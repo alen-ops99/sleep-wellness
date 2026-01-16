@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Wellness for Luxury Hotels | Dr. Alen Juginovic</title>
+    <meta name="description" content="Physician-designed sleep wellness programs for luxury hotels. Transform guest experiences with evidence-based sleep optimization from Harvard Medical School.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+        :root {
+            --deep-navy: #0f1c2e;
+            --navy: #1a2744;
+            --navy-light: #2d3e5f;
+            --gold: #C9A962;
+            --gold-light: #E8D5A3;
+            --gold-dark: #a08540;
+            --cream: #FAF8F5;
+            --warm-white: #FDFCFA;
+            --text: #2c2c2c;
+            --text-light: #666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            color: var(--text);
+            line-height: 1.7;
+            background: var(--cream);
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 28, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 60px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .nav-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-decoration: none;
+        }
+
+        .nav-brand-main {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--cream);
+            font-size: 22px;
+            font-weight: 400;
+            letter-spacing: 3px;
+        }
+
+        .nav-brand-sub {
+            font-size: 10px;
+            color: var(--gold);
+            letter-spacing: 2px;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .nav-cta {
+            background: var(--gold);
+            color: var(--deep-navy) !important;
+            padding: 12px 28px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold-light);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--navy) 50%, var(--navy-light) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 140px 40px 100px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A962' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero-label {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 64px;
+            font-weight: 300;
+            color: var(--cream);
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            line-height: 1.15;
+        }
+
+        .hero-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--gold-light);
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto 50px;
+            line-height: 1.9;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--deep-navy);
+            padding: 18px 50px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .hero-cta:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 60px;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 400;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Problem Section */
+        .problem {
+            background: var(--warm-white);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .problem-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .problem-stat {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 56px;
+            font-weight: 400;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .problem-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 15px;
+        }
+
+        .problem-card p {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Science Section */
+        .science {
+            background: var(--navy);
+            color: var(--cream);
+        }
+
+        .science .section-title {
+            color: var(--cream);
+        }
+
+        .science .section-subtitle {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .science-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .science-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 35px;
+            display: flex;
+            gap: 25px;
+        }
+
+        .science-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 400;
+            color: var(--gold);
+            min-width: 80px;
+        }
+
+        .science-card h4 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .science-card p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.7;
+        }
+
+        /* Program Section */
+        .program {
+            background: var(--cream);
+        }
+
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .program-card {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .program-card.featured {
+            border: 2px solid var(--gold);
+        }
+
+        .program-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold);
+            color: var(--deep-navy);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 6px 20px;
+        }
+
+        .program-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .program-card .tagline {
+            font-size: 14px;
+            color: var(--gold-dark);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .program-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 30px;
+            padding: 25px 0;
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+            border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .program-features li {
+            font-size: 14px;
+            color: var(--text);
+            padding: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .program-features li::before {
+            content: '✓';
+            color: var(--gold);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .program-cta {
+            display: inline-block;
+            background: var(--navy);
+            color: var(--cream);
+            padding: 14px 35px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .program-cta:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .program-card.featured .program-cta {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .program-card.featured .program-cta:hover {
+            background: var(--gold-dark);
+        }
+
+        /* Differentiators */
+        .differentiators {
+            background: var(--warm-white);
+        }
+
+        .diff-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1100px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .diff-content h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 400;
+            color: var(--navy);
+            margin-bottom: 25px;
+        }
+
+        .diff-content p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.9;
+            margin-bottom: 30px;
+        }
+
+        .diff-list {
+            list-style: none;
+        }
+
+        .diff-list li {
+            font-size: 15px;
+            color: var(--text);
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .diff-list li:last-child {
+            border-bottom: none;
+        }
+
+        .diff-list li::before {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: var(--gold);
+            margin-top: 10px;
+            flex-shrink: 0;
+        }
+
+        .diff-image {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .diff-image-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: var(--cream);
+            text-align: center;
+            padding: 40px;
+            font-style: italic;
+        }
+
+        .diff-image::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 150px;
+            height: 150px;
+            border: 2px solid var(--gold);
+            z-index: -1;
+        }
+
+        /* Testimonial */
+        .testimonial {
+            background: var(--navy);
+            text-align: center;
+            padding: 100px 60px;
+        }
+
+        .testimonial-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-style: italic;
+            color: var(--cream);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            color: var(--gold);
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .testimonial-role {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* FAQ */
+        .faq {
+            background: var(--cream);
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(201, 169, 98, 0.3);
+            padding: 30px 0;
+        }
+
+        .faq-item h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--navy);
+            margin-bottom: 15px;
+        }
+
+        .faq-item p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 60px;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--deep-navy);
+            padding: 18px 50px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .cta-primary:hover {
+            background: var(--gold-light);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 60px;
+            background: var(--deep-navy);
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: var(--cream);
+            letter-spacing: 2px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 48px; }
+            .problem-grid,
+            .program-grid { grid-template-columns: 1fr; max-width: 500px; }
+            .science-grid { grid-template-columns: 1fr; }
+            .diff-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav { padding: 15px 30px; }
+            .nav-links { display: none; }
+            section { padding: 80px 30px; }
+            .hero { padding: 120px 30px 80px; }
+            .hero h1 { font-size: 36px; }
+            .hero-tagline { font-size: 20px; }
+            .section-title { font-size: 32px; }
+            .testimonial-quote { font-size: 24px; }
+            .footer { flex-direction: column; gap: 20px; text-align: center; }
+            .footer-links { flex-wrap: wrap; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+    <a href="index.html" class="nav-brand">
+        <span class="nav-brand-main">SLEEP WELLNESS</span>
+        <span class="nav-brand-sub">by Dr. Alen</span>
+    </a>
+    <div class="nav-links">
+        <a href="hotels.html" class="active">Hotels</a>
+        <a href="athletes.html">Athletes</a>
+        <a href="corporate.html">Corporate</a>
+        <a href="index.html#about">About</a>
+        <a href="#contact" class="nav-cta">Get Started</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-content">
+        <p class="hero-label">For Luxury Hospitality</p>
+        <h1>Transform Guest Sleep<br>Into Your Signature</h1>
+        <p class="hero-tagline">
+            The world's most discerning travelers deserve the world's most advanced sleep experience
+        </p>
+        <p class="hero-description">
+            Partner with a Harvard physician to create a physician-designed sleep wellness program
+            that differentiates your property and delivers measurable guest satisfaction.
+        </p>
+        <a href="#contact" class="hero-cta">Explore Partnership</a>
+    </div>
+</section>
+
+<!-- Problem Section -->
+<section class="problem">
+    <div class="section-header">
+        <p class="section-label">The Opportunity</p>
+        <h2 class="section-title">Sleep is the Untapped Differentiator</h2>
+        <p class="section-subtitle">
+            Your guests invest in luxury for a reason. Yet most leave having slept worse than at home.
+        </p>
+    </div>
+
+    <div class="problem-grid">
+        <div class="problem-card">
+            <div class="problem-stat">68%</div>
+            <h3>Report Poor Hotel Sleep</h3>
+            <p>The majority of business travelers struggle to sleep well in hotels, impacting their experience and your reviews.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-stat">$639B</div>
+            <h3>Wellness Tourism Market</h3>
+            <p>The global wellness travel market continues to grow, with sleep emerging as a primary driver of booking decisions.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-stat">91%</div>
+            <h3>Prioritize Sleep</h3>
+            <p>When surveyed, the vast majority of travelers say sleep quality significantly influences their hotel choice.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Science Section -->
+<section class="science">
+    <div class="section-header">
+        <p class="section-label">The Science</p>
+        <h2 class="section-title">Variables You Can Control</h2>
+        <p class="section-subtitle">
+            Every element of the guest room environment can be optimized for restorative sleep.
+        </p>
+    </div>
+
+    <div class="science-grid">
+        <div class="science-card">
+            <div class="science-value">18-20°C</div>
+            <div>
+                <h4>Temperature Optimization</h4>
+                <p>Core body temperature must drop 1-2°C for sleep onset. Thermal-regulating systems maintain the optimal zone throughout the night.</p>
+            </div>
+        </div>
+        <div class="science-card">
+            <div class="science-value">0 lux</div>
+            <div>
+                <h4>Complete Darkness</h4>
+                <p>Light above 5 lux suppresses melatonin by 50%. Complete blackout protocols are essential for hormone optimization.</p>
+            </div>
+        </div>
+        <div class="science-card">
+            <div class="science-value">< 40 dB</div>
+            <div>
+                <h4>Acoustic Control</h4>
+                <p>Ambient noise causes micro-arousals that fragment sleep architecture. Pink noise can increase deep sleep by 25%.</p>
+            </div>
+        </div>
+        <div class="science-card">
+            <div class="science-value">3000K</div>
+            <div>
+                <h4>Circadian Lighting</h4>
+                <p>Warm-spectrum evening light preserves melatonin production. Dawn simulation optimizes the cortisol awakening response.</p>
+            </div>
+        </div>
+        <div class="science-card">
+            <div class="science-value">30-50%</div>
+            <div>
+                <h4>Air Quality</h4>
+                <p>Optimal humidity prevents airway irritation. HEPA filtration removes allergens. CO2 monitoring ensures freshness.</p>
+            </div>
+        </div>
+        <div class="science-card">
+            <div class="science-value">~24h</div>
+            <div>
+                <h4>Jet Lag Protocols</h4>
+                <p>Strategic light therapy and caffeine timing can accelerate circadian adaptation from days to hours.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Program Section -->
+<section class="program">
+    <div class="section-header">
+        <p class="section-label">Programs</p>
+        <h2 class="section-title">Partnership Options</h2>
+        <p class="section-subtitle">
+            Every engagement is customized to your property's unique character and goals.
+        </p>
+    </div>
+
+    <div class="program-grid">
+        <div class="program-card">
+            <h3>Sleep Audit</h3>
+            <p class="tagline">Foundation Assessment</p>
+            <ul class="program-features">
+                <li>Comprehensive room environment analysis</li>
+                <li>Guest journey sleep mapping</li>
+                <li>Competitive landscape review</li>
+                <li>Detailed recommendations report</li>
+                <li>Implementation roadmap</li>
+            </ul>
+            <a href="#contact" class="program-cta">Learn More</a>
+        </div>
+
+        <div class="program-card featured">
+            <h3>Sleep Suite Program</h3>
+            <p class="tagline">Signature Implementation</p>
+            <ul class="program-features">
+                <li>Everything in Sleep Audit</li>
+                <li>Pilot suite design & implementation</li>
+                <li>Staff training program</li>
+                <li>Sleep Concierge certification</li>
+                <li>Guest experience protocols</li>
+                <li>Marketing support & collateral</li>
+                <li>Ongoing optimization consulting</li>
+            </ul>
+            <a href="#contact" class="program-cta">Learn More</a>
+        </div>
+
+        <div class="program-card">
+            <h3>Property-Wide</h3>
+            <p class="tagline">Complete Transformation</p>
+            <ul class="program-features">
+                <li>Everything in Sleep Suite Program</li>
+                <li>Full property implementation</li>
+                <li>Spa & wellness integration</li>
+                <li>F&B sleep-optimized menus</li>
+                <li>VIP events & retreat programming</li>
+                <li>Branded amenity development</li>
+                <li>Ongoing physician partnership</li>
+            </ul>
+            <a href="#contact" class="program-cta">Learn More</a>
+        </div>
+    </div>
+</section>
+
+<!-- Differentiators -->
+<section class="differentiators">
+    <div class="diff-grid">
+        <div class="diff-content">
+            <h3>Why Partner With<br>Dr. Alen?</h3>
+            <p>
+                This is not another wellness trend or unproven concept. This is evidence-based
+                sleep medicine applied to hospitality by a Harvard physician with published
+                research and real clinical expertise.
+            </p>
+            <ul class="diff-list">
+                <li>The only hotel sleep program designed by a physician-scientist with peer-reviewed publications</li>
+                <li>Research published in <em>Cell</em>, one of the world's most prestigious scientific journals</li>
+                <li>Clinical practice at Harvard Medical School and MGH Sleep Neurobiology</li>
+                <li>Proven experience consulting for elite athletes and Fortune 500 executives</li>
+                <li>Featured expertise in The New York Times and Forbes</li>
+            </ul>
+        </div>
+        <div class="diff-image">
+            <p class="diff-image-text">"Where medical science meets luxury hospitality"</p>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonial -->
+<section class="testimonial">
+    <p class="testimonial-quote">
+        "Dr. Alen's program has fundamentally changed how we think about the guest experience.
+        Sleep is now our signature differentiator, and our guests notice the difference immediately."
+    </p>
+    <p class="testimonial-author">Marco H.</p>
+    <p class="testimonial-role">General Manager, Luxury Resort</p>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+    <div class="section-header">
+        <p class="section-label">Questions</p>
+        <h2 class="section-title">Frequently Asked</h2>
+    </div>
+
+    <div class="faq-grid">
+        <div class="faq-item">
+            <h4>What makes this different from standard wellness programs?</h4>
+            <p>Most hotel wellness focuses on spa services or fitness. Sleep is the foundation of wellness that affects everything else, yet it's rarely addressed with scientific rigor. Our program is the only one designed by a Harvard physician with published sleep research.</p>
+        </div>
+        <div class="faq-item">
+            <h4>How long does implementation take?</h4>
+            <p>A pilot suite can be implemented within 4-8 weeks depending on scope. Property-wide programs are phased over several months to ensure quality and staff readiness.</p>
+        </div>
+        <div class="faq-item">
+            <h4>What investment is required?</h4>
+            <p>Programs are customized to your property's scale and ambitions. We discuss scope and investment during our initial consultation to ensure alignment.</p>
+        </div>
+        <div class="faq-item">
+            <h4>How do you measure success?</h4>
+            <p>We track guest satisfaction scores, sleep-related reviews, repeat booking rates, and premium revenue from sleep-enhanced inventory. Clear metrics are established at program outset.</p>
+        </div>
+        <div class="faq-item">
+            <h4>Do you work with hotel groups or individual properties?</h4>
+            <p>Both. We partner with individual luxury properties as well as hotel groups looking to differentiate their portfolio with a signature sleep program.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+    <h2>Ready to Differentiate?</h2>
+    <p>
+        Let's discuss how a physician-designed sleep program can transform
+        your guest experience and competitive position.
+    </p>
+    <a href="mailto:alen_juginovic@hms.harvard.edu" class="cta-primary">Schedule a Consultation</a>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <span class="footer-brand">SLEEP WELLNESS</span>
+    <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="hotels.html">Hotels</a>
+        <a href="athletes.html">Athletes</a>
+        <a href="corporate.html">Corporate</a>
+        <a href="index.html#about">About</a>
+    </div>
+    <span class="footer-text">© 2026 Dr. Alen Juginovic</span>
+</footer>
+
+</body>
+</html>

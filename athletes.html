@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Wellness for Elite Athletes | Dr. Alen Juginovic</title>
+    <meta name="description" content="Physician-designed sleep optimization for elite athletes. Reduce injury risk, accelerate recovery, and unlock peak performance with Harvard Medical School expertise.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+        :root {
+            --deep-navy: #0f1c2e;
+            --navy: #1a2744;
+            --navy-light: #2d3e5f;
+            --gold: #C9A962;
+            --gold-light: #E8D5A3;
+            --gold-dark: #a08540;
+            --cream: #FAF8F5;
+            --warm-white: #FDFCFA;
+            --text: #2c2c2c;
+            --text-light: #666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            color: var(--text);
+            line-height: 1.7;
+            background: var(--cream);
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 28, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 60px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .nav-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-decoration: none;
+        }
+
+        .nav-brand-main {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--cream);
+            font-size: 22px;
+            font-weight: 400;
+            letter-spacing: 3px;
+        }
+
+        .nav-brand-sub {
+            font-size: 10px;
+            color: var(--gold);
+            letter-spacing: 2px;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .nav-cta {
+            background: var(--gold);
+            color: var(--deep-navy) !important;
+            padding: 12px 28px;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold-light);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--navy) 50%, var(--navy-light) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 140px 40px 100px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 70% 30%, rgba(201, 169, 98, 0.08) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero-label {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 64px;
+            font-weight: 300;
+            color: var(--cream);
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            line-height: 1.15;
+        }
+
+        .hero-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--gold-light);
+            margin-bottom: 30px;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto 50px;
+            line-height: 1.9;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--deep-navy);
+            padding: 18px 50px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .hero-cta:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 60px;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 400;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: var(--navy);
+            padding: 80px 60px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item {
+            color: var(--cream);
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 56px;
+            font-weight: 400;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        /* Problem/Opportunity */
+        .problem {
+            background: var(--warm-white);
+        }
+
+        .problem-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            max-width: 1100px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .problem-text h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 400;
+            color: var(--navy);
+            margin-bottom: 25px;
+        }
+
+        .problem-text p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .problem-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-style: italic;
+            color: var(--navy);
+            padding: 30px;
+            background: white;
+            border-left: 4px solid var(--gold);
+            margin-top: 30px;
+        }
+
+        .problem-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .problem-card.highlight {
+            background: var(--navy);
+            color: var(--cream);
+            grid-column: span 2;
+        }
+
+        .problem-card-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 400;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .problem-card h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .problem-card p {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .problem-card.highlight p {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Science Section */
+        .science {
+            background: var(--cream);
+        }
+
+        .science-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .science-card {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .science-icon {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .science-card h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--navy);
+            margin-bottom: 15px;
+        }
+
+        .science-card p {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Program Section */
+        .program {
+            background: var(--navy);
+            color: var(--cream);
+        }
+
+        .program .section-title {
+            color: var(--cream);
+        }
+
+        .program .section-subtitle {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .program-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(201, 169, 98, 0.3);
+            padding: 50px 40px;
+        }
+
+        .program-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .program-card > p {
+            font-size: 15px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .program-features {
+            list-style: none;
+        }
+
+        .program-features li {
+            font-size: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.15);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .program-features li:last-child {
+            border-bottom: none;
+        }
+
+        .program-features li::before {
+            content: '—';
+            color: var(--gold);
+        }
+
+        /* Results Section */
+        .results {
+            background: var(--warm-white);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .result-card {
+            text-align: center;
+            padding: 40px 25px;
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .result-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .result-card h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .result-card p {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Testimonial */
+        .testimonial {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            text-align: center;
+            padding: 100px 60px;
+        }
+
+        .testimonial-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-style: italic;
+            color: var(--cream);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            color: var(--gold);
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .testimonial-role {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--cream);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 80px;
+            max-width: 1100px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .about-initials {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 100px;
+            color: var(--gold);
+            opacity: 0.3;
+        }
+
+        .about-content h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 400;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .about-content .title {
+            font-size: 14px;
+            color: var(--gold-dark);
+            margin-bottom: 25px;
+        }
+
+        .about-content p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .credentials-list {
+            list-style: none;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(201, 169, 98, 0.3);
+        }
+
+        .credentials-list li {
+            font-size: 14px;
+            color: var(--text);
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .credentials-list li::before {
+            content: '>';
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* FAQ */
+        .faq {
+            background: var(--warm-white);
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(201, 169, 98, 0.3);
+            padding: 30px 0;
+        }
+
+        .faq-item h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--navy);
+            margin-bottom: 15px;
+        }
+
+        .faq-item p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 120px 60px;
+            background: var(--navy);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--deep-navy);
+            padding: 18px 50px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .cta-primary:hover {
+            background: var(--gold-light);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 60px;
+            background: var(--deep-navy);
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: var(--cream);
+            letter-spacing: 2px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 48px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .problem-content { grid-template-columns: 1fr; }
+            .science-grid { grid-template-columns: 1fr; max-width: 500px; }
+            .program-grid { grid-template-columns: 1fr; }
+            .results-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-grid { grid-template-columns: 1fr; }
+            .about-image { max-width: 350px; margin: 0 auto; }
+        }
+
+        @media (max-width: 768px) {
+            .nav { padding: 15px 30px; }
+            .nav-links { display: none; }
+            section { padding: 80px 30px; }
+            .hero { padding: 120px 30px 80px; }
+            .hero h1 { font-size: 36px; }
+            .section-title { font-size: 32px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .results-grid { grid-template-columns: 1fr; }
+            .problem-visual { grid-template-columns: 1fr; }
+            .problem-card.highlight { grid-column: span 1; }
+            .footer { flex-direction: column; gap: 20px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+    <a href="index.html" class="nav-brand">
+        <span class="nav-brand-main">SLEEP WELLNESS</span>
+        <span class="nav-brand-sub">by Dr. Alen</span>
+    </a>
+    <div class="nav-links">
+        <a href="hotels.html">Hotels</a>
+        <a href="athletes.html" class="active">Athletes</a>
+        <a href="corporate.html">Corporate</a>
+        <a href="index.html#about">About</a>
+        <a href="#contact" class="nav-cta">Get Started</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-content">
+        <p class="hero-label">For Elite Athletes & Teams</p>
+        <h1>Sleep is Your<br>Greatest Advantage</h1>
+        <p class="hero-tagline">
+            Reduce injury risk. Accelerate recovery. Unlock peak performance.
+        </p>
+        <p class="hero-description">
+            Work with a Harvard physician who understands that at the elite level,
+            the difference between good and great often comes down to recovery.
+            Sleep is the most powerful legal performance enhancer in sport.
+        </p>
+        <a href="#contact" class="hero-cta">Work With Dr. Alen</a>
+    </div>
+</section>
+
+<!-- Stats -->
+<section class="stats">
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-number">1.7x</div>
+            <div class="stat-label">Higher injury rate with less than 8 hours sleep</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">70%</div>
+            <div class="stat-label">Of growth hormone released during deep sleep</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">+12%</div>
+            <div class="stat-label">Improvement in reaction time when optimized</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">4-6x</div>
+            <div class="stat-label">Faster jet lag recovery with proper protocols</div>
+        </div>
+    </div>
+</section>
+
+<!-- Problem/Opportunity -->
+<section class="problem">
+    <div class="problem-content">
+        <div class="problem-text">
+            <h3>The Edge Hidden in Plain Sight</h3>
+            <p>
+                You've optimized your training. Your nutrition is dialed in. Your mental game is strong.
+                But if you're not optimizing sleep, you're leaving significant performance on the table.
+            </p>
+            <p>
+                Sleep isn't just rest—it's when your body repairs, adapts, and consolidates the skills
+                you've trained. It's when growth hormone floods your system. It's when your brain
+                processes and improves the motor patterns you've practiced.
+            </p>
+            <div class="problem-quote">
+                "Sleep is the greatest legal performance-enhancing drug that most athletes are neglecting."
+            </div>
+        </div>
+        <div class="problem-visual">
+            <div class="problem-card">
+                <div class="problem-card-value">-70%</div>
+                <h4>Injury Reduction</h4>
+                <p>Athletes sleeping 8+ hours show dramatically lower injury rates</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-card-value">+40%</div>
+                <h4>Sprint Performance</h4>
+                <p>Improvement potential with optimized sleep protocols</p>
+            </div>
+            <div class="problem-card highlight">
+                <div class="problem-card-value">REM</div>
+                <h4>Motor Learning</h4>
+                <p>Skills and techniques are consolidated during REM sleep. Miss it and you lose the benefit of practice.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Science -->
+<section class="science">
+    <div class="section-header">
+        <p class="section-label">The Science</p>
+        <h2 class="section-title">Why Sleep Drives Performance</h2>
+        <p class="section-subtitle">
+            Understanding the mechanisms helps you appreciate why sleep optimization
+            is as important as any other aspect of your training.
+        </p>
+    </div>
+
+    <div class="science-grid">
+        <div class="science-card">
+            <div class="science-icon">HGH</div>
+            <h4>Growth Hormone</h4>
+            <p>70% of daily HGH is secreted during deep sleep. This is essential for muscle protein synthesis, tissue repair, and adaptation to training loads.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-icon">REM</div>
+            <h4>Motor Consolidation</h4>
+            <p>During REM sleep, your brain replays and strengthens the motor patterns you practiced. This is how techniques become automatic.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-icon">HRV</div>
+            <h4>Autonomic Recovery</h4>
+            <p>Heart rate variability reflects nervous system recovery. Sleep quality directly predicts next-day readiness and performance capacity.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-icon">90m</div>
+            <h4>Sleep Cycles</h4>
+            <p>Understanding your 90-minute ultradian rhythms enables strategic scheduling of training, competition, and recovery.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-icon">Jet Lag</div>
+            <h4>Travel Optimization</h4>
+            <p>Strategic light exposure and timing protocols can compress multi-day jet lag adaptation into hours.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-icon">Naps</div>
+            <h4>Strategic Napping</h4>
+            <p>Properly timed naps can enhance afternoon performance, support recovery, and extend effective training capacity.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Program -->
+<section class="program">
+    <div class="section-header">
+        <p class="section-label">Programs</p>
+        <h2 class="section-title">How We Work Together</h2>
+        <p class="section-subtitle">
+            Whether you're an individual athlete or leading a team, we have a program designed for your needs.
+        </p>
+    </div>
+
+    <div class="program-grid">
+        <div class="program-card">
+            <h3>Individual Athlete</h3>
+            <p>Personal optimization for athletes who want to maximize their competitive edge through sleep science.</p>
+            <ul class="program-features">
+                <li>Comprehensive sleep assessment</li>
+                <li>Chronotype analysis and schedule optimization</li>
+                <li>Competition travel protocols</li>
+                <li>Recovery cycle design</li>
+                <li>Strategic napping protocols</li>
+                <li>Wearable data integration</li>
+                <li>Ongoing physician support</li>
+            </ul>
+        </div>
+        <div class="program-card">
+            <h3>Team Programs</h3>
+            <p>Comprehensive sleep optimization for sports organizations seeking a competitive advantage.</p>
+            <ul class="program-features">
+                <li>Team-wide sleep education</li>
+                <li>Coaching and support staff training</li>
+                <li>Travel schedule optimization</li>
+                <li>Game-day and recovery protocols</li>
+                <li>Training facility design guidance</li>
+                <li>Load management integration</li>
+                <li>Injury prevention protocols</li>
+                <li>Ongoing organizational consulting</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Results -->
+<section class="results">
+    <div class="section-header">
+        <p class="section-label">Outcomes</p>
+        <h2 class="section-title">What Athletes Experience</h2>
+    </div>
+
+    <div class="results-grid">
+        <div class="result-card">
+            <div class="result-value">-70%</div>
+            <h4>Injury Risk</h4>
+            <p>Dramatically reduced injury rates mean more training days and competition availability</p>
+        </div>
+        <div class="result-card">
+            <div class="result-value">+23%</div>
+            <h4>Reaction Time</h4>
+            <p>Faster reactions and better split-second decision-making under pressure</p>
+        </div>
+        <div class="result-card">
+            <div class="result-value">2x</div>
+            <h4>Recovery Speed</h4>
+            <p>Faster adaptation to training loads and quicker bounce-back between sessions</p>
+        </div>
+        <div class="result-card">
+            <div class="result-value">+Years</div>
+            <h4>Career Longevity</h4>
+            <p>Sustainable practices that extend prime performance years</p>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonial -->
+<section class="testimonial">
+    <p class="testimonial-quote">
+        "The travel protocols alone have been game-changing. I used to lose the first few days
+        of any international competition to jet lag. Now I arrive ready to perform at my best."
+    </p>
+    <p class="testimonial-author">Stefan K.</p>
+    <p class="testimonial-role">Professional Athlete</p>
+</section>
+
+<!-- About -->
+<section class="about">
+    <div class="about-grid">
+        <div class="about-image">
+            <span class="about-initials">AJ</span>
+        </div>
+        <div class="about-content">
+            <h3>Alen Juginovic, M.D.</h3>
+            <p class="title">Sleep Physician & Researcher | Harvard Medical School</p>
+            <p>
+                Dr. Alen brings a unique combination of cutting-edge sleep research and real-world
+                application to elite sport. His work with athletes spans individual optimization
+                to team-wide performance programs.
+            </p>
+            <p>
+                With research published in <em>Cell</em> and clinical practice at Harvard Medical School,
+                Dr. Alen delivers protocols that are both scientifically rigorous and practically effective.
+            </p>
+            <ul class="credentials-list">
+                <li>Research published in Cell and peer-reviewed journals</li>
+                <li>Author: Sleep Science Made Simple (Springer)</li>
+                <li>Trusted consultant to elite athletes worldwide</li>
+                <li>Editorial Board: Journal of Clinical Sleep Medicine</li>
+                <li>Featured in The New York Times and Forbes</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+    <div class="section-header">
+        <p class="section-label">Questions</p>
+        <h2 class="section-title">Frequently Asked</h2>
+    </div>
+
+    <div class="faq-grid">
+        <div class="faq-item">
+            <h4>How quickly will I see results?</h4>
+            <p>Many athletes notice improvements in perceived recovery and energy within the first 1-2 weeks of implementing protocols. Measurable performance gains typically emerge over 4-8 weeks as sleep optimization compounds.</p>
+        </div>
+        <div class="faq-item">
+            <h4>I already sleep 8+ hours. Can you still help?</h4>
+            <p>Absolutely. Sleep quality matters as much as quantity. Many athletes sleep adequate hours but miss critical deep sleep or REM phases. We optimize the architecture of your sleep, not just the duration.</p>
+        </div>
+        <div class="faq-item">
+            <h4>How do you work with my existing performance team?</h4>
+            <p>We integrate seamlessly with coaches, trainers, and sports scientists. Sleep data informs training load decisions, and our protocols complement existing periodization and recovery strategies.</p>
+        </div>
+        <div class="faq-item">
+            <h4>What about competition schedules that disrupt sleep?</h4>
+            <p>This is exactly what we plan for. We design protocols around your competition calendar, travel schedule, and the realities of elite sport—not idealized laboratory conditions.</p>
+        </div>
+        <div class="faq-item">
+            <h4>Do you work with specific sports?</h4>
+            <p>We work with athletes across all sports. While specific demands vary, the foundational science of sleep optimization applies universally. Protocols are customized to your sport's unique requirements.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+    <h2>Ready for Your Edge?</h2>
+    <p>
+        Let's discuss how physician-designed sleep optimization can elevate your performance
+        and extend your career.
+    </p>
+    <a href="mailto:alen_juginovic@hms.harvard.edu" class="cta-primary">Schedule a Consultation</a>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <span class="footer-brand">SLEEP WELLNESS</span>
+    <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="hotels.html">Hotels</a>
+        <a href="athletes.html">Athletes</a>
+        <a href="corporate.html">Corporate</a>
+        <a href="index.html#about">About</a>
+    </div>
+    <span class="footer-text">© 2026 Dr. Alen Juginovic</span>
+</footer>
+
+</body>
+</html>

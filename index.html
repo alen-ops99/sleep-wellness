@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Wellness by Dr. Alen | The Science of Restorative Sleep</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+        :root {
+            --deep-navy: #0f1c2e;
+            --navy: #1a2744;
+            --navy-light: #2d3e5f;
+            --gold: #C9A962;
+            --gold-light: #E8D5A3;
+            --gold-dark: #a08540;
+            --cream: #FAF8F5;
+            --warm-white: #FDFCFA;
+            --text: #2c2c2c;
+            --text-light: #666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            color: var(--text);
+            line-height: 1.7;
+            background: var(--cream);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 28, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 60px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav.scrolled {
+            padding: 15px 60px;
+            background: rgba(15, 28, 46, 0.98);
+        }
+
+        .nav-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .nav-brand-main {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--cream);
+            font-size: 22px;
+            font-weight: 400;
+            letter-spacing: 3px;
+        }
+
+        .nav-brand-sub {
+            font-size: 10px;
+            color: var(--gold);
+            letter-spacing: 2px;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-cta {
+            background: var(--gold);
+            color: var(--deep-navy);
+            padding: 12px 28px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold-light);
+            color: var(--deep-navy);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--navy) 50%, var(--navy-light) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 40px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 70%, rgba(201, 169, 98, 0.05) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero-label {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 72px;
+            font-weight: 300;
+            color: var(--cream);
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--gold-light);
+            margin-bottom: 30px;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--deep-navy);
+            padding: 18px 50px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .hero-cta:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold);
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.7;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        .hero-scroll::after {
+            content: '';
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+        }
+
+        /* Audience Section */
+        .audiences {
+            padding: 120px 60px;
+            background: var(--cream);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 80px;
+        }
+
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .audience-card {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 50px 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .audience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .audience-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .audience-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .audience-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .audience-icon svg {
+            width: 36px;
+            height: 36px;
+            stroke: var(--gold);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .audience-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--navy);
+            margin-bottom: 15px;
+        }
+
+        .audience-card .tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-style: italic;
+            color: var(--gold-dark);
+            margin-bottom: 20px;
+        }
+
+        .audience-card p {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .audience-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+            border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .audience-features li {
+            font-size: 13px;
+            color: var(--text);
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .audience-features li::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .audience-cta {
+            display: inline-block;
+            background: var(--navy);
+            color: var(--cream);
+            padding: 14px 35px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .audience-cta:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        /* Stats Section */
+        .stats {
+            background: var(--navy);
+            padding: 100px 60px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item {
+            color: var(--cream);
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 64px;
+            font-weight: 400;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        /* About Section */
+        .about {
+            padding: 120px 60px;
+            background: var(--warm-white);
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image-main {
+            width: 100%;
+            aspect-ratio: 4/5;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-initials {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 120px;
+            color: var(--gold);
+            opacity: 0.3;
+        }
+
+        .about-image-accent {
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            width: 200px;
+            height: 200px;
+            border: 2px solid var(--gold);
+            z-index: -1;
+        }
+
+        .about-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 400;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .about-content .title {
+            font-size: 14px;
+            color: var(--gold-dark);
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+
+        .about-content p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .credentials-list {
+            list-style: none;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(201, 169, 98, 0.3);
+        }
+
+        .credentials-list li {
+            font-size: 14px;
+            color: var(--text);
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .credentials-list li::before {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        /* Science Section */
+        .science {
+            padding: 120px 60px;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--navy) 100%);
+            color: var(--cream);
+        }
+
+        .science .section-header {
+            margin-bottom: 60px;
+        }
+
+        .science .section-title {
+            color: var(--cream);
+        }
+
+        .science .section-subtitle {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .science-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .science-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .science-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .science-card h4 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .science-card p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.7;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 120px 60px;
+            background: var(--cream);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 40px;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .testimonial-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-style: italic;
+            color: var(--navy);
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: var(--gold);
+        }
+
+        .testimonial-info h5 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 3px;
+        }
+
+        .testimonial-info p {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .testimonial-type {
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-top: 5px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 60px;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 52px;
+            font-weight: 400;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary {
+            background: var(--gold);
+            color: var(--deep-navy);
+            padding: 18px 50px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .cta-primary:hover {
+            background: var(--gold-light);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--cream);
+            padding: 18px 50px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s;
+        }
+
+        .cta-secondary:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 60px;
+            background: var(--deep-navy);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-col h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: var(--cream);
+            margin-bottom: 25px;
+        }
+
+        .contact-col p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .contact-col a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-col a:hover {
+            color: var(--gold-light);
+        }
+
+        .contact-links {
+            list-style: none;
+        }
+
+        .contact-links li {
+            margin-bottom: 12px;
+        }
+
+        .contact-links a {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 60px;
+            background: var(--deep-navy);
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: var(--cream);
+            letter-spacing: 2px;
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: var(--cream);
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 52px;
+            }
+
+            .audience-grid,
+            .science-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .about-image {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 40px;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 15px 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 100px 30px 60px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+                letter-spacing: 2px;
+            }
+
+            .hero-tagline {
+                font-size: 20px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .audiences,
+            .about,
+            .science,
+            .testimonials,
+            .cta-section {
+                padding: 80px 30px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-number {
+                font-size: 48px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+    <div class="nav-brand">
+        <span class="nav-brand-main">SLEEP WELLNESS</span>
+        <span class="nav-brand-sub">by Dr. Alen</span>
+    </div>
+    <div class="nav-links">
+        <a href="hotels.html">Hotels</a>
+        <a href="athletes.html">Athletes</a>
+        <a href="corporate.html">Corporate</a>
+        <a href="#about">About</a>
+        <a href="#contact" class="nav-cta">Start a Conversation</a>
+    </div>
+    <button class="mobile-menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-content">
+        <p class="hero-label">Harvard Medical School Expertise</p>
+        <h1>The Science of<br>Restorative Sleep</h1>
+        <p class="hero-tagline">Transforming rest into a refined art of performance</p>
+        <p class="hero-description">
+            Physician-designed sleep optimization programs for those who demand excellence.
+            Whether you lead teams, compete at the highest level, or create world-class experiences,
+            sleep is your most powerful advantage.
+        </p>
+        <a href="#audiences" class="hero-cta">Discover Your Path</a>
+    </div>
+    <div class="hero-scroll">
+        Explore
+    </div>
+</section>
+
+<!-- Audiences Section -->
+<section class="audiences" id="audiences">
+    <div class="section-header">
+        <p class="section-label">Who We Serve</p>
+        <h2 class="section-title">Excellence Demands Rest</h2>
+        <p class="section-subtitle">
+            We partner with those who understand that peak performance begins with optimal recovery.
+            Select your path to discover how we can serve you.
+        </p>
+    </div>
+
+    <div class="audience-grid">
+        <!-- Hotels -->
+        <div class="audience-card">
+            <div class="audience-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 21h18M3 10h18M3 7l9-4 9 4M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
+                </svg>
+            </div>
+            <h3>Luxury Hotels</h3>
+            <p class="tagline">Transform guest experiences</p>
+            <p>
+                Create an unmatched competitive advantage by offering the world's
+                most scientifically advanced sleep experience to your discerning guests.
+            </p>
+            <ul class="audience-features">
+                <li>Sleep-optimized room environments</li>
+                <li>Jet lag management protocols</li>
+                <li>Sleep Concierge training</li>
+                <li>Guest wellness experiences</li>
+                <li>Branded sleep amenities</li>
+            </ul>
+            <a href="hotels.html" class="audience-cta">For Hotels</a>
+        </div>
+
+        <!-- Athletes -->
+        <div class="audience-card">
+            <div class="audience-icon">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 2a10 10 0 0 1 0 20M12 2a10 10 0 0 0 0 20M2 12h20M12 2v20"/>
+                </svg>
+            </div>
+            <h3>Elite Athletes</h3>
+            <p class="tagline">Unlock your full potential</p>
+            <p>
+                Gain the performance edge that separates champions from competitors.
+                Reduce injury risk, accelerate recovery, and extend your prime years.
+            </p>
+            <ul class="audience-features">
+                <li>Personal sleep optimization</li>
+                <li>Competition travel protocols</li>
+                <li>Recovery cycle design</li>
+                <li>Team-wide programs</li>
+                <li>Injury prevention strategies</li>
+            </ul>
+            <a href="athletes.html" class="audience-cta">For Athletes</a>
+        </div>
+
+        <!-- Corporate -->
+        <div class="audience-card">
+            <div class="audience-icon">
+                <svg viewBox="0 0 24 24">
+                    <rect x="2" y="3" width="20" height="14" rx="2"/>
+                    <path d="M8 21h8M12 17v4"/>
+                </svg>
+            </div>
+            <h3>Corporate Leaders</h3>
+            <p class="tagline">Sharpen your edge</p>
+            <p>
+                Make better decisions, lead with clarity, and build organizations
+                where peak performance is sustainable—starting with you.
+            </p>
+            <ul class="audience-features">
+                <li>Executive sleep coaching</li>
+                <li>Leadership team workshops</li>
+                <li>Corporate wellness programs</li>
+                <li>Travel policy optimization</li>
+                <li>Performance culture development</li>
+            </ul>
+            <a href="corporate.html" class="audience-cta">For Executives</a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats">
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-number">$411B</div>
+            <div class="stat-label">Annual cost of sleep deprivation to US business</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">70%</div>
+            <div class="stat-label">Higher injury risk for under-slept athletes</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">4x</div>
+            <div class="stat-label">Increased risk of poor decisions when tired</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">91%</div>
+            <div class="stat-label">Of travelers prioritize sleep when booking</div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about" id="about">
+    <div class="about-container">
+        <div class="about-image">
+            <div class="about-image-main">
+                <span class="about-initials">AJ</span>
+            </div>
+            <div class="about-image-accent"></div>
+        </div>
+        <div class="about-content">
+            <h2>Alen Juginovic, M.D.</h2>
+            <p class="title">Sleep Physician & Researcher | Harvard Medical School</p>
+            <p>
+                Dr. Alen Juginovic brings a rare combination of clinical expertise, published research,
+                and real-world application to the science of sleep optimization. His work bridges
+                the gap between laboratory discoveries and practical protocols that transform performance.
+            </p>
+            <p>
+                With research published in <em>Cell</em>—one of the world's most prestigious scientific
+                journals—and experience consulting for elite athletes, luxury hotels, and Fortune 500
+                executives, Dr. Alen delivers evidence-based solutions that produce measurable results.
+            </p>
+            <ul class="credentials-list">
+                <li>Research published in Cell and peer-reviewed journals</li>
+                <li>Author: Sleep Science Made Simple (Springer)</li>
+                <li>Editorial Board: Journal of Clinical Sleep Medicine</li>
+                <li>Sleep consultant to elite athletes worldwide</li>
+                <li>Featured in The New York Times and Forbes</li>
+                <li>Forbes 30 Under 30 Europe nominee (Healthcare)</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Science Section -->
+<section class="science" id="science">
+    <div class="section-header">
+        <p class="section-label">The Science</p>
+        <h2 class="section-title">Evidence-Based Optimization</h2>
+        <p class="section-subtitle">
+            Every recommendation is grounded in peer-reviewed research and clinical practice.
+            These are the controllable variables that transform sleep quality.
+        </p>
+    </div>
+
+    <div class="science-grid">
+        <div class="science-card">
+            <div class="science-value">18-20°C</div>
+            <h4>Temperature</h4>
+            <p>Core body temperature must drop for sleep onset. Precision thermal management is foundational.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-value">0 lux</div>
+            <h4>Light Control</h4>
+            <p>Even dim light suppresses melatonin by 50%. Complete darkness protocols are non-negotiable.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-value">70%</div>
+            <h4>HGH Release</h4>
+            <p>Majority of growth hormone secreted during deep sleep. Critical for recovery and repair.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-value">90 min</div>
+            <h4>Sleep Cycles</h4>
+            <p>Understanding ultradian rhythms enables strategic scheduling of high-performance activities.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-value">4-6x</div>
+            <h4>Jet Lag Recovery</h4>
+            <p>Strategic protocols compress adaptation from days to hours for peak competition performance.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-value">HRV</div>
+            <h4>Recovery Metrics</h4>
+            <p>Objective tracking provides actionable data on readiness, recovery, and optimization progress.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+    <div class="section-header">
+        <p class="section-label">Trust</p>
+        <h2 class="section-title">Words from Those We Serve</h2>
+    </div>
+
+    <div class="testimonials-grid">
+        <div class="testimonial-card">
+            <p class="testimonial-quote">
+                "Dr. Alen's program transformed how we think about guest experience.
+                Sleep is now our signature differentiator."
+            </p>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">MH</div>
+                <div class="testimonial-info">
+                    <h5>Marco H.</h5>
+                    <p>General Manager</p>
+                    <p class="testimonial-type">Luxury Hotel</p>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card">
+            <p class="testimonial-quote">
+                "The travel protocols alone have been game-changing. I arrive ready to compete,
+                not recover."
+            </p>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">SK</div>
+                <div class="testimonial-info">
+                    <h5>Stefan K.</h5>
+                    <p>Professional Athlete</p>
+                    <p class="testimonial-type">Elite Sports</p>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card">
+            <p class="testimonial-quote">
+                "My decision-making has never been sharper. Sleep optimization is now
+                part of my leadership practice."
+            </p>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">LT</div>
+                <div class="testimonial-info">
+                    <h5>Laura T.</h5>
+                    <p>CEO</p>
+                    <p class="testimonial-type">Corporate</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <h2>Ready to Transform Your Rest?</h2>
+    <p>
+        Every partnership begins with a conversation. Let's explore how physician-designed
+        sleep optimization can serve your goals.
+    </p>
+    <div class="cta-buttons">
+        <a href="#contact" class="cta-primary">Schedule a Consultation</a>
+        <a href="#audiences" class="cta-secondary">Explore Programs</a>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact" id="contact">
+    <div class="contact-container">
+        <div class="contact-col">
+            <h4>Get in Touch</h4>
+            <p><a href="mailto:alen_juginovic@hms.harvard.edu">alen_juginovic@hms.harvard.edu</a></p>
+            <p>+1 (617) 982-8835</p>
+            <p>+385 99 190 4488</p>
+        </div>
+        <div class="contact-col">
+            <h4>Programs</h4>
+            <ul class="contact-links">
+                <li><a href="hotels.html">For Luxury Hotels</a></li>
+                <li><a href="athletes.html">For Elite Athletes</a></li>
+                <li><a href="corporate.html">For Corporate Leaders</a></li>
+            </ul>
+        </div>
+        <div class="contact-col">
+            <h4>Location</h4>
+            <p>Harvard Medical School</p>
+            <p>170 Brookline Ave</p>
+            <p>Boston, MA, USA</p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <span class="footer-brand">SLEEP WELLNESS</span>
+    <span class="footer-text">© 2026 Dr. Alen Juginovic. All rights reserved.</span>
+</footer>
+
+<script>
+    // Navbar scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

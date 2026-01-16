@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Wellness for Executives | Dr. Alen Juginovic</title>
+    <meta name="description" content="Physician-designed sleep optimization for executives and business leaders. Sharper decisions, better performance, and sustainable success with Harvard Medical School expertise.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+        :root {
+            --deep-navy: #0f1c2e;
+            --navy: #1a2744;
+            --navy-light: #2d3e5f;
+            --gold: #C9A962;
+            --gold-light: #E8D5A3;
+            --gold-dark: #a08540;
+            --cream: #FAF8F5;
+            --warm-white: #FDFCFA;
+            --text: #2c2c2c;
+            --text-light: #666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            color: var(--text);
+            line-height: 1.7;
+            background: var(--cream);
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 28, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 60px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .nav-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-decoration: none;
+        }
+
+        .nav-brand-main {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--cream);
+            font-size: 22px;
+            font-weight: 400;
+            letter-spacing: 3px;
+        }
+
+        .nav-brand-sub {
+            font-size: 10px;
+            color: var(--gold);
+            letter-spacing: 2px;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .nav-cta {
+            background: var(--gold);
+            color: var(--deep-navy) !important;
+            padding: 12px 28px;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold-light);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--navy) 50%, var(--navy-light) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 140px 40px 100px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 70% 30%, rgba(201, 169, 98, 0.08) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero-label {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 64px;
+            font-weight: 300;
+            color: var(--cream);
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            line-height: 1.15;
+        }
+
+        .hero-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--gold-light);
+            margin-bottom: 30px;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto 50px;
+            line-height: 1.9;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--deep-navy);
+            padding: 18px 50px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .hero-cta:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 60px;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 400;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: var(--navy);
+            padding: 80px 60px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item {
+            color: var(--cream);
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 56px;
+            font-weight: 400;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        /* Problem/Opportunity */
+        .problem {
+            background: var(--warm-white);
+        }
+
+        .problem-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            max-width: 1100px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .problem-text h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 400;
+            color: var(--navy);
+            margin-bottom: 25px;
+        }
+
+        .problem-text p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .problem-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-style: italic;
+            color: var(--navy);
+            padding: 30px;
+            background: white;
+            border-left: 4px solid var(--gold);
+            margin-top: 30px;
+        }
+
+        .problem-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .problem-card.highlight {
+            background: var(--navy);
+            color: var(--cream);
+            grid-column: span 2;
+        }
+
+        .problem-card-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 400;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .problem-card h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .problem-card p {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .problem-card.highlight p {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Science Section */
+        .science {
+            background: var(--cream);
+        }
+
+        .science-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .science-card {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .science-icon {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .science-card h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--navy);
+            margin-bottom: 15px;
+        }
+
+        .science-card p {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Program Section */
+        .program {
+            background: var(--navy);
+            color: var(--cream);
+        }
+
+        .program .section-title {
+            color: var(--cream);
+        }
+
+        .program .section-subtitle {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .program-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(201, 169, 98, 0.3);
+            padding: 50px 35px;
+        }
+
+        .program-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .program-card > p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .program-features {
+            list-style: none;
+        }
+
+        .program-features li {
+            font-size: 13px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.15);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .program-features li:last-child {
+            border-bottom: none;
+        }
+
+        .program-features li::before {
+            content: '-';
+            color: var(--gold);
+        }
+
+        /* Results Section */
+        .results {
+            background: var(--warm-white);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .result-card {
+            text-align: center;
+            padding: 40px 25px;
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .result-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .result-card h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .result-card p {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Testimonial */
+        .testimonial {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            text-align: center;
+            padding: 100px 60px;
+        }
+
+        .testimonial-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-style: italic;
+            color: var(--cream);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            color: var(--gold);
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .testimonial-role {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--cream);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 80px;
+            max-width: 1100px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .about-initials {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 100px;
+            color: var(--gold);
+            opacity: 0.3;
+        }
+
+        .about-content h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 400;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .about-content .title {
+            font-size: 14px;
+            color: var(--gold-dark);
+            margin-bottom: 25px;
+        }
+
+        .about-content p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .credentials-list {
+            list-style: none;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(201, 169, 98, 0.3);
+        }
+
+        .credentials-list li {
+            font-size: 14px;
+            color: var(--text);
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .credentials-list li::before {
+            content: '>';
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* FAQ */
+        .faq {
+            background: var(--warm-white);
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(201, 169, 98, 0.3);
+            padding: 30px 0;
+        }
+
+        .faq-item h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--navy);
+            margin-bottom: 15px;
+        }
+
+        .faq-item p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 120px 60px;
+            background: var(--navy);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--deep-navy);
+            padding: 18px 50px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .cta-primary:hover {
+            background: var(--gold-light);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 60px;
+            background: var(--deep-navy);
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: var(--cream);
+            letter-spacing: 2px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 48px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .problem-content { grid-template-columns: 1fr; }
+            .science-grid { grid-template-columns: 1fr; max-width: 500px; }
+            .program-grid { grid-template-columns: 1fr; max-width: 500px; }
+            .results-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-grid { grid-template-columns: 1fr; }
+            .about-image { max-width: 350px; margin: 0 auto; }
+        }
+
+        @media (max-width: 768px) {
+            .nav { padding: 15px 30px; }
+            .nav-links { display: none; }
+            section { padding: 80px 30px; }
+            .hero { padding: 120px 30px 80px; }
+            .hero h1 { font-size: 36px; }
+            .section-title { font-size: 32px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .results-grid { grid-template-columns: 1fr; }
+            .problem-visual { grid-template-columns: 1fr; }
+            .problem-card.highlight { grid-column: span 1; }
+            .footer { flex-direction: column; gap: 20px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+    <a href="index.html" class="nav-brand">
+        <span class="nav-brand-main">SLEEP WELLNESS</span>
+        <span class="nav-brand-sub">by Dr. Alen</span>
+    </a>
+    <div class="nav-links">
+        <a href="hotels.html">Hotels</a>
+        <a href="athletes.html">Athletes</a>
+        <a href="corporate.html" class="active">Corporate</a>
+        <a href="index.html#about">About</a>
+        <a href="#contact" class="nav-cta">Get Started</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-content">
+        <p class="hero-label">For Executives & Business Leaders</p>
+        <h1>Sleep Fuels Your<br>Best Decisions</h1>
+        <p class="hero-tagline">
+            Sharper thinking. Strategic clarity. Sustainable leadership.
+        </p>
+        <p class="hero-description">
+            Work with a Harvard physician who understands that executive performance
+            isn't just about working harder—it's about thinking clearer. Optimize the
+            foundation of cognitive function: restorative sleep.
+        </p>
+        <a href="#contact" class="hero-cta">Work With Dr. Alen</a>
+    </div>
+</section>
+
+<!-- Stats -->
+<section class="stats">
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-number">$411B</div>
+            <div class="stat-label">Annual US productivity loss from sleep deprivation</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">4x</div>
+            <div class="stat-label">Higher risk of poor decisions with less than 6 hours sleep</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">70%</div>
+            <div class="stat-label">Of executives report regular sleep issues</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">-25%</div>
+            <div class="stat-label">Cognitive performance loss from jet lag</div>
+        </div>
+    </div>
+</section>
+
+<!-- Problem/Opportunity -->
+<section class="problem">
+    <div class="problem-content">
+        <div class="problem-text">
+            <h3>The Hidden Cost of Executive Sleep Debt</h3>
+            <p>
+                You've built your career on sharp thinking, sound judgment, and the ability
+                to perform under pressure. But sleep deprivation erodes precisely these
+                executive functions—often without you noticing the decline.
+            </p>
+            <p>
+                The irony is clear: executives sacrifice sleep to work more, yet sleep
+                deprivation diminishes the cognitive capacity that makes their work valuable.
+                Creativity, strategic thinking, emotional regulation, and decision quality
+                all suffer.
+            </p>
+            <div class="problem-quote">
+                "The best investment you can make in your leadership is protecting the
+                cognitive foundation that makes great leadership possible."
+            </div>
+        </div>
+        <div class="problem-visual">
+            <div class="problem-card">
+                <div class="problem-card-value">-40%</div>
+                <h4>Problem-Solving</h4>
+                <p>Reduction in creative problem-solving ability when sleep-deprived</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-card-value">+60%</div>
+                <h4>Emotional Reactivity</h4>
+                <p>Increase in emotional response and reduced regulation</p>
+            </div>
+            <div class="problem-card highlight">
+                <div class="problem-card-value">Prefrontal Cortex</div>
+                <h4>Executive Function</h4>
+                <p>The brain region controlling judgment, planning, and impulse control is first to suffer from poor sleep.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Science -->
+<section class="science">
+    <div class="section-header">
+        <p class="section-label">The Science</p>
+        <h2 class="section-title">Why Sleep Powers Executive Performance</h2>
+        <p class="section-subtitle">
+            Understanding the neuroscience helps you appreciate why sleep optimization
+            is a strategic investment in your leadership capacity.
+        </p>
+    </div>
+
+    <div class="science-grid">
+        <div class="science-card">
+            <div class="science-icon">PFC</div>
+            <h4>Prefrontal Function</h4>
+            <p>Your prefrontal cortex—the seat of judgment, planning, and impulse control—is exquisitely sensitive to sleep deprivation. Even moderate sleep debt impairs executive function.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-icon">REM</div>
+            <h4>Creative Insight</h4>
+            <p>During REM sleep, your brain forms novel connections between disparate concepts. This is where breakthrough insights and creative solutions emerge.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-icon">Memory</div>
+            <h4>Memory Consolidation</h4>
+            <p>Sleep transforms daily experiences into lasting memories and integrates new information with existing knowledge—essential for learning and adaptation.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-icon">Glymphatic</div>
+            <h4>Brain Cleansing</h4>
+            <p>The glymphatic system clears toxic metabolic waste during deep sleep. Poor sleep allows neurotoxin accumulation linked to cognitive decline.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-icon">Jet Lag</div>
+            <h4>Travel Protocols</h4>
+            <p>Strategic light exposure and timing protocols can compress multi-day jet lag adaptation into hours, maintaining performance during international business travel.</p>
+        </div>
+        <div class="science-card">
+            <div class="science-icon">Cortisol</div>
+            <h4>Stress Regulation</h4>
+            <p>Sleep regulates cortisol rhythms. Chronic sleep deprivation leads to elevated stress hormones, impaired recovery, and eventual burnout.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Program -->
+<section class="program">
+    <div class="section-header">
+        <p class="section-label">Programs</p>
+        <h2 class="section-title">How We Work Together</h2>
+        <p class="section-subtitle">
+            From individual executive optimization to organization-wide performance programs.
+        </p>
+    </div>
+
+    <div class="program-grid">
+        <div class="program-card">
+            <h3>Executive Coaching</h3>
+            <p>Personal optimization for leaders who want to protect and enhance their cognitive capacity.</p>
+            <ul class="program-features">
+                <li>Comprehensive sleep assessment</li>
+                <li>Chronotype and schedule analysis</li>
+                <li>Business travel protocols</li>
+                <li>Jet lag prevention strategies</li>
+                <li>High-stakes performance timing</li>
+                <li>Wearable data integration</li>
+                <li>Ongoing physician support</li>
+            </ul>
+        </div>
+        <div class="program-card">
+            <h3>Leadership Workshops</h3>
+            <p>Equip your leadership team with the science of sustainable performance.</p>
+            <ul class="program-features">
+                <li>Executive team seminars</li>
+                <li>Manager training programs</li>
+                <li>Sleep culture development</li>
+                <li>Meeting schedule optimization</li>
+                <li>Travel policy design</li>
+                <li>Work-life rhythm strategies</li>
+                <li>Performance sustainability</li>
+            </ul>
+        </div>
+        <div class="program-card">
+            <h3>Corporate Programs</h3>
+            <p>Organization-wide wellness initiatives that drive measurable business outcomes.</p>
+            <ul class="program-features">
+                <li>Employee wellness programs</li>
+                <li>Workspace design consulting</li>
+                <li>Shift work optimization</li>
+                <li>Health cost reduction</li>
+                <li>Productivity improvement</li>
+                <li>Policy recommendations</li>
+                <li>Ongoing organizational support</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Results -->
+<section class="results">
+    <div class="section-header">
+        <p class="section-label">Outcomes</p>
+        <h2 class="section-title">What Leaders Experience</h2>
+    </div>
+
+    <div class="results-grid">
+        <div class="result-card">
+            <div class="result-value">+35%</div>
+            <h4>Decision Quality</h4>
+            <p>Improved strategic thinking and reduced decision errors</p>
+        </div>
+        <div class="result-card">
+            <div class="result-value">-50%</div>
+            <h4>Jet Lag Impact</h4>
+            <p>Faster recovery and maintained performance during travel</p>
+        </div>
+        <div class="result-card">
+            <div class="result-value">2x</div>
+            <h4>Energy Stability</h4>
+            <p>Consistent performance throughout the day without afternoon crashes</p>
+        </div>
+        <div class="result-card">
+            <div class="result-value">+Years</div>
+            <h4>Career Longevity</h4>
+            <p>Sustainable practices that protect long-term cognitive health</p>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonial -->
+<section class="testimonial">
+    <p class="testimonial-quote">
+        "I used to pride myself on getting by with little sleep. Working with Dr. Alen
+        showed me how much cognitive capacity I was leaving on the table. The jet lag
+        protocols alone have transformed my international business travel."
+    </p>
+    <p class="testimonial-author">Michael R.</p>
+    <p class="testimonial-role">CEO, Technology Company</p>
+</section>
+
+<!-- About -->
+<section class="about">
+    <div class="about-grid">
+        <div class="about-image">
+            <span class="about-initials">AJ</span>
+        </div>
+        <div class="about-content">
+            <h3>Alen Juginovic, M.D.</h3>
+            <p class="title">Sleep Physician & Researcher | Harvard Medical School</p>
+            <p>
+                Dr. Alen brings cutting-edge sleep research directly to executive performance.
+                His work spans individual coaching to organization-wide programs, always grounded
+                in the latest science.
+            </p>
+            <p>
+                With research published in <em>Cell</em> and clinical practice at Harvard Medical School,
+                Dr. Alen delivers protocols that are both scientifically rigorous and practically
+                applicable to the demands of executive life.
+            </p>
+            <ul class="credentials-list">
+                <li>Research published in Cell and peer-reviewed journals</li>
+                <li>Author: Sleep Science Made Simple (Springer)</li>
+                <li>Trusted advisor to business leaders and elite athletes</li>
+                <li>Editorial Board: Journal of Clinical Sleep Medicine</li>
+                <li>Featured in The New York Times and Forbes</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+    <div class="section-header">
+        <p class="section-label">Questions</p>
+        <h2 class="section-title">Frequently Asked</h2>
+    </div>
+
+    <div class="faq-grid">
+        <div class="faq-item">
+            <h4>I'm a high performer who functions well on little sleep. Why should I care?</h4>
+            <p>Research consistently shows that sleep-deprived individuals overestimate their performance. The prefrontal cortex—responsible for self-assessment—is impaired. You may feel fine while your decision quality, creativity, and judgment are measurably diminished.</p>
+        </div>
+        <div class="faq-item">
+            <h4>I travel internationally for business. Can you help with jet lag?</h4>
+            <p>Absolutely. Strategic light exposure, timing protocols, and pre-travel preparation can compress multi-day jet lag adaptation into hours. Arrive ready to perform, not struggling to stay awake.</p>
+        </div>
+        <div class="faq-item">
+            <h4>How do you work around demanding executive schedules?</h4>
+            <p>We design protocols for reality, not ideal conditions. The goal is optimization within your constraints—not adding more to your plate. Often, small timing adjustments yield significant cognitive benefits.</p>
+        </div>
+        <div class="faq-item">
+            <h4>Can this really impact business results?</h4>
+            <p>Studies show sleep optimization improves decision quality, creative problem-solving, emotional regulation, and interpersonal effectiveness. When leaders perform better, organizations benefit measurably.</p>
+        </div>
+        <div class="faq-item">
+            <h4>What about my team?</h4>
+            <p>We offer leadership workshops and organization-wide programs. When entire leadership teams understand sleep science, meeting schedules, travel policies, and work culture can shift to support sustainable high performance.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+    <h2>Ready to Lead at Your Best?</h2>
+    <p>
+        Let's discuss how physician-designed sleep optimization can sharpen your thinking
+        and sustain your performance.
+    </p>
+    <a href="mailto:alen_juginovic@hms.harvard.edu" class="cta-primary">Schedule a Consultation</a>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <span class="footer-brand">SLEEP WELLNESS</span>
+    <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="hotels.html">Hotels</a>
+        <a href="athletes.html">Athletes</a>
+        <a href="corporate.html">Corporate</a>
+        <a href="index.html#about">About</a>
+    </div>
+    <span class="footer-text">© 2026 Dr. Alen Juginovic</span>
+</footer>
+
+</body>
+</html>
