@@ -18,6 +18,10 @@
             --warm-white: #FDFCFA;
             --text: #2c2c2c;
             --text-light: #666;
+            /* Segment accent colors */
+            --hotels-accent: #8B4D5C;
+            --athletes-accent: #2A8B8B;
+            --corporate-accent: #4A6085;
         }
 
         * {
@@ -300,6 +304,18 @@
             transform: scaleX(0);
             transition: transform 0.4s ease;
         }
+
+        .audience-card.hotels::before { background: var(--hotels-accent); }
+        .audience-card.athletes::before { background: var(--athletes-accent); }
+        .audience-card.corporate::before { background: var(--corporate-accent); }
+
+        .audience-card.hotels .audience-icon { background: linear-gradient(135deg, var(--hotels-accent) 0%, #A66B7A 100%); }
+        .audience-card.athletes .audience-icon { background: linear-gradient(135deg, var(--athletes-accent) 0%, #3AACAC 100%); }
+        .audience-card.corporate .audience-icon { background: linear-gradient(135deg, var(--corporate-accent) 0%, #6B82A8 100%); }
+
+        .audience-card.hotels .audience-cta:hover { background: var(--hotels-accent); color: white; }
+        .audience-card.athletes .audience-cta:hover { background: var(--athletes-accent); color: white; }
+        .audience-card.corporate .audience-cta:hover { background: var(--corporate-accent); color: white; }
 
         .audience-card:hover {
             transform: translateY(-10px);
@@ -949,7 +965,7 @@
 
     <div class="audience-grid">
         <!-- Hotels -->
-        <div class="audience-card">
+        <div class="audience-card hotels">
             <div class="audience-icon">
                 <svg viewBox="0 0 24 24">
                     <path d="M3 21h18M3 10h18M3 7l9-4 9 4M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
@@ -972,7 +988,7 @@
         </div>
 
         <!-- Athletes -->
-        <div class="audience-card">
+        <div class="audience-card athletes">
             <div class="audience-icon">
                 <svg viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="10"/>
@@ -996,7 +1012,7 @@
         </div>
 
         <!-- Corporate -->
-        <div class="audience-card">
+        <div class="audience-card corporate">
             <div class="audience-icon">
                 <svg viewBox="0 0 24 24">
                     <rect x="2" y="3" width="20" height="14" rx="2"/>
@@ -1027,18 +1043,22 @@
         <div class="stat-item">
             <div class="stat-number">$411B</div>
             <div class="stat-label">Annual cost of sleep deprivation to US business</div>
+            <p style="font-size: 10px; margin-top: 8px; opacity: 0.6;"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5627640/" target="_blank" style="color: var(--gold-light);">RAND, 2016</a></p>
         </div>
         <div class="stat-item">
-            <div class="stat-number">70%</div>
+            <div class="stat-number">1.7x</div>
             <div class="stat-label">Higher injury risk for under-slept athletes</div>
+            <p style="font-size: 10px; margin-top: 8px; opacity: 0.6;"><a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank" style="color: var(--gold-light);">J Pediatr Orthop, 2014</a></p>
         </div>
         <div class="stat-item">
             <div class="stat-number">4x</div>
             <div class="stat-label">Increased risk of poor decisions when tired</div>
+            <p style="font-size: 10px; margin-top: 8px; opacity: 0.6;"><a href="https://pubmed.ncbi.nlm.nih.gov/16489997/" target="_blank" style="color: var(--gold-light);">J Sleep Res, 2006</a></p>
         </div>
         <div class="stat-item">
-            <div class="stat-number">91%</div>
-            <div class="stat-label">Of travelers prioritize sleep when booking</div>
+            <div class="stat-number">70%</div>
+            <div class="stat-label">Of growth hormone released during deep sleep</div>
+            <p style="font-size: 10px; margin-top: 8px; opacity: 0.6;"><a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" style="color: var(--gold-light);">J Clin Endocrinol, 1996</a></p>
         </div>
     </div>
 </section>

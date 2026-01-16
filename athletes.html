@@ -19,6 +19,9 @@
             --warm-white: #FDFCFA;
             --text: #2c2c2c;
             --text-light: #666;
+            /* Athletes accent - teal */
+            --accent: #2A8B8B;
+            --accent-light: #3AACAC;
         }
 
         * {
@@ -128,7 +131,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 70% 30%, rgba(201, 169, 98, 0.08) 0%, transparent 50%);
+            background: radial-gradient(circle at 70% 30%, rgba(42, 139, 139, 0.12) 0%, transparent 50%);
         }
 
         .hero-content {
@@ -141,8 +144,12 @@
             font-size: 12px;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--accent-light);
             margin-bottom: 30px;
+            display: inline-block;
+            padding: 8px 20px;
+            border: 1px solid var(--accent);
+            background: rgba(42, 139, 139, 0.1);
         }
 
         .hero h1 {
@@ -246,9 +253,24 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 56px;
             font-weight: 400;
-            color: var(--gold);
+            color: var(--accent-light);
             line-height: 1;
             margin-bottom: 10px;
+        }
+
+        .citation {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 8px;
+        }
+
+        .citation a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .citation a:hover {
+            text-decoration: underline;
         }
 
         .stat-label {
@@ -762,18 +784,22 @@
         <div class="stat-item">
             <div class="stat-number">1.7x</div>
             <div class="stat-label">Higher injury rate with less than 8 hours sleep</div>
+            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank" style="color: var(--accent-light);">Milewski et al., J Pediatr Orthop, 2014</a></p>
         </div>
         <div class="stat-item">
             <div class="stat-number">70%</div>
             <div class="stat-label">Of growth hormone released during deep sleep</div>
+            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" style="color: var(--accent-light);">Van Cauter et al., J Clin Endocrinol Metab, 1996</a></p>
         </div>
         <div class="stat-item">
-            <div class="stat-number">+12%</div>
-            <div class="stat-label">Improvement in reaction time when optimized</div>
+            <div class="stat-number">+9%</div>
+            <div class="stat-label">Improvement in shooting accuracy with extended sleep</div>
+            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pubmed.ncbi.nlm.nih.gov/21731144/" target="_blank" style="color: var(--accent-light);">Mah et al., SLEEP, 2011</a></p>
         </div>
         <div class="stat-item">
             <div class="stat-number">4-6x</div>
             <div class="stat-label">Faster jet lag recovery with proper protocols</div>
+            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pubmed.ncbi.nlm.nih.gov/10704520/" target="_blank" style="color: var(--accent-light);">Cho et al., J Neurosci, 2000</a></p>
         </div>
     </div>
 </section>

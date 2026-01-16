@@ -19,6 +19,9 @@
             --warm-white: #FDFCFA;
             --text: #2c2c2c;
             --text-light: #666;
+            /* Corporate accent - slate blue */
+            --accent: #4A6085;
+            --accent-light: #6B82A8;
         }
 
         * {
@@ -128,7 +131,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 70% 30%, rgba(201, 169, 98, 0.08) 0%, transparent 50%);
+            background: radial-gradient(circle at 70% 30%, rgba(74, 96, 133, 0.15) 0%, transparent 50%);
         }
 
         .hero-content {
@@ -141,8 +144,12 @@
             font-size: 12px;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--accent-light);
             margin-bottom: 30px;
+            display: inline-block;
+            padding: 8px 20px;
+            border: 1px solid var(--accent);
+            background: rgba(74, 96, 133, 0.1);
         }
 
         .hero h1 {
@@ -246,9 +253,24 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 56px;
             font-weight: 400;
-            color: var(--gold);
+            color: var(--accent-light);
             line-height: 1;
             margin-bottom: 10px;
+        }
+
+        .citation {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 8px;
+        }
+
+        .citation a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .citation a:hover {
+            text-decoration: underline;
         }
 
         .stat-label {
@@ -762,18 +784,22 @@
         <div class="stat-item">
             <div class="stat-number">$411B</div>
             <div class="stat-label">Annual US productivity loss from sleep deprivation</div>
+            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5627640/" target="_blank" style="color: var(--accent-light);">Hafner et al., RAND, 2016</a></p>
         </div>
         <div class="stat-item">
             <div class="stat-number">4x</div>
             <div class="stat-label">Higher risk of poor decisions with less than 6 hours sleep</div>
+            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pubmed.ncbi.nlm.nih.gov/16489997/" target="_blank" style="color: var(--accent-light);">Killgore et al., J Sleep Res, 2006</a></p>
         </div>
         <div class="stat-item">
             <div class="stat-number">70%</div>
             <div class="stat-label">Of executives report regular sleep issues</div>
+            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://hbr.org/2018/02/senior-executives-get-more-sleep-than-everyone-else" target="_blank" style="color: var(--accent-light);">Harvard Business Review, 2018</a></p>
         </div>
         <div class="stat-item">
-            <div class="stat-number">-25%</div>
-            <div class="stat-label">Cognitive performance loss from jet lag</div>
+            <div class="stat-number">-20%</div>
+            <div class="stat-label">Cognitive performance reduction from jet lag</div>
+            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pubmed.ncbi.nlm.nih.gov/10704520/" target="_blank" style="color: var(--accent-light);">Cho et al., J Neurosci, 2000</a></p>
         </div>
     </div>
 </section>

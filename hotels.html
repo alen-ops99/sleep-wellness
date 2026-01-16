@@ -19,6 +19,9 @@
             --warm-white: #FDFCFA;
             --text: #2c2c2c;
             --text-light: #666;
+            /* Hotels accent - warm burgundy */
+            --accent: #8B4D5C;
+            --accent-light: #A66B7A;
         }
 
         * {
@@ -134,7 +137,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A962' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background:
+                radial-gradient(circle at 80% 20%, rgba(139, 77, 92, 0.15) 0%, transparent 40%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A962' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             opacity: 0.5;
         }
 
@@ -148,8 +153,12 @@
             font-size: 12px;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--accent-light);
             margin-bottom: 30px;
+            display: inline-block;
+            padding: 8px 20px;
+            border: 1px solid var(--accent);
+            background: rgba(139, 77, 92, 0.1);
         }
 
         .hero h1 {
@@ -257,8 +266,23 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 56px;
             font-weight: 400;
-            color: var(--gold);
+            color: var(--accent);
             margin-bottom: 15px;
+        }
+
+        .citation {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 10px;
+        }
+
+        .citation a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .citation a:hover {
+            text-decoration: underline;
         }
 
         .problem-card h3 {
@@ -308,7 +332,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 32px;
             font-weight: 400;
-            color: var(--gold);
+            color: var(--accent-light);
             min-width: 80px;
         }
 
@@ -753,6 +777,7 @@
             <div>
                 <h4>Temperature Optimization</h4>
                 <p>Core body temperature must drop 1-2°C for sleep onset. Thermal-regulating systems maintain the optimal zone throughout the night.</p>
+                <p class="citation"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6491889/" target="_blank">Okamoto-Mizuno & Mizuno, J Physiol Anthropol, 2012</a></p>
             </div>
         </div>
         <div class="science-card">
@@ -760,6 +785,7 @@
             <div>
                 <h4>Complete Darkness</h4>
                 <p>Light above 5 lux suppresses melatonin by 50%. Complete blackout protocols are essential for hormone optimization.</p>
+                <p class="citation"><a href="https://www.pnas.org/doi/10.1073/pnas.1901824116" target="_blank">Phillips et al., PNAS, 2019</a></p>
             </div>
         </div>
         <div class="science-card">
@@ -767,6 +793,7 @@
             <div>
                 <h4>Acoustic Control</h4>
                 <p>Ambient noise causes micro-arousals that fragment sleep architecture. Pink noise can increase deep sleep by 25%.</p>
+                <p class="citation"><a href="https://pubmed.ncbi.nlm.nih.gov/28323612/" target="_blank">Papalambros et al., Front Hum Neurosci, 2017</a></p>
             </div>
         </div>
         <div class="science-card">
@@ -774,6 +801,7 @@
             <div>
                 <h4>Circadian Lighting</h4>
                 <p>Warm-spectrum evening light preserves melatonin production. Dawn simulation optimizes the cortisol awakening response.</p>
+                <p class="citation"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5536841/" target="_blank">Nagare et al., Physiol Rep, 2017</a></p>
             </div>
         </div>
         <div class="science-card">
