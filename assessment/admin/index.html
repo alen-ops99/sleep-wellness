@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Sleep Wellness</title>
     <link rel="stylesheet" href="../styles.css">
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         :root {
             --deep-navy: #0f1c2e;
@@ -1079,7 +1081,23 @@
                 <div id="generated-code" style="font-family: 'Courier New', monospace; font-size: 28px; font-weight: bold; color: #0f1c2e; letter-spacing: 2px; margin-bottom: 15px;">SW-XXXX-XXXX</div>
                 <button onclick="copyInviteCode()" style="padding: 10px 20px; background: #0f1c2e; color: white; border: none; cursor: pointer; border-radius: 4px;">Copy Code</button>
             </div>
-            <p style="font-size: 13px; color: #666; text-align: center;">
+
+            <!-- Email Section -->
+            <div id="email-section" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                <p style="font-size: 14px; color: #0f1c2e; font-weight: 500; margin-bottom: 15px; text-align: center;">Send Welcome Email to Client</p>
+                <div id="email-preview" style="background: #fafafa; border: 1px solid #eee; border-radius: 8px; padding: 20px; margin-bottom: 15px; font-size: 13px; line-height: 1.7; color: #333;">
+                    <!-- Email preview will be inserted here -->
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button id="send-email-btn" onclick="sendInviteEmail()" style="padding: 12px 24px; background: #2e7d32; color: white; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                        Send Email
+                    </button>
+                </div>
+                <p id="email-status" style="text-align: center; margin-top: 10px; font-size: 13px; display: none;"></p>
+            </div>
+
+            <p style="font-size: 13px; color: #666; text-align: center; margin-top: 15px;">
                 The client will use this code to create their account at:<br>
                 <strong id="auth-url"></strong>
             </p>
@@ -1528,16 +1546,164 @@
         document.getElementById('invite-modal').style.display = 'flex';
     }
 
+    // Store current invite data for email
+    let currentInviteData = {};
+
     async function generateInviteCode() {
-        const email = document.getElementById('invite-email').value;
+        const email = document.getElementById('invite-email').value.trim();
         const notes = document.getElementById('invite-notes').value;
 
         const code = await FirebaseDB.generateInviteCode(currentUser.uid, email, notes);
+        const authUrl = window.location.origin + '/assessment/auth.html';
+
+        // Store for email sending
+        currentInviteData = { email, code, authUrl };
 
         document.getElementById('generated-code').textContent = code;
-        document.getElementById('auth-url').textContent = window.location.origin + '/assessment/auth.html';
+        document.getElementById('auth-url').textContent = authUrl;
         document.getElementById('invite-form-view').style.display = 'none';
         document.getElementById('invite-result-view').style.display = 'block';
+
+        // Show email section if email was provided
+        const emailSection = document.getElementById('email-section');
+        const emailStatus = document.getElementById('email-status');
+        emailStatus.style.display = 'none';
+
+        if (email) {
+            emailSection.style.display = 'block';
+            document.getElementById('email-preview').innerHTML = generateEmailPreview(email, code, authUrl);
+            document.getElementById('send-email-btn').disabled = false;
+            document.getElementById('send-email-btn').innerHTML = `
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                Send Email
+            `;
+        } else {
+            emailSection.style.display = 'none';
+        }
+    }
+
+    function generateEmailPreview(email, code, authUrl) {
+        return `
+            <div style="font-family: Georgia, serif; color: #0f1c2e;">
+                <p style="margin: 0 0 15px 0;">Dear Client,</p>
+
+                <p style="margin: 0 0 15px 0;">I hope this message finds you well. I am delighted to welcome you to my <strong>Sleep Wellness</strong> practice.</p>
+
+                <p style="margin: 0 0 15px 0;">Your personalized client portal is now ready. This secure space will allow us to work together on optimizing your sleep health, track your progress, and communicate directly.</p>
+
+                <p style="margin: 0 0 10px 0;"><strong>Your Personal Invite Code:</strong></p>
+                <p style="margin: 0 0 15px 0; font-family: 'Courier New', monospace; font-size: 18px; background: #f0f0f0; padding: 12px; text-align: center; letter-spacing: 2px; font-weight: bold;">${code}</p>
+
+                <p style="margin: 0 0 10px 0;"><strong>To get started:</strong></p>
+                <ol style="margin: 0 0 15px 0; padding-left: 20px;">
+                    <li style="margin-bottom: 5px;">Visit: <a href="${authUrl}" style="color: #9a7b3c;">${authUrl}</a></li>
+                    <li style="margin-bottom: 5px;">Click "Create Account"</li>
+                    <li style="margin-bottom: 5px;">Enter your invite code above</li>
+                    <li style="margin-bottom: 5px;">Complete your profile</li>
+                </ol>
+
+                <p style="margin: 0 0 15px 0;">I look forward to supporting you on your journey to better sleep and improved well-being.</p>
+
+                <p style="margin: 0 0 5px 0;">Warm regards,</p>
+                <p style="margin: 0; font-style: italic;">Dr. Alen Juginovic</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Sleep Wellness by Dr. Alen</p>
+            </div>
+        `;
+    }
+
+    async function sendInviteEmail() {
+        const { email, code, authUrl } = currentInviteData;
+        if (!email) return;
+
+        const btn = document.getElementById('send-email-btn');
+        const status = document.getElementById('email-status');
+
+        btn.disabled = true;
+        btn.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" style="animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="30 70"/></svg>
+            Sending...
+        `;
+
+        try {
+            // EmailJS configuration - REPLACE THESE WITH YOUR OWN
+            const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+            const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
+            const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+
+            // Check if EmailJS is configured
+            if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+                // Fallback: Open email client
+                const subject = encodeURIComponent('Welcome to Sleep Wellness - Your Access Code');
+                const body = encodeURIComponent(`Dear Client,
+
+I hope this message finds you well. I am delighted to welcome you to my Sleep Wellness practice.
+
+Your personalized client portal is now ready. This secure space will allow us to work together on optimizing your sleep health, track your progress, and communicate directly.
+
+Your Personal Invite Code: ${code}
+
+To get started:
+1. Visit: ${authUrl}
+2. Click "Create Account"
+3. Enter your invite code above
+4. Complete your profile
+
+I look forward to supporting you on your journey to better sleep and improved well-being.
+
+Warm regards,
+Dr. Alen Juginovic
+Sleep Wellness by Dr. Alen`);
+
+                window.open(`mailto:${email}?subject=${subject}&body=${body}`, '_blank');
+
+                status.style.display = 'block';
+                status.style.color = '#ed6c02';
+                status.textContent = 'Email client opened. Please send the email manually.';
+                btn.innerHTML = `
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                    Open Email Again
+                `;
+                btn.disabled = false;
+                return;
+            }
+
+            // Send via EmailJS
+            emailjs.init(EMAILJS_PUBLIC_KEY);
+
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                to_email: email,
+                invite_code: code,
+                auth_url: authUrl,
+                from_name: 'Dr. Alen Juginovic',
+                reply_to: 'alen_juginovic@hms.harvard.edu'
+            });
+
+            status.style.display = 'block';
+            status.style.color = '#2e7d32';
+            status.textContent = 'Email sent successfully!';
+            btn.innerHTML = `
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                Sent!
+            `;
+        } catch (error) {
+            console.error('Email error:', error);
+            status.style.display = 'block';
+            status.style.color = '#d32f2f';
+            status.textContent = 'Failed to send. Opening email client instead...';
+
+            // Fallback to mailto
+            setTimeout(() => {
+                const subject = encodeURIComponent('Welcome to Sleep Wellness - Your Access Code');
+                const body = encodeURIComponent(`Your invite code: ${code}\n\nCreate your account at: ${authUrl}`);
+                window.open(`mailto:${email}?subject=${subject}&body=${body}`, '_blank');
+            }, 1000);
+
+            btn.disabled = false;
+            btn.innerHTML = `
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                Try Again
+            `;
+        }
     }
 
     function copyInviteCode() {
