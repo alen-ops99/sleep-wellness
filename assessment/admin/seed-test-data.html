@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seed Test Data</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0f1c2e;
+            color: white;
+            padding: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 { color: #C9A962; }
+        .btn {
+            background: #C9A962;
+            color: #0f1c2e;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: block;
+            width: 100%;
+        }
+        .btn:hover { background: #d4b978; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .log {
+            background: #1a2a3a;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .log-item { margin: 8px 0; }
+        .success { color: #4caf50; }
+        .error { color: #f44336; }
+    </style>
+</head>
+<body>
+
+<h1>Seed Test Data</h1>
+<p>This will create test clients and assessments so you can see how the admin dashboard works.</p>
+
+<button class="btn" onclick="seedTestData()">Create Test Clients & Data</button>
+<button class="btn" onclick="clearTestData()" style="background: #d32f2f; color: white;">Clear Test Data</button>
+
+<div class="log" id="log"></div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="../firebase-config.js"></script>
+
+<script>
+    const logDiv = document.getElementById('log');
+
+    function log(message, type = '') {
+        const item = document.createElement('div');
+        item.className = 'log-item ' + type;
+        item.textContent = '> ' + message;
+        logDiv.appendChild(item);
+        logDiv.scrollTop = logDiv.scrollHeight;
+    }
+
+    const testClients = [
+        {
+            id: 'test-client-athlete-001',
+            email: 'michael.johnson@example.com',
+            displayName: 'Michael Johnson',
+            clientType: 'athlete',
+            photoURL: '',
+            role: 'client'
+        },
+        {
+            id: 'test-client-executive-001',
+            email: 'sarah.chen@example.com',
+            displayName: 'Sarah Chen',
+            clientType: 'executive',
+            photoURL: '',
+            role: 'client'
+        },
+        {
+            id: 'test-client-hotel-001',
+            email: 'james.wilson@example.com',
+            displayName: 'James Wilson',
+            clientType: 'hotel',
+            photoURL: '',
+            role: 'client'
+        }
+    ];
+
+    const testAssessments = [
+        {
+            id: 'test-assessment-001',
+            userId: 'test-client-athlete-001',
+            overallScore: 72,
+            scores: {
+                ess: 8,
+                isi: 10,
+                stopbang: 2
+            },
+            findings: [
+                'Mild daytime sleepiness detected',
+                'Subthreshold insomnia symptoms',
+                'Low sleep apnea risk'
+            ],
+            recommendations: [
+                'Optimize sleep schedule around training',
+                'Consider sleep hygiene improvements'
+            ],
+            clientType: 'athlete',
+            status: 'submitted'
+        },
+        {
+            id: 'test-assessment-002',
+            userId: 'test-client-executive-001',
+            overallScore: 54,
+            scores: {
+                ess: 14,
+                isi: 18,
+                stopbang: 3
+            },
+            findings: [
+                'Excessive daytime sleepiness',
+                'Moderate insomnia severity',
+                'Intermediate sleep apnea risk',
+                'High stress levels reported'
+            ],
+            recommendations: [
+                'Consider CBT-I therapy',
+                'Evaluate for sleep study',
+                'Stress management techniques'
+            ],
+            clientType: 'executive',
+            status: 'submitted'
+        },
+        {
+            id: 'test-assessment-003',
+            userId: 'test-client-hotel-001',
+            overallScore: 81,
+            scores: {
+                ess: 6,
+                isi: 7,
+                stopbang: 1
+            },
+            findings: [
+                'Normal daytime alertness',
+                'No clinical insomnia',
+                'Low sleep apnea risk',
+                'Some travel-related sleep disruption'
+            ],
+            recommendations: [
+                'Sleep hygiene tips for travel',
+                'Jet lag management strategies'
+            ],
+            clientType: 'hotel',
+            status: 'submitted'
+        }
+    ];
+
+    const testAppointments = [
+        {
+            id: 'test-appointment-001',
+            userId: 'test-client-executive-001',
+            type: 'Follow-up Consultation',
+            dateTime: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
+            status: 'pending',
+            notes: 'Want to discuss assessment results and treatment options'
+        },
+        {
+            id: 'test-appointment-002',
+            userId: 'test-client-athlete-001',
+            type: 'Initial Consultation',
+            dateTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+            status: 'pending',
+            notes: 'Preparing for upcoming competition, need sleep optimization'
+        }
+    ];
+
+    const testConversations = [
+        {
+            id: 'test-conv-001',
+            participants: ['test-client-executive-001', 'iHDuOEJXsQe7dL5C4QwA3fLX9zi2'],
+            lastMessage: 'Thank you for the assessment, when can we discuss the results?',
+            lastSenderId: 'test-client-executive-001'
+        }
+    ];
+
+    const testMessages = [
+        {
+            conversationId: 'test-conv-001',
+            senderId: 'test-client-executive-001',
+            text: 'Hi Dr. Alen, I just completed my sleep assessment.',
+            createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000)
+        },
+        {
+            conversationId: 'test-conv-001',
+            senderId: 'test-client-executive-001',
+            text: 'Thank you for the assessment, when can we discuss the results?',
+            createdAt: new Date(Date.now() - 1 * 60 * 60 * 1000)
+        }
+    ];
+
+    async function seedTestData() {
+        log('Starting to seed test data...');
+
+        try {
+            // Create test clients
+            for (const client of testClients) {
+                log(`Creating client: ${client.displayName}...`);
+                await db.collection('users').doc(client.id).set({
+                    ...client,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                log(`Created: ${client.displayName}`, 'success');
+            }
+
+            // Create test assessments
+            for (const assessment of testAssessments) {
+                log(`Creating assessment for user: ${assessment.userId}...`);
+                await db.collection('assessments').doc(assessment.id).set({
+                    ...assessment,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                log(`Created assessment: ${assessment.id}`, 'success');
+            }
+
+            // Create test appointments
+            for (const apt of testAppointments) {
+                log(`Creating appointment: ${apt.type}...`);
+                await db.collection('appointments').doc(apt.id).set({
+                    ...apt,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                log(`Created appointment: ${apt.id}`, 'success');
+            }
+
+            // Create test conversations
+            for (const conv of testConversations) {
+                log(`Creating conversation: ${conv.id}...`);
+                await db.collection('conversations').doc(conv.id).set({
+                    ...conv,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    lastMessageAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                log(`Created conversation: ${conv.id}`, 'success');
+            }
+
+            // Create test messages
+            for (const msg of testMessages) {
+                log(`Creating message in conversation...`);
+                await db.collection('conversations').doc(msg.conversationId)
+                    .collection('messages').add({
+                        senderId: msg.senderId,
+                        text: msg.text,
+                        createdAt: msg.createdAt,
+                        read: false
+                    });
+                log(`Created message`, 'success');
+            }
+
+            // Create some invite codes
+            log('Creating sample invite codes...');
+            await db.collection('inviteCodes').doc('SW-TEST-0001').set({
+                code: 'SW-TEST-0001',
+                createdBy: 'iHDuOEJXsQe7dL5C4QwA3fLX9zi2',
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                clientEmail: 'potential.client@example.com',
+                notes: 'Sample unused invite code',
+                used: false,
+                usedBy: null,
+                usedAt: null
+            });
+            log('Created invite code: SW-TEST-0001', 'success');
+
+            log('');
+            log('=== ALL TEST DATA CREATED SUCCESSFULLY ===', 'success');
+            log('');
+            log('Now go to your Admin Dashboard and refresh the page!', 'success');
+
+        } catch (error) {
+            log('Error: ' + error.message, 'error');
+            console.error(error);
+        }
+    }
+
+    async function clearTestData() {
+        if (!confirm('Are you sure you want to delete all test data?')) return;
+
+        log('Clearing test data...');
+
+        try {
+            // Delete test clients
+            for (const client of testClients) {
+                await db.collection('users').doc(client.id).delete();
+                log(`Deleted client: ${client.id}`, 'success');
+            }
+
+            // Delete test assessments
+            for (const assessment of testAssessments) {
+                await db.collection('assessments').doc(assessment.id).delete();
+                log(`Deleted assessment: ${assessment.id}`, 'success');
+            }
+
+            // Delete test appointments
+            for (const apt of testAppointments) {
+                await db.collection('appointments').doc(apt.id).delete();
+                log(`Deleted appointment: ${apt.id}`, 'success');
+            }
+
+            // Delete test conversations and messages
+            for (const conv of testConversations) {
+                const messagesSnapshot = await db.collection('conversations').doc(conv.id)
+                    .collection('messages').get();
+                for (const doc of messagesSnapshot.docs) {
+                    await doc.ref.delete();
+                }
+                await db.collection('conversations').doc(conv.id).delete();
+                log(`Deleted conversation: ${conv.id}`, 'success');
+            }
+
+            // Delete test invite code
+            await db.collection('inviteCodes').doc('SW-TEST-0001').delete();
+            log('Deleted invite code: SW-TEST-0001', 'success');
+
+            log('');
+            log('=== ALL TEST DATA CLEARED ===', 'success');
+
+        } catch (error) {
+            log('Error: ' + error.message, 'error');
+            console.error(error);
+        }
+    }
+</script>
+
+</body>
+</html>

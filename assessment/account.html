@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | Sleep Wellness by Dr. Alen</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+            padding-top: 70px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--deep-navy);
+            padding: 30px 0;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 25px 25px;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: var(--deep-navy);
+        }
+
+        .sidebar-user-info h4 {
+            color: var(--cream);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .sidebar-user-info p {
+            color: var(--gold);
+            font-size: 11px;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin: 2px 0;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 25px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(201, 169, 98, 0.1);
+            color: var(--cream);
+        }
+
+        .sidebar-nav a.active {
+            background: rgba(201, 169, 98, 0.15);
+            color: var(--gold);
+            border-left: 3px solid var(--gold);
+        }
+
+        .sidebar-nav svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .sidebar-nav .badge {
+            margin-left: auto;
+            background: var(--gold);
+            color: var(--deep-navy);
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .sidebar-footer {
+            padding: 20px 25px;
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+            margin-top: auto;
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .logout-btn:hover {
+            color: var(--cream);
+        }
+
+        /* Main Content */
+        .dashboard-main {
+            flex: 1;
+            margin-left: 260px;
+            padding: 30px 40px;
+            background: var(--cream);
+        }
+
+        .dashboard-section {
+            display: none;
+        }
+
+        .dashboard-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .section-header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            color: var(--navy);
+        }
+
+        /* Dashboard Cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 25px;
+        }
+
+        .dashboard-card.clickable {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dashboard-card.clickable:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(201, 169, 98, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .card-icon svg {
+            width: 22px;
+            height: 22px;
+            color: var(--gold-dark);
+        }
+
+        .dashboard-card h3 {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .dashboard-card .value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            color: var(--navy);
+        }
+
+        .dashboard-card p {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 10px;
+        }
+
+        /* Recent Activity */
+        .activity-list {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 15px;
+            padding: 20px 25px;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.1);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .activity-icon svg {
+            width: 18px;
+            height: 18px;
+            color: var(--gold-dark);
+        }
+
+        .activity-content h4 {
+            font-size: 14px;
+            color: var(--navy);
+            margin-bottom: 3px;
+        }
+
+        .activity-content p {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .activity-time {
+            margin-left: auto;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* Assessments List */
+        .assessment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .assessment-item {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .assessment-score {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .assessment-score.good { background: var(--success); }
+        .assessment-score.moderate { background: var(--warning); }
+        .assessment-score.poor { background: var(--danger); }
+
+        .assessment-details {
+            flex: 1;
+        }
+
+        .assessment-details h4 {
+            font-size: 16px;
+            color: var(--navy);
+            margin-bottom: 5px;
+        }
+
+        .assessment-details p {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .assessment-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Messages */
+        .messages-container {
+            display: flex;
+            gap: 0;
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            height: 600px;
+        }
+
+        .messages-list {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .messages-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .messages-header-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+        }
+
+        .messages-header-info h4 {
+            font-size: 15px;
+            color: var(--navy);
+        }
+
+        .messages-header-info p {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .messages-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 75%;
+            padding: 12px 16px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .message.received {
+            background: var(--cream);
+            border-radius: 0 15px 15px 15px;
+            align-self: flex-start;
+        }
+
+        .message.sent {
+            background: var(--navy);
+            color: var(--cream);
+            border-radius: 15px 0 15px 15px;
+            align-self: flex-end;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        .message.sent .message-time {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .messages-input {
+            padding: 15px 20px;
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+            display: flex;
+            gap: 10px;
+        }
+
+        .messages-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid rgba(201, 169, 98, 0.3);
+            font-size: 14px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .messages-input input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .messages-input button {
+            padding: 12px 25px;
+            background: var(--gold);
+            color: var(--deep-navy);
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .messages-input button:hover {
+            background: var(--gold-light);
+        }
+
+        /* Appointments */
+        .appointments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .appointment-card {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 25px;
+        }
+
+        .appointment-card.pending {
+            border-left: 4px solid var(--warning);
+        }
+
+        .appointment-card.confirmed {
+            border-left: 4px solid var(--success);
+        }
+
+        .appointment-date {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .appointment-calendar {
+            width: 55px;
+            text-align: center;
+            background: var(--cream);
+            padding: 8px;
+        }
+
+        .appointment-calendar .month {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gold-dark);
+        }
+
+        .appointment-calendar .day {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--navy);
+        }
+
+        .appointment-time h4 {
+            font-size: 15px;
+            color: var(--navy);
+        }
+
+        .appointment-time p {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .appointment-status {
+            display: inline-block;
+            padding: 5px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 3px;
+        }
+
+        .appointment-status.pending {
+            background: rgba(245, 124, 0, 0.1);
+            color: var(--warning);
+        }
+
+        .appointment-status.confirmed {
+            background: rgba(46, 125, 50, 0.1);
+            color: var(--success);
+        }
+
+        /* Book Appointment Form */
+        .book-appointment-form {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 30px;
+            max-width: 500px;
+        }
+
+        .book-appointment-form h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+
+        /* Sleep Diary */
+        .diary-form {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .diary-form h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+
+        .diary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .diary-chart {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 25px;
+        }
+
+        .diary-history {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .diary-entry {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .diary-entry-date {
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .diary-entry-date .day {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: var(--navy);
+        }
+
+        .diary-entry-date .month {
+            font-size: 11px;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .diary-entry-stats {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .diary-stat {
+            text-align: center;
+        }
+
+        .diary-stat span {
+            display: block;
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        .diary-stat strong {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            color: var(--navy);
+        }
+
+        /* Modules */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* Profile */
+        .profile-form {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 30px;
+            max-width: 600px;
+        }
+
+        .profile-form h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 40px;
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .empty-state svg {
+            width: 60px;
+            height: 60px;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 80px;
+            }
+
+            .sidebar-header {
+                padding: 0 10px 20px;
+            }
+
+            .sidebar-user {
+                justify-content: center;
+            }
+
+            .sidebar-user-info {
+                display: none;
+            }
+
+            .sidebar-nav a {
+                padding: 14px 20px;
+                justify-content: center;
+            }
+
+            .sidebar-nav a span {
+                display: none;
+            }
+
+            .sidebar-nav .badge {
+                position: absolute;
+                top: 5px;
+                right: 10px;
+            }
+
+            .sidebar-footer {
+                text-align: center;
+            }
+
+            .logout-btn span {
+                display: none;
+            }
+
+            .dashboard-main {
+                margin-left: 80px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: static;
+                width: 100%;
+                padding: 15px 0;
+            }
+
+            .sidebar-header {
+                display: none;
+            }
+
+            .sidebar-nav {
+                display: flex;
+                overflow-x: auto;
+                padding: 0 15px;
+            }
+
+            .sidebar-nav li {
+                margin: 0;
+            }
+
+            .sidebar-nav a {
+                padding: 10px 15px;
+                white-space: nowrap;
+            }
+
+            .sidebar-nav a span {
+                display: inline;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .dashboard-main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .diary-entry-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+    <a href="../index.html" class="nav-brand">
+        <span class="nav-brand-main">SLEEP WELLNESS</span>
+        <span class="nav-brand-sub">by Dr. Alen</span>
+    </a>
+    <div class="nav-links">
+        <a href="../hotels.html">Hotels</a>
+        <a href="../athletes.html">Athletes</a>
+        <a href="../corporate.html">Corporate</a>
+        <a href="account.html" class="active" data-auth="logged-in">My Account</a>
+        <a href="auth.html" data-auth="logged-out">Sign In</a>
+    </div>
+</nav>
+
+<!-- Dashboard Layout -->
+<div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-user">
+                <div class="sidebar-avatar" id="userAvatar">--</div>
+                <div class="sidebar-user-info">
+                    <h4 data-user-name>Loading...</h4>
+                    <p>Client</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <li><a href="#dashboard" class="active" onclick="showSection('dashboard')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                </svg>
+                <span>Dashboard</span>
+            </a></li>
+            <li><a href="#assessments" onclick="showSection('assessments')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+                </svg>
+                <span>Assessments</span>
+            </a></li>
+            <li><a href="#diary" onclick="showSection('diary')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                <span>Sleep Diary</span>
+            </a></li>
+            <li><a href="#messages" onclick="showSection('messages')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+                <span>Messages</span>
+                <span class="badge" id="unreadBadge" style="display: none;">0</span>
+            </a></li>
+            <li><a href="#appointments" onclick="showSection('appointments')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <span>Appointments</span>
+            </a></li>
+            <li><a href="#modules" onclick="showSection('modules')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                    <polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+                </svg>
+                <span>Resources</span>
+            </a></li>
+            <li><a href="#profile" onclick="showSection('profile')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>Profile</span>
+            </a></li>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="logout-btn" onclick="Auth.logout()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <!-- Dashboard Section -->
+        <section class="dashboard-section active" id="section-dashboard">
+            <div class="section-header">
+                <h1>Welcome back, <span data-user-name>User</span></h1>
+                <a href="index.html" class="btn-primary">Take Assessment</a>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card clickable" onclick="showSection('assessments')">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                        </svg>
+                    </div>
+                    <h3>Assessments</h3>
+                    <div class="value" id="assessmentCount">0</div>
+                    <p>Completed assessments</p>
+                </div>
+
+                <div class="dashboard-card clickable" onclick="showSection('diary')">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3>Sleep Efficiency</h3>
+                    <div class="value" id="avgEfficiency">--%</div>
+                    <p>7-day average</p>
+                </div>
+
+                <div class="dashboard-card clickable" onclick="showSection('appointments')">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                        </svg>
+                    </div>
+                    <h3>Next Appointment</h3>
+                    <div class="value" id="nextAppointment">--</div>
+                    <p id="nextAppointmentDetails">No upcoming appointments</p>
+                </div>
+
+                <div class="dashboard-card clickable" onclick="showSection('modules')">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                            <polyline points="2 17 12 22 22 17"/>
+                        </svg>
+                    </div>
+                    <h3>Unlocked Resources</h3>
+                    <div class="value" id="unlockedCount">0</div>
+                    <p>Therapeutic modules</p>
+                </div>
+            </div>
+
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--navy); margin-bottom: 20px;">Recent Activity</h2>
+            <div class="activity-list" id="activityList">
+                <div class="empty-state">
+                    <p>No recent activity</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Assessments Section -->
+        <section class="dashboard-section" id="section-assessments">
+            <div class="section-header">
+                <h1>My Assessments</h1>
+                <a href="index.html" class="btn-primary">Take New Assessment</a>
+            </div>
+
+            <div class="assessment-list" id="assessmentList">
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                    <h3>No Assessments Yet</h3>
+                    <p>Complete your first sleep assessment to track your progress.</p>
+                    <a href="index.html" class="btn-primary">Take Assessment</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sleep Diary Section -->
+        <section class="dashboard-section" id="section-diary">
+            <div class="section-header">
+                <h1>Sleep Diary</h1>
+            </div>
+
+            <div class="diary-form">
+                <h3>Log Today's Sleep</h3>
+                <form id="diaryForm" onsubmit="saveDiaryEntry(event)">
+                    <div class="diary-grid">
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" id="diaryDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Bedtime</label>
+                            <input type="time" id="diaryBedtime" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Wake Time</label>
+                            <input type="time" id="diaryWakeTime" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Time to Fall Asleep (min)</label>
+                            <input type="number" id="diaryLatency" min="0" max="300">
+                        </div>
+                        <div class="form-group">
+                            <label>Night Awakenings</label>
+                            <input type="number" id="diaryAwakenings" min="0" max="20">
+                        </div>
+                        <div class="form-group">
+                            <label>Time Awake (min)</label>
+                            <input type="number" id="diaryWASO" min="0" max="300">
+                        </div>
+                        <div class="form-group">
+                            <label>Sleep Quality (1-5)</label>
+                            <select id="diaryQuality">
+                                <option value="1">1 - Very Poor</option>
+                                <option value="2">2 - Poor</option>
+                                <option value="3">3 - Fair</option>
+                                <option value="4">4 - Good</option>
+                                <option value="5">5 - Excellent</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Save Entry</button>
+                </form>
+            </div>
+
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); margin-bottom: 20px;">Recent Entries</h3>
+            <div class="diary-history" id="diaryHistory">
+                <div class="empty-state">
+                    <p>No diary entries yet. Start tracking your sleep above.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Messages Section -->
+        <section class="dashboard-section" id="section-messages">
+            <div class="section-header">
+                <h1>Messages</h1>
+            </div>
+
+            <div class="messages-container">
+                <div class="messages-list">
+                    <div class="messages-header">
+                        <div class="messages-header-avatar">AJ</div>
+                        <div class="messages-header-info">
+                            <h4>Dr. Alen Juginovic</h4>
+                            <p>Sleep Wellness Consultant</p>
+                        </div>
+                    </div>
+                    <div class="messages-body" id="messagesBody">
+                        <div class="message received">
+                            <p>Welcome to Sleep Wellness! I'm here to help you optimize your sleep. Feel free to ask any questions about your assessment results or sleep concerns.</p>
+                            <div class="message-time">Dr. Alen</div>
+                        </div>
+                    </div>
+                    <div class="messages-input">
+                        <input type="text" id="messageInput" placeholder="Type your message..." onkeypress="handleMessageKeypress(event)">
+                        <button onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Appointments Section -->
+        <section class="dashboard-section" id="section-appointments">
+            <div class="section-header">
+                <h1>Appointments</h1>
+            </div>
+
+            <div class="book-appointment-form">
+                <h3>Book a Consultation</h3>
+                <form id="appointmentForm" onsubmit="bookAppointment(event)">
+                    <div class="form-group">
+                        <label>Preferred Date</label>
+                        <input type="date" id="apptDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Time</label>
+                        <select id="apptTime" required>
+                            <option value="">Select time</option>
+                            <option value="09:00">9:00 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="14:00">2:00 PM</option>
+                            <option value="15:00">3:00 PM</option>
+                            <option value="16:00">4:00 PM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Topic / Reason</label>
+                        <select id="apptTopic">
+                            <option value="assessment">Discuss Assessment Results</option>
+                            <option value="follow-up">Follow-up Consultation</option>
+                            <option value="program">Sleep Program Planning</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Notes (optional)</label>
+                        <textarea id="apptNotes" rows="3" style="width: 100%; padding: 12px; border: 1px solid rgba(201, 169, 98, 0.3); font-family: 'Montserrat', sans-serif;"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Request Appointment</button>
+                </form>
+            </div>
+
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); margin: 30px 0 20px;">Your Appointments</h3>
+            <div class="appointments-grid" id="appointmentsList">
+                <div class="empty-state">
+                    <p>No appointments scheduled.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modules Section -->
+        <section class="dashboard-section" id="section-modules">
+            <div class="section-header">
+                <h1>Therapeutic Resources</h1>
+            </div>
+
+            <p style="font-size: 15px; color: var(--text-light); margin-bottom: 25px;">
+                Access evidence-based therapeutic content to improve your sleep. Resources are unlocked based on your assessment results and consultation with Dr. Alen.
+            </p>
+
+            <div class="modules-grid" id="modulesGrid">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section class="dashboard-section" id="section-profile">
+            <div class="section-header">
+                <h1>My Profile</h1>
+            </div>
+
+            <div class="profile-form">
+                <h3>Personal Information</h3>
+                <form id="profileForm" onsubmit="updateProfile(event)">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="profileName" data-user-name>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="profileEmail" data-user-email disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone (optional)</label>
+                        <input type="tel" id="profilePhone">
+                    </div>
+                    <div class="form-group">
+                        <label>Client Type</label>
+                        <select id="profileClientType">
+                            <option value="athlete">Athlete</option>
+                            <option value="executive">Executive</option>
+                            <option value="hotel">Traveler</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Content Modal -->
+<div class="modal" id="contentModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="Content.closeModal()">&times;</button>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="auth.js"></script>
+<script src="content.js"></script>
+
+<script>
+    let currentUser = null;
+    let userProfile = null;
+    let conversationId = null;
+    let messagesUnsubscribe = null;
+
+    // Show section
+    function showSection(section) {
+        // Update nav
+        document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+        document.querySelector(`[href="#${section}"]`).classList.add('active');
+
+        // Update section
+        document.querySelectorAll('.dashboard-section').forEach(s => s.classList.remove('active'));
+        document.getElementById('section-' + section).classList.add('active');
+
+        // Load section data
+        if (section === 'assessments') loadAssessments();
+        if (section === 'diary') loadDiaryEntries();
+        if (section === 'messages') initMessages();
+        if (section === 'appointments') loadAppointments();
+        if (section === 'modules') loadModules();
+    }
+
+    // Initialize dashboard
+    async function initDashboard(user, profile) {
+        currentUser = user;
+        userProfile = profile;
+
+        // Update avatar
+        const initials = (profile.displayName || user.email).split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        document.getElementById('userAvatar').textContent = initials;
+
+        // Load dashboard data
+        loadDashboardStats();
+
+        // Set default diary date
+        document.getElementById('diaryDate').value = new Date().toISOString().split('T')[0];
+
+        // Set min date for appointments
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('apptDate').min = tomorrow.toISOString().split('T')[0];
+    }
+
+    // Load dashboard stats
+    async function loadDashboardStats() {
+        try {
+            const [assessments, diary, appointments, unlocks] = await Promise.all([
+                FirebaseDB.getUserAssessments(currentUser.uid),
+                FirebaseDB.getDiaryEntries(currentUser.uid, 7),
+                FirebaseDB.getUserAppointments(currentUser.uid),
+                FirebaseDB.getUserUnlocks(currentUser.uid)
+            ]);
+
+            // Assessment count
+            document.getElementById('assessmentCount').textContent = assessments.length;
+
+            // Average sleep efficiency
+            if (diary.length > 0) {
+                const avgEff = diary.reduce((sum, d) => sum + (d.sleepEfficiency || 0), 0) / diary.length;
+                document.getElementById('avgEfficiency').textContent = avgEff.toFixed(0) + '%';
+            }
+
+            // Next appointment
+            const upcoming = appointments.find(a => {
+                const dt = a.dateTime?.toDate();
+                return dt && dt > new Date() && a.status !== 'cancelled';
+            });
+            if (upcoming) {
+                const dt = upcoming.dateTime.toDate();
+                document.getElementById('nextAppointment').textContent = dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                document.getElementById('nextAppointmentDetails').textContent = dt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            }
+
+            // Unlocked modules
+            const unlockedCount = unlocks.includes('all') ? 7 : unlocks.length;
+            document.getElementById('unlockedCount').textContent = unlockedCount;
+
+            // Recent activity
+            const activities = [];
+            assessments.slice(0, 3).forEach(a => {
+                activities.push({
+                    type: 'assessment',
+                    title: 'Completed Assessment',
+                    description: `Score: ${a.overallScore}/100`,
+                    time: a.createdAt?.toDate()
+                });
+            });
+            renderActivities(activities);
+
+        } catch (error) {
+            console.error('Error loading dashboard:', error);
+        }
+    }
+
+    // Render activities
+    function renderActivities(activities) {
+        const container = document.getElementById('activityList');
+        if (activities.length === 0) {
+            container.innerHTML = '<div class="empty-state"><p>No recent activity</p></div>';
+            return;
+        }
+
+        container.innerHTML = activities.map(a => `
+            <div class="activity-item">
+                <div class="activity-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                </div>
+                <div class="activity-content">
+                    <h4>${a.title}</h4>
+                    <p>${a.description}</p>
+                </div>
+                <span class="activity-time">${formatTimeAgo(a.time)}</span>
+            </div>
+        `).join('');
+    }
+
+    // Load assessments
+    async function loadAssessments() {
+        const container = document.getElementById('assessmentList');
+        container.innerHTML = '<p style="padding: 20px; color: var(--text-light);">Loading...</p>';
+
+        const assessments = await FirebaseDB.getUserAssessments(currentUser.uid);
+
+        if (assessments.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                    <h3>No Assessments Yet</h3>
+                    <p>Complete your first sleep assessment to track your progress.</p>
+                    <a href="index.html" class="btn-primary">Take Assessment</a>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = assessments.map(a => {
+            const score = a.overallScore || 0;
+            const scoreClass = score >= 70 ? 'good' : score >= 40 ? 'moderate' : 'poor';
+            const date = a.createdAt?.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            return `
+                <div class="assessment-item">
+                    <div class="assessment-score ${scoreClass}">${score}</div>
+                    <div class="assessment-details">
+                        <h4>Sleep Health Assessment</h4>
+                        <p>${date} - ${a.clientType || 'General'}</p>
+                    </div>
+                    <div class="assessment-actions">
+                        <button class="btn-secondary" onclick="viewAssessment('${a.id}')">View Details</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // Save diary entry
+    async function saveDiaryEntry(e) {
+        e.preventDefault();
+
+        const bedtime = document.getElementById('diaryBedtime').value;
+        const wakeTime = document.getElementById('diaryWakeTime').value;
+        const latency = parseInt(document.getElementById('diaryLatency').value) || 0;
+        const waso = parseInt(document.getElementById('diaryWASO').value) || 0;
+
+        // Calculate metrics
+        const [bedH, bedM] = bedtime.split(':').map(Number);
+        const [wakeH, wakeM] = wakeTime.split(':').map(Number);
+        let tib = (wakeH * 60 + wakeM) - (bedH * 60 + bedM);
+        if (tib < 0) tib += 24 * 60;
+        const tst = tib - latency - waso;
+        const sleepEfficiency = (tst / tib * 100);
+
+        const entry = {
+            date: document.getElementById('diaryDate').value,
+            bedtime,
+            wakeTime,
+            sleepLatency: latency,
+            awakenings: parseInt(document.getElementById('diaryAwakenings').value) || 0,
+            waso,
+            quality: parseInt(document.getElementById('diaryQuality').value),
+            timeInBed: tib,
+            totalSleepTime: tst,
+            sleepEfficiency
+        };
+
+        await FirebaseDB.saveDiaryEntry(currentUser.uid, entry);
+        alert('Entry saved!');
+        document.getElementById('diaryForm').reset();
+        document.getElementById('diaryDate').value = new Date().toISOString().split('T')[0];
+        loadDiaryEntries();
+    }
+
+    // Load diary entries
+    async function loadDiaryEntries() {
+        const container = document.getElementById('diaryHistory');
+        const entries = await FirebaseDB.getDiaryEntries(currentUser.uid);
+
+        if (entries.length === 0) {
+            container.innerHTML = '<div class="empty-state"><p>No diary entries yet.</p></div>';
+            return;
+        }
+
+        container.innerHTML = entries.map(e => {
+            const date = new Date(e.date);
+            return `
+                <div class="diary-entry">
+                    <div class="diary-entry-date">
+                        <div class="day">${date.getDate()}</div>
+                        <div class="month">${date.toLocaleDateString('en-US', { month: 'short' })}</div>
+                    </div>
+                    <div class="diary-entry-stats">
+                        <div class="diary-stat">
+                            <span>Sleep Time</span>
+                            <strong>${Math.floor(e.totalSleepTime / 60)}h ${e.totalSleepTime % 60}m</strong>
+                        </div>
+                        <div class="diary-stat">
+                            <span>Efficiency</span>
+                            <strong>${e.sleepEfficiency.toFixed(0)}%</strong>
+                        </div>
+                        <div class="diary-stat">
+                            <span>Latency</span>
+                            <strong>${e.sleepLatency}m</strong>
+                        </div>
+                        <div class="diary-stat">
+                            <span>Quality</span>
+                            <strong>${e.quality}/5</strong>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // Init messages
+    async function initMessages() {
+        if (!ADMIN_UID || ADMIN_UID === 'YOUR_ADMIN_UID_HERE') {
+            document.getElementById('messagesBody').innerHTML = '<p style="padding: 20px; color: var(--text-light);">Messaging will be available once the admin account is configured.</p>';
+            return;
+        }
+
+        const conv = await FirebaseDB.getOrCreateConversation(currentUser.uid, ADMIN_UID);
+        conversationId = conv.id;
+
+        // Listen for messages
+        if (messagesUnsubscribe) messagesUnsubscribe();
+        messagesUnsubscribe = FirebaseDB.getMessagesListener(conversationId, renderMessages);
+    }
+
+    // Render messages
+    function renderMessages(messages) {
+        const container = document.getElementById('messagesBody');
+
+        if (messages.length === 0) {
+            container.innerHTML = `
+                <div class="message received">
+                    <p>Welcome to Sleep Wellness! I'm here to help you optimize your sleep.</p>
+                    <div class="message-time">Dr. Alen</div>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = messages.map(m => {
+            const isSent = m.senderId === currentUser.uid;
+            const time = m.createdAt?.toDate().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            return `
+                <div class="message ${isSent ? 'sent' : 'received'}">
+                    <p>${m.text}</p>
+                    <div class="message-time">${time || ''}</div>
+                </div>
+            `;
+        }).join('');
+
+        container.scrollTop = container.scrollHeight;
+    }
+
+    // Send message
+    async function sendMessage() {
+        const input = document.getElementById('messageInput');
+        const text = input.value.trim();
+        if (!text || !conversationId) return;
+
+        input.value = '';
+        await FirebaseDB.sendMessage(conversationId, currentUser.uid, text);
+    }
+
+    function handleMessageKeypress(e) {
+        if (e.key === 'Enter') sendMessage();
+    }
+
+    // Book appointment
+    async function bookAppointment(e) {
+        e.preventDefault();
+
+        const date = document.getElementById('apptDate').value;
+        const time = document.getElementById('apptTime').value;
+        const topic = document.getElementById('apptTopic').value;
+        const notes = document.getElementById('apptNotes').value;
+
+        const dateTime = new Date(`${date}T${time}`);
+
+        await FirebaseDB.createAppointment(currentUser.uid, {
+            dateTime: firebase.firestore.Timestamp.fromDate(dateTime),
+            topic,
+            notes,
+            userName: userProfile.displayName || currentUser.email
+        });
+
+        alert('Appointment request submitted! You will be notified once confirmed.');
+        document.getElementById('appointmentForm').reset();
+        loadAppointments();
+    }
+
+    // Load appointments
+    async function loadAppointments() {
+        const container = document.getElementById('appointmentsList');
+        const appointments = await FirebaseDB.getUserAppointments(currentUser.uid);
+
+        if (appointments.length === 0) {
+            container.innerHTML = '<div class="empty-state"><p>No appointments scheduled.</p></div>';
+            return;
+        }
+
+        container.innerHTML = appointments.map(a => {
+            const dt = a.dateTime?.toDate();
+            if (!dt) return '';
+            return `
+                <div class="appointment-card ${a.status}">
+                    <div class="appointment-date">
+                        <div class="appointment-calendar">
+                            <div class="month">${dt.toLocaleDateString('en-US', { month: 'short' })}</div>
+                            <div class="day">${dt.getDate()}</div>
+                        </div>
+                        <div class="appointment-time">
+                            <h4>${dt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</h4>
+                            <p>${a.topic}</p>
+                        </div>
+                    </div>
+                    <span class="appointment-status ${a.status}">${a.status}</span>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // Load modules
+    async function loadModules() {
+        const unlocks = await FirebaseDB.getUserUnlocks(currentUser.uid);
+        const hasAll = unlocks.includes('all');
+
+        const container = document.getElementById('modulesGrid');
+        const modules = Content.modules;
+
+        container.innerHTML = Object.keys(modules).map(id => {
+            const m = modules[id];
+            const isUnlocked = !m.locked || hasAll || unlocks.includes(id);
+
+            return `
+                <div class="module-card ${isUnlocked ? '' : 'locked'}" onclick="${isUnlocked ? `Content.openModule('${id}')` : ''}">
+                    ${!isUnlocked ? '<svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : ''}
+                    <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${Content.getModuleIconSVG(m.icon)}</svg>
+                    <h4>${m.title}</h4>
+                    <p>${m.description}</p>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // Update profile
+    async function updateProfile(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('profileName').value;
+        const phone = document.getElementById('profilePhone').value;
+        const clientType = document.getElementById('profileClientType').value;
+
+        await db.collection('users').doc(currentUser.uid).update({
+            displayName: name,
+            phone,
+            clientType
+        });
+
+        alert('Profile updated!');
+    }
+
+    // Utility: format time ago
+    function formatTimeAgo(date) {
+        if (!date) return '';
+        const seconds = Math.floor((new Date() - date) / 1000);
+        if (seconds < 60) return 'Just now';
+        if (seconds < 3600) return Math.floor(seconds / 60) + 'm ago';
+        if (seconds < 86400) return Math.floor(seconds / 3600) + 'h ago';
+        return Math.floor(seconds / 86400) + 'd ago';
+    }
+
+    // Auth state listener
+    auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+            window.location.href = 'auth.html?redirect=' + encodeURIComponent(window.location.pathname);
+            return;
+        }
+
+        const profile = await FirebaseDB.getUserProfile(user.uid);
+
+        // If admin, redirect to admin dashboard
+        if (profile && profile.role === 'admin') {
+            window.location.href = 'admin/index.html';
+            return;
+        }
+
+        // Update auth UI
+        Auth.currentUser = user;
+        Auth.userProfile = profile;
+        Auth.updateAuthUI(true);
+
+        // Initialize dashboard
+        initDashboard(user, profile);
+
+        // Load profile form
+        if (profile) {
+            document.getElementById('profileName').value = profile.displayName || '';
+            document.getElementById('profilePhone').value = profile.phone || '';
+            document.getElementById('profileClientType').value = profile.clientType || 'athlete';
+        }
+    });
+</script>
+
+</body>
+</html>

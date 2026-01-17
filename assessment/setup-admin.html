@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Setup | Sleep Wellness</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f1c2e;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #0f1c2e;
+        }
+        p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #C9A962;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #C9A962;
+            color: #0f1c2e;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background: #d4b978;
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .error {
+            background: #fee;
+            color: #c00;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+        .success {
+            background: #efe;
+            color: #060;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+        .uid-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            word-break: break-all;
+        }
+        .uid-box strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .uid-box code {
+            font-size: 14px;
+            color: #0f1c2e;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Admin Account Setup</h1>
+    <p>Create your admin account for Sleep Wellness.</p>
+
+    <div class="error" id="error"></div>
+    <div class="success" id="success"></div>
+
+    <form id="registerForm">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" required placeholder="Dr. Alen Juginovic">
+
+        <label for="email">Email</label>
+        <input type="email" id="email" required placeholder="your@email.com">
+
+        <label for="password">Password</label>
+        <input type="password" id="password" required minlength="6" placeholder="At least 6 characters">
+
+        <button type="submit" id="submitBtn">Create Admin Account</button>
+    </form>
+
+    <div class="uid-box" id="uidBox" style="display: none;">
+        <strong>Your User UID (copy this):</strong>
+        <code id="userUid"></code>
+    </div>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+    const form = document.getElementById('registerForm');
+    const errorDiv = document.getElementById('error');
+    const successDiv = document.getElementById('success');
+    const submitBtn = document.getElementById('submitBtn');
+    const uidBox = document.getElementById('uidBox');
+    const userUid = document.getElementById('userUid');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Creating account...';
+        errorDiv.style.display = 'none';
+        successDiv.style.display = 'none';
+
+        try {
+            // Create user
+            const { user } = await auth.createUserWithEmailAndPassword(email, password);
+
+            // Update display name
+            await user.updateProfile({ displayName: name });
+
+            // Show success
+            successDiv.textContent = 'Account created successfully!';
+            successDiv.style.display = 'block';
+
+            // Show UID
+            userUid.textContent = user.uid;
+            uidBox.style.display = 'block';
+
+            submitBtn.textContent = 'Account Created!';
+            form.style.display = 'none';
+
+        } catch (error) {
+            console.error('Error:', error);
+            errorDiv.textContent = error.message;
+            errorDiv.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Create Admin Account';
+        }
+    });
+
+    // Check if already logged in
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            successDiv.textContent = 'You are already logged in!';
+            successDiv.style.display = 'block';
+            userUid.textContent = user.uid;
+            uidBox.style.display = 'block';
+            form.style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>
