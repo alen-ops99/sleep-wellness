@@ -806,16 +806,6 @@
                     </svg>
                     <span>All Clients</span>
                 </a>
-                <a class="nav-item" onclick="showSection('assessments')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                        <line x1="16" y1="13" x2="8" y2="13"/>
-                        <line x1="16" y1="17" x2="8" y2="17"/>
-                        <polyline points="10 9 9 9 8 9"/>
-                    </svg>
-                    <span>Assessments</span>
-                </a>
                 <a class="nav-item" onclick="showSection('invites')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
@@ -946,18 +936,89 @@
             </div>
         </section>
 
-        <!-- Assessments Section -->
-        <section class="admin-section" id="section-assessments">
-            <div class="page-header">
-                <div>
-                    <h1 class="page-title">Assessments</h1>
-                    <p class="page-subtitle">View all client assessments</p>
+        <!-- Client Detail Section -->
+        <section class="admin-section" id="section-client-detail">
+            <div class="page-header" style="margin-bottom: 0;">
+                <button onclick="showSection('clients')" style="display: flex; align-items: center; gap: 8px; background: none; border: none; color: var(--gold); cursor: pointer; font-size: 14px; padding: 0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    Back to Clients
+                </button>
+            </div>
+
+            <!-- Client Profile Header -->
+            <div class="data-card" style="margin-top: 20px;">
+                <div style="display: flex; align-items: center; gap: 20px; padding: 10px 0;">
+                    <div id="client-avatar" style="width: 70px; height: 70px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; color: white; font-weight: 600;">?</div>
+                    <div style="flex: 1;">
+                        <h1 id="client-name" style="font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--navy); margin: 0 0 5px 0;">Client Name</h1>
+                        <div style="display: flex; flex-wrap: wrap; gap: 15px; font-size: 13px; color: var(--text-light);">
+                            <span id="client-type-badge" style="background: var(--gold); color: var(--deep-navy); padding: 4px 12px; border-radius: 20px; font-weight: 500; text-transform: capitalize;">Type</span>
+                            <span id="client-email">email@example.com</span>
+                            <span id="client-joined">Joined: --</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="openClientChat()" class="action-btn action-btn-secondary" style="display: flex; align-items: center; gap: 6px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            Message
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="data-card">
-                <div id="assessments-list">
-                    <div class="loading">Loading...</div>
+            <!-- Sleep Health Summary -->
+            <div class="data-card" style="margin-top: 20px;">
+                <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin: 0 0 20px 0;">Sleep Health Summary</h2>
+                <div id="no-assessment-notice" style="display: none; text-align: center; padding: 30px; color: var(--text-light);">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: 15px; opacity: 0.5;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <p style="margin: 0;">No assessment completed yet</p>
+                </div>
+                <div id="assessment-summary" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px;">
+                    <!-- Score cards will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Key Findings -->
+            <div class="data-card" id="findings-card" style="margin-top: 20px; display: none;">
+                <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin: 0 0 20px 0;">Key Findings</h2>
+                <ul id="findings-list" style="margin: 0; padding-left: 20px; color: var(--navy);">
+                    <!-- Findings will be inserted here -->
+                </ul>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="data-card" style="margin-top: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin: 0;">Next Steps</h2>
+                    <button onclick="showAddActionModal()" style="background: var(--gold); color: var(--deep-navy); border: none; padding: 8px 16px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Add Action
+                    </button>
+                </div>
+                <div id="actions-list">
+                    <p style="color: var(--text-light); font-size: 14px; text-align: center; padding: 20px;">No actions yet. Add next steps for this client.</p>
+                </div>
+            </div>
+
+            <!-- Recent Messages -->
+            <div class="data-card" style="margin-top: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin: 0;">Recent Messages</h2>
+                    <button onclick="openClientChat()" style="background: none; border: 1px solid var(--gold); color: var(--gold); padding: 8px 16px; border-radius: 4px; font-size: 13px; cursor: pointer;">Open Full Chat</button>
+                </div>
+                <div id="recent-messages">
+                    <p style="color: var(--text-light); font-size: 14px; text-align: center; padding: 20px;">No messages yet</p>
+                </div>
+            </div>
+
+            <!-- Unlocked Modules -->
+            <div class="data-card" style="margin-top: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin: 0;">Unlocked Modules</h2>
+                    <button onclick="showUnlockModuleForClient()" style="background: none; border: 1px solid var(--gold); color: var(--gold); padding: 8px 16px; border-radius: 4px; font-size: 13px; cursor: pointer;">Manage Modules</button>
+                </div>
+                <div id="client-modules">
+                    <p style="color: var(--text-light); font-size: 14px; text-align: center; padding: 20px;">No modules unlocked yet</p>
                 </div>
             </div>
         </section>
@@ -1104,6 +1165,40 @@
             <div style="display: flex; justify-content: center; margin-top: 20px;">
                 <button onclick="closeInviteModal()" style="padding: 12px 30px; background: #C9A962; color: #0f1c2e; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">Done</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Action Modal -->
+<div id="action-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 500px; margin: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #0f1c2e; margin: 0;">Add Next Step</h2>
+            <button onclick="closeModal('action-modal')" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Action Description *</label>
+            <input type="text" id="action-text" placeholder="e.g., Schedule follow-up consultation" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Priority</label>
+            <select id="action-priority" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+                <option value="normal">Normal</option>
+                <option value="high">High Priority</option>
+                <option value="low">Low Priority</option>
+            </select>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Due Date (optional)</label>
+            <input type="date" id="action-due" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button onclick="closeModal('action-modal')" style="padding: 12px 24px; background: #f5f5f5; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+            <button onclick="addClientAction()" style="padding: 12px 24px; background: #C9A962; color: #0f1c2e; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">Add Action</button>
         </div>
     </div>
 </div>
@@ -2043,20 +2138,384 @@ Sleep Wellness by Dr. Alen`);
             'Key Findings:\n' + (assessment.findings?.join('\n') || 'None'));
     }
 
-    function viewClient(clientId) {
+    // Current client being viewed
+    let currentViewedClient = null;
+
+    async function viewClient(clientId) {
         const client = allClients.find(c => c.id === clientId);
         if (!client) return;
 
-        alert('Client Details:\n\n' +
-            'Name: ' + (client.displayName || 'N/A') + '\n' +
-            'Email: ' + (client.email || 'N/A') + '\n' +
-            'Type: ' + (client.clientType || 'N/A') + '\n' +
-            'Joined: ' + (client.createdAt?.toDate()?.toLocaleDateString() || 'N/A'));
+        currentViewedClient = client;
+
+        // Update profile header
+        const initials = (client.displayName || 'U').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+        document.getElementById('client-avatar').textContent = initials;
+        document.getElementById('client-name').textContent = client.displayName || 'Unknown';
+        document.getElementById('client-type-badge').textContent = client.clientType || 'Client';
+        document.getElementById('client-email').textContent = client.email || '';
+        document.getElementById('client-joined').textContent = 'Joined: ' + (client.createdAt?.toDate()?.toLocaleDateString() || 'Unknown');
+
+        // Load all client data
+        await Promise.all([
+            loadClientAssessment(clientId),
+            loadClientActions(clientId),
+            loadClientMessages(clientId),
+            loadClientModules(clientId)
+        ]);
+
+        // Show client detail section
+        showSection('client-detail');
+    }
+
+    async function loadClientAssessment(clientId) {
+        const summaryContainer = document.getElementById('assessment-summary');
+        const noAssessmentNotice = document.getElementById('no-assessment-notice');
+        const findingsCard = document.getElementById('findings-card');
+        const findingsList = document.getElementById('findings-list');
+
+        // Find assessment for this client
+        const assessment = allAssessments.find(a => a.userId === clientId);
+
+        if (!assessment) {
+            summaryContainer.innerHTML = '';
+            noAssessmentNotice.style.display = 'block';
+            findingsCard.style.display = 'none';
+            return;
+        }
+
+        noAssessmentNotice.style.display = 'none';
+
+        // Build score cards
+        const scores = assessment.scores || {};
+        const overallScore = assessment.overallScore || 0;
+
+        const getScoreColor = (score, type) => {
+            if (type === 'ess') {
+                if (score <= 10) return '#2e7d32';
+                if (score <= 15) return '#ed6c02';
+                return '#d32f2f';
+            }
+            if (type === 'isi') {
+                if (score <= 7) return '#2e7d32';
+                if (score <= 14) return '#ed6c02';
+                if (score <= 21) return '#ed6c02';
+                return '#d32f2f';
+            }
+            if (type === 'stopbang') {
+                if (score <= 2) return '#2e7d32';
+                if (score <= 4) return '#ed6c02';
+                return '#d32f2f';
+            }
+            if (type === 'overall') {
+                if (score >= 70) return '#2e7d32';
+                if (score >= 50) return '#ed6c02';
+                return '#d32f2f';
+            }
+            return '#666';
+        };
+
+        const getScoreLabel = (score, type) => {
+            if (type === 'ess') {
+                if (score <= 10) return 'Normal';
+                if (score <= 15) return 'Moderate';
+                return 'Severe';
+            }
+            if (type === 'isi') {
+                if (score <= 7) return 'Normal';
+                if (score <= 14) return 'Subthreshold';
+                if (score <= 21) return 'Moderate';
+                return 'Severe';
+            }
+            if (type === 'stopbang') {
+                if (score <= 2) return 'Low Risk';
+                if (score <= 4) return 'Intermediate';
+                return 'High Risk';
+            }
+            return '';
+        };
+
+        summaryContainer.innerHTML = `
+            <div style="background: linear-gradient(135deg, ${getScoreColor(overallScore, 'overall')}22 0%, ${getScoreColor(overallScore, 'overall')}11 100%); border: 1px solid ${getScoreColor(overallScore, 'overall')}33; border-radius: 12px; padding: 20px; text-align: center;">
+                <div style="font-size: 36px; font-weight: 700; color: ${getScoreColor(overallScore, 'overall')};">${overallScore}</div>
+                <div style="font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px;">Overall Score</div>
+            </div>
+            <div style="background: #f8f8f8; border-radius: 12px; padding: 20px; text-align: center;">
+                <div style="font-size: 28px; font-weight: 600; color: ${getScoreColor(scores.ess || 0, 'ess')};">${scores.ess ?? 'N/A'}</div>
+                <div style="font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px;">ESS</div>
+                <div style="font-size: 12px; color: ${getScoreColor(scores.ess || 0, 'ess')}; margin-top: 4px;">${getScoreLabel(scores.ess || 0, 'ess')}</div>
+            </div>
+            <div style="background: #f8f8f8; border-radius: 12px; padding: 20px; text-align: center;">
+                <div style="font-size: 28px; font-weight: 600; color: ${getScoreColor(scores.isi || 0, 'isi')};">${scores.isi ?? 'N/A'}</div>
+                <div style="font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px;">ISI</div>
+                <div style="font-size: 12px; color: ${getScoreColor(scores.isi || 0, 'isi')}; margin-top: 4px;">${getScoreLabel(scores.isi || 0, 'isi')}</div>
+            </div>
+            <div style="background: #f8f8f8; border-radius: 12px; padding: 20px; text-align: center;">
+                <div style="font-size: 28px; font-weight: 600; color: ${getScoreColor(scores.stopbang || 0, 'stopbang')};">${scores.stopbang ?? 'N/A'}</div>
+                <div style="font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px;">STOP-BANG</div>
+                <div style="font-size: 12px; color: ${getScoreColor(scores.stopbang || 0, 'stopbang')}; margin-top: 4px;">${getScoreLabel(scores.stopbang || 0, 'stopbang')}</div>
+            </div>
+        `;
+
+        // Show findings
+        const findings = assessment.findings || [];
+        if (findings.length > 0) {
+            findingsCard.style.display = 'block';
+            findingsList.innerHTML = findings.map(f => `<li style="margin-bottom: 8px;">${f}</li>`).join('');
+        } else {
+            findingsCard.style.display = 'none';
+        }
+    }
+
+    async function loadClientActions(clientId) {
+        const container = document.getElementById('actions-list');
+
+        try {
+            const snapshot = await db.collection('users').doc(clientId).collection('actions').get();
+
+            if (snapshot.empty) {
+                container.innerHTML = '<p style="color: var(--text-light); font-size: 14px; text-align: center; padding: 20px;">No actions yet. Add next steps for this client.</p>';
+                return;
+            }
+
+            const actions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            actions.sort((a, b) => {
+                const priorityOrder = { high: 0, normal: 1, low: 2 };
+                return (priorityOrder[a.priority] || 1) - (priorityOrder[b.priority] || 1);
+            });
+
+            container.innerHTML = actions.map(action => {
+                const priorityColors = { high: '#d32f2f', normal: '#0f1c2e', low: '#666' };
+                const priorityColor = priorityColors[action.priority] || '#0f1c2e';
+                const isCompleted = action.completed;
+                const dueDate = action.dueDate ? new Date(action.dueDate).toLocaleDateString() : '';
+
+                return `
+                    <div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #eee; ${isCompleted ? 'opacity: 0.6;' : ''}">
+                        <input type="checkbox" ${isCompleted ? 'checked' : ''} onchange="toggleAction('${clientId}', '${action.id}', this.checked)"
+                            style="width: 20px; height: 20px; margin-top: 2px; cursor: pointer; accent-color: var(--gold);">
+                        <div style="flex: 1;">
+                            <div style="font-size: 14px; color: ${priorityColor}; ${isCompleted ? 'text-decoration: line-through;' : ''}">${action.text}</div>
+                            ${dueDate ? `<div style="font-size: 12px; color: var(--text-light); margin-top: 4px;">Due: ${dueDate}</div>` : ''}
+                        </div>
+                        ${action.priority === 'high' ? '<span style="background: #d32f2f22; color: #d32f2f; font-size: 10px; padding: 2px 8px; border-radius: 10px;">HIGH</span>' : ''}
+                        <button onclick="deleteAction('${clientId}', '${action.id}')" style="background: none; border: none; color: #999; cursor: pointer; font-size: 18px;">&times;</button>
+                    </div>
+                `;
+            }).join('');
+        } catch (error) {
+            console.error('Error loading actions:', error);
+            container.innerHTML = '<p style="color: var(--text-light); font-size: 14px; text-align: center; padding: 20px;">Error loading actions</p>';
+        }
+    }
+
+    async function loadClientMessages(clientId) {
+        const container = document.getElementById('recent-messages');
+
+        try {
+            // Find conversation with this client
+            const snapshot = await db.collection('conversations')
+                .where('participants', 'array-contains', currentUser.uid)
+                .get();
+
+            const conversation = snapshot.docs
+                .map(doc => ({ id: doc.id, ...doc.data() }))
+                .find(conv => conv.participants.includes(clientId));
+
+            if (!conversation) {
+                container.innerHTML = '<p style="color: var(--text-light); font-size: 14px; text-align: center; padding: 20px;">No messages yet</p>';
+                return;
+            }
+
+            // Get recent messages
+            const messagesSnapshot = await db.collection('conversations').doc(conversation.id)
+                .collection('messages')
+                .orderBy('timestamp', 'desc')
+                .limit(3)
+                .get();
+
+            if (messagesSnapshot.empty) {
+                container.innerHTML = '<p style="color: var(--text-light); font-size: 14px; text-align: center; padding: 20px;">No messages yet</p>';
+                return;
+            }
+
+            const messages = messagesSnapshot.docs.map(doc => doc.data()).reverse();
+
+            container.innerHTML = messages.map(msg => {
+                const isAdmin = msg.senderId === currentUser.uid;
+                const time = msg.timestamp?.toDate?.();
+                const timeStr = time ? formatTimeAgo(time) : '';
+
+                return `
+                    <div style="display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f0f0f0;">
+                        <div style="width: 32px; height: 32px; background: ${isAdmin ? 'var(--gold)' : 'var(--navy)'}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; flex-shrink: 0;">
+                            ${isAdmin ? 'You' : currentViewedClient?.displayName?.charAt(0) || '?'}
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-size: 13px; color: var(--navy);">${msg.text}</div>
+                            <div style="font-size: 11px; color: var(--text-light); margin-top: 4px;">${timeStr}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        } catch (error) {
+            console.error('Error loading messages:', error);
+            container.innerHTML = '<p style="color: var(--text-light); font-size: 14px; text-align: center; padding: 20px;">Error loading messages</p>';
+        }
+    }
+
+    function formatTimeAgo(date) {
+        const now = new Date();
+        const diff = Math.floor((now - date) / 1000);
+
+        if (diff < 60) return 'Just now';
+        if (diff < 3600) return Math.floor(diff / 60) + ' min ago';
+        if (diff < 86400) return Math.floor(diff / 3600) + ' hr ago';
+        if (diff < 604800) return Math.floor(diff / 86400) + ' days ago';
+        return date.toLocaleDateString();
+    }
+
+    async function loadClientModules(clientId) {
+        const container = document.getElementById('client-modules');
+
+        try {
+            const snapshot = await db.collection('unlocks')
+                .where('userId', '==', clientId)
+                .get();
+
+            if (snapshot.empty) {
+                container.innerHTML = '<p style="color: var(--text-light); font-size: 14px; text-align: center; padding: 20px;">No modules unlocked yet</p>';
+                return;
+            }
+
+            const unlocks = snapshot.docs.map(doc => doc.data());
+            const allModules = unlocks.flatMap(u => u.modules || []);
+            const uniqueModules = [...new Set(allModules)];
+
+            const moduleNames = {
+                'sleep-hygiene': 'Sleep Hygiene',
+                'breathing': '4-7-8 Breathing',
+                'pmr': 'Progressive Muscle Relaxation',
+                'sleep-restriction': 'CBT-I: Sleep Restriction',
+                'stimulus-control': 'CBT-I: Stimulus Control',
+                'cognitive': 'CBT-I: Cognitive Restructuring',
+                'sleep-diary': 'Sleep Diary'
+            };
+
+            if (uniqueModules.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-light); font-size: 14px; text-align: center; padding: 20px;">No modules unlocked yet</p>';
+                return;
+            }
+
+            container.innerHTML = `
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    ${uniqueModules.map(m => `
+                        <span style="background: #2e7d3222; color: #2e7d32; padding: 8px 16px; border-radius: 20px; font-size: 13px; display: flex; align-items: center; gap: 6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                            ${moduleNames[m] || m}
+                        </span>
+                    `).join('')}
+                </div>
+            `;
+        } catch (error) {
+            console.error('Error loading modules:', error);
+            container.innerHTML = '<p style="color: var(--text-light); font-size: 14px; text-align: center; padding: 20px;">Error loading modules</p>';
+        }
+    }
+
+    // Action management
+    function showAddActionModal() {
+        document.getElementById('action-text').value = '';
+        document.getElementById('action-priority').value = 'normal';
+        document.getElementById('action-due').value = '';
+        document.getElementById('action-modal').style.display = 'flex';
+    }
+
+    async function addClientAction() {
+        if (!currentViewedClient) return;
+
+        const text = document.getElementById('action-text').value.trim();
+        const priority = document.getElementById('action-priority').value;
+        const dueDate = document.getElementById('action-due').value;
+
+        if (!text) {
+            alert('Please enter an action description.');
+            return;
+        }
+
+        try {
+            await db.collection('users').doc(currentViewedClient.id).collection('actions').add({
+                text,
+                priority,
+                dueDate: dueDate || null,
+                completed: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                createdBy: currentUser.uid
+            });
+
+            closeModal('action-modal');
+            loadClientActions(currentViewedClient.id);
+        } catch (error) {
+            console.error('Error adding action:', error);
+            alert('Error adding action. Please try again.');
+        }
+    }
+
+    async function toggleAction(clientId, actionId, completed) {
+        try {
+            await db.collection('users').doc(clientId).collection('actions').doc(actionId).update({
+                completed,
+                completedAt: completed ? firebase.firestore.FieldValue.serverTimestamp() : null
+            });
+            loadClientActions(clientId);
+        } catch (error) {
+            console.error('Error toggling action:', error);
+        }
+    }
+
+    async function deleteAction(clientId, actionId) {
+        if (!confirm('Delete this action?')) return;
+
+        try {
+            await db.collection('users').doc(clientId).collection('actions').doc(actionId).delete();
+            loadClientActions(clientId);
+        } catch (error) {
+            console.error('Error deleting action:', error);
+        }
+    }
+
+    // Open chat with current client
+    function openClientChat() {
+        if (!currentViewedClient) return;
+
+        // Switch to messages section and open chat with this client
+        showSection('messages');
+        setTimeout(() => {
+            openConversation(currentViewedClient.id, currentViewedClient.displayName, currentViewedClient.displayName?.charAt(0) || '?');
+        }, 100);
+    }
+
+    // Unlock module for current client
+    async function showUnlockModuleForClient() {
+        if (!currentViewedClient) return;
+
+        // Pre-select the current client in the unlock modal
+        const select = document.getElementById('unlock-client');
+        const clients = await FirebaseDB.getAllUsers();
+
+        select.innerHTML = '<option value="">Select a client</option>' +
+            clients.map(c => `<option value="${c.id}" ${c.id === currentViewedClient.id ? 'selected' : ''}>${c.displayName || c.email}</option>`).join('');
+
+        document.querySelectorAll('input[name="unlock-modules"]').forEach(cb => cb.checked = false);
+        document.getElementById('unlock-notes').value = '';
+
+        document.getElementById('unlock-modal').classList.add('active');
     }
 
     // Modal functions
     function closeModal(modalId) {
-        document.getElementById(modalId).style.display = 'none';
+        const modal = document.getElementById(modalId);
+        modal.style.display = 'none';
+        modal.classList.remove('active');
     }
 
     // Logout
@@ -2065,11 +2524,13 @@ Sleep Wellness by Dr. Alen`);
         window.location.href = '../auth.html';
     }
 
-    // Close invite modal on outside click
-    document.getElementById('invite-modal').addEventListener('click', (e) => {
-        if (e.target.id === 'invite-modal') {
-            e.target.style.display = 'none';
-        }
+    // Close modals on outside click
+    ['invite-modal', 'action-modal'].forEach(modalId => {
+        document.getElementById(modalId).addEventListener('click', (e) => {
+            if (e.target.id === modalId) {
+                e.target.style.display = 'none';
+            }
+        });
     });
 
     // Close other modals on outside click
@@ -2077,6 +2538,7 @@ Sleep Wellness by Dr. Alen`);
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) {
                 overlay.style.display = 'none';
+                overlay.classList.remove('active');
             }
         });
     });
