@@ -314,6 +314,7 @@
         .badge-cancelled { background: rgba(211, 47, 47, 0.1); color: var(--danger); }
         .badge-unused { background: rgba(46, 125, 50, 0.1); color: var(--success); }
         .badge-used { background: rgba(107, 123, 138, 0.1); color: var(--text-light); }
+        .badge-success { background: rgba(46, 125, 50, 0.15); color: var(--success); font-weight: 500; }
 
         .action-btn {
             padding: 8px 16px;
@@ -917,6 +918,10 @@
                     <h1 class="page-title">Clients</h1>
                     <p class="page-subtitle">Manage your client accounts</p>
                 </div>
+                <button class="action-btn action-btn-secondary" onclick="loadClients()" style="display: flex; align-items: center; gap: 6px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                    Refresh
+                </button>
             </div>
 
             <div class="search-bar">
@@ -1465,9 +1470,35 @@
     // Load clients
     async function loadClients() {
         const container = document.getElementById('clients-list');
-        allClients = await FirebaseDB.getAllUsers();
+        container.innerHTML = '<div class="loading">Loading clients...</div>';
 
-        renderClients(allClients);
+        try {
+            // Force fresh fetch from Firestore
+            const snapshot = await db.collection('users')
+                .where('role', '==', 'client')
+                .get({ source: 'server' });
+
+            allClients = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            // Sort by createdAt
+            allClients.sort((a, b) => {
+                const aTime = a.createdAt?.toDate?.() || new Date(0);
+                const bTime = b.createdAt?.toDate?.() || new Date(0);
+                return bTime - aTime;
+            });
+
+            console.log('Loaded clients:', allClients.length, allClients);
+            renderClients(allClients);
+        } catch (error) {
+            console.error('Error loading clients:', error);
+            container.innerHTML = `
+                <div class="empty-state">
+                    <h3>Error Loading Clients</h3>
+                    <p>${error.message}</p>
+                    <button class="action-btn action-btn-primary" onclick="loadClients()">Retry</button>
+                </div>
+            `;
+        }
     }
 
     function renderClients(clients) {
@@ -1614,7 +1645,7 @@
                     <th>Code</th>
                     <th>Status</th>
                     <th>Created</th>
-                    <th>Notes</th>
+                    <th>Client / Notes</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -1622,20 +1653,38 @@
 
         for (const invite of invites) {
             const created = invite.createdAt?.toDate()?.toLocaleDateString() || 'N/A';
-            const statusClass = invite.used ? 'badge-used' : 'badge-unused';
-            const statusText = invite.used ? 'Used' : 'Available';
+
+            let statusClass, statusText, clientInfo;
+
+            if (invite.used) {
+                statusClass = 'badge-success';
+                statusText = 'Registered';
+                // Try to get client name
+                if (invite.usedBy) {
+                    const client = allClients.find(c => c.id === invite.usedBy);
+                    clientInfo = client ? `<strong>${client.displayName || client.email}</strong>` : (invite.clientEmail || 'Client');
+                } else {
+                    clientInfo = invite.clientEmail || 'Client';
+                }
+            } else {
+                statusClass = 'badge-pending';
+                statusText = 'Available';
+                clientInfo = invite.notes || invite.clientEmail || '-';
+            }
+
+            const registeredDate = invite.usedAt?.toDate()?.toLocaleDateString() || '';
 
             html += `
                 <tr>
                     <td><strong style="font-family: monospace; letter-spacing: 1px;">${invite.code}</strong></td>
                     <td><span class="badge ${statusClass}">${statusText}</span></td>
-                    <td>${created}</td>
-                    <td>${invite.notes || invite.clientEmail || '-'}</td>
+                    <td>${created}${invite.used && registeredDate ? `<br><small style="color: var(--text-light);">Registered: ${registeredDate}</small>` : ''}</td>
+                    <td>${clientInfo}</td>
                     <td>
                         ${!invite.used ? `
                             <button class="action-btn action-btn-secondary" onclick="copyCode('${invite.code}')">Copy</button>
                             <button class="action-btn action-btn-danger" onclick="deleteInvite('${invite.code}')">Delete</button>
-                        ` : '-'}
+                        ` : `<button class="action-btn action-btn-secondary" onclick="viewClient('${invite.usedBy}')">View Client</button>`}
                     </td>
                 </tr>
             `;
