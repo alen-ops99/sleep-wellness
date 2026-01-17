@@ -1306,16 +1306,29 @@
     function showSection(sectionId) {
         // Update nav
         document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        if (event && event.target) {
-            event.target.closest('.nav-item')?.classList.add('active');
+
+        // Try to highlight the matching nav item (if called from nav click)
+        try {
+            if (typeof event !== 'undefined' && event && event.target) {
+                event.target.closest('.nav-item')?.classList.add('active');
+            }
+        } catch (e) {
+            // Ignore - event might not be available
         }
 
         // Show section
         document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
-        document.getElementById('section-' + sectionId).classList.add('active');
+        const section = document.getElementById('section-' + sectionId);
+        if (section) {
+            section.classList.add('active');
+        } else {
+            console.error('Section not found:', 'section-' + sectionId);
+        }
 
-        // Load section data
-        loadSectionData(sectionId);
+        // Load section data (skip for client-detail as it's loaded separately)
+        if (sectionId !== 'client-detail') {
+            loadSectionData(sectionId);
+        }
     }
 
     // Load section data
@@ -2142,8 +2155,29 @@ Sleep Wellness by Dr. Alen`);
     let currentViewedClient = null;
 
     async function viewClient(clientId) {
-        const client = allClients.find(c => c.id === clientId);
-        if (!client) return;
+        console.log('viewClient called with:', clientId);
+        console.log('allClients:', allClients);
+
+        let client = allClients.find(c => c.id === clientId);
+
+        // If not in cache, fetch directly
+        if (!client) {
+            console.log('Client not in cache, fetching from database...');
+            try {
+                const profile = await FirebaseDB.getUserProfile(clientId);
+                if (profile) {
+                    client = { id: clientId, ...profile };
+                }
+            } catch (error) {
+                console.error('Error fetching client:', error);
+            }
+        }
+
+        if (!client) {
+            console.error('Client not found:', clientId);
+            alert('Error: Client not found');
+            return;
+        }
 
         currentViewedClient = client;
 
@@ -2153,18 +2187,22 @@ Sleep Wellness by Dr. Alen`);
         document.getElementById('client-name').textContent = client.displayName || 'Unknown';
         document.getElementById('client-type-badge').textContent = client.clientType || 'Client';
         document.getElementById('client-email').textContent = client.email || '';
-        document.getElementById('client-joined').textContent = 'Joined: ' + (client.createdAt?.toDate()?.toLocaleDateString() || 'Unknown');
+        document.getElementById('client-joined').textContent = 'Joined: ' + (client.createdAt?.toDate?.() ? client.createdAt.toDate().toLocaleDateString() : 'Unknown');
+
+        // Show client detail section first so user sees immediate feedback
+        showSection('client-detail');
 
         // Load all client data
-        await Promise.all([
-            loadClientAssessment(clientId),
-            loadClientActions(clientId),
-            loadClientMessages(clientId),
-            loadClientModules(clientId)
-        ]);
-
-        // Show client detail section
-        showSection('client-detail');
+        try {
+            await Promise.all([
+                loadClientAssessment(clientId),
+                loadClientActions(clientId),
+                loadClientMessages(clientId),
+                loadClientModules(clientId)
+            ]);
+        } catch (error) {
+            console.error('Error loading client data:', error);
+        }
     }
 
     async function loadClientAssessment(clientId) {
