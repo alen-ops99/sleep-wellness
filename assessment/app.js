@@ -389,15 +389,22 @@ const App = {
      * Show a specific step
      */
     showStep(stepName) {
+        console.log('showStep called with:', stepName);
+
         // Hide all steps
         document.querySelectorAll('.step-section').forEach(section => {
             section.classList.remove('active');
+            section.style.display = 'none';
         });
 
         // Show target step
         const targetSection = document.querySelector(`[data-step="${stepName}"]`);
         if (targetSection) {
             targetSection.classList.add('active');
+            targetSection.style.display = 'block';
+            console.log('Showing section:', stepName, targetSection);
+        } else {
+            console.error('Section not found:', stepName);
         }
 
         // Update client-specific section if needed
