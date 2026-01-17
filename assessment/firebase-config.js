@@ -184,12 +184,25 @@ const FirebaseDB = {
      * Get user's assessments
      */
     async getUserAssessments(userId) {
-        const snapshot = await db.collection('assessments')
-            .where('userId', '==', userId)
-            .orderBy('createdAt', 'desc')
-            .get();
+        try {
+            const snapshot = await db.collection('assessments')
+                .where('userId', '==', userId)
+                .get();
 
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const assessments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            // Sort by createdAt client-side (descending)
+            assessments.sort((a, b) => {
+                const aTime = a.createdAt?.toDate?.() || new Date(0);
+                const bTime = b.createdAt?.toDate?.() || new Date(0);
+                return bTime - aTime;
+            });
+
+            return assessments;
+        } catch (error) {
+            console.error('Error getting user assessments:', error);
+            return [];
+        }
     },
 
     /**
@@ -288,13 +301,25 @@ const FirebaseDB = {
      * Get user's diary entries
      */
     async getDiaryEntries(userId, limit = 30) {
-        const snapshot = await db.collection('diaryEntries')
-            .where('userId', '==', userId)
-            .orderBy('date', 'desc')
-            .limit(limit)
-            .get();
+        try {
+            const snapshot = await db.collection('diaryEntries')
+                .where('userId', '==', userId)
+                .get();
 
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const entries = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            // Sort by date client-side (descending)
+            entries.sort((a, b) => {
+                const dateA = a.date || '';
+                const dateB = b.date || '';
+                return dateB.localeCompare(dateA);
+            });
+
+            return entries.slice(0, limit);
+        } catch (error) {
+            console.error('Error getting diary entries:', error);
+            return [];
+        }
     },
 
     /**
@@ -316,12 +341,25 @@ const FirebaseDB = {
      * Get user's appointments
      */
     async getUserAppointments(userId) {
-        const snapshot = await db.collection('appointments')
-            .where('userId', '==', userId)
-            .orderBy('dateTime', 'desc')
-            .get();
+        try {
+            const snapshot = await db.collection('appointments')
+                .where('userId', '==', userId)
+                .get();
 
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const appointments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            // Sort by dateTime client-side (descending)
+            appointments.sort((a, b) => {
+                const aTime = a.dateTime?.toDate?.() || new Date(0);
+                const bTime = b.dateTime?.toDate?.() || new Date(0);
+                return bTime - aTime;
+            });
+
+            return appointments;
+        } catch (error) {
+            console.error('Error getting user appointments:', error);
+            return [];
+        }
     },
 
     /**

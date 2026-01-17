@@ -27,30 +27,40 @@ const App = {
      * Initialize the application
      */
     init() {
+        console.log('App.init() starting...');
+
         // Load saved data
         this.responses = Storage.getResponses();
         this.clientType = Storage.getClientType();
         this.currentStep = Storage.getCurrentStep();
 
+        console.log('Loaded state:', { responses: this.responses, clientType: this.clientType, currentStep: this.currentStep });
+
         // Check for saved progress
-        if (Storage.hasSavedProgress() && this.currentStep !== 'welcome' && this.currentStep !== 'results') {
-            document.getElementById('resumeNotice').style.display = 'block';
+        const resumeNotice = document.getElementById('resumeNotice');
+        if (resumeNotice && Storage.hasSavedProgress() && this.currentStep !== 'welcome' && this.currentStep !== 'results') {
+            resumeNotice.style.display = 'block';
         }
 
         // Render step indicators
         this.renderStepIndicators();
+        console.log('Step indicators rendered');
 
         // Render questionnaires
         this.renderQuestionnaires();
+        console.log('Questionnaires rendered');
 
         // Set up event listeners
         this.setupEventListeners();
+        console.log('Event listeners set up');
 
         // Show current step
         this.showStep(this.currentStep);
+        console.log('Showing step:', this.currentStep);
 
         // Update progress
         this.updateProgress();
+        console.log('App.init() complete');
     },
 
     /**
@@ -520,7 +530,19 @@ function toggleMobileMenu() {
 
 // Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    App.init();
+    console.log('DOM loaded, initializing App...');
+    try {
+        App.init();
+        console.log('App initialized successfully');
+    } catch (error) {
+        console.error('Error initializing App:', error);
+        // Show welcome section as fallback
+        const welcome = document.querySelector('[data-step="welcome"]');
+        if (welcome) {
+            welcome.classList.add('active');
+            welcome.style.display = 'block';
+        }
+    }
 });
 
 // Make App available globally
