@@ -325,8 +325,8 @@
 
         <!-- Login/Register Tabs -->
         <div class="auth-tabs" id="authTabs">
-            <button type="button" class="auth-tab active" data-tab="login" onclick="showAuthTab('login')">Sign In</button>
-            <button type="button" class="auth-tab" data-tab="register" onclick="showAuthTab('register')">Create Account</button>
+            <div class="auth-tab active" data-tab="login" id="tab-login" onclick="showAuthTab('login')">Sign In</div>
+            <div class="auth-tab" data-tab="register" id="tab-register" onclick="showAuthTab('register')">Create Account</div>
         </div>
 
         <!-- Login Form -->
@@ -626,6 +626,7 @@
             }
         }
     });
+
 </script>
 
 </body>
