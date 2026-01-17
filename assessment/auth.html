@@ -409,6 +409,24 @@
                 </div>
             </div>
 
+            <!-- GDPR/Privacy Consent -->
+            <div class="consent-section" style="margin-top: 20px; padding: 15px; background: rgba(201, 169, 98, 0.05); border-radius: 8px;">
+                <label class="consent-checkbox" style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer;">
+                    <input type="checkbox" id="consentCheckbox" required style="margin-top: 3px; width: 18px; height: 18px; accent-color: var(--gold);">
+                    <span style="font-size: 12px; color: var(--text-light); line-height: 1.5;">
+                        I consent to the collection and processing of my sleep health data for the purpose of receiving personalized sleep wellness consultation. I understand that my data will be handled confidentially and used only to provide sleep assessment and recommendations. I can request deletion of my data at any time by contacting Dr. Alen.
+                        <a href="#" onclick="showPrivacyPolicy(event)" style="color: var(--gold); text-decoration: underline;">View Privacy Policy</a>
+                    </span>
+                </label>
+
+                <label class="consent-checkbox" style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer; margin-top: 12px;">
+                    <input type="checkbox" id="marketingConsent" style="margin-top: 3px; width: 18px; height: 18px; accent-color: var(--gold);">
+                    <span style="font-size: 12px; color: var(--text-light); line-height: 1.5;">
+                        I agree to receive sleep wellness tips and updates via email (optional)
+                    </span>
+                </label>
+            </div>
+
             <p class="form-error" id="registerError"></p>
 
             <button type="submit" class="auth-btn" id="registerBtn">Create Account</button>
@@ -537,8 +555,17 @@
         const email = document.getElementById('registerEmail').value;
         const password = document.getElementById('registerPassword').value;
         const clientType = document.querySelector('input[name="clientType"]:checked')?.value;
+        const consentChecked = document.getElementById('consentCheckbox').checked;
+        const marketingConsent = document.getElementById('marketingConsent').checked;
         const btn = document.getElementById('registerBtn');
         const error = document.getElementById('registerError');
+
+        // Check consent
+        if (!consentChecked) {
+            error.textContent = 'Please agree to the data processing terms to create an account.';
+            error.classList.add('visible');
+            return;
+        }
 
         btn.disabled = true;
         btn.textContent = 'Verifying invite code...';
@@ -562,6 +589,18 @@
         if (result.success) {
             // Mark invite code as used
             await FirebaseDB.useInviteCode(inviteCode, result.user.uid);
+
+            // Save consent to user profile
+            try {
+                await db.collection('users').doc(result.user.uid).update({
+                    dataConsentGiven: true,
+                    dataConsentDate: firebase.firestore.FieldValue.serverTimestamp(),
+                    marketingConsent: marketingConsent
+                });
+            } catch (err) {
+                console.log('Consent update will be saved on next login');
+            }
+
             window.location.href = 'account.html';
         } else {
             error.textContent = result.error;
@@ -569,6 +608,57 @@
             btn.disabled = false;
             btn.textContent = 'Create Account';
         }
+    }
+
+    // Show privacy policy modal
+    function showPrivacyPolicy(e) {
+        e.preventDefault();
+        const modal = document.createElement('div');
+        modal.id = 'privacyModal';
+        modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px;';
+        modal.innerHTML = `
+            <div style="background: white; max-width: 600px; max-height: 80vh; overflow-y: auto; padding: 30px; border-radius: 8px; position: relative;">
+                <button onclick="document.getElementById('privacyModal').remove()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
+                <h2 style="font-family: 'Cormorant Garamond', serif; color: var(--navy); margin-bottom: 20px;">Privacy Policy</h2>
+                <div style="font-size: 14px; line-height: 1.7; color: var(--text-light);">
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 20px 0 10px;">Data We Collect</h3>
+                    <p>We collect the following information to provide sleep wellness services:</p>
+                    <ul style="padding-left: 20px; margin: 10px 0;">
+                        <li>Contact information (name, email)</li>
+                        <li>Sleep patterns and habits</li>
+                        <li>Assessment responses</li>
+                        <li>Sleep diary entries</li>
+                        <li>Messages with your consultant</li>
+                    </ul>
+
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 20px 0 10px;">How We Use Your Data</h3>
+                    <p>Your data is used exclusively to:</p>
+                    <ul style="padding-left: 20px; margin: 10px 0;">
+                        <li>Provide personalized sleep assessment and recommendations</li>
+                        <li>Track your progress over time</li>
+                        <li>Enable communication with Dr. Alen Juginovic</li>
+                        <li>Improve our sleep wellness services</li>
+                    </ul>
+
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 20px 0 10px;">Data Security</h3>
+                    <p>Your data is stored securely using industry-standard encryption. We never sell or share your personal information with third parties.</p>
+
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 20px 0 10px;">Your Rights</h3>
+                    <p>You have the right to:</p>
+                    <ul style="padding-left: 20px; margin: 10px 0;">
+                        <li>Access your personal data</li>
+                        <li>Request correction of inaccurate data</li>
+                        <li>Request deletion of your data</li>
+                        <li>Withdraw consent at any time</li>
+                    </ul>
+
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 20px 0 10px;">Contact</h3>
+                    <p>For any privacy-related inquiries, contact Dr. Alen Juginovic at alen_juginovic@hms.harvard.edu</p>
+                </div>
+                <button onclick="document.getElementById('privacyModal').remove()" style="margin-top: 20px; padding: 12px 24px; background: var(--gold); color: var(--deep-navy); border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">Close</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
     }
 
     // Handle Google login
