@@ -468,8 +468,10 @@
         document.getElementById('authTitle').textContent =
             tab === 'login' ? 'Welcome Back' : 'Create Your Account';
 
-        // Hide reset form
-        hideResetForm();
+        // Make sure reset form is hidden and tabs are visible
+        document.getElementById('resetForm').classList.remove('active');
+        document.getElementById('authTabs').style.display = 'flex';
+        document.getElementById('authTitle').style.display = '';
     }
 
     // Show reset form
@@ -487,7 +489,12 @@
         document.getElementById('resetForm').classList.remove('active');
         document.getElementById('authTitle').style.display = '';
         document.getElementById('resetSuccess').classList.remove('visible');
-        showAuthTab('login');
+        // Show login form directly without calling showAuthTab to avoid recursion
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector('[data-tab="login"]').classList.add('active');
+        document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+        document.getElementById('loginForm').classList.add('active');
+        document.getElementById('authTitle').textContent = 'Welcome Back';
     }
 
     // Handle login
