@@ -563,6 +563,78 @@
             margin-top: 5px;
         }
 
+        /* Sports Media Section */
+        .sports-media {
+            background: var(--cream);
+            padding: 60px;
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .sports-media-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .sports-media-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            padding: 15px 25px;
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            transition: all 0.3s;
+        }
+
+        .sports-media-item:hover {
+            border-color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .sports-media-icon {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: var(--gold);
+        }
+
+        .sports-media-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sports-media-source {
+            font-size: 10px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sports-media-title {
+            font-size: 14px;
+            color: var(--navy);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .sports-media {
+                padding: 40px 30px;
+            }
+            .sports-media-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .sports-media-item {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
         /* About Section */
         .about {
             background: var(--cream);
@@ -1017,6 +1089,33 @@
     </p>
     <p class="testimonial-author">Stefan K.</p>
     <p class="testimonial-role">Professional Athlete</p>
+</section>
+
+<!-- Sports Media -->
+<section class="sports-media">
+    <div class="sports-media-content">
+        <a href="https://www.nytimes.com/athletic/5686704/2024/08/08/nhl-sleep-hacks-tips-hockey-health-naps/" target="_blank" class="sports-media-item">
+            <span class="sports-media-icon">NYT</span>
+            <div class="sports-media-text">
+                <span class="sports-media-source">The Athletic / New York Times</span>
+                <span class="sports-media-title">NHL Sleep Hacks</span>
+            </div>
+        </a>
+        <a href="https://link.springer.com/chapter/10.1007/978-3-031-92060-8_18" target="_blank" class="sports-media-item">
+            <span class="sports-media-icon">Book</span>
+            <div class="sports-media-text">
+                <span class="sports-media-source">Springer Nature</span>
+                <span class="sports-media-title">The Crucial Role of Sleep for Athletes</span>
+            </div>
+        </a>
+        <a href="https://www.sportsdoctorsnetwork.com/team/dr-alen-juginovic" target="_blank" class="sports-media-item">
+            <span class="sports-media-icon">Pro</span>
+            <div class="sports-media-text">
+                <span class="sports-media-source">Sports Doctors Network</span>
+                <span class="sports-media-title">Expert Profile</span>
+            </div>
+        </a>
+    </div>
 </section>
 
 <!-- About -->

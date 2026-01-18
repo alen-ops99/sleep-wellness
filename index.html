@@ -1135,6 +1135,123 @@
             }
         }
 
+        /* Featured In / Media Section */
+        .featured-in {
+            background: var(--cream);
+            padding: 80px 60px;
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .featured-in .section-header {
+            margin-bottom: 50px;
+        }
+
+        .featured-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto 50px;
+        }
+
+        .featured-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: transform 0.3s, opacity 0.3s;
+            opacity: 0.7;
+        }
+
+        .featured-logo:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+        }
+
+        .featured-logo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--navy);
+            letter-spacing: 1px;
+        }
+
+        .featured-logo-sub {
+            font-size: 11px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .featured-articles {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .featured-article {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 30px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .featured-article:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-color: var(--gold);
+        }
+
+        .featured-article-source {
+            font-size: 11px;
+            color: var(--gold-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .featured-article-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--navy);
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .featured-article-date {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        @media (max-width: 900px) {
+            .featured-logos {
+                gap: 40px;
+            }
+            .featured-articles {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .featured-in {
+                padding: 60px 30px;
+            }
+            .featured-logos {
+                gap: 30px;
+            }
+            .featured-logo-text {
+                font-size: 20px;
+            }
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .hero h1 {
@@ -1445,6 +1562,51 @@
                 <li>Forbes 30 Under 30 Europe nominee (Healthcare)</li>
             </ul>
         </div>
+    </div>
+</section>
+
+<!-- Featured In / Media Section -->
+<section class="featured-in">
+    <div class="section-header">
+        <p class="section-label">As Featured In</p>
+        <h2 class="section-title">Trusted Voice in Sleep Science</h2>
+    </div>
+
+    <div class="featured-logos">
+        <a href="https://www.nytimes.com/athletic/5686704/2024/08/08/nhl-sleep-hacks-tips-hockey-health-naps/" target="_blank" class="featured-logo">
+            <span class="featured-logo-text">The New York Times</span>
+            <span class="featured-logo-sub">The Athletic</span>
+        </a>
+        <a href="https://www.forbes.com/sites/forbes-personal-shopper/article/best-sleep-tracker-ring/" target="_blank" class="featured-logo">
+            <span class="featured-logo-text">Forbes</span>
+            <span class="featured-logo-sub">Expert Contributor</span>
+        </a>
+        <a href="https://brain.harvard.edu/hbi_humans/alen-juginovic/" target="_blank" class="featured-logo">
+            <span class="featured-logo-text">Harvard</span>
+            <span class="featured-logo-sub">Brain Initiative</span>
+        </a>
+        <a href="https://www.barnesandnoble.com/w/sleep-science-made-simple-alen-juginovic/1147216471" target="_blank" class="featured-logo">
+            <span class="featured-logo-text">Springer</span>
+            <span class="featured-logo-sub">Published Author</span>
+        </a>
+    </div>
+
+    <div class="featured-articles">
+        <a href="https://www.nytimes.com/athletic/5686704/2024/08/08/nhl-sleep-hacks-tips-hockey-health-naps/" target="_blank" class="featured-article">
+            <p class="featured-article-source">The Athletic / New York Times</p>
+            <h4 class="featured-article-title">NHL Sleep Hacks: Tips for Hockey Health and Naps</h4>
+            <p class="featured-article-date">August 2024</p>
+        </a>
+        <a href="https://link.springer.com/chapter/10.1007/978-3-031-92060-8_18" target="_blank" class="featured-article">
+            <p class="featured-article-source">Springer Nature</p>
+            <h4 class="featured-article-title">The Crucial Role of Sleep for Athletes</h4>
+            <p class="featured-article-date">Book Chapter, June 2025</p>
+        </a>
+        <a href="https://wearable-technologies.com/speakers/alen-juginovic" target="_blank" class="featured-article">
+            <p class="featured-article-source">WT Conference Europe</p>
+            <h4 class="featured-article-title">Featured Speaker: Wearable Technologies Conference</h4>
+            <p class="featured-article-date">2025</p>
+        </a>
     </div>
 </section>
 
