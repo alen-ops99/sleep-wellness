@@ -466,6 +466,31 @@
             margin-bottom: 10px;
         }
 
+        .stat-citation {
+            margin-top: 12px;
+        }
+
+        .stat-citation a {
+            font-size: 11px;
+            color: var(--gold-light);
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat-citation a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        .stat-citation a::before {
+            content: '↗';
+            font-size: 10px;
+        }
+
         .stat-label {
             font-size: 13px;
             font-weight: 400;
@@ -1359,24 +1384,32 @@
 <section class="stats">
     <div class="stats-grid">
         <div class="stat-item">
-            <div class="stat-number">$411B</div>
-            <div class="stat-label">Annual cost of sleep deprivation to US business</div>
-            <p style="font-size: 10px; margin-top: 8px; opacity: 0.6;"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5627640/" target="_blank" style="color: var(--gold-light);">RAND, 2016</a></p>
+            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5627640/" target="_blank" style="text-decoration: none;">
+                <div class="stat-number">$411B</div>
+            </a>
+            <div class="stat-label">Annual cost of sleep deprivation to US economy</div>
+            <div class="stat-citation"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5627640/" target="_blank">Hafner et al., RAND Corporation, 2016</a></div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">1.7x</div>
-            <div class="stat-label">Higher injury risk for under-slept athletes</div>
-            <p style="font-size: 10px; margin-top: 8px; opacity: 0.6;"><a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank" style="color: var(--gold-light);">J Pediatr Orthop, 2014</a></p>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank" style="text-decoration: none;">
+                <div class="stat-number">1.7x</div>
+            </a>
+            <div class="stat-label">Higher injury risk with inadequate sleep</div>
+            <div class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank">Milewski et al., J Pediatr Orthop, 2014</a></div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">4x</div>
-            <div class="stat-label">Increased risk of poor decisions when tired</div>
-            <p style="font-size: 10px; margin-top: 8px; opacity: 0.6;"><a href="https://pubmed.ncbi.nlm.nih.gov/16489997/" target="_blank" style="color: var(--gold-light);">J Sleep Res, 2006</a></p>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/21075236/" target="_blank" style="text-decoration: none;">
+                <div class="stat-number">-40%</div>
+            </a>
+            <div class="stat-label">Cognitive performance decline when sleep-deprived</div>
+            <div class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/21075236/" target="_blank">Alhola & Polo-Kantola, Neuropsychiatr Dis Treat, 2007</a></div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">70%</div>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" style="text-decoration: none;">
+                <div class="stat-number">70%</div>
+            </a>
             <div class="stat-label">Of growth hormone released during deep sleep</div>
-            <p style="font-size: 10px; margin-top: 8px; opacity: 0.6;"><a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" style="color: var(--gold-light);">J Clin Endocrinol, 1996</a></p>
+            <div class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank">Van Cauter et al., J Clin Endocrinol Metab, 1996</a></div>
         </div>
     </div>
 </section>
