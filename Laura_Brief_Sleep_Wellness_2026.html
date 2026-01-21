@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Wellness 2026 - Reference Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0f1c2e;
+            --gold: #C9A962;
+            --cream: #FAF8F5;
+            --light-gold: rgba(201, 169, 98, 0.1);
+            --text-dark: #1a1a1a;
+            --text-muted: #5a5a5a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--cream);
+            color: var(--text-dark);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .header {
+            background: var(--navy);
+            color: var(--cream);
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* Tab Navigation */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(201, 169, 98, 0.3);
+            padding-bottom: 0;
+        }
+
+        .tab {
+            padding: 15px 30px;
+            background: white;
+            border: none;
+            border-radius: 10px 10px 0 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tab:hover {
+            background: var(--light-gold);
+        }
+
+        .tab.active {
+            background: var(--navy);
+            color: var(--cream);
+        }
+
+        .tab .icon {
+            font-size: 20px;
+        }
+
+        .tab .target {
+            background: var(--gold);
+            color: var(--navy);
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .tab.active .target {
+            background: var(--gold);
+        }
+
+        /* Panel Content */
+        .panel {
+            display: none;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        /* Section Cards */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .info-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            color: var(--navy);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--gold);
+        }
+
+        .info-card p, .info-card li {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .info-card ul {
+            list-style: none;
+        }
+
+        .info-card li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .info-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* Editable fields */
+        .editable {
+            background: var(--light-gold);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            min-height: 60px;
+        }
+
+        .editable:focus {
+            outline: 2px solid var(--gold);
+        }
+
+        .editable-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gold);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .editable-label::after {
+            content: '(click to edit)';
+            font-size: 10px;
+            opacity: 0.7;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        /* Full width card */
+        .full-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .full-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            color: var(--navy);
+            margin-bottom: 15px;
+        }
+
+        /* Pitch box */
+        .pitch-box {
+            background: var(--navy);
+            color: var(--cream);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .pitch-box h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .pitch-box p {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        /* Key stats */
+        .stats-row {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat {
+            background: rgba(201, 169, 98, 0.15);
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat .number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .stat .label {
+            font-size: 11px;
+            color: var(--cream);
+            opacity: 0.8;
+        }
+
+        /* Outreach steps */
+        .outreach-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 15px;
+            background: var(--cream);
+            border-radius: 8px;
+        }
+
+        .step-num {
+            width: 30px;
+            height: 30px;
+            background: var(--navy);
+            color: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin: 0 auto 10px;
+        }
+
+        .step-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 5px;
+        }
+
+        .step-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Notes section */
+        .notes-area {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .notes-area h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            color: var(--navy);
+            margin-bottom: 15px;
+        }
+
+        .notes-content {
+            background: var(--cream);
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 120px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .notes-content:focus {
+            outline: 2px solid var(--gold);
+        }
+
+        /* Overview section */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .overview-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .overview-card.priority {
+            border: 2px solid var(--gold);
+        }
+
+        .overview-card .icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .overview-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .overview-card .target-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .overview-card .target-label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Why us box */
+        .why-us {
+            background: var(--navy);
+            color: var(--cream);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .why-us h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .why-us-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .why-item {
+            text-align: center;
+        }
+
+        .why-item strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .why-item span {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        @media (max-width: 900px) {
+            .info-grid, .outreach-steps, .why-us-grid {
+                grid-template-columns: 1fr;
+            }
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+            .tabs {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media print {
+            .tabs { display: none; }
+            .panel { display: block !important; page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>Sleep Wellness 2026</h1>
+        <p>Reference guide for Alen & Laura</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab active" onclick="showPanel('start')">
+                <span class="icon">🚀</span> Getting Started
+            </button>
+            <button class="tab" onclick="showPanel('overview')">
+                <span class="icon">📋</span> Overview
+            </button>
+            <button class="tab" onclick="showPanel('hotels')">
+                <span class="icon">🏨</span> Hotels
+                <span class="target">2-3</span>
+            </button>
+            <button class="tab" onclick="showPanel('athletes')">
+                <span class="icon">⚽</span> Athletes
+                <span class="target">2-3</span>
+            </button>
+            <button class="tab" onclick="showPanel('corporate')">
+                <span class="icon">💼</span> Corporate
+                <span class="target">1-2</span>
+            </button>
+        </div>
+
+        <!-- GETTING STARTED PANEL -->
+        <div id="start" class="panel active">
+
+            <!-- First Week Checklist -->
+            <div class="full-card">
+                <h3>First Week Checklist</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 15px;">
+                    <div>
+                        <div style="font-weight: 600; color: var(--navy); margin-bottom: 10px;">Setup</div>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative; border-bottom: 1px solid #eee;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">☐</span>
+                                Review this guide — ask Alen any questions
+                            </li>
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative; border-bottom: 1px solid #eee;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">☐</span>
+                                Create prospect tracker (Google Sheet)
+                            </li>
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">☐</span>
+                                Schedule weekly 15-min sync with Alen
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: var(--navy); margin-bottom: 10px;">First Research</div>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative; border-bottom: 1px solid #eee;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">☐</span>
+                                Research 10 luxury hotels (5 Europe, 5 US)
+                            </li>
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative; border-bottom: 1px solid #eee;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">☐</span>
+                                Find decision-maker + email for each
+                            </li>
+                            <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">☐</span>
+                                Draft first outreach email with Alen
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Communication -->
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>How We Communicate</h3>
+                    <ul>
+                        <li><strong>Slack</strong> — Quick updates, questions, sharing prospects</li>
+                        <li><strong>Weekly sync</strong> — 15 min to review progress, plan next steps</li>
+                        <li><strong>Loop Alen in</strong> — When someone responds or wants to schedule a call</li>
+                    </ul>
+                    <div class="editable-label">Weekly Sync Time</div>
+                    <div class="editable" contenteditable="true">To be scheduled...</div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Time Commitment</h3>
+                    <ul>
+                        <li><strong>2-5 hours/week</strong> on sleep wellness</li>
+                        <li>~1-2 hrs research (finding prospects)</li>
+                        <li>~1-2 hrs outreach (emails, follow-ups)</li>
+                        <li>~1 hr admin (tracker, prep materials)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Pricing -->
+            <div class="pitch-box">
+                <h3>If Someone Asks About Pricing</h3>
+                <p style="margin-bottom: 15px;">"Our engagements are customized based on your property's needs and scope. Pricing is discussed after an initial discovery call where we understand your goals. I'd be happy to schedule a brief call with Dr. Juginovic to explore how we might work together."</p>
+                <div style="font-size: 14px; opacity: 0.8;">
+                    <strong>Key points:</strong> Premium positioning — we don't publish rates. Every engagement is tailored. Discovery call first, then proposal with pricing.
+                </div>
+            </div>
+
+            <!-- Sample Email -->
+            <div class="full-card">
+                <h3>Sample Outreach Email (Hotels)</h3>
+                <div style="background: var(--cream); padding: 20px; border-radius: 8px; font-size: 14px; line-height: 1.8;">
+                    <p style="color: var(--text-muted); margin-bottom: 15px;"><strong>Subject:</strong> Sleep as [Property Name]'s signature — quick thought</p>
+
+                    <p style="margin-bottom: 12px;">Dear [Name],</p>
+
+                    <p style="margin-bottom: 12px;">I noticed [Property Name]'s commitment to guest wellness [reference specific initiative, award, or recent news]. I'm reaching out because we help luxury hotels transform sleep into a true differentiator — so guests choose your property specifically because they know they'll sleep better there.</p>
+
+                    <p style="margin-bottom: 12px;">The opportunity is significant: 68% of travelers report poor hotel sleep, yet 91% say sleep quality influences their booking decisions. We've developed evidence-based protocols — from room optimization to Sleep Concierge training — that turn this gap into a competitive advantage.</p>
+
+                    <p style="margin-bottom: 12px;">I'm a physician and sleep researcher at Harvard Medical School, with published work on sleep optimization. I'd welcome a brief conversation to share what we've learned and explore whether there's a fit.</p>
+
+                    <p style="margin-bottom: 12px;">Would you be open to a 20-minute call?</p>
+
+                    <p style="margin-bottom: 5px;">Best regards,</p>
+                    <p style="margin-bottom: 0;">Dr. Alen Juginovic<br>
+                    <span style="color: var(--text-muted);">Harvard Medical School | Sleep Wellness Consulting</span></p>
+                </div>
+                <div class="editable-label" style="margin-top: 15px;">Personalization Notes</div>
+                <div class="editable" contenteditable="true">Always personalize the first paragraph — mention their spa, recent renovation, wellness award, or specific initiative. Generic emails don't work.</div>
+            </div>
+
+            <!-- Prospect Tracker -->
+            <div class="full-card">
+                <h3>Prospect Tracker Columns</h3>
+                <p style="color: var(--text-muted); margin-bottom: 15px;">Create a Google Sheet with these columns:</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <span style="background: var(--light-gold); padding: 6px 12px; border-radius: 6px; font-size: 13px;">Property Name</span>
+                    <span style="background: var(--light-gold); padding: 6px 12px; border-radius: 6px; font-size: 13px;">Location</span>
+                    <span style="background: var(--light-gold); padding: 6px 12px; border-radius: 6px; font-size: 13px;">Contact Name</span>
+                    <span style="background: var(--light-gold); padding: 6px 12px; border-radius: 6px; font-size: 13px;">Title</span>
+                    <span style="background: var(--light-gold); padding: 6px 12px; border-radius: 6px; font-size: 13px;">Email</span>
+                    <span style="background: var(--light-gold); padding: 6px 12px; border-radius: 6px; font-size: 13px;">Vertical</span>
+                    <span style="background: var(--light-gold); padding: 6px 12px; border-radius: 6px; font-size: 13px;">Date Contacted</span>
+                    <span style="background: var(--light-gold); padding: 6px 12px; border-radius: 6px; font-size: 13px;">Status</span>
+                    <span style="background: var(--light-gold); padding: 6px 12px; border-radius: 6px; font-size: 13px;">Notes</span>
+                    <span style="background: var(--light-gold); padding: 6px 12px; border-radius: 6px; font-size: 13px;">Next Action</span>
+                </div>
+                <p style="color: var(--text-muted); margin-top: 15px; font-size: 13px;"><strong>Status options:</strong> Researched → Contacted → Follow-up Sent → Responded → Call Scheduled → Proposal Sent → Won / Lost</p>
+            </div>
+
+        </div>
+
+        <!-- OVERVIEW PANEL -->
+        <div id="overview" class="panel">
+            <div class="overview-grid">
+                <div class="overview-card priority" onclick="showPanel('hotels')">
+                    <div class="icon">🏨</div>
+                    <h3>Luxury Hotels</h3>
+                    <div class="target-num">2-3</div>
+                    <div class="target-label">contracts · priority</div>
+                </div>
+                <div class="overview-card" onclick="showPanel('athletes')">
+                    <div class="icon">⚽</div>
+                    <h3>Elite Athletes</h3>
+                    <div class="target-num">2-3</div>
+                    <div class="target-label">clients</div>
+                </div>
+                <div class="overview-card" onclick="showPanel('corporate')">
+                    <div class="icon">💼</div>
+                    <h3>Corporate</h3>
+                    <div class="target-num">1-2</div>
+                    <div class="target-label">engagements</div>
+                </div>
+            </div>
+
+            <div class="why-us">
+                <h3>Why Clients Choose Us</h3>
+                <div class="why-us-grid">
+                    <div class="why-item">
+                        <strong>Harvard Researcher</strong>
+                        <span>Active sleep research at HMS</span>
+                    </div>
+                    <div class="why-item">
+                        <strong>Physician-Led</strong>
+                        <span>MD, not just wellness coach</span>
+                    </div>
+                    <div class="why-item">
+                        <strong>Published Science</strong>
+                        <span>Cell, Sleep Medicine, etc.</span>
+                    </div>
+                    <div class="why-item">
+                        <strong>Premium Focus</strong>
+                        <span>Quality over quantity</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="full-card">
+                <h3>How We Build the Brand</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 10px 0; padding-left: 25px; position: relative; border-bottom: 1px solid #eee;">
+                        <span style="position: absolute; left: 0; color: var(--gold);">→</span>
+                        Create 2-3 case studies from past/current work
+                    </li>
+                    <li style="padding: 10px 0; padding-left: 25px; position: relative; border-bottom: 1px solid #eee;">
+                        <span style="position: absolute; left: 0; color: var(--gold);">→</span>
+                        Post monthly on LinkedIn (sleep science insights)
+                    </li>
+                    <li style="padding: 10px 0; padding-left: 25px; position: relative; border-bottom: 1px solid #eee;">
+                        <span style="position: absolute; left: 0; color: var(--gold);">→</span>
+                        Pursue speaking opportunities (hospitality, sports, executive events)
+                    </li>
+                    <li style="padding: 10px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--gold);">→</span>
+                        Collect testimonials from anyone we've helped
+                    </li>
+                </ul>
+            </div>
+
+            <div class="notes-area">
+                <h3>General Notes</h3>
+                <div class="notes-content" contenteditable="true">Click here to add notes about overall strategy, priorities, or things to remember...</div>
+            </div>
+        </div>
+
+        <!-- HOTELS PANEL -->
+        <div id="hotels" class="panel">
+            <div class="pitch-box">
+                <h3>The Pitch</h3>
+                <p>"68% of travelers report poor hotel sleep. We help luxury properties transform sleep into a signature differentiator — so guests choose you specifically because they know they'll sleep better."</p>
+                <div class="stats-row">
+                    <div class="stat">
+                        <div class="number">68%</div>
+                        <div class="label">poor hotel sleep</div>
+                    </div>
+                    <div class="stat">
+                        <div class="number">$639B</div>
+                        <div class="label">wellness tourism</div>
+                    </div>
+                    <div class="stat">
+                        <div class="number">91%</div>
+                        <div class="label">prioritize sleep when booking</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Target Audience</h3>
+                    <ul>
+                        <li>5-star luxury hotels</li>
+                        <li>Wellness-focused resorts</li>
+                        <li>Boutique properties investing in guest experience</li>
+                        <li>Hotels with existing spa/wellness programs</li>
+                    </ul>
+                    <div class="editable-label">Regions to Focus</div>
+                    <div class="editable" contenteditable="true">Europe: Monaco, Paris, London, Mediterranean<br>US: East Coast, wellness resorts</div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Decision Makers</h3>
+                    <ul>
+                        <li>Wellness Directors</li>
+                        <li>General Managers</li>
+                        <li>Spa Directors</li>
+                        <li>Guest Experience Managers</li>
+                    </ul>
+                    <div class="editable-label">Where to Find Them</div>
+                    <div class="editable" contenteditable="true">LinkedIn, Forbes Travel Guide, Leading Hotels of the World, Condé Nast awards, hospitality conferences</div>
+                </div>
+
+                <div class="info-card">
+                    <h3>What We Offer</h3>
+                    <ul>
+                        <li><strong>Sleep Audit</strong> — room analysis, recommendations report</li>
+                        <li><strong>Sleep Suite Program</strong> — pilot design, staff training, protocols</li>
+                        <li><strong>Property-Wide</strong> — full implementation, spa integration, F&B</li>
+                    </ul>
+                    <div class="editable-label">Entry Point Strategy</div>
+                    <div class="editable" contenteditable="true">Start with Sleep Audit (low commitment), prove value, expand to full programs</div>
+                </div>
+
+                <div class="info-card">
+                    <h3>What They Get</h3>
+                    <ul>
+                        <li>Room optimization report (light, temp, sound, bedding)</li>
+                        <li>Staff training program</li>
+                        <li>Sleep Concierge protocols</li>
+                        <li>Marketing support & talking points</li>
+                        <li>Ongoing consulting</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="full-card">
+                <h3>How to Reach Out</h3>
+                <div class="outreach-steps">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <div class="step-title">Research</div>
+                        <div class="step-desc">Find property, decision-maker, email, existing wellness initiatives</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <div class="step-title">Personalize</div>
+                        <div class="step-desc">Reference their property, recent news, or wellness focus</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <div class="step-title">Outreach</div>
+                        <div class="step-desc">Send email, follow up in 5-7 days if no response</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">4</div>
+                        <div class="step-title">Discovery</div>
+                        <div class="step-desc">30-min call to understand needs, then tailored proposal</div>
+                    </div>
+                </div>
+                <div class="editable-label" style="margin-top: 20px;">Email Template Notes</div>
+                <div class="editable" contenteditable="true">Key points to include: Harvard credentials, 68% stat, "signature differentiator" angle, offer to share case studies...</div>
+            </div>
+
+            <!-- Target Prospects -->
+            <div class="full-card">
+                <h3>Target Hotels to Research</h3>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">High-potential prospects — start here. These are luxury properties with strong wellness positioning or opportunity.</p>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                    <div style="background: var(--cream); padding: 15px; border-radius: 8px;">
+                        <div style="font-weight: 600; color: var(--navy); margin-bottom: 8px;">🇪🇺 Europe</div>
+                        <ul style="list-style: none; padding: 0; font-size: 14px; color: var(--text-muted);">
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Hôtel de Paris Monte-Carlo <span style="color: var(--gold);">★</span></li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Six Senses (Ibiza, Douro Valley, London)</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">SHA Wellness Clinic, Spain</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Aman Venice / Aman Le Mélézin</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">The Lanesborough, London</li>
+                            <li style="padding: 6px 0;">Clinique La Prairie, Switzerland</li>
+                        </ul>
+                    </div>
+                    <div style="background: var(--cream); padding: 15px; border-radius: 8px;">
+                        <div style="font-weight: 600; color: var(--navy); margin-bottom: 8px;">🇺🇸 United States</div>
+                        <ul style="list-style: none; padding: 0; font-size: 14px; color: var(--text-muted);">
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Canyon Ranch (Tucson, Lenox, Woodside)</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Miraval Arizona / Austin / Berkshires</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Four Seasons (Lanai, Maui, Napa)</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">The Peninsula New York / Chicago</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Montage Laguna Beach / Deer Valley</li>
+                            <li style="padding: 6px 0;">Mandarin Oriental (Boston, NYC, Miami)</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="font-size: 12px; color: var(--gold); margin-top: 15px;"><span style="color: var(--gold);">★</span> = Proposal already prepared</p>
+            </div>
+
+            <div class="notes-area">
+                <h3>Hotels — Notes & Prospects</h3>
+                <div class="notes-content" contenteditable="true">Add notes about specific hotels we're targeting, conversations in progress, or lessons learned...</div>
+            </div>
+        </div>
+
+        <!-- ATHLETES PANEL -->
+        <div id="athletes" class="panel">
+            <div class="pitch-box">
+                <h3>The Pitch</h3>
+                <p>"Sleep is the most underutilized legal performance enhancer in sports. We help athletes and teams reduce injuries, accelerate recovery, and gain a competitive edge that most competitors completely ignore."</p>
+                <div class="stats-row">
+                    <div class="stat">
+                        <div class="number">1.7x</div>
+                        <div class="label">injury rate with poor sleep</div>
+                    </div>
+                    <div class="stat">
+                        <div class="number">70%</div>
+                        <div class="label">HGH during deep sleep</div>
+                    </div>
+                    <div class="stat">
+                        <div class="number">+12%</div>
+                        <div class="label">reaction time improvement</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Target Audience</h3>
+                    <ul>
+                        <li>Professional teams (soccer, basketball, F1)</li>
+                        <li>Olympic athletes</li>
+                        <li>Elite individual performers</li>
+                        <li>Sports academies</li>
+                    </ul>
+                    <div class="editable-label">Sports/Leagues to Focus</div>
+                    <div class="editable" contenteditable="true">Add specific sports, leagues, or teams we want to target...</div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Decision Makers</h3>
+                    <ul>
+                        <li>Team physicians</li>
+                        <li>Performance directors</li>
+                        <li>Agents (for individuals)</li>
+                        <li>Athletes directly</li>
+                        <li>Coaching staff</li>
+                    </ul>
+                    <div class="editable-label">Existing Connections</div>
+                    <div class="editable" contenteditable="true">List athletes or teams we already know or have worked with...</div>
+                </div>
+
+                <div class="info-card">
+                    <h3>What We Offer</h3>
+                    <ul>
+                        <li><strong>Individual</strong> — assessment, chronotype analysis, travel protocols</li>
+                        <li><strong>Team Program</strong> — education, coaching staff training, game-day protocols</li>
+                    </ul>
+                    <div class="editable-label">Entry Point Strategy</div>
+                    <div class="editable" contenteditable="true">Start with one athlete, prove results, expand to team. Or: team education workshop as entry point.</div>
+                </div>
+
+                <div class="info-card">
+                    <h3>What They Get</h3>
+                    <ul>
+                        <li>Sleep performance assessment</li>
+                        <li>Competition travel protocols</li>
+                        <li>Game-day/recovery scheduling</li>
+                        <li>Wearable data integration</li>
+                        <li>Ongoing check-ins</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="full-card">
+                <h3>How to Reach Out</h3>
+                <div class="outreach-steps">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <div class="step-title">Warm Intros</div>
+                        <div class="step-desc">Use existing network — athletes talk to each other</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <div class="step-title">Agents/Docs</div>
+                        <div class="step-desc">Reach team physicians or agents who advise athletes</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <div class="step-title">Content</div>
+                        <div class="step-desc">LinkedIn posts on sports sleep — athletes find us</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">4</div>
+                        <div class="step-title">Speaking</div>
+                        <div class="step-desc">Sports performance events, team talks</div>
+                    </div>
+                </div>
+                <div class="editable-label" style="margin-top: 20px;">Outreach Notes</div>
+                <div class="editable" contenteditable="true">Athletes are often best reached through personal referrals. Focus on documenting results to create word-of-mouth...</div>
+            </div>
+
+            <!-- Target Prospects -->
+            <div class="full-card">
+                <h3>Target Athletes & Teams to Research</h3>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">High-potential prospects — heavy travel schedules, performance-driven, invest in marginal gains.</p>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                    <div style="background: var(--cream); padding: 15px; border-radius: 8px;">
+                        <div style="font-weight: 600; color: var(--navy); margin-bottom: 8px;">🏎️ F1 / Motorsport</div>
+                        <ul style="list-style: none; padding: 0; font-size: 14px; color: var(--text-muted);">
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Mercedes-AMG Petronas F1</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Red Bull Racing</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">McLaren Racing</li>
+                            <li style="padding: 6px 0;">Ferrari / Scuderia Ferrari</li>
+                        </ul>
+                        <div style="font-weight: 600; color: var(--navy); margin: 15px 0 8px;">⚽ Soccer / Football</div>
+                        <ul style="list-style: none; padding: 0; font-size: 14px; color: var(--text-muted);">
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Manchester City</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Real Madrid</li>
+                            <li style="padding: 6px 0;">Bayern Munich</li>
+                        </ul>
+                    </div>
+                    <div style="background: var(--cream); padding: 15px; border-radius: 8px;">
+                        <div style="font-weight: 600; color: var(--navy); margin-bottom: 8px;">🎾 Tennis / Golf</div>
+                        <ul style="list-style: none; padding: 0; font-size: 14px; color: var(--text-muted);">
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">ATP/WTA Tour players (via agents)</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">PGA Tour players (heavy travel)</li>
+                            <li style="padding: 6px 0;">IMG / CAA Sports (agencies)</li>
+                        </ul>
+                        <div style="font-weight: 600; color: var(--navy); margin: 15px 0 8px;">🏀 US Pro Leagues</div>
+                        <ul style="list-style: none; padding: 0; font-size: 14px; color: var(--text-muted);">
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">NBA teams (82+ games, heavy travel)</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">NHL teams</li>
+                            <li style="padding: 6px 0;">US Olympic Committee</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 15px;"><strong>Best entry:</strong> Team physicians, performance directors, or individual athletes via warm intros.</p>
+            </div>
+
+            <div class="notes-area">
+                <h3>Athletes — Notes & Prospects</h3>
+                <div class="notes-content" contenteditable="true">Add notes about athletes or teams we're targeting, conversations in progress, or results to document...</div>
+            </div>
+        </div>
+
+        <!-- CORPORATE PANEL -->
+        <div id="corporate" class="panel">
+            <div class="pitch-box">
+                <h3>The Pitch</h3>
+                <p>"Sleep-deprived leaders make costly mistakes and burn out faster. We help executives and organizations treat sleep as a strategic asset — better decisions, sustained energy, and leaders who perform at their peak."</p>
+                <div class="stats-row">
+                    <div class="stat">
+                        <div class="number">$411B</div>
+                        <div class="label">annual productivity loss</div>
+                    </div>
+                    <div class="stat">
+                        <div class="number">4x</div>
+                        <div class="label">poor decision risk</div>
+                    </div>
+                    <div class="stat">
+                        <div class="number">70%</div>
+                        <div class="label">execs report sleep issues</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Target Audience</h3>
+                    <ul>
+                        <li>C-suite executives</li>
+                        <li>Leadership teams</li>
+                        <li>Companies with heavy travel demands</li>
+                        <li>Organizations investing in wellness</li>
+                    </ul>
+                    <div class="editable-label">Industries to Focus</div>
+                    <div class="editable" contenteditable="true">Finance, consulting, tech, pharma — industries with demanding schedules and travel...</div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Decision Makers</h3>
+                    <ul>
+                        <li>Chief People Officers</li>
+                        <li>HR/Wellness Directors</li>
+                        <li>C-suite directly</li>
+                        <li>Event organizers</li>
+                    </ul>
+                    <div class="editable-label">Potential Connections</div>
+                    <div class="editable" contenteditable="true">People we know who could introduce us to corporate clients...</div>
+                </div>
+
+                <div class="info-card">
+                    <h3>What We Offer</h3>
+                    <ul>
+                        <li><strong>Executive Coaching</strong> — personal optimization, jet lag protocols</li>
+                        <li><strong>Leadership Workshop</strong> — team seminars, culture development</li>
+                        <li><strong>Keynote Speaking</strong> — engaging talk on sleep science</li>
+                    </ul>
+                    <div class="editable-label">Entry Point Strategy</div>
+                    <div class="editable" contenteditable="true">Speaking engagement → individual coaching → organization program. Build reputation through thought leadership.</div>
+                </div>
+
+                <div class="info-card">
+                    <h3>What They Get</h3>
+                    <ul>
+                        <li>Decision timing framework</li>
+                        <li>Travel recovery playbook</li>
+                        <li>Meeting/policy recommendations</li>
+                        <li>Keynote presentation</li>
+                        <li>Ongoing support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="full-card">
+                <h3>How to Reach Out</h3>
+                <div class="outreach-steps">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <div class="step-title">Speaking</div>
+                        <div class="step-desc">Target executive events, wellness summits, leadership retreats</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <div class="step-title">LinkedIn</div>
+                        <div class="step-desc">Thought leadership posts attract executive audience</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <div class="step-title">Referrals</div>
+                        <div class="step-desc">Executives recommend to other executives</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">4</div>
+                        <div class="step-title">HR/Wellness</div>
+                        <div class="step-desc">Reach wellness program buyers at target companies</div>
+                    </div>
+                </div>
+                <div class="editable-label" style="margin-top: 20px;">Outreach Notes</div>
+                <div class="editable" contenteditable="true">Corporate is tertiary focus for now. Main goal: 1-2 speaking engagements to build credibility and pipeline for future...</div>
+            </div>
+
+            <!-- Target Prospects -->
+            <div class="full-card">
+                <h3>Target Corporate Clients to Research</h3>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">High-potential prospects — demanding schedules, heavy travel, invest in executive performance.</p>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                    <div style="background: var(--cream); padding: 15px; border-radius: 8px;">
+                        <div style="font-weight: 600; color: var(--navy); margin-bottom: 8px;">🏢 Consulting / Finance</div>
+                        <ul style="list-style: none; padding: 0; font-size: 14px; color: var(--text-muted);">
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">McKinsey & Company</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Bain & Company</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Boston Consulting Group</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Goldman Sachs (exec wellness)</li>
+                            <li style="padding: 6px 0;">Blackstone / KKR / Carlyle</li>
+                        </ul>
+                    </div>
+                    <div style="background: var(--cream); padding: 15px; border-radius: 8px;">
+                        <div style="font-weight: 600; color: var(--navy); margin-bottom: 8px;">💊 Tech / Pharma</div>
+                        <ul style="list-style: none; padding: 0; font-size: 14px; color: var(--text-muted);">
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Google / Alphabet (wellness programs)</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Microsoft</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Pfizer / Johnson & Johnson</li>
+                            <li style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">Novartis / Roche</li>
+                            <li style="padding: 6px 0;">Salesforce (wellness-focused culture)</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 15px;"><strong>Best entry:</strong> Speaking at leadership events, HR/Wellness director outreach, or exec referrals.</p>
+            </div>
+
+            <div class="notes-area">
+                <h3>Corporate — Notes & Prospects</h3>
+                <div class="notes-content" contenteditable="true">Add notes about corporate contacts, speaking opportunities, or companies to target...</div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        Last updated: January 2026 · alen_juginovic@hms.harvard.edu
+    </footer>
+
+    <script>
+        function showPanel(id) {
+            // Hide all panels
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            // Deactivate all tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            // Show selected panel
+            document.getElementById(id).classList.add('active');
+            // Activate selected tab
+            document.querySelector(`.tab[onclick="showPanel('${id}')"]`).classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
