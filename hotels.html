@@ -936,14 +936,13 @@
     </div>
 </section>
 
-<!-- Testimonial -->
+<!-- Expertise -->
 <section class="testimonial">
     <p class="testimonial-quote">
-        "Dr. Alen's program has fundamentally changed how we think about the guest experience.
-        Sleep is now our signature differentiator, and our guests notice the difference immediately."
+        "Sleep quality is the strongest predictor of overall guest satisfaction, surpassing other amenities."
     </p>
-    <p class="testimonial-author">Marco H.</p>
-    <p class="testimonial-role">General Manager, Luxury Resort</p>
+    <p class="testimonial-author">Park et al., 2023</p>
+    <p class="testimonial-role">International Journal of Hospitality Management</p>
 </section>
 
 <!-- FAQ -->
@@ -984,7 +983,15 @@
         Let's discuss how a physician-designed sleep program can transform
         your guest experience and competitive position.
     </p>
-    <a href="mailto:alen_juginovic@hms.harvard.edu" class="cta-primary">Schedule a Consultation</a>
+    <!-- TODO: Set up Formspree account and replace HOTELS_FORM_ID below -->
+    <form class="cta-form" action="https://formspree.io/f/HOTELS_FORM_ID" method="POST" style="max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
+        <input type="hidden" name="_subject" value="Hotel Partnership Inquiry">
+        <input type="text" name="name" placeholder="Your Name" required style="padding: 14px 18px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; text-align: center;">
+        <input type="email" name="email" placeholder="Your Email" required style="padding: 14px 18px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; text-align: center;">
+        <input type="text" name="property" placeholder="Hotel / Property Name" style="padding: 14px 18px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; text-align: center;">
+        <button type="submit" class="cta-primary" style="border: none; cursor: pointer;">Schedule a Consultation</button>
+    </form>
+    <p style="margin-top: 20px; font-size: 14px; opacity: 0.7;">Or email directly: <a href="mailto:alen_juginovic@hms.harvard.edu" style="color: var(--gold);">alen_juginovic@hms.harvard.edu</a></p>
 </section>
 
 <!-- Footer -->

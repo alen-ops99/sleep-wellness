@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Build a Brand | Step-by-Step Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+        :root {
+            --black: #0a0a0a;
+            --navy: #0f1c2e;
+            --navy-light: #1a2744;
+            --white: #fff;
+            --cream: #FAF8F5;
+            --gold: #C9A962;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            padding: 80px 100px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .slide.active { display: flex; opacity: 1; }
+
+        /* Backgrounds */
+        .bg-black { background: var(--black); }
+        .bg-navy { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); }
+        .bg-cream { background: var(--cream); color: var(--navy); }
+        .bg-gold { background: var(--gold); color: var(--navy); }
+        .bg-white { background: var(--white); color: var(--navy); }
+
+        /* Typography - BIGGER */
+        .label {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 30px;
+        }
+        .bg-cream .label, .bg-white .label, .bg-gold .label { color: var(--navy); opacity: 0.7; }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 90px;
+            font-weight: 400;
+            line-height: 1.05;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 400;
+            line-height: 1.1;
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        p, li {
+            font-size: 28px;
+            line-height: 1.6;
+        }
+
+        .subtitle {
+            font-size: 32px;
+            opacity: 0.7;
+            margin-top: 30px;
+            max-width: 900px;
+        }
+
+        .small {
+            font-size: 22px;
+            opacity: 0.6;
+        }
+
+        /* Icons */
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 30px;
+        }
+        .icon-large {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 40px;
+        }
+        .icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--gold);
+            stroke-width: 1.5;
+            fill: none;
+        }
+        .bg-cream .icon svg, .bg-white .icon svg { stroke: var(--navy); }
+        .bg-gold .icon svg { stroke: var(--navy); }
+
+        /* Quote */
+        .quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-style: italic;
+            line-height: 1.3;
+            max-width: 1000px;
+        }
+        .quote-author {
+            font-family: 'Inter', sans-serif;
+            font-size: 24px;
+            font-style: normal;
+            margin-top: 40px;
+            opacity: 0.5;
+        }
+
+        /* Centered */
+        .centered {
+            text-align: center;
+            align-items: center;
+        }
+
+        /* Step Number */
+        .step-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 120px;
+            color: var(--gold);
+            opacity: 0.3;
+            position: absolute;
+            top: 60px;
+            right: 100px;
+        }
+        .bg-cream .step-num, .bg-white .step-num { color: var(--navy); }
+
+        /* Simple List */
+        ul {
+            list-style: none;
+            margin-top: 40px;
+        }
+        li {
+            display: flex;
+            align-items: flex-start;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        li::before {
+            content: '→';
+            color: var(--gold);
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+        .bg-cream li::before, .bg-white li::before { color: var(--navy); }
+
+        /* Two Column */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 50px;
+        }
+
+        /* Box */
+        .box {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            padding: 50px;
+            margin-top: 40px;
+        }
+        .bg-cream .box, .bg-white .box {
+            background: var(--white);
+            border: 2px solid rgba(0,0,0,0.1);
+        }
+        .box h4 {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 25px;
+        }
+        .bg-cream .box h4, .bg-white .box h4 { color: var(--navy); }
+        .box p {
+            font-size: 26px;
+        }
+
+        /* Example Box */
+        .example {
+            background: var(--gold);
+            color: var(--navy);
+            padding: 50px;
+            margin-top: 40px;
+        }
+        .example h4 {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+        .example p {
+            font-size: 26px;
+        }
+
+        /* Question Box */
+        .question {
+            border-left: 6px solid var(--gold);
+            padding-left: 40px;
+            margin-top: 50px;
+        }
+        .bg-cream .question, .bg-white .question { border-color: var(--navy); }
+        .question h4 {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+        .bg-cream .question h4, .bg-white .question h4 { color: var(--navy); }
+        .question p {
+            font-size: 32px;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+
+        /* VS comparison */
+        .vs {
+            display: grid;
+            grid-template-columns: 1fr 80px 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .vs-side h4 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+        .vs-side p {
+            font-size: 26px;
+            line-height: 1.8;
+            opacity: 0.8;
+        }
+        .vs-divider {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            text-align: center;
+            opacity: 0.3;
+        }
+
+        /* Steps Overview */
+        .steps-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+        .step-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        .bg-cream .step-card {
+            background: var(--white);
+            border-color: rgba(0,0,0,0.1);
+        }
+        .step-card .icon {
+            margin: 0 auto 20px;
+        }
+        .step-card .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            color: var(--gold);
+        }
+        .bg-cream .step-card .num { color: var(--navy); }
+        .step-card h4 {
+            font-size: 28px;
+            font-weight: 600;
+            margin: 15px 0 10px;
+        }
+        .step-card p {
+            font-size: 20px;
+            opacity: 0.6;
+        }
+
+        /* Brand Card */
+        .brand-card {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        .brand-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .bg-cream .brand-icon, .bg-white .brand-icon {
+            background: var(--navy);
+        }
+        .brand-icon svg {
+            width: 50px;
+            height: 50px;
+            stroke: var(--gold);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        /* Color Swatches */
+        .swatches {
+            display: flex;
+            gap: 50px;
+            margin-top: 50px;
+        }
+        .swatch {
+            text-align: center;
+        }
+        .swatch-color {
+            width: 140px;
+            height: 140px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+        }
+        .swatch p {
+            font-size: 22px;
+        }
+        .swatch .meaning {
+            font-size: 18px;
+            opacity: 0.6;
+            margin-top: 5px;
+        }
+
+        /* Diagram */
+        .diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 60px;
+        }
+        .diagram-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid var(--gold);
+        }
+        .bg-cream .diagram-circle {
+            background: var(--white);
+            border-color: var(--navy);
+        }
+        .diagram-circle .icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        .diagram-circle span {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .diagram-arrow {
+            font-size: 36px;
+            color: var(--gold);
+        }
+        .bg-cream .diagram-arrow { color: var(--navy); }
+
+        /* Pyramid */
+        .pyramid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 50px;
+        }
+        .pyramid-level {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 20px;
+            padding: 20px;
+        }
+        .pyramid-1 { width: 250px; background: var(--gold); color: var(--navy); }
+        .pyramid-2 { width: 350px; background: #1a2744; }
+        .pyramid-3 { width: 450px; background: #2d3e5f; }
+        .pyramid-4 { width: 550px; background: #4a6085; }
+
+        /* Navigation */
+        .progress-bar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 5px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+            z-index: 100;
+        }
+
+        .nav-controls {
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: var(--white);
+            width: 70px;
+            height: 70px;
+            font-size: 32px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 50%;
+        }
+        .nav-btn:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .slide-num {
+            font-size: 20px;
+            opacity: 0.5;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .hint {
+            position: fixed;
+            bottom: 50px;
+            right: 60px;
+            font-size: 16px;
+            opacity: 0.3;
+        }
+
+        @media (max-width: 1400px) {
+            .slide { padding: 60px 80px; }
+            h1 { font-size: 72px; }
+            h2 { font-size: 56px; }
+            h3 { font-size: 40px; }
+            .quote { font-size: 44px; }
+            p, li { font-size: 24px; }
+            .steps-row { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 900px) {
+            .slide { padding: 40px; }
+            h1 { font-size: 48px; }
+            h2 { font-size: 40px; }
+            .two-col, .vs { grid-template-columns: 1fr; }
+            .steps-row { grid-template-columns: 1fr; }
+            .diagram { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ============ INTRO ============ -->
+
+<!-- SLIDE 1: Title -->
+<div class="slide bg-black active centered">
+    <div class="icon icon-large">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+    </div>
+    <p class="label">A Step-by-Step Guide</p>
+    <h1>How to Build<br>a Brand</h1>
+    <p class="subtitle">For people who've never done it before</p>
+</div>
+
+<!-- SLIDE 2: What We'll Learn -->
+<div class="slide bg-navy">
+    <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>
+    </div>
+    <p class="label">What You'll Learn</p>
+    <h2>By the end of this...</h2>
+    <ul>
+        <li>Understand what a brand really is (it's not a logo)</li>
+        <li>Know the 4 steps to build any brand</li>
+        <li>Have a clear brand for Sleep Wellness</li>
+    </ul>
+</div>
+
+<!-- SLIDE 3: What is a Brand - Quote -->
+<div class="slide bg-cream centered">
+    <div class="icon icon-large">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </div>
+    <p class="label">First, Let's Define It</p>
+    <p class="quote">"A brand is what people say about you when you're not in the room."</p>
+    <p class="quote-author">— Jeff Bezos, Amazon founder</p>
+</div>
+
+<!-- SLIDE 4: Not vs Is -->
+<div class="slide bg-white">
+    <p class="label">What is a Brand?</p>
+    <div class="vs">
+        <div class="vs-side">
+            <h4>A brand is NOT:</h4>
+            <p>A logo<br>Colors and fonts<br>A website<br>A tagline</p>
+        </div>
+        <div class="vs-divider">→</div>
+        <div class="vs-side">
+            <h4>A brand IS:</h4>
+            <p>A feeling people have<br>Your reputation<br>Trust built over time<br>A promise you keep</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 5: Brand Diagram -->
+<div class="slide bg-navy centered">
+    <p class="label">Think of it This Way</p>
+    <h3>A brand lives in people's minds</h3>
+    <div class="diagram">
+        <div class="diagram-circle">
+            <div class="icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <span>You</span>
+        </div>
+        <div class="diagram-arrow">→</div>
+        <div class="diagram-circle">
+            <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <span>Your Actions</span>
+        </div>
+        <div class="diagram-arrow">→</div>
+        <div class="diagram-circle">
+            <div class="icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+            <span>Their Feeling</span>
+        </div>
+    </div>
+    <p class="small" style="margin-top: 50px;">Every interaction shapes how people feel about you. That feeling IS your brand.</p>
+</div>
+
+<!-- SLIDE 6: Why It Matters -->
+<div class="slide bg-black">
+    <div class="icon">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    </div>
+    <p class="label">Why This Matters</p>
+    <h2>Strong brands charge more and keep clients longer.</h2>
+    <div class="example">
+        <h4>Real Numbers</h4>
+        <p>Apple charges 2-3x more than competitors. Four Seasons charges $800/night. Mayo Clinic has year-long waitlists. That's what brand does.</p>
+    </div>
+</div>
+
+<!-- SLIDE 7: The 4 Steps Overview -->
+<div class="slide bg-cream">
+    <p class="label">The Process</p>
+    <h2>4 Steps to Build a Brand</h2>
+    <div class="steps-row">
+        <div class="step-card">
+            <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
+            <div class="num">1</div>
+            <h4>Purpose</h4>
+            <p>Define your "why"</p>
+        </div>
+        <div class="step-card">
+            <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+            <div class="num">2</div>
+            <h4>Position</h4>
+            <p>Define your difference</p>
+        </div>
+        <div class="step-card">
+            <div class="icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="num">3</div>
+            <h4>Personality</h4>
+            <p>Define your character</p>
+        </div>
+        <div class="step-card">
+            <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a4.5 4.5 0 0 0 0 9 4.5 4.5 0 0 1 0 9"/><path d="M12 2c2.5 0 4.5 4 4.5 10s-2 10-4.5 10"/></svg></div>
+            <div class="num">4</div>
+            <h4>Look</h4>
+            <p>Define your visuals</p>
+        </div>
+    </div>
+</div>
+
+<!-- ============ STEP 1: PURPOSE ============ -->
+
+<!-- SLIDE 8: Step 1 Intro -->
+<div class="slide bg-gold centered">
+    <div class="icon icon-large">
+        <svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+    </div>
+    <p class="label">Step 1 of 4</p>
+    <h1>Purpose</h1>
+    <p class="subtitle">Why do you exist beyond making money?</p>
+</div>
+
+<!-- SLIDE 9: What is Purpose -->
+<div class="slide bg-black">
+    <div class="step-num">01</div>
+    <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+    </div>
+    <p class="label">Step 1: Purpose</p>
+    <h2>What is Purpose?</h2>
+    <p style="margin-top: 30px; max-width: 900px;">
+        Purpose is the reason your brand exists beyond profit. It's the change you want to make in the world. It's what gets you out of bed.
+    </p>
+    <div class="question">
+        <h4>The Key Question to Ask Yourself</h4>
+        <p>"Why does this matter to the world?"</p>
+    </div>
+</div>
+
+<!-- SLIDE 10: Purpose Example - Nike -->
+<div class="slide bg-navy">
+    <div class="step-num">01</div>
+    <p class="label">Step 1: Purpose — Example</p>
+    <div class="brand-card">
+        <div class="brand-icon">
+            <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div>
+            <h3>Nike</h3>
+            <p class="small" style="margin-top: 10px;">"Just Do It"</p>
+        </div>
+    </div>
+    <div class="two-col" style="margin-top: 40px;">
+        <div>
+            <p class="small">WHAT THEY SELL</p>
+            <p style="margin-top: 10px;">Shoes and sportswear</p>
+        </div>
+        <div>
+            <p class="small">THEIR PURPOSE</p>
+            <p style="margin-top: 10px;">"To bring inspiration and innovation to every athlete in the world"</p>
+        </div>
+    </div>
+    <div class="box">
+        <h4>Why This Works</h4>
+        <p>They don't sell shoes. They sell the belief that everyone is an athlete. That's why "Just Do It" resonates—it's about human potential, not footwear.</p>
+    </div>
+</div>
+
+<!-- SLIDE 11: Purpose Example - Patagonia -->
+<div class="slide bg-cream">
+    <div class="step-num">01</div>
+    <p class="label">Step 1: Purpose — Example</p>
+    <div class="brand-card">
+        <div class="brand-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div>
+            <h3>Patagonia</h3>
+            <p class="small" style="margin-top: 10px;">"Don't Buy This Jacket"</p>
+        </div>
+    </div>
+    <div class="two-col" style="margin-top: 40px;">
+        <div>
+            <p class="small">WHAT THEY SELL</p>
+            <p style="margin-top: 10px;">Outdoor clothing</p>
+        </div>
+        <div>
+            <p class="small">THEIR PURPOSE</p>
+            <p style="margin-top: 10px;">"We're in business to save our home planet"</p>
+        </div>
+    </div>
+    <div class="box">
+        <h4>Why This Works</h4>
+        <p>They ran an ad saying "Don't Buy This Jacket." Crazy? No—it proves they care about the planet more than sales. Customers trust them completely.</p>
+    </div>
+</div>
+
+<!-- SLIDE 12: Sleep Wellness Purpose -->
+<div class="slide bg-black">
+    <div class="step-num">01</div>
+    <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </div>
+    <p class="label">Step 1: Purpose — Sleep Wellness</p>
+    <h3>Our Purpose</h3>
+    <div class="two-col">
+        <div>
+            <p class="small">WHAT WE SELL</p>
+            <p style="margin-top: 10px;">Sleep consulting</p>
+        </div>
+        <div>
+            <p class="small">OUR PURPOSE</p>
+            <p style="margin-top: 10px;">"Transform human performance through the science of restorative sleep"</p>
+        </div>
+    </div>
+    <div class="example">
+        <h4>What This Means</h4>
+        <p>We don't sell sleep tips. We help people perform at their best, make better decisions, have longer careers, and live healthier lives.</p>
+    </div>
+</div>
+
+<!-- ============ STEP 2: POSITION ============ -->
+
+<!-- SLIDE 13: Step 2 Intro -->
+<div class="slide bg-gold centered">
+    <div class="icon icon-large">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+    </div>
+    <p class="label">Step 2 of 4</p>
+    <h1>Position</h1>
+    <p class="subtitle">How are you different from everyone else?</p>
+</div>
+
+<!-- SLIDE 14: What is Position -->
+<div class="slide bg-navy">
+    <div class="step-num">02</div>
+    <div class="icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+    </div>
+    <p class="label">Step 2: Position</p>
+    <h2>What is Positioning?</h2>
+    <p style="margin-top: 30px; max-width: 900px;">
+        Positioning is the unique space you occupy in people's minds. It's not about being better—it's about being different in a way that matters.
+    </p>
+    <div class="question">
+        <h4>The Key Question to Ask Yourself</h4>
+        <p>"Why should someone choose me over everyone else?"</p>
+    </div>
+</div>
+
+<!-- SLIDE 15: Position Example - Mayo Clinic -->
+<div class="slide bg-white">
+    <div class="step-num">02</div>
+    <p class="label">Step 2: Position — Example</p>
+    <div class="brand-card">
+        <div class="brand-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div>
+            <h3>Mayo Clinic</h3>
+            <p class="small" style="margin-top: 10px;">"The needs of the patient come first"</p>
+        </div>
+    </div>
+    <div class="box" style="margin-top: 40px;">
+        <h4>Their Position</h4>
+        <p>"Where you go when it really matters."</p>
+    </div>
+    <p class="small" style="margin-top: 30px;">They're not the cheapest. They're not the most convenient. But when it's serious, people fly across the world to go there. That's positioning.</p>
+</div>
+
+<!-- SLIDE 16: Position Example - Apple -->
+<div class="slide bg-black">
+    <div class="step-num">02</div>
+    <p class="label">Step 2: Position — Example</p>
+    <div class="brand-card">
+        <div class="brand-icon">
+            <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <div>
+            <h3>Apple</h3>
+            <p class="small" style="margin-top: 10px;">"Think Different"</p>
+        </div>
+    </div>
+    <div class="box" style="margin-top: 40px;">
+        <h4>Their Position</h4>
+        <p>"Premium technology for creative people who want things to just work."</p>
+    </div>
+    <p class="small" style="margin-top: 30px;">They never compete on specs or price. They compete on experience and identity. Owning Apple says something about who you are.</p>
+</div>
+
+<!-- SLIDE 17: Sleep Wellness Position -->
+<div class="slide bg-cream">
+    <div class="step-num">02</div>
+    <p class="label">Step 2: Position — Sleep Wellness</p>
+    <h3>Our Position</h3>
+    <div class="vs">
+        <div class="vs-side">
+            <h4>Generic Sleep Coach</h4>
+            <p>Tips & tricks<br>Online certifications<br>Works with anyone<br>Competes on price</p>
+        </div>
+        <div class="vs-divider">vs</div>
+        <div class="vs-side">
+            <h4>Sleep Wellness</h4>
+            <p>Performance transformation<br>Harvard + Cell publication<br>Elite clients only<br>Commands premium</p>
+        </div>
+    </div>
+</div>
+
+<!-- ============ STEP 3: PERSONALITY ============ -->
+
+<!-- SLIDE 18: Step 3 Intro -->
+<div class="slide bg-gold centered">
+    <div class="icon icon-large">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <p class="label">Step 3 of 4</p>
+    <h1>Personality</h1>
+    <p class="subtitle">If your brand were a person, who would they be?</p>
+</div>
+
+<!-- SLIDE 19: What is Personality -->
+<div class="slide bg-black">
+    <div class="step-num">03</div>
+    <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <p class="label">Step 3: Personality</p>
+    <h2>What is Brand Personality?</h2>
+    <p style="margin-top: 30px; max-width: 900px;">
+        Personality is the human traits of your brand. It determines how you talk, how you look, and how people feel when they interact with you.
+    </p>
+    <div class="question">
+        <h4>The Key Question to Ask Yourself</h4>
+        <p>"If my brand walked into a room, what would people think?"</p>
+    </div>
+</div>
+
+<!-- SLIDE 20: Personality Example - Four Seasons -->
+<div class="slide bg-navy">
+    <div class="step-num">03</div>
+    <p class="label">Step 3: Personality — Example</p>
+    <div class="brand-card">
+        <div class="brand-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div>
+            <h3>Four Seasons</h3>
+            <p class="small" style="margin-top: 10px;">"The Golden Rule"</p>
+        </div>
+    </div>
+    <div class="box" style="margin-top: 40px;">
+        <h4>Their Personality</h4>
+        <p>Warm. Attentive. Sophisticated. Anticipates your needs before you ask. Like a gracious host who remembers everything about you.</p>
+    </div>
+    <p class="small" style="margin-top: 30px;">Their staff remember your name, your coffee order, your preferences. That's not a policy—that's personality in action.</p>
+</div>
+
+<!-- SLIDE 21: Personality Example - Ritz-Carlton -->
+<div class="slide bg-white">
+    <div class="step-num">03</div>
+    <p class="label">Step 3: Personality — Example</p>
+    <div class="brand-card">
+        <div class="brand-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div>
+            <h3>Ritz-Carlton</h3>
+            <p class="small" style="margin-top: 10px;">"Ladies and Gentlemen serving Ladies and Gentlemen"</p>
+        </div>
+    </div>
+    <div class="box" style="margin-top: 40px;">
+        <h4>Their Personality</h4>
+        <p>Formal. Dignified. Empowering. Every employee can spend $2,000 to solve a guest problem—no approval needed.</p>
+    </div>
+    <p class="small" style="margin-top: 30px;">This creates legendary service stories that people share. The personality becomes the marketing.</p>
+</div>
+
+<!-- SLIDE 22: Sleep Wellness Personality -->
+<div class="slide bg-black">
+    <div class="step-num">03</div>
+    <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </div>
+    <p class="label">Step 3: Personality — Sleep Wellness</p>
+    <h3>Our Personality</h3>
+    <ul>
+        <li>Authoritative but warm</li>
+        <li>Scientific but accessible</li>
+        <li>Sophisticated but approachable</li>
+    </ul>
+    <div class="example">
+        <h4>Think of it as</h4>
+        <p>A world-class Harvard physician who genuinely cares about you—like having an expert doctor as a friend.</p>
+    </div>
+</div>
+
+<!-- ============ STEP 4: LOOK ============ -->
+
+<!-- SLIDE 23: Step 4 Intro -->
+<div class="slide bg-gold centered">
+    <div class="icon icon-large">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a4.5 4.5 0 0 0 0 9 4.5 4.5 0 0 1 0 9"/><path d="M12 2c2.5 0 4.5 4 4.5 10s-2 10-4.5 10"/></svg>
+    </div>
+    <p class="label">Step 4 of 4</p>
+    <h1>Visual Identity</h1>
+    <p class="subtitle">What does your brand look like?</p>
+</div>
+
+<!-- SLIDE 24: What is Visual Identity -->
+<div class="slide bg-navy">
+    <div class="step-num">04</div>
+    <div class="icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a4.5 4.5 0 0 0 0 9 4.5 4.5 0 0 1 0 9"/><path d="M12 2c2.5 0 4.5 4 4.5 10s-2 10-4.5 10"/></svg>
+    </div>
+    <p class="label">Step 4: Visual Identity</p>
+    <h2>What is Visual Identity?</h2>
+    <p style="margin-top: 30px; max-width: 900px;">
+        Visual identity is colors, fonts, logo, and imagery. It must reflect your purpose, position, and personality. It's the last step—not the first.
+    </p>
+    <div class="question">
+        <h4>The Key Question to Ask Yourself</h4>
+        <p>"Does this look like who we are?"</p>
+    </div>
+</div>
+
+<!-- SLIDE 25: Visual Identity Pyramid -->
+<div class="slide bg-cream centered">
+    <div class="step-num">04</div>
+    <p class="label">Step 4: Visual Identity</p>
+    <h3>Why is this step last?</h3>
+    <div class="pyramid">
+        <div class="pyramid-level pyramid-1">Visual Identity</div>
+        <div class="pyramid-level pyramid-2">Personality</div>
+        <div class="pyramid-level pyramid-3">Positioning</div>
+        <div class="pyramid-level pyramid-4">Purpose</div>
+    </div>
+    <p style="margin-top: 40px; max-width: 700px;">Most people start with visuals and work down. That's backwards. Start with purpose, and the visuals become obvious.</p>
+</div>
+
+<!-- SLIDE 26: Sleep Wellness Colors -->
+<div class="slide bg-white">
+    <div class="step-num">04</div>
+    <p class="label">Step 4: Visual Identity — Sleep Wellness</p>
+    <h3>Our Colors</h3>
+    <div class="swatches">
+        <div class="swatch">
+            <div class="swatch-color" style="background: #0f1c2e;"></div>
+            <p><strong>Deep Navy</strong></p>
+            <p class="meaning">Trust & Expertise</p>
+        </div>
+        <div class="swatch">
+            <div class="swatch-color" style="background: #C9A962;"></div>
+            <p><strong>Gold</strong></p>
+            <p class="meaning">Premium & Excellence</p>
+        </div>
+        <div class="swatch">
+            <div class="swatch-color" style="background: #FAF8F5; border: 1px solid #ddd;"></div>
+            <p><strong>Cream</strong></p>
+            <p class="meaning">Calm & Sophistication</p>
+        </div>
+    </div>
+    <p class="small" style="margin-top: 50px;">Navy = medical trust. Gold = premium quality. Cream = restful calm. Every color has a reason.</p>
+</div>
+
+<!-- SLIDE 27: Sleep Wellness Brand Mark -->
+<div class="slide bg-navy centered">
+    <div class="step-num">04</div>
+    <p class="label">Step 4: Visual Identity — Sleep Wellness</p>
+    <div style="margin-top: 30px;">
+        <p style="font-family: 'Playfair Display', serif; font-size: 80px; letter-spacing: 8px;">SLEEP WELLNESS</p>
+        <p style="font-size: 24px; letter-spacing: 4px; color: var(--gold); margin-top: 20px;">by Dr. Alen</p>
+    </div>
+    <p style="margin-top: 60px; font-family: 'Playfair Display', serif; font-size: 36px; font-style: italic; opacity: 0.7;">
+        "The Science of Restorative Sleep"
+    </p>
+</div>
+
+<!-- ============ SUMMARY ============ -->
+
+<!-- SLIDE 28: Recap -->
+<div class="slide bg-black">
+    <div class="icon">
+        <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    </div>
+    <p class="label">Let's Recap</p>
+    <h2>Sleep Wellness Brand</h2>
+    <div class="two-col" style="margin-top: 40px;">
+        <div>
+            <p class="small">PURPOSE</p>
+            <p style="margin-top: 10px;">Transform human performance through the science of restorative sleep</p>
+        </div>
+        <div>
+            <p class="small">POSITION</p>
+            <p style="margin-top: 10px;">The Harvard-backed sleep consultancy for elite clients who demand results</p>
+        </div>
+        <div>
+            <p class="small">PERSONALITY</p>
+            <p style="margin-top: 10px;">Authoritative but warm. Scientific but accessible. The trusted expert.</p>
+        </div>
+        <div>
+            <p class="small">LOOK</p>
+            <p style="margin-top: 10px;">Navy, gold, cream. Elegant serif headings. Clean and sophisticated.</p>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 29: The Key Insight -->
+<div class="slide bg-cream centered">
+    <div class="icon icon-large">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </div>
+    <p class="label">The Most Important Thing</p>
+    <p class="quote">"A brand is a promise kept over time."</p>
+    <p style="margin-top: 50px; font-size: 26px; max-width: 800px;">
+        Every email, every call, every consultation either builds or breaks trust. The brand isn't what you say—it's what you do, consistently.
+    </p>
+</div>
+
+<!-- SLIDE 30: Next Steps -->
+<div class="slide bg-navy">
+    <div class="icon">
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </div>
+    <p class="label">What's Next</p>
+    <h2>Now we build it.</h2>
+    <ul>
+        <li>Create brand guidelines (the rulebook)</li>
+        <li>Design website and materials</li>
+        <li>Apply it to every touchpoint</li>
+        <li>Live it every day</li>
+    </ul>
+</div>
+
+<!-- SLIDE 31: End -->
+<div class="slide bg-black centered">
+    <div class="icon icon-large">
+        <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </div>
+    <p style="font-family: 'Playfair Display', serif; font-size: 64px; letter-spacing: 6px; color: var(--gold);">SLEEP WELLNESS</p>
+    <p style="font-size: 20px; letter-spacing: 4px; margin-top: 15px; opacity: 0.5;">by Dr. Alen</p>
+    <p style="margin-top: 80px; font-size: 24px; opacity: 0.4;">The Science of Restorative Sleep</p>
+</div>
+
+<!-- Navigation -->
+<div class="nav-controls">
+    <button class="nav-btn" id="prevBtn">←</button>
+    <span class="slide-num"><span id="current">1</span> / <span id="total">31</span></span>
+    <button class="nav-btn" id="nextBtn">→</button>
+</div>
+
+<div class="hint">← → to navigate</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+    let current = 0;
+
+    const currentEl = document.getElementById('current');
+    const totalEl = document.getElementById('total');
+    const progress = document.getElementById('progressBar');
+
+    totalEl.textContent = total;
+
+    function show(index) {
+        slides.forEach(s => s.classList.remove('active'));
+        slides[index].classList.add('active');
+        currentEl.textContent = index + 1;
+        progress.style.width = ((index + 1) / total * 100) + '%';
+    }
+
+    function next() { if (current < total - 1) { current++; show(current); } }
+    function prev() { if (current > 0) { current--; show(current); } }
+
+    document.getElementById('nextBtn').onclick = next;
+    document.getElementById('prevBtn').onclick = prev;
+
+    document.onkeydown = (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+    };
+
+    let touchX = 0;
+    document.ontouchstart = (e) => { touchX = e.touches[0].clientX; };
+    document.ontouchend = (e) => {
+        const diff = touchX - e.changedTouches[0].clientX;
+        if (diff > 50) next();
+        if (diff < -50) prev();
+    };
+</script>
+
+</body>
+</html>

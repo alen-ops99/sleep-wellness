@@ -1081,14 +1081,14 @@
     </div>
 </section>
 
-<!-- Testimonial -->
+<!-- Research Insight -->
 <section class="testimonial">
     <p class="testimonial-quote">
-        "The travel protocols alone have been game-changing. I used to lose the first few days
-        of any international competition to jet lag. Now I arrive ready to perform at my best."
+        "Athletes sleeping fewer than 8 hours per night had 1.7x higher injury rates
+        than those who slept 8 or more hours."
     </p>
-    <p class="testimonial-author">Stefan K.</p>
-    <p class="testimonial-role">Professional Athlete</p>
+    <p class="testimonial-author">Milewski et al., 2014</p>
+    <p class="testimonial-role">Journal of Pediatric Orthopaedics</p>
 </section>
 
 <!-- Sports Media -->
@@ -1185,7 +1185,15 @@
         Let's discuss how physician-designed sleep optimization can elevate your performance
         and extend your career.
     </p>
-    <a href="mailto:alen_juginovic@hms.harvard.edu" class="cta-primary">Schedule a Consultation</a>
+    <!-- TODO: Set up Formspree account and replace ATHLETES_FORM_ID below -->
+    <form class="cta-form" action="https://formspree.io/f/ATHLETES_FORM_ID" method="POST" style="max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
+        <input type="hidden" name="_subject" value="Athlete/Team Inquiry">
+        <input type="text" name="name" placeholder="Your Name" required style="padding: 14px 18px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; text-align: center;">
+        <input type="email" name="email" placeholder="Your Email" required style="padding: 14px 18px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; text-align: center;">
+        <input type="text" name="sport" placeholder="Sport / Team (Optional)" style="padding: 14px 18px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; text-align: center;">
+        <button type="submit" class="cta-primary" style="border: none; cursor: pointer;">Schedule a Consultation</button>
+    </form>
+    <p style="margin-top: 20px; font-size: 14px; opacity: 0.7;">Or email directly: <a href="mailto:alen_juginovic@hms.harvard.edu" style="color: var(--gold);">alen_juginovic@hms.harvard.edu</a></p>
 </section>
 
 <!-- Footer -->

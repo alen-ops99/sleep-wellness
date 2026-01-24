@@ -1,657 +1,363 @@
 /**
- * Questionnaires Module - Contains all questionnaire definitions and scoring
+ * Clinical Sleep Questionnaires
+ * All instruments are validated and widely used in clinical practice
  */
 
 const Questionnaires = {
-    /**
-     * Epworth Sleepiness Scale (ESS)
-     * Score: 0-24, >10 indicates excessive daytime sleepiness
-     */
-    epworth: {
-        id: 'epworth',
-        name: 'Epworth Sleepiness Scale',
-        description: 'Measures daytime sleepiness',
-        questions: [
-            {
-                id: 'ess1',
-                text: 'Sitting and reading',
-                options: [
-                    { value: 0, label: '0 - Would never doze' },
-                    { value: 1, label: '1 - Slight chance' },
-                    { value: 2, label: '2 - Moderate chance' },
-                    { value: 3, label: '3 - High chance' }
-                ]
-            },
-            {
-                id: 'ess2',
-                text: 'Watching TV',
-                options: [
-                    { value: 0, label: '0 - Would never doze' },
-                    { value: 1, label: '1 - Slight chance' },
-                    { value: 2, label: '2 - Moderate chance' },
-                    { value: 3, label: '3 - High chance' }
-                ]
-            },
-            {
-                id: 'ess3',
-                text: 'Sitting inactive in a public place (e.g., theater or meeting)',
-                options: [
-                    { value: 0, label: '0 - Would never doze' },
-                    { value: 1, label: '1 - Slight chance' },
-                    { value: 2, label: '2 - Moderate chance' },
-                    { value: 3, label: '3 - High chance' }
-                ]
-            },
-            {
-                id: 'ess4',
-                text: 'As a passenger in a car for an hour without a break',
-                options: [
-                    { value: 0, label: '0 - Would never doze' },
-                    { value: 1, label: '1 - Slight chance' },
-                    { value: 2, label: '2 - Moderate chance' },
-                    { value: 3, label: '3 - High chance' }
-                ]
-            },
-            {
-                id: 'ess5',
-                text: 'Lying down to rest in the afternoon when circumstances permit',
-                options: [
-                    { value: 0, label: '0 - Would never doze' },
-                    { value: 1, label: '1 - Slight chance' },
-                    { value: 2, label: '2 - Moderate chance' },
-                    { value: 3, label: '3 - High chance' }
-                ]
-            },
-            {
-                id: 'ess6',
-                text: 'Sitting and talking to someone',
-                options: [
-                    { value: 0, label: '0 - Would never doze' },
-                    { value: 1, label: '1 - Slight chance' },
-                    { value: 2, label: '2 - Moderate chance' },
-                    { value: 3, label: '3 - High chance' }
-                ]
-            },
-            {
-                id: 'ess7',
-                text: 'Sitting quietly after lunch without alcohol',
-                options: [
-                    { value: 0, label: '0 - Would never doze' },
-                    { value: 1, label: '1 - Slight chance' },
-                    { value: 2, label: '2 - Moderate chance' },
-                    { value: 3, label: '3 - High chance' }
-                ]
-            },
-            {
-                id: 'ess8',
-                text: 'In a car, while stopped for a few minutes in traffic',
-                options: [
-                    { value: 0, label: '0 - Would never doze' },
-                    { value: 1, label: '1 - Slight chance' },
-                    { value: 2, label: '2 - Moderate chance' },
-                    { value: 3, label: '3 - High chance' }
+    // Questionnaire definitions
+    instruments: {
+        'isi': {
+            id: 'isi',
+            name: 'Insomnia Severity Index',
+            shortName: 'ISI',
+            description: 'Validated 7-item questionnaire measuring insomnia severity',
+            timeToComplete: '2-3 minutes',
+            category: 'Insomnia',
+            citation: 'Bastien, C.H., Vallieres, A., & Morin, C.M. (2001)',
+            instructions: 'Please rate the current (i.e., last 2 weeks) severity of your insomnia problem(s).',
+            questions: [
+                {
+                    id: 1,
+                    text: 'Difficulty falling asleep',
+                    options: [
+                        { value: 0, label: 'None' },
+                        { value: 1, label: 'Mild' },
+                        { value: 2, label: 'Moderate' },
+                        { value: 3, label: 'Severe' },
+                        { value: 4, label: 'Very Severe' }
+                    ]
+                },
+                {
+                    id: 2,
+                    text: 'Difficulty staying asleep',
+                    options: [
+                        { value: 0, label: 'None' },
+                        { value: 1, label: 'Mild' },
+                        { value: 2, label: 'Moderate' },
+                        { value: 3, label: 'Severe' },
+                        { value: 4, label: 'Very Severe' }
+                    ]
+                },
+                {
+                    id: 3,
+                    text: 'Problems waking up too early',
+                    options: [
+                        { value: 0, label: 'None' },
+                        { value: 1, label: 'Mild' },
+                        { value: 2, label: 'Moderate' },
+                        { value: 3, label: 'Severe' },
+                        { value: 4, label: 'Very Severe' }
+                    ]
+                },
+                {
+                    id: 4,
+                    text: 'How satisfied/dissatisfied are you with your current sleep pattern?',
+                    options: [
+                        { value: 0, label: 'Very Satisfied' },
+                        { value: 1, label: 'Satisfied' },
+                        { value: 2, label: 'Moderately Satisfied' },
+                        { value: 3, label: 'Dissatisfied' },
+                        { value: 4, label: 'Very Dissatisfied' }
+                    ]
+                },
+                {
+                    id: 5,
+                    text: 'How noticeable to others do you think your sleep problem is in terms of impairing the quality of your life?',
+                    options: [
+                        { value: 0, label: 'Not at all Noticeable' },
+                        { value: 1, label: 'A Little' },
+                        { value: 2, label: 'Somewhat' },
+                        { value: 3, label: 'Much' },
+                        { value: 4, label: 'Very Much Noticeable' }
+                    ]
+                },
+                {
+                    id: 6,
+                    text: 'How worried/distressed are you about your current sleep problem?',
+                    options: [
+                        { value: 0, label: 'Not at all Worried' },
+                        { value: 1, label: 'A Little' },
+                        { value: 2, label: 'Somewhat' },
+                        { value: 3, label: 'Much' },
+                        { value: 4, label: 'Very Much Worried' }
+                    ]
+                },
+                {
+                    id: 7,
+                    text: 'To what extent do you consider your sleep problem to interfere with your daily functioning?',
+                    options: [
+                        { value: 0, label: 'Not at all Interfering' },
+                        { value: 1, label: 'A Little' },
+                        { value: 2, label: 'Somewhat' },
+                        { value: 3, label: 'Much' },
+                        { value: 4, label: 'Very Much Interfering' }
+                    ]
+                }
+            ],
+            scoring: {
+                min: 0,
+                max: 28,
+                calculate: (answers) => answers.reduce((sum, a) => sum + a.value, 0),
+                ranges: [
+                    { min: 0, max: 7, severity: 'none', label: 'No Clinically Significant Insomnia', color: '#2e7d32', description: 'Your sleep appears to be within normal limits.' },
+                    { min: 8, max: 14, severity: 'mild', label: 'Subthreshold Insomnia', color: '#f9a825', description: 'You are experiencing some sleep difficulties that may benefit from sleep hygiene improvements.' },
+                    { min: 15, max: 21, severity: 'moderate', label: 'Moderate Clinical Insomnia', color: '#ef6c00', description: 'You have moderate insomnia that would likely benefit from CBT-I treatment.' },
+                    { min: 22, max: 28, severity: 'severe', label: 'Severe Clinical Insomnia', color: '#c62828', description: 'You have severe insomnia. Treatment is strongly recommended.' }
                 ]
             }
-        ],
-        scoring: {
-            maxScore: 24,
-            ranges: [
-                { min: 0, max: 5, label: 'Lower Normal', severity: 'normal' },
-                { min: 6, max: 10, label: 'Higher Normal', severity: 'normal' },
-                { min: 11, max: 12, label: 'Mild Excessive', severity: 'mild' },
-                { min: 13, max: 15, label: 'Moderate Excessive', severity: 'moderate' },
-                { min: 16, max: 24, label: 'Severe Excessive', severity: 'severe' }
-            ]
         },
-        calculateScore(responses) {
-            let total = 0;
-            this.questions.forEach(q => {
-                if (responses[q.id] !== undefined) {
-                    total += parseInt(responses[q.id]);
-                }
-            });
-            return total;
-        },
-        getInterpretation(score) {
-            for (const range of this.scoring.ranges) {
-                if (score >= range.min && score <= range.max) {
-                    return range;
-                }
+
+        'ess': {
+            id: 'ess',
+            name: 'Epworth Sleepiness Scale',
+            shortName: 'ESS',
+            description: 'Measures daytime sleepiness and likelihood of dozing',
+            timeToComplete: '2-3 minutes',
+            category: 'Sleepiness',
+            citation: 'Johns, M.W. (1991)',
+            instructions: 'How likely are you to doze off or fall asleep in the following situations? Even if you have not done some of these things recently, try to work out how they would have affected you.',
+            questions: [
+                { id: 1, text: 'Sitting and reading', options: [{ value: 0, label: 'Would never doze' }, { value: 1, label: 'Slight chance' }, { value: 2, label: 'Moderate chance' }, { value: 3, label: 'High chance' }] },
+                { id: 2, text: 'Watching TV', options: [{ value: 0, label: 'Would never doze' }, { value: 1, label: 'Slight chance' }, { value: 2, label: 'Moderate chance' }, { value: 3, label: 'High chance' }] },
+                { id: 3, text: 'Sitting inactive in a public place', options: [{ value: 0, label: 'Would never doze' }, { value: 1, label: 'Slight chance' }, { value: 2, label: 'Moderate chance' }, { value: 3, label: 'High chance' }] },
+                { id: 4, text: 'As a passenger in a car for an hour', options: [{ value: 0, label: 'Would never doze' }, { value: 1, label: 'Slight chance' }, { value: 2, label: 'Moderate chance' }, { value: 3, label: 'High chance' }] },
+                { id: 5, text: 'Lying down to rest in the afternoon', options: [{ value: 0, label: 'Would never doze' }, { value: 1, label: 'Slight chance' }, { value: 2, label: 'Moderate chance' }, { value: 3, label: 'High chance' }] },
+                { id: 6, text: 'Sitting and talking to someone', options: [{ value: 0, label: 'Would never doze' }, { value: 1, label: 'Slight chance' }, { value: 2, label: 'Moderate chance' }, { value: 3, label: 'High chance' }] },
+                { id: 7, text: 'Sitting quietly after lunch (no alcohol)', options: [{ value: 0, label: 'Would never doze' }, { value: 1, label: 'Slight chance' }, { value: 2, label: 'Moderate chance' }, { value: 3, label: 'High chance' }] },
+                { id: 8, text: 'In a car, stopped in traffic', options: [{ value: 0, label: 'Would never doze' }, { value: 1, label: 'Slight chance' }, { value: 2, label: 'Moderate chance' }, { value: 3, label: 'High chance' }] }
+            ],
+            scoring: {
+                min: 0,
+                max: 24,
+                calculate: (answers) => answers.reduce((sum, a) => sum + a.value, 0),
+                ranges: [
+                    { min: 0, max: 10, severity: 'normal', label: 'Normal Daytime Sleepiness', color: '#2e7d32', description: 'Your daytime sleepiness is within normal limits.' },
+                    { min: 11, max: 14, severity: 'mild', label: 'Mild Excessive Sleepiness', color: '#f9a825', description: 'You have mild excessive daytime sleepiness.' },
+                    { min: 15, max: 17, severity: 'moderate', label: 'Moderate Excessive Sleepiness', color: '#ef6c00', description: 'You have moderate excessive daytime sleepiness. Evaluation may be warranted.' },
+                    { min: 18, max: 24, severity: 'severe', label: 'Severe Excessive Sleepiness', color: '#c62828', description: 'You have severe excessive daytime sleepiness. Medical evaluation is recommended.' }
+                ]
             }
-            return this.scoring.ranges[0];
+        },
+
+        'stopbang': {
+            id: 'stopbang',
+            name: 'STOP-BANG Questionnaire',
+            shortName: 'STOP-BANG',
+            description: 'Screening tool for obstructive sleep apnea risk',
+            timeToComplete: '1-2 minutes',
+            category: 'Sleep Apnea',
+            citation: 'Chung, F. et al. (2008)',
+            instructions: 'Answer yes or no to the following questions about your sleep and health.',
+            questions: [
+                { id: 1, text: 'Do you SNORE loudly?', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
+                { id: 2, text: 'Do you often feel TIRED during daytime?', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
+                { id: 3, text: 'Has anyone OBSERVED you stop breathing during sleep?', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
+                { id: 4, text: 'Do you have high blood PRESSURE?', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
+                { id: 5, text: 'Is your BMI more than 35?', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
+                { id: 6, text: 'Is your AGE over 50?', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
+                { id: 7, text: 'Is your NECK circumference greater than 40cm?', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
+                { id: 8, text: 'Is your GENDER male?', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] }
+            ],
+            scoring: {
+                min: 0,
+                max: 8,
+                calculate: (answers) => answers.reduce((sum, a) => sum + a.value, 0),
+                ranges: [
+                    { min: 0, max: 2, severity: 'low', label: 'Low Risk for OSA', color: '#2e7d32', description: 'You are at low risk for obstructive sleep apnea.' },
+                    { min: 3, max: 4, severity: 'intermediate', label: 'Intermediate Risk for OSA', color: '#f9a825', description: 'You have intermediate risk. Consider a sleep study if symptomatic.' },
+                    { min: 5, max: 8, severity: 'high', label: 'High Risk for OSA', color: '#c62828', description: 'You are at high risk. A sleep study is recommended.' }
+                ]
+            }
+        },
+
+        'phq9': {
+            id: 'phq9',
+            name: 'Patient Health Questionnaire-9',
+            shortName: 'PHQ-9',
+            description: 'Screens for depression severity',
+            timeToComplete: '2-3 minutes',
+            category: 'Mood',
+            citation: 'Kroenke, K., Spitzer, R.L., & Williams, J.B. (2001)',
+            instructions: 'Over the last 2 weeks, how often have you been bothered by any of the following problems?',
+            questions: [
+                { id: 1, text: 'Little interest or pleasure in doing things', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] },
+                { id: 2, text: 'Feeling down, depressed, or hopeless', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] },
+                { id: 3, text: 'Trouble falling or staying asleep, or sleeping too much', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] },
+                { id: 4, text: 'Feeling tired or having little energy', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] },
+                { id: 5, text: 'Poor appetite or overeating', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] },
+                { id: 6, text: 'Feeling bad about yourself', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] },
+                { id: 7, text: 'Trouble concentrating on things', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] },
+                { id: 8, text: 'Moving or speaking slowly, or being restless', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] },
+                { id: 9, text: 'Thoughts of self-harm', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] }
+            ],
+            scoring: {
+                min: 0,
+                max: 27,
+                calculate: (answers) => answers.reduce((sum, a) => sum + a.value, 0),
+                ranges: [
+                    { min: 0, max: 4, severity: 'minimal', label: 'Minimal Depression', color: '#2e7d32', description: 'Your symptoms suggest minimal or no depression.' },
+                    { min: 5, max: 9, severity: 'mild', label: 'Mild Depression', color: '#8bc34a', description: 'Your symptoms suggest mild depression.' },
+                    { min: 10, max: 14, severity: 'moderate', label: 'Moderate Depression', color: '#f9a825', description: 'Your symptoms suggest moderate depression. Treatment should be considered.' },
+                    { min: 15, max: 19, severity: 'moderately-severe', label: 'Moderately Severe Depression', color: '#ef6c00', description: 'Your symptoms suggest moderately severe depression.' },
+                    { min: 20, max: 27, severity: 'severe', label: 'Severe Depression', color: '#c62828', description: 'Your symptoms suggest severe depression. Treatment is recommended.' }
+                ],
+                specialNote: 'If you answered positively to question 9, please reach out to a mental health professional immediately.'
+            }
+        },
+
+        'gad7': {
+            id: 'gad7',
+            name: 'Generalized Anxiety Disorder 7-Item',
+            shortName: 'GAD-7',
+            description: 'Screens for anxiety severity',
+            timeToComplete: '2 minutes',
+            category: 'Mood',
+            citation: 'Spitzer, R.L. et al. (2006)',
+            instructions: 'Over the last 2 weeks, how often have you been bothered by the following problems?',
+            questions: [
+                { id: 1, text: 'Feeling nervous, anxious, or on edge', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] },
+                { id: 2, text: 'Not being able to stop or control worrying', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] },
+                { id: 3, text: 'Worrying too much about different things', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] },
+                { id: 4, text: 'Trouble relaxing', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] },
+                { id: 5, text: 'Being so restless that it is hard to sit still', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] },
+                { id: 6, text: 'Becoming easily annoyed or irritable', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] },
+                { id: 7, text: 'Feeling afraid, as if something awful might happen', options: [{ value: 0, label: 'Not at all' }, { value: 1, label: 'Several days' }, { value: 2, label: 'More than half the days' }, { value: 3, label: 'Nearly every day' }] }
+            ],
+            scoring: {
+                min: 0,
+                max: 21,
+                calculate: (answers) => answers.reduce((sum, a) => sum + a.value, 0),
+                ranges: [
+                    { min: 0, max: 4, severity: 'minimal', label: 'Minimal Anxiety', color: '#2e7d32', description: 'Your symptoms suggest minimal or no anxiety.' },
+                    { min: 5, max: 9, severity: 'mild', label: 'Mild Anxiety', color: '#8bc34a', description: 'Your symptoms suggest mild anxiety.' },
+                    { min: 10, max: 14, severity: 'moderate', label: 'Moderate Anxiety', color: '#f9a825', description: 'Your symptoms suggest moderate anxiety.' },
+                    { min: 15, max: 21, severity: 'severe', label: 'Severe Anxiety', color: '#c62828', description: 'Your symptoms suggest severe anxiety. Treatment is recommended.' }
+                ]
+            }
+        },
+
+        'csds': {
+            id: 'csds',
+            name: 'Comprehensive Sleep Disorder Screener',
+            shortName: 'CSDS',
+            description: 'Multi-disorder screening for insomnia, sleep apnea, RLS, parasomnias, REM behavior disorder, narcolepsy, and circadian rhythm disorders',
+            timeToComplete: '5-7 minutes',
+            category: 'Comprehensive',
+            citation: 'Based on ICSD-3 diagnostic criteria and validated screening tools',
+            instructions: 'The following questions assess various sleep-related symptoms. Please answer based on your experiences over the past month.',
+            isMultiDomain: true,
+            questions: [
+                // Insomnia Domain (Q1-3)
+                { id: 1, text: 'Do you have difficulty falling asleep at night?', domain: 'insomnia', options: [{ value: 0, label: 'Never' }, { value: 1, label: 'Rarely (1-2x/month)' }, { value: 2, label: 'Sometimes (1-2x/week)' }, { value: 3, label: 'Often (3+ times/week)' }] },
+                { id: 2, text: 'Do you wake up during the night and have trouble going back to sleep?', domain: 'insomnia', options: [{ value: 0, label: 'Never' }, { value: 1, label: 'Rarely' }, { value: 2, label: 'Sometimes' }, { value: 3, label: 'Often' }] },
+                { id: 3, text: 'Do you wake up earlier than desired and cannot get back to sleep?', domain: 'insomnia', options: [{ value: 0, label: 'Never' }, { value: 1, label: 'Rarely' }, { value: 2, label: 'Sometimes' }, { value: 3, label: 'Often' }] },
+
+                // Sleep Apnea Domain (Q4-6)
+                { id: 4, text: 'Have you been told that you snore loudly?', domain: 'apnea', options: [{ value: 0, label: 'No' }, { value: 1, label: 'Occasionally' }, { value: 2, label: 'Frequently' }, { value: 3, label: 'Almost every night' }] },
+                { id: 5, text: 'Has anyone observed you stop breathing or gasp for air during sleep?', domain: 'apnea', options: [{ value: 0, label: 'Never' }, { value: 1, label: 'Rarely' }, { value: 2, label: 'Sometimes' }, { value: 3, label: 'Often' }] },
+                { id: 6, text: 'Do you wake up with a dry mouth, sore throat, or headache?', domain: 'apnea', options: [{ value: 0, label: 'Never' }, { value: 1, label: 'Rarely' }, { value: 2, label: 'Sometimes' }, { value: 3, label: 'Often' }] },
+
+                // Restless Legs Syndrome Domain (Q7-9)
+                { id: 7, text: 'Do you experience uncomfortable sensations in your legs (creeping, crawling, tingling) that create an urge to move them?', domain: 'rls', options: [{ value: 0, label: 'Never' }, { value: 1, label: 'Rarely' }, { value: 2, label: 'Sometimes' }, { value: 3, label: 'Often' }] },
+                { id: 8, text: 'Are these sensations worse when you are resting or lying down?', domain: 'rls', options: [{ value: 0, label: 'Not applicable' }, { value: 1, label: 'No' }, { value: 2, label: 'Somewhat' }, { value: 3, label: 'Yes, much worse' }] },
+                { id: 9, text: 'Do these sensations improve when you move your legs or walk around?', domain: 'rls', options: [{ value: 0, label: 'Not applicable' }, { value: 1, label: 'No' }, { value: 2, label: 'Somewhat' }, { value: 3, label: 'Yes, completely' }] },
+
+                // Parasomnias Domain (Q10-12)
+                { id: 10, text: 'Have you or others noticed you walking, talking, or performing activities while asleep?', domain: 'parasomnia', options: [{ value: 0, label: 'Never' }, { value: 1, label: 'Once or twice ever' }, { value: 2, label: 'A few times a year' }, { value: 3, label: 'Monthly or more' }] },
+                { id: 11, text: 'Do you experience confusion or disorientation when awakened from sleep?', domain: 'parasomnia', options: [{ value: 0, label: 'Never' }, { value: 1, label: 'Rarely' }, { value: 2, label: 'Sometimes' }, { value: 3, label: 'Often' }] },
+                { id: 12, text: 'Have you experienced sleep terrors (waking in panic with screaming, racing heart)?', domain: 'parasomnia', options: [{ value: 0, label: 'Never' }, { value: 1, label: 'Once or twice ever' }, { value: 2, label: 'A few times a year' }, { value: 3, label: 'Monthly or more' }] },
+
+                // REM Behavior Disorder Domain (Q13-14)
+                { id: 13, text: 'Have you or a bed partner noticed you acting out your dreams (punching, kicking, shouting)?', domain: 'rbd', options: [{ value: 0, label: 'Never' }, { value: 1, label: 'Rarely' }, { value: 2, label: 'Sometimes' }, { value: 3, label: 'Often' }] },
+                { id: 14, text: 'Have you injured yourself or a bed partner during sleep?', domain: 'rbd', options: [{ value: 0, label: 'Never' }, { value: 1, label: 'Once' }, { value: 2, label: 'A few times' }, { value: 3, label: 'Multiple times' }] },
+
+                // Narcolepsy/Hypersomnia Domain (Q15-16)
+                { id: 15, text: 'Do you experience sudden muscle weakness triggered by strong emotions (laughter, surprise, anger)?', domain: 'narcolepsy', options: [{ value: 0, label: 'Never' }, { value: 1, label: 'Rarely' }, { value: 2, label: 'Sometimes' }, { value: 3, label: 'Often' }] },
+                { id: 16, text: 'Do you have vivid dream-like experiences when falling asleep or waking up (hallucinations)?', domain: 'narcolepsy', options: [{ value: 0, label: 'Never' }, { value: 1, label: 'Rarely' }, { value: 2, label: 'Sometimes' }, { value: 3, label: 'Often' }] },
+
+                // Circadian Rhythm Disorders Domain (Q17-18)
+                { id: 17, text: 'Do you naturally fall asleep much later than desired (e.g., after 2 AM) and have great difficulty waking for morning obligations?', domain: 'circadian', options: [{ value: 0, label: 'Never' }, { value: 1, label: 'Rarely' }, { value: 2, label: 'Sometimes' }, { value: 3, label: 'Often/Always' }] },
+                { id: 18, text: 'Does your sleep schedule shift significantly (2+ hours) between workdays and free days?', domain: 'circadian', options: [{ value: 0, label: 'No shift' }, { value: 1, label: 'Minor shift (1-2 hrs)' }, { value: 2, label: 'Moderate shift (2-3 hrs)' }, { value: 3, label: 'Large shift (3+ hrs)' }] }
+            ],
+            scoring: {
+                min: 0,
+                max: 54,
+                isMultiDomain: true,
+                domains: {
+                    insomnia: { questions: [1, 2, 3], maxScore: 9, threshold: 5, label: 'Insomnia', icon: 'moon' },
+                    apnea: { questions: [4, 5, 6], maxScore: 9, threshold: 4, label: 'Sleep Apnea Risk', icon: 'lungs' },
+                    rls: { questions: [7, 8, 9], maxScore: 9, threshold: 5, label: 'Restless Legs Syndrome', icon: 'legs' },
+                    parasomnia: { questions: [10, 11, 12], maxScore: 9, threshold: 4, label: 'Parasomnia', icon: 'walk' },
+                    rbd: { questions: [13, 14], maxScore: 6, threshold: 2, label: 'REM Behavior Disorder', icon: 'fight' },
+                    narcolepsy: { questions: [15, 16], maxScore: 6, threshold: 3, label: 'Narcolepsy Indicators', icon: 'sleep' },
+                    circadian: { questions: [17, 18], maxScore: 6, threshold: 4, label: 'Circadian Rhythm Disorder', icon: 'clock' }
+                },
+                calculate: (answers) => answers.reduce((sum, a) => sum + a.value, 0),
+                calculateDomains: function(answers) {
+                    const results = {};
+                    for (const [domain, config] of Object.entries(this.domains)) {
+                        const domainAnswers = answers.filter(a => config.questions.includes(a.questionId));
+                        const score = domainAnswers.reduce((sum, a) => sum + a.value, 0);
+                        const flagged = score >= config.threshold;
+                        results[domain] = {
+                            score,
+                            maxScore: config.maxScore,
+                            percentage: Math.round((score / config.maxScore) * 100),
+                            flagged,
+                            label: config.label,
+                            severity: flagged ? (score >= config.threshold * 1.5 ? 'high' : 'moderate') : 'low'
+                        };
+                    }
+                    return results;
+                },
+                ranges: [
+                    { min: 0, max: 10, severity: 'low', label: 'Low Concern', color: '#2e7d32', description: 'Your responses suggest minimal sleep disorder indicators.' },
+                    { min: 11, max: 25, severity: 'moderate', label: 'Some Concerns', color: '#f9a825', description: 'Some sleep disorder indicators present. Review specific domains.' },
+                    { min: 26, max: 40, severity: 'elevated', label: 'Multiple Concerns', color: '#ef6c00', description: 'Multiple sleep disorder indicators. Consultation recommended.' },
+                    { min: 41, max: 54, severity: 'high', label: 'Significant Concerns', color: '#c62828', description: 'Significant indicators across multiple domains. Evaluation strongly recommended.' }
+                ]
+            }
         }
     },
 
-    /**
-     * Insomnia Severity Index (ISI)
-     * Score: 0-28
-     * 0-7 = No clinically significant insomnia
-     * 8-14 = Subthreshold insomnia
-     * 15-21 = Clinical insomnia (moderate)
-     * 22-28 = Clinical insomnia (severe)
-     */
-    isi: {
-        id: 'isi',
-        name: 'Insomnia Severity Index',
-        description: 'Measures insomnia severity',
-        questions: [
-            {
-                id: 'isi1',
-                text: 'Difficulty falling asleep',
-                options: [
-                    { value: 0, label: '0 - None' },
-                    { value: 1, label: '1 - Mild' },
-                    { value: 2, label: '2 - Moderate' },
-                    { value: 3, label: '3 - Severe' },
-                    { value: 4, label: '4 - Very Severe' }
-                ]
-            },
-            {
-                id: 'isi2',
-                text: 'Difficulty staying asleep',
-                options: [
-                    { value: 0, label: '0 - None' },
-                    { value: 1, label: '1 - Mild' },
-                    { value: 2, label: '2 - Moderate' },
-                    { value: 3, label: '3 - Severe' },
-                    { value: 4, label: '4 - Very Severe' }
-                ]
-            },
-            {
-                id: 'isi3',
-                text: 'Problem waking up too early',
-                options: [
-                    { value: 0, label: '0 - None' },
-                    { value: 1, label: '1 - Mild' },
-                    { value: 2, label: '2 - Moderate' },
-                    { value: 3, label: '3 - Severe' },
-                    { value: 4, label: '4 - Very Severe' }
-                ]
-            },
-            {
-                id: 'isi4',
-                text: 'How satisfied/dissatisfied are you with your current sleep pattern?',
-                options: [
-                    { value: 0, label: '0 - Very Satisfied' },
-                    { value: 1, label: '1 - Satisfied' },
-                    { value: 2, label: '2 - Neutral' },
-                    { value: 3, label: '3 - Dissatisfied' },
-                    { value: 4, label: '4 - Very Dissatisfied' }
-                ]
-            },
-            {
-                id: 'isi5',
-                text: 'How noticeable to others do you think your sleep problem is in terms of impairing the quality of your life?',
-                options: [
-                    { value: 0, label: '0 - Not at all' },
-                    { value: 1, label: '1 - A Little' },
-                    { value: 2, label: '2 - Somewhat' },
-                    { value: 3, label: '3 - Much' },
-                    { value: 4, label: '4 - Very Much' }
-                ]
-            },
-            {
-                id: 'isi6',
-                text: 'How worried/distressed are you about your current sleep problem?',
-                options: [
-                    { value: 0, label: '0 - Not at all' },
-                    { value: 1, label: '1 - A Little' },
-                    { value: 2, label: '2 - Somewhat' },
-                    { value: 3, label: '3 - Much' },
-                    { value: 4, label: '4 - Very Much' }
-                ]
-            },
-            {
-                id: 'isi7',
-                text: 'To what extent do you consider your sleep problem to interfere with your daily functioning?',
-                options: [
-                    { value: 0, label: '0 - Not at all' },
-                    { value: 1, label: '1 - A Little' },
-                    { value: 2, label: '2 - Somewhat' },
-                    { value: 3, label: '3 - Much' },
-                    { value: 4, label: '4 - Very Much' }
-                ]
-            }
-        ],
-        scoring: {
-            maxScore: 28,
-            ranges: [
-                { min: 0, max: 7, label: 'No Clinically Significant Insomnia', severity: 'normal' },
-                { min: 8, max: 14, label: 'Subthreshold Insomnia', severity: 'mild' },
-                { min: 15, max: 21, label: 'Moderate Clinical Insomnia', severity: 'moderate' },
-                { min: 22, max: 28, label: 'Severe Clinical Insomnia', severity: 'severe' }
-            ]
-        },
-        calculateScore(responses) {
-            let total = 0;
-            this.questions.forEach(q => {
-                if (responses[q.id] !== undefined) {
-                    total += parseInt(responses[q.id]);
-                }
-            });
-            return total;
-        },
-        getInterpretation(score) {
-            for (const range of this.scoring.ranges) {
-                if (score >= range.min && score <= range.max) {
-                    return range;
-                }
-            }
-            return this.scoring.ranges[0];
+    calculateScore(instrumentId, answers) {
+        const instrument = this.instruments[instrumentId];
+        if (!instrument) return null;
+        const score = instrument.scoring.calculate(answers);
+        const range = instrument.scoring.ranges.find(r => score >= r.min && score <= r.max);
+
+        const result = {
+            instrumentId,
+            instrumentName: instrument.name,
+            shortName: instrument.shortName,
+            score,
+            maxScore: instrument.scoring.max,
+            severity: range?.severity || 'unknown',
+            label: range?.label || 'Unknown',
+            color: range?.color || '#666',
+            description: range?.description || '',
+            specialNote: instrument.scoring.specialNote || null
+        };
+
+        // Handle multi-domain questionnaires (like CSDS)
+        if (instrument.scoring.isMultiDomain && instrument.scoring.calculateDomains) {
+            result.isMultiDomain = true;
+            result.domains = instrument.scoring.calculateDomains(answers);
+            result.flaggedDomains = Object.entries(result.domains)
+                .filter(([_, d]) => d.flagged)
+                .map(([key, d]) => ({ key, ...d }));
         }
+
+        return result;
     },
 
-    /**
-     * STOP-BANG Sleep Apnea Screening
-     * Score: 0-8
-     * 0-2 = Low risk
-     * 3-4 = Intermediate risk
-     * 5-8 = High risk
-     */
-    stopbang: {
-        id: 'stopbang',
-        name: 'STOP-BANG Questionnaire',
-        description: 'Screens for obstructive sleep apnea risk',
-        questions: [
-            {
-                id: 'sb1',
-                text: 'Do you SNORE loudly (louder than talking or loud enough to be heard through closed doors)?',
-                type: 'yesno'
-            },
-            {
-                id: 'sb2',
-                text: 'Do you often feel TIRED, fatigued, or sleepy during daytime?',
-                type: 'yesno'
-            },
-            {
-                id: 'sb3',
-                text: 'Has anyone OBSERVED you stop breathing during your sleep?',
-                type: 'yesno'
-            },
-            {
-                id: 'sb4',
-                text: 'Do you have or are you being treated for high blood PRESSURE?',
-                type: 'yesno'
-            },
-            {
-                id: 'sb5',
-                text: 'BMI more than 35 kg/m²?',
-                type: 'calculated',
-                description: '(Calculated from your height and weight)'
-            },
-            {
-                id: 'sb6',
-                text: 'AGE over 50 years old?',
-                type: 'calculated',
-                description: '(Based on your provided age)'
-            },
-            {
-                id: 'sb7',
-                text: 'NECK circumference greater than 40 cm (16 inches)?',
-                type: 'calculated',
-                description: '(Based on provided measurement)'
-            },
-            {
-                id: 'sb8',
-                text: 'GENDER - Male?',
-                type: 'calculated',
-                description: '(Based on your provided gender)'
-            }
-        ],
-        scoring: {
-            maxScore: 8,
-            ranges: [
-                { min: 0, max: 2, label: 'Low Risk for OSA', severity: 'normal' },
-                { min: 3, max: 4, label: 'Intermediate Risk for OSA', severity: 'moderate' },
-                { min: 5, max: 8, label: 'High Risk for OSA', severity: 'severe' }
-            ]
-        },
-        calculateScore(responses, demographics) {
-            let total = 0;
-
-            // Manual yes/no questions
-            ['sb1', 'sb2', 'sb3', 'sb4'].forEach(id => {
-                if (responses[id] === 'yes') total++;
-            });
-
-            // Calculated fields
-            if (demographics) {
-                // BMI > 35
-                if (demographics.height && demographics.weight) {
-                    const heightM = demographics.height / 100;
-                    const bmi = demographics.weight / (heightM * heightM);
-                    if (bmi > 35) total++;
-                }
-
-                // Age > 50
-                if (demographics.age && parseInt(demographics.age) > 50) total++;
-
-                // Neck > 40cm
-                if (demographics.neckCircumference && parseInt(demographics.neckCircumference) > 40) total++;
-
-                // Male gender
-                if (demographics.gender === 'male') total++;
-            }
-
-            return total;
-        },
-        getInterpretation(score) {
-            for (const range of this.scoring.ranges) {
-                if (score >= range.min && score <= range.max) {
-                    return range;
-                }
-            }
-            return this.scoring.ranges[0];
-        }
+    getInstrument(id) {
+        return this.instruments[id] || null;
     },
 
-    /**
-     * Restless Legs Syndrome (RLS) Essential Criteria
-     * All 4 criteria must be met for diagnosis consideration
-     */
-    rls: {
-        id: 'rls',
-        name: 'Restless Legs Syndrome Screening',
-        description: 'Screens for restless legs syndrome',
-        questions: [
-            {
-                id: 'rls1',
-                text: 'Do you have an urge to move your legs, usually accompanied by uncomfortable sensations?',
-                type: 'yesno'
-            },
-            {
-                id: 'rls2',
-                text: 'Do these symptoms begin or worsen during periods of rest or inactivity?',
-                type: 'yesno'
-            },
-            {
-                id: 'rls3',
-                text: 'Are these symptoms partially or totally relieved by movement (walking, stretching)?',
-                type: 'yesno'
-            },
-            {
-                id: 'rls4',
-                text: 'Do these symptoms occur exclusively or predominantly in the evening or night?',
-                type: 'yesno'
-            },
-            {
-                id: 'rls5',
-                text: 'How much do these symptoms bother you?',
-                options: [
-                    { value: 0, label: 'Not at all' },
-                    { value: 1, label: 'A little' },
-                    { value: 2, label: 'Moderately' },
-                    { value: 3, label: 'Quite a bit' },
-                    { value: 4, label: 'Extremely' }
-                ]
-            }
-        ],
-        calculateCriteriaMet(responses) {
-            let criteriaMet = 0;
-            ['rls1', 'rls2', 'rls3', 'rls4'].forEach(id => {
-                if (responses[id] === 'yes') criteriaMet++;
-            });
-            return criteriaMet;
-        },
-        getInterpretation(responses) {
-            const criteriaMet = this.calculateCriteriaMet(responses);
-            const distress = parseInt(responses.rls5) || 0;
-
-            if (criteriaMet === 4) {
-                if (distress >= 3) {
-                    return { label: 'RLS Criteria Met - Significant Distress', severity: 'severe' };
-                } else if (distress >= 2) {
-                    return { label: 'RLS Criteria Met - Moderate Distress', severity: 'moderate' };
-                } else {
-                    return { label: 'RLS Criteria Met - Mild Symptoms', severity: 'mild' };
-                }
-            } else if (criteriaMet >= 2) {
-                return { label: 'Possible RLS - Some Criteria Met', severity: 'mild' };
-            }
-            return { label: 'RLS Criteria Not Met', severity: 'normal' };
-        }
-    },
-
-    /**
-     * Parasomnia Screening
-     */
-    parasomnias: {
-        id: 'parasomnias',
-        name: 'Parasomnia Screening',
-        description: 'Screens for sleepwalking, night terrors, and other parasomnias',
-        questions: [
-            {
-                id: 'para1',
-                text: 'How often do you walk or perform complex behaviors while asleep?',
-                options: [
-                    { value: 0, label: 'Never' },
-                    { value: 1, label: 'Rarely (few times/year)' },
-                    { value: 2, label: 'Sometimes (monthly)' },
-                    { value: 3, label: 'Often (weekly)' },
-                    { value: 4, label: 'Very Often (multiple times/week)' }
-                ]
-            },
-            {
-                id: 'para2',
-                text: 'How often do you experience night terrors (sudden awakening with intense fear, screaming)?',
-                options: [
-                    { value: 0, label: 'Never' },
-                    { value: 1, label: 'Rarely (few times/year)' },
-                    { value: 2, label: 'Sometimes (monthly)' },
-                    { value: 3, label: 'Often (weekly)' },
-                    { value: 4, label: 'Very Often (multiple times/week)' }
-                ]
-            },
-            {
-                id: 'para3',
-                text: 'How often do you have vivid, disturbing nightmares?',
-                options: [
-                    { value: 0, label: 'Never' },
-                    { value: 1, label: 'Rarely (few times/year)' },
-                    { value: 2, label: 'Sometimes (monthly)' },
-                    { value: 3, label: 'Often (weekly)' },
-                    { value: 4, label: 'Very Often (multiple times/week)' }
-                ]
-            },
-            {
-                id: 'para4',
-                text: 'How often do you experience sleep paralysis (unable to move upon waking)?',
-                options: [
-                    { value: 0, label: 'Never' },
-                    { value: 1, label: 'Rarely (few times/year)' },
-                    { value: 2, label: 'Sometimes (monthly)' },
-                    { value: 3, label: 'Often (weekly)' },
-                    { value: 4, label: 'Very Often (multiple times/week)' }
-                ]
-            }
-        ],
-        calculateScore(responses) {
-            let total = 0;
-            this.questions.forEach(q => {
-                if (responses[q.id] !== undefined) {
-                    total += parseInt(responses[q.id]);
-                }
-            });
-            return total;
-        },
-        getInterpretation(score) {
-            if (score === 0) return { label: 'No Parasomnia Symptoms', severity: 'normal' };
-            if (score <= 4) return { label: 'Minimal Parasomnia Symptoms', severity: 'normal' };
-            if (score <= 8) return { label: 'Mild Parasomnia Symptoms', severity: 'mild' };
-            if (score <= 12) return { label: 'Moderate Parasomnia Symptoms', severity: 'moderate' };
-            return { label: 'Significant Parasomnia Symptoms', severity: 'severe' };
-        }
-    },
-
-    /**
-     * REM Behavior Disorder Screening
-     */
-    remBehavior: {
-        id: 'remBehavior',
-        name: 'REM Behavior Disorder Screening',
-        description: 'Screens for REM sleep behavior disorder',
-        questions: [
-            {
-                id: 'rem1',
-                text: 'Have you ever been told, or suspected yourself, that you act out your dreams while sleeping (punching, kicking, running)?',
-                type: 'yesno'
-            },
-            {
-                id: 'rem2',
-                text: 'Have you ever injured yourself or your bed partner from movements during sleep?',
-                type: 'yesno'
-            },
-            {
-                id: 'rem3',
-                text: 'Do you have vivid dreams that seem to "come alive" physically?',
-                type: 'yesno'
-            }
-        ],
-        getInterpretation(responses) {
-            const positiveCount = ['rem1', 'rem2', 'rem3'].filter(id => responses[id] === 'yes').length;
-            if (positiveCount >= 2) return { label: 'Possible REM Behavior Disorder', severity: 'moderate' };
-            if (positiveCount === 1) return { label: 'Some RBD Indicators', severity: 'mild' };
-            return { label: 'No RBD Indicators', severity: 'normal' };
-        }
-    },
-
-    /**
-     * Circadian Rhythm Assessment
-     */
-    circadian: {
-        id: 'circadian',
-        name: 'Circadian Rhythm Assessment',
-        description: 'Assesses circadian rhythm patterns',
-        questions: [
-            {
-                id: 'circ1',
-                text: 'What time do you naturally prefer to go to sleep (if you had no obligations)?',
-                options: [
-                    { value: 'early', label: 'Before 10 PM' },
-                    { value: 'normal', label: '10 PM - Midnight' },
-                    { value: 'late', label: 'After Midnight' },
-                    { value: 'very_late', label: 'After 2 AM' }
-                ]
-            },
-            {
-                id: 'circ2',
-                text: 'What time do you naturally prefer to wake up (if you had no obligations)?',
-                options: [
-                    { value: 'early', label: 'Before 6 AM' },
-                    { value: 'normal', label: '6 AM - 8 AM' },
-                    { value: 'late', label: '8 AM - 10 AM' },
-                    { value: 'very_late', label: 'After 10 AM' }
-                ]
-            },
-            {
-                id: 'circ3',
-                text: 'When do you feel most alert and productive?',
-                options: [
-                    { value: 'morning', label: 'Morning (before noon)' },
-                    { value: 'afternoon', label: 'Afternoon (noon - 6 PM)' },
-                    { value: 'evening', label: 'Evening (6 PM - midnight)' },
-                    { value: 'night', label: 'Night (after midnight)' }
-                ]
-            },
-            {
-                id: 'circ4',
-                text: 'Does your sleep schedule on weekends/days off differ significantly from work days?',
-                options: [
-                    { value: 0, label: 'No difference' },
-                    { value: 1, label: 'Slight difference (< 1 hour)' },
-                    { value: 2, label: 'Moderate difference (1-2 hours)' },
-                    { value: 3, label: 'Significant difference (2-3 hours)' },
-                    { value: 4, label: 'Large difference (> 3 hours)' }
-                ]
-            }
-        ],
-        getChronotype(responses) {
-            const sleep = responses.circ1;
-            const wake = responses.circ2;
-            const alert = responses.circ3;
-
-            let morningScore = 0;
-            let eveningScore = 0;
-
-            if (sleep === 'early') morningScore += 2;
-            else if (sleep === 'late') eveningScore += 1;
-            else if (sleep === 'very_late') eveningScore += 2;
-
-            if (wake === 'early') morningScore += 2;
-            else if (wake === 'late') eveningScore += 1;
-            else if (wake === 'very_late') eveningScore += 2;
-
-            if (alert === 'morning') morningScore += 2;
-            else if (alert === 'evening') eveningScore += 1;
-            else if (alert === 'night') eveningScore += 2;
-
-            if (morningScore >= 4) return 'Morning Type (Lark)';
-            if (eveningScore >= 4) return 'Evening Type (Owl)';
-            return 'Intermediate Type';
-        },
-        getSocialJetLag(responses) {
-            const diff = parseInt(responses.circ4) || 0;
-            if (diff >= 3) return { label: 'Significant Social Jet Lag', severity: 'moderate' };
-            if (diff >= 2) return { label: 'Moderate Social Jet Lag', severity: 'mild' };
-            return { label: 'Minimal Social Jet Lag', severity: 'normal' };
-        }
-    },
-
-    /**
-     * Render questionnaire questions to HTML
-     */
-    renderQuestions(questionnaire, containerId, responses = {}) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-
-        let html = '';
-        questionnaire.questions.forEach((q, index) => {
-            if (q.type === 'calculated') {
-                // Skip calculated fields - they're derived from demographics
-                return;
-            }
-
-            html += `<div class="questionnaire-item ${q.type === 'yesno' ? 'yes-no' : ''}">
-                <div class="question">${index + 1}. ${q.text}</div>
-                <div class="options">`;
-
-            if (q.type === 'yesno') {
-                const yesSelected = responses[q.id] === 'yes' ? 'selected' : '';
-                const noSelected = responses[q.id] === 'no' ? 'selected' : '';
-                html += `
-                    <button type="button" class="option-btn ${yesSelected}" data-question="${q.id}" data-value="yes">Yes</button>
-                    <button type="button" class="option-btn ${noSelected}" data-question="${q.id}" data-value="no">No</button>
-                `;
-            } else if (q.options) {
-                q.options.forEach(opt => {
-                    const selected = responses[q.id] == opt.value ? 'selected' : '';
-                    html += `<button type="button" class="option-btn ${selected}" data-question="${q.id}" data-value="${opt.value}">${opt.label}</button>`;
-                });
-            }
-
-            html += '</div></div>';
-        });
-
-        container.innerHTML = html;
-
-        // Add click handlers
-        container.querySelectorAll('.option-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const questionId = btn.dataset.question;
-                const value = btn.dataset.value;
-
-                // Remove selected from siblings
-                btn.parentElement.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-
-                // Save response
-                if (window.App) {
-                    window.App.saveResponse(questionId, value);
-                }
-            });
-        });
+    getAllInstruments() {
+        return Object.values(this.instruments);
     }
 };
 
-// Make available globally
 window.Questionnaires = Questionnaires;

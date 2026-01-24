@@ -25,7 +25,7 @@
         }
 
         .sidebar-header {
-            padding: 0 25px 25px;
+            padding: 25px;
             border-bottom: 1px solid rgba(201, 169, 98, 0.2);
             margin-bottom: 20px;
         }
@@ -33,6 +33,7 @@
         .sidebar-user {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
         }
 
@@ -534,6 +535,143 @@
             margin-bottom: 20px;
         }
 
+        /* Sleep Diary - Enhanced */
+        .diary-reminder {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #fff3e0 0%, #fffde7 100%);
+            border: 1px solid #ffcc80;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .diary-reminder-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: #f57c00;
+        }
+
+        .diary-reminder-text {
+            flex: 1;
+            font-size: 14px;
+            color: #e65100;
+        }
+
+        .diary-reminder-dismiss {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #f57c00;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+
+        .diary-section {
+            margin-bottom: 30px;
+        }
+
+        .diary-label {
+            display: block;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .diary-date-pills, .time-picker-grid, .quick-pick-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .date-pill, .time-pill, .quick-pill {
+            padding: 10px 18px;
+            background: #f5f5f5;
+            border: 2px solid transparent;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .date-pill:hover, .time-pill:hover, .quick-pill:hover {
+            background: #e8e8e8;
+        }
+
+        .date-pill.active, .time-pill.active, .quick-pill.active {
+            background: var(--gold);
+            color: var(--deep-navy);
+            border-color: var(--gold);
+        }
+
+        .quality-rating {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .quality-star {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 10px;
+            background: #f8f8f8;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quality-star:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        .quality-star.active {
+            background: linear-gradient(135deg, #fff8e6 0%, #fffdf8 100%);
+            border-color: var(--gold);
+        }
+
+        .quality-star.active svg {
+            fill: var(--gold);
+            stroke: var(--gold);
+        }
+
+        .quality-star svg {
+            width: 32px;
+            height: 32px;
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 1.5;
+            transition: all 0.2s;
+        }
+
+        .quality-star span {
+            font-size: 11px;
+            color: #888;
+            text-align: center;
+        }
+
+        .quality-star.active span {
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .quality-rating {
+                flex-wrap: wrap;
+            }
+            .quality-star {
+                flex: 0 0 calc(33% - 7px);
+            }
+        }
+
         /* Sleep Diary */
         .diary-form {
             background: white;
@@ -622,6 +760,476 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
+        }
+
+        /* Resource Groups */
+        .resource-group {
+            margin-bottom: 35px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.15);
+        }
+
+        .resource-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .resource-group-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            color: var(--navy);
+            margin: 0 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .resource-group-title svg {
+            color: var(--gold);
+        }
+
+        .resource-group-desc {
+            font-size: 14px;
+            color: var(--text-light);
+            margin: 0 0 20px;
+        }
+
+        .resource-group .modules-grid:empty + .empty-group-msg,
+        .resource-group .modules-grid:empty {
+            display: none;
+        }
+
+        /* Substance checkboxes */
+        .substance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+        }
+
+        .substance-check {
+            cursor: pointer;
+        }
+
+        .substance-check input {
+            display: none;
+        }
+
+        .substance-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            background: #f5f5f5;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #555;
+            transition: all 0.2s;
+        }
+
+        .substance-check input:checked + .substance-box {
+            background: rgba(201, 169, 98, 0.15);
+            border-color: var(--gold);
+            color: var(--navy);
+        }
+
+        .substance-box svg {
+            color: #888;
+            flex-shrink: 0;
+        }
+
+        .substance-check input:checked + .substance-box svg {
+            color: var(--gold);
+        }
+
+        /* Rested buttons styling */
+        .rested-btn svg {
+            stroke-width: 1.5;
+        }
+
+        /* NPS Scale */
+        .nps-scale {
+            margin-top: 10px;
+        }
+
+        .nps-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .nps-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .nps-btn {
+            flex: 1;
+            min-width: 32px;
+            height: 42px;
+            border: 2px solid #e0e0e0;
+            background: #f8f8f8;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nps-btn:hover {
+            border-color: var(--gold);
+            background: rgba(201, 169, 98, 0.1);
+        }
+
+        .nps-btn.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--deep-navy);
+        }
+
+        /* Detractor (0-6) */
+        .nps-btn.active[data-value="0"],
+        .nps-btn.active[data-value="1"],
+        .nps-btn.active[data-value="2"],
+        .nps-btn.active[data-value="3"],
+        .nps-btn.active[data-value="4"],
+        .nps-btn.active[data-value="5"],
+        .nps-btn.active[data-value="6"] {
+            background: #ef5350;
+            border-color: #ef5350;
+            color: white;
+        }
+
+        /* Passive (7-8) */
+        .nps-btn.active[data-value="7"],
+        .nps-btn.active[data-value="8"] {
+            background: #ffc107;
+            border-color: #ffc107;
+            color: #333;
+        }
+
+        /* Promoter (9-10) */
+        .nps-btn.active[data-value="9"],
+        .nps-btn.active[data-value="10"] {
+            background: #4caf50;
+            border-color: #4caf50;
+            color: white;
+        }
+
+        /* Discharge pill buttons */
+        .discharge-pill {
+            font-size: 13px;
+        }
+
+        /* AI Chatbot Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+        }
+
+        .chat-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold) 0%, #b8923c 100%);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(201, 169, 98, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(201, 169, 98, 0.5);
+        }
+
+        .chat-toggle svg {
+            width: 28px;
+            height: 28px;
+            color: var(--deep-navy);
+        }
+
+        .chat-toggle .close-icon {
+            display: none;
+        }
+
+        .chat-widget.open .chat-toggle .chat-icon {
+            display: none;
+        }
+
+        .chat-widget.open .chat-toggle .close-icon {
+            display: block;
+        }
+
+        .chat-panel {
+            position: absolute;
+            bottom: 75px;
+            right: 0;
+            width: 380px;
+            height: 520px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-widget.open .chat-panel {
+            display: flex;
+            animation: chatSlideUp 0.3s ease;
+        }
+
+        @keyframes chatSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-header {
+            background: var(--deep-navy);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-header-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-header-avatar svg {
+            width: 22px;
+            height: 22px;
+            color: var(--deep-navy);
+        }
+
+        .chat-header-info h4 {
+            color: var(--cream);
+            font-size: 15px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .chat-header-info p {
+            color: var(--gold);
+            font-size: 12px;
+            margin: 2px 0 0;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .chat-message {
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-message.user {
+            align-items: flex-end;
+        }
+
+        .chat-message.assistant {
+            align-items: flex-start;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .chat-message.user .chat-bubble {
+            background: var(--deep-navy);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message.assistant .chat-bubble {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-bubble p {
+            margin: 0 0 8px;
+        }
+
+        .chat-bubble p:last-child {
+            margin-bottom: 0;
+        }
+
+        .chat-bubble ul, .chat-bubble ol {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .chat-bubble strong {
+            color: var(--navy);
+        }
+
+        .chat-typing {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+            width: fit-content;
+        }
+
+        .chat-typing span {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite ease-in-out;
+        }
+
+        .chat-typing span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .chat-typing span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        .chat-contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 10px 16px;
+            background: var(--gold);
+            color: var(--deep-navy);
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chat-contact-btn:hover {
+            background: #b8923c;
+        }
+
+        .chat-input-area {
+            padding: 16px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 24px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: none;
+            max-height: 100px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .chat-input:focus {
+            border-color: var(--gold);
+        }
+
+        .chat-send {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .chat-send:hover {
+            background: #b8923c;
+        }
+
+        .chat-send:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .chat-send svg {
+            width: 20px;
+            height: 20px;
+            color: var(--deep-navy);
+        }
+
+        .chat-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .chat-suggestion {
+            padding: 8px 14px;
+            background: rgba(201, 169, 98, 0.1);
+            border: 1px solid rgba(201, 169, 98, 0.3);
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--navy);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chat-suggestion:hover {
+            background: rgba(201, 169, 98, 0.2);
+            border-color: var(--gold);
+        }
+
+        @media (max-width: 768px) {
+            .chat-panel {
+                width: calc(100vw - 32px);
+                height: calc(100vh - 120px);
+                bottom: 70px;
+                right: -8px;
+            }
         }
 
         /* Questionnaires */
@@ -738,107 +1346,19 @@
 
         /* ========== ONBOARDING & ANIMATIONS ========== */
 
-        /* Welcome Overlay */
-        .welcome-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, var(--deep-navy) 0%, #1a3a5c 100%);
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 1;
-            transition: opacity 0.8s ease-out;
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .welcome-overlay.fade-out {
-            opacity: 0;
-            pointer-events: none;
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        .welcome-content {
-            text-align: center;
-            color: white;
-            max-width: 600px;
-            padding: 40px;
-        }
-
-        .welcome-logo {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 18px;
-            letter-spacing: 4px;
-            color: var(--gold);
-            margin-bottom: 40px;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease forwards 0.2s;
-        }
-
-        .welcome-greeting {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 48px;
-            margin-bottom: 20px;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease forwards 0.5s;
-        }
-
-        .welcome-name {
-            color: var(--gold);
-        }
-
-        .welcome-message {
-            font-size: 18px;
-            line-height: 1.8;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 40px;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease forwards 0.8s;
-        }
-
-        .welcome-cta {
-            opacity: 0;
-            animation: fadeInUp 0.8s ease forwards 1.1s;
-        }
-
-        .welcome-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 18px 40px;
-            background: var(--gold);
-            color: var(--deep-navy);
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .welcome-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(201, 169, 98, 0.4);
-        }
-
-        .welcome-particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--gold);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: float 15s infinite;
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(201, 169, 98, 0.4); }
+            50% { box-shadow: 0 0 0 15px rgba(201, 169, 98, 0); }
         }
 
         @keyframes float {
@@ -848,147 +1368,333 @@
             100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Onboarding Tour */
-        .onboarding-modal {
+        /* Welcome Modal */
+        .welcome-modal {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 9999;
+            background: rgba(15, 28, 46, 0.95);
+            z-index: 10000;
             display: none;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
         }
 
-        .onboarding-modal.active {
-            display: flex;
+        .welcome-modal.active { display: flex; }
+
+        .welcome-modal .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
         }
 
-        .onboarding-card {
+        .welcome-modal .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite;
+        }
+
+        .welcome-card {
             background: white;
-            border-radius: 16px;
-            max-width: 500px;
+            border-radius: 20px;
+            max-width: 520px;
             width: 90%;
             overflow: hidden;
-            animation: slideIn 0.4s ease;
+            position: relative;
+            animation: slideIn 0.6s ease;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .onboarding-header {
+        .welcome-header {
             background: linear-gradient(135deg, var(--deep-navy) 0%, #1a3a5c 100%);
-            padding: 30px;
+            padding: 40px 35px 35px;
             text-align: center;
+            position: relative;
         }
 
-        .onboarding-step {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
+        .welcome-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-top: 20px solid #1a3a5c;
+        }
+
+        .welcome-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(201, 169, 98, 0.2);
+            border: 1px solid var(--gold);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--gold);
+            text-transform: uppercase;
             margin-bottom: 20px;
         }
 
-        .onboarding-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            transition: all 0.3s;
-        }
-
-        .onboarding-dot.active {
-            background: var(--gold);
-            transform: scale(1.2);
-        }
-
-        .onboarding-icon {
-            width: 70px;
-            height: 70px;
-            background: rgba(201, 169, 98, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-        }
-
-        .onboarding-icon svg {
-            width: 35px;
-            height: 35px;
-            stroke: var(--gold);
-        }
-
-        .onboarding-title {
+        .welcome-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 28px;
+            font-size: 36px;
             color: white;
+            margin: 0 0 8px;
+            line-height: 1.2;
+        }
+
+        .welcome-name { color: var(--gold); }
+
+        .welcome-subtitle {
+            font-size: 15px;
+            color: rgba(255,255,255,0.7);
             margin: 0;
         }
 
-        .onboarding-body {
-            padding: 30px;
+        .welcome-body {
+            padding: 35px 35px 30px;
         }
 
-        .onboarding-text {
+        .welcome-program-intro {
             font-size: 15px;
-            line-height: 1.7;
+            line-height: 1.8;
             color: #555;
             margin-bottom: 25px;
         }
 
-        .onboarding-highlight {
-            background: linear-gradient(135deg, rgba(201, 169, 98, 0.1), rgba(201, 169, 98, 0.05));
-            border-left: 3px solid var(--gold);
-            padding: 15px 20px;
-            margin: 20px 0;
+        .welcome-features {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .welcome-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: linear-gradient(135deg, rgba(201, 169, 98, 0.08), rgba(201, 169, 98, 0.03));
+            border-radius: 10px;
+        }
+
+        .welcome-feature-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .welcome-feature-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--deep-navy);
+        }
+
+        .welcome-feature span {
             font-size: 14px;
             color: var(--navy);
         }
 
-        .onboarding-actions {
-            display: flex;
-            gap: 12px;
-            justify-content: space-between;
+        .welcome-gdpr {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
         }
 
-        .onboarding-skip {
-            padding: 12px 25px;
-            background: transparent;
-            border: none;
-            color: #999;
-            font-size: 14px;
+        .welcome-gdpr-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
             cursor: pointer;
         }
 
-        .onboarding-next {
-            padding: 12px 30px;
+        .welcome-gdpr-checkbox input {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            accent-color: var(--gold);
+            flex-shrink: 0;
+        }
+
+        .welcome-gdpr-checkbox span {
+            font-size: 12px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .welcome-gdpr-checkbox a {
+            color: var(--gold-dark);
+            text-decoration: underline;
+        }
+
+        .welcome-btn-primary {
+            width: 100%;
+            padding: 16px;
             background: var(--gold);
             color: var(--deep-navy);
             border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .welcome-btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(201, 169, 98, 0.3);
+        }
+
+        .welcome-btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Spotlight Tour */
+        .tour-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9998;
+            pointer-events: none;
+            display: none;
+        }
+
+        .tour-overlay.active {
+            display: block;
+            pointer-events: auto;
+        }
+
+        .tour-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 28, 46, 0.85);
+            transition: all 0.4s ease;
+        }
+
+        .tour-spotlight {
+            position: absolute;
+            border-radius: 12px;
+            box-shadow: 0 0 0 9999px rgba(15, 28, 46, 0.85);
+            transition: all 0.4s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .tour-tooltip {
+            position: absolute;
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            max-width: 340px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 9999;
+            animation: slideIn 0.4s ease;
+        }
+
+        .tour-tooltip-arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+        }
+
+        .tour-tooltip-arrow.top {
+            top: -12px;
+            left: 30px;
+            border-bottom: 12px solid white;
+        }
+
+        .tour-tooltip-arrow.bottom {
+            bottom: -12px;
+            left: 30px;
+            border-top: 12px solid white;
+        }
+
+        .tour-step-indicator {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        .tour-step-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .tour-step-dot.active { background: var(--gold); }
+        .tour-step-dot.completed { background: var(--navy); }
+
+        .tour-tooltip h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            color: var(--navy);
+            margin: 0 0 10px;
+        }
+
+        .tour-tooltip p {
             font-size: 14px;
+            line-height: 1.7;
+            color: #666;
+            margin: 0 0 20px;
+        }
+
+        .tour-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+        .tour-skip {
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            color: #999;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .tour-skip:hover { color: #666; }
+
+        .tour-next {
+            padding: 10px 24px;
+            background: var(--gold);
+            color: var(--deep-navy);
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
@@ -997,8 +1703,137 @@
             transition: all 0.3s;
         }
 
-        .onboarding-next:hover {
+        .tour-next:hover { background: var(--gold-light); }
+
+        /* Assessment Reminder Modal */
+        .assessment-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 28, 46, 0.9);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .assessment-modal.active { display: flex; }
+
+        .assessment-card {
+            background: white;
+            border-radius: 20px;
+            max-width: 480px;
+            width: 90%;
+            overflow: hidden;
+            animation: slideIn 0.5s ease;
+            text-align: center;
+        }
+
+        .assessment-header {
+            background: linear-gradient(135deg, var(--gold) 0%, #d4b978 100%);
+            padding: 40px 30px;
+        }
+
+        .assessment-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .assessment-icon svg {
+            width: 40px;
+            height: 40px;
+            stroke: var(--gold);
+        }
+
+        .assessment-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--deep-navy);
+            margin: 0;
+        }
+
+        .assessment-body {
+            padding: 30px;
+        }
+
+        .assessment-body p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #555;
+            margin: 0 0 25px;
+        }
+
+        .assessment-deadline {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: rgba(201, 169, 98, 0.1);
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .assessment-deadline svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--gold);
+        }
+
+        .assessment-deadline span {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .assessment-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .assessment-later {
+            flex: 1;
+            padding: 14px;
+            background: #f5f5f5;
+            color: #666;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .assessment-later:hover { background: #eee; }
+
+        .assessment-start {
+            flex: 2;
+            padding: 14px;
+            background: var(--gold);
+            color: var(--deep-navy);
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .assessment-start:hover {
             background: var(--gold-light);
+            transform: translateY(-2px);
         }
 
         /* Tasks Notification Banner */
@@ -1252,59 +2087,97 @@
 </head>
 <body>
 
-<!-- Welcome Overlay (for new users) -->
-<div class="welcome-overlay" id="welcomeOverlay" style="display: none;">
-    <div class="welcome-particles" id="welcomeParticles"></div>
-    <div class="welcome-content">
-        <div class="welcome-logo">SLEEP WELLNESS</div>
-        <h1 class="welcome-greeting">Welcome, <span class="welcome-name" id="welcomeName">Friend</span></h1>
-        <p class="welcome-message">
-            Your journey to better sleep starts now. I'm Dr. Alen Juginovic, and I'll be guiding you through a personalized sleep optimization program designed just for you.
-        </p>
-        <div class="welcome-cta">
-            <button class="welcome-btn" onclick="startOnboarding()">
-                Begin Your Journey
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-                </svg>
+<!-- Welcome Modal (for new users) -->
+<div class="welcome-modal" id="welcomeModal">
+    <div class="particles" id="welcomeParticles"></div>
+    <div class="welcome-card">
+        <div class="welcome-header">
+            <div class="welcome-badge" id="welcomeBadge">ATHLETE PROGRAM</div>
+            <h1 class="welcome-title">Welcome, <span class="welcome-name" id="welcomeName">Friend</span></h1>
+            <p class="welcome-subtitle">Your personalized sleep optimization journey begins</p>
+        </div>
+        <div class="welcome-body">
+            <p class="welcome-program-intro" id="welcomeIntro">
+                I'm Dr. Alen Juginovic, a Harvard sleep scientist and physician. Over the next few weeks, we'll work together to optimize your sleep for peak performance and recovery.
+            </p>
+            <div class="welcome-features" id="welcomeFeatures">
+                <div class="welcome-feature">
+                    <div class="welcome-feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    </div>
+                    <span>Personalized sleep assessment & analysis</span>
+                </div>
+                <div class="welcome-feature">
+                    <div class="welcome-feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                    </div>
+                    <span>Daily tracking & progress monitoring</span>
+                </div>
+                <div class="welcome-feature">
+                    <div class="welcome-feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <span>Direct messaging with Dr. Alen</span>
+                </div>
+            </div>
+            <div class="welcome-gdpr">
+                <label class="welcome-gdpr-checkbox">
+                    <input type="checkbox" id="welcomeConsent">
+                    <span>I consent to the collection of my sleep and health data for personalized sleep consultation. My data will be kept confidential and used only to provide recommendations. I can request deletion at any time. <a href="#" onclick="showPrivacyPolicy(event)">Privacy Policy</a></span>
+                </label>
+            </div>
+            <button class="welcome-btn-primary" id="welcomeContinueBtn" onclick="startTour()" disabled>
+                Continue
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
         </div>
     </div>
 </div>
 
-<!-- Onboarding Tour Modal -->
-<div class="onboarding-modal" id="onboardingModal">
-    <div class="onboarding-card">
-        <div class="onboarding-header">
-            <div class="onboarding-step">
-                <div class="onboarding-dot active" data-step="1"></div>
-                <div class="onboarding-dot" data-step="2"></div>
-                <div class="onboarding-dot" data-step="3"></div>
-                <div class="onboarding-dot" data-step="4"></div>
-                <div class="onboarding-dot" data-step="5"></div>
-            </div>
-            <div class="onboarding-icon" id="onboardingIcon">
+<!-- Spotlight Tour Overlay -->
+<div class="tour-overlay" id="tourOverlay">
+    <div class="tour-spotlight" id="tourSpotlight"></div>
+    <div class="tour-tooltip" id="tourTooltip">
+        <div class="tour-tooltip-arrow top" id="tourArrow"></div>
+        <div class="tour-step-indicator" id="tourStepIndicator"></div>
+        <h3 id="tourTitle">Dashboard Overview</h3>
+        <p id="tourText">This is your central hub for tracking sleep progress and accessing all features.</p>
+        <div class="tour-actions">
+            <button class="tour-skip" onclick="skipTour()">Skip Tour</button>
+            <button class="tour-next" onclick="nextTourStep()">
+                Next
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Assessment Reminder Modal -->
+<div class="assessment-modal" id="assessmentModal">
+    <div class="assessment-card">
+        <div class="assessment-header">
+            <div class="assessment-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                     <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
                 </svg>
             </div>
-            <h2 class="onboarding-title" id="onboardingTitle">Complete Your Assessment</h2>
+            <h2>One Last Thing</h2>
         </div>
-        <div class="onboarding-body">
-            <p class="onboarding-text" id="onboardingText">
-                Start with our comprehensive sleep assessment. This helps me understand your unique sleep patterns, challenges, and goals so I can create a personalized plan for you.
-            </p>
-            <div class="onboarding-highlight" id="onboardingHighlight">
-                The assessment takes about 5-10 minutes and covers your sleep habits, lifestyle, and any concerns you may have.
+        <div class="assessment-body">
+            <p>To create your personalized sleep plan, I need to understand your current sleep patterns. Please complete your initial assessment within the next 24 hours.</p>
+            <div class="assessment-deadline">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Complete within 24 hours</span>
             </div>
-            <div class="onboarding-actions">
-                <button class="onboarding-skip" onclick="skipOnboarding()">Skip Tour</button>
-                <button class="onboarding-next" onclick="nextOnboardingStep()">
-                    Next
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"/>
-                    </svg>
+            <div class="assessment-actions">
+                <button class="assessment-later" onclick="dismissAssessmentModal()">I'll Do It Later</button>
+                <button class="assessment-start" onclick="startAssessmentNow()">
+                    Start Assessment
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </button>
             </div>
         </div>
@@ -1522,56 +2395,296 @@
             </div>
         </section>
 
-        <!-- Sleep Diary Section -->
+        <!-- Sleep Diary Section - Based on Consensus Sleep Diary -->
         <section class="dashboard-section" id="section-diary">
             <div class="section-header">
                 <h1>Sleep Diary</h1>
             </div>
 
+            <!-- Diary Reminder Banner -->
+            <div class="diary-reminder" id="diaryReminder" style="display: none;">
+                <div class="diary-reminder-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div class="diary-reminder-text">
+                    <strong>Good morning!</strong> Don't forget to log last night's sleep.
+                </div>
+                <button class="diary-reminder-dismiss" onclick="dismissDiaryReminder()">×</button>
+            </div>
+
             <div class="diary-form">
-                <h3>Log Today's Sleep</h3>
+                <h3>Log Your Sleep</h3>
+                <p style="color: var(--text-light); margin-bottom: 25px; font-size: 14px;">Based on the Consensus Sleep Diary - Complete each morning</p>
+
                 <form id="diaryForm" onsubmit="saveDiaryEntry(event)">
-                    <div class="diary-grid">
-                        <div class="form-group">
-                            <label>Date</label>
-                            <input type="date" id="diaryDate" required>
+                    <!-- Date Selection -->
+                    <div class="diary-section">
+                        <label class="diary-label">1. What date are you reporting on?</label>
+                        <div class="diary-date-pills">
+                            <button type="button" class="date-pill" onclick="setDiaryDate(-1)">Last Night</button>
+                            <button type="button" class="date-pill active" onclick="setDiaryDate(0)">Tonight</button>
                         </div>
-                        <div class="form-group">
-                            <label>Bedtime</label>
-                            <input type="time" id="diaryBedtime" required>
+                        <input type="date" id="diaryDate" required style="margin-top: 10px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px;">
+                    </div>
+
+                    <!-- Bedtime -->
+                    <div class="diary-section">
+                        <label class="diary-label">2. What time did you get into bed?</label>
+                        <div class="time-picker-grid">
+                            <button type="button" class="time-pill" data-field="bedtime" data-time="21:00">9 PM</button>
+                            <button type="button" class="time-pill" data-field="bedtime" data-time="21:30">9:30</button>
+                            <button type="button" class="time-pill" data-field="bedtime" data-time="22:00">10 PM</button>
+                            <button type="button" class="time-pill" data-field="bedtime" data-time="22:30">10:30</button>
+                            <button type="button" class="time-pill" data-field="bedtime" data-time="23:00">11 PM</button>
+                            <button type="button" class="time-pill" data-field="bedtime" data-time="23:30">11:30</button>
+                            <button type="button" class="time-pill" data-field="bedtime" data-time="00:00">12 AM</button>
+                            <button type="button" class="time-pill" data-field="bedtime" data-time="00:30">12:30</button>
+                            <button type="button" class="time-pill" data-field="bedtime" data-time="01:00">1 AM</button>
                         </div>
-                        <div class="form-group">
-                            <label>Wake Time</label>
-                            <input type="time" id="diaryWakeTime" required>
+                        <input type="time" id="diaryBedtime" placeholder="Or enter exact time" style="margin-top: 10px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px;">
+                    </div>
+
+                    <!-- Lights Out / Try to Sleep -->
+                    <div class="diary-section">
+                        <label class="diary-label">3. What time did you try to go to sleep?</label>
+                        <div class="time-picker-grid">
+                            <button type="button" class="time-pill" data-field="lightsOut" data-time="21:00">9 PM</button>
+                            <button type="button" class="time-pill" data-field="lightsOut" data-time="21:30">9:30</button>
+                            <button type="button" class="time-pill" data-field="lightsOut" data-time="22:00">10 PM</button>
+                            <button type="button" class="time-pill" data-field="lightsOut" data-time="22:30">10:30</button>
+                            <button type="button" class="time-pill" data-field="lightsOut" data-time="23:00">11 PM</button>
+                            <button type="button" class="time-pill" data-field="lightsOut" data-time="23:30">11:30</button>
+                            <button type="button" class="time-pill" data-field="lightsOut" data-time="00:00">12 AM</button>
+                            <button type="button" class="time-pill" data-field="lightsOut" data-time="00:30">12:30</button>
+                            <button type="button" class="time-pill" data-field="lightsOut" data-time="01:00">1 AM</button>
                         </div>
-                        <div class="form-group">
-                            <label>Time to Fall Asleep (min)</label>
-                            <input type="number" id="diaryLatency" min="0" max="300">
+                        <input type="time" id="diaryLightsOut" style="margin-top: 10px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px;">
+                    </div>
+
+                    <!-- Sleep Latency -->
+                    <div class="diary-section">
+                        <label class="diary-label">4. How long did it take you to fall asleep?</label>
+                        <div class="quick-pick-grid">
+                            <button type="button" class="quick-pill" data-field="latency" data-value="0">Immediately</button>
+                            <button type="button" class="quick-pill" data-field="latency" data-value="5">~5 min</button>
+                            <button type="button" class="quick-pill" data-field="latency" data-value="10">~10 min</button>
+                            <button type="button" class="quick-pill" data-field="latency" data-value="15">~15 min</button>
+                            <button type="button" class="quick-pill" data-field="latency" data-value="20">~20 min</button>
+                            <button type="button" class="quick-pill" data-field="latency" data-value="30">~30 min</button>
+                            <button type="button" class="quick-pill" data-field="latency" data-value="45">~45 min</button>
+                            <button type="button" class="quick-pill" data-field="latency" data-value="60">~1 hour</button>
+                            <button type="button" class="quick-pill" data-field="latency" data-value="90">1+ hours</button>
                         </div>
-                        <div class="form-group">
-                            <label>Night Awakenings</label>
-                            <input type="number" id="diaryAwakenings" min="0" max="20">
+                        <input type="hidden" id="diaryLatency" value="">
+                    </div>
+
+                    <!-- Night Awakenings -->
+                    <div class="diary-section">
+                        <label class="diary-label">5. How many times did you wake up, not counting your final awakening?</label>
+                        <div class="quick-pick-grid">
+                            <button type="button" class="quick-pill" data-field="awakenings" data-value="0">0</button>
+                            <button type="button" class="quick-pill" data-field="awakenings" data-value="1">1</button>
+                            <button type="button" class="quick-pill" data-field="awakenings" data-value="2">2</button>
+                            <button type="button" class="quick-pill" data-field="awakenings" data-value="3">3</button>
+                            <button type="button" class="quick-pill" data-field="awakenings" data-value="4">4</button>
+                            <button type="button" class="quick-pill" data-field="awakenings" data-value="5">5+</button>
                         </div>
-                        <div class="form-group">
-                            <label>Time Awake (min)</label>
-                            <input type="number" id="diaryWASO" min="0" max="300">
+                        <input type="hidden" id="diaryAwakenings" value="">
+                    </div>
+
+                    <!-- WASO -->
+                    <div class="diary-section">
+                        <label class="diary-label">6. In total, how long did these awakenings last?</label>
+                        <div class="quick-pick-grid">
+                            <button type="button" class="quick-pill" data-field="waso" data-value="0">None</button>
+                            <button type="button" class="quick-pill" data-field="waso" data-value="5">~5 min</button>
+                            <button type="button" class="quick-pill" data-field="waso" data-value="10">~10 min</button>
+                            <button type="button" class="quick-pill" data-field="waso" data-value="15">~15 min</button>
+                            <button type="button" class="quick-pill" data-field="waso" data-value="20">~20 min</button>
+                            <button type="button" class="quick-pill" data-field="waso" data-value="30">~30 min</button>
+                            <button type="button" class="quick-pill" data-field="waso" data-value="45">~45 min</button>
+                            <button type="button" class="quick-pill" data-field="waso" data-value="60">~1 hour</button>
+                            <button type="button" class="quick-pill" data-field="waso" data-value="90">1+ hours</button>
                         </div>
-                        <div class="form-group">
-                            <label>Sleep Quality (1-5)</label>
-                            <select id="diaryQuality">
-                                <option value="1">1 - Very Poor</option>
-                                <option value="2">2 - Poor</option>
-                                <option value="3">3 - Fair</option>
-                                <option value="4">4 - Good</option>
-                                <option value="5">5 - Excellent</option>
-                            </select>
+                        <input type="hidden" id="diaryWASO" value="">
+                    </div>
+
+                    <!-- Final Wake Time -->
+                    <div class="diary-section">
+                        <label class="diary-label">7. What time was your final awakening?</label>
+                        <div class="time-picker-grid">
+                            <button type="button" class="time-pill" data-field="finalWake" data-time="05:00">5 AM</button>
+                            <button type="button" class="time-pill" data-field="finalWake" data-time="05:30">5:30</button>
+                            <button type="button" class="time-pill" data-field="finalWake" data-time="06:00">6 AM</button>
+                            <button type="button" class="time-pill" data-field="finalWake" data-time="06:30">6:30</button>
+                            <button type="button" class="time-pill" data-field="finalWake" data-time="07:00">7 AM</button>
+                            <button type="button" class="time-pill" data-field="finalWake" data-time="07:30">7:30</button>
+                            <button type="button" class="time-pill" data-field="finalWake" data-time="08:00">8 AM</button>
+                            <button type="button" class="time-pill" data-field="finalWake" data-time="08:30">8:30</button>
+                            <button type="button" class="time-pill" data-field="finalWake" data-time="09:00">9 AM</button>
+                        </div>
+                        <input type="time" id="diaryFinalWake" style="margin-top: 10px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px;">
+                    </div>
+
+                    <!-- Out of Bed Time -->
+                    <div class="diary-section">
+                        <label class="diary-label">8. What time did you get out of bed for the day?</label>
+                        <div class="time-picker-grid">
+                            <button type="button" class="time-pill" data-field="outOfBed" data-time="05:00">5 AM</button>
+                            <button type="button" class="time-pill" data-field="outOfBed" data-time="05:30">5:30</button>
+                            <button type="button" class="time-pill" data-field="outOfBed" data-time="06:00">6 AM</button>
+                            <button type="button" class="time-pill" data-field="outOfBed" data-time="06:30">6:30</button>
+                            <button type="button" class="time-pill" data-field="outOfBed" data-time="07:00">7 AM</button>
+                            <button type="button" class="time-pill" data-field="outOfBed" data-time="07:30">7:30</button>
+                            <button type="button" class="time-pill" data-field="outOfBed" data-time="08:00">8 AM</button>
+                            <button type="button" class="time-pill" data-field="outOfBed" data-time="08:30">8:30</button>
+                            <button type="button" class="time-pill" data-field="outOfBed" data-time="09:00">9 AM</button>
+                        </div>
+                        <input type="time" id="diaryOutOfBed" style="margin-top: 10px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px;">
+                    </div>
+
+                    <!-- Sleep Quality -->
+                    <div class="diary-section">
+                        <label class="diary-label">9. How would you rate the quality of your sleep?</label>
+                        <div class="quality-rating">
+                            <button type="button" class="quality-star" data-value="1" onclick="setQuality(1)">
+                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                <span>Very Poor</span>
+                            </button>
+                            <button type="button" class="quality-star" data-value="2" onclick="setQuality(2)">
+                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                <span>Poor</span>
+                            </button>
+                            <button type="button" class="quality-star" data-value="3" onclick="setQuality(3)">
+                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                <span>Fair</span>
+                            </button>
+                            <button type="button" class="quality-star" data-value="4" onclick="setQuality(4)">
+                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                <span>Good</span>
+                            </button>
+                            <button type="button" class="quality-star" data-value="5" onclick="setQuality(5)">
+                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                <span>Very Good</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="diaryQuality" value="">
+                    </div>
+
+                    <!-- Restedness -->
+                    <div class="diary-section">
+                        <label class="diary-label">10. How rested or refreshed did you feel when you woke up?</label>
+                        <div class="quality-rating">
+                            <button type="button" class="quality-star rested-btn" data-value="1" onclick="setRestedness(1)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                                <span>Not at all</span>
+                            </button>
+                            <button type="button" class="quality-star rested-btn" data-value="2" onclick="setRestedness(2)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                                <span>Slightly</span>
+                            </button>
+                            <button type="button" class="quality-star rested-btn" data-value="3" onclick="setRestedness(3)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                                <span>Somewhat</span>
+                            </button>
+                            <button type="button" class="quality-star rested-btn" data-value="4" onclick="setRestedness(4)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                                <span>Well rested</span>
+                            </button>
+                            <button type="button" class="quality-star rested-btn" data-value="5" onclick="setRestedness(5)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                                <span>Very well</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="diaryRestedness" value="">
+                    </div>
+
+                    <!-- Naps -->
+                    <div class="diary-section">
+                        <label class="diary-label">11. Did you take any naps or doze yesterday?</label>
+                        <div class="quick-pick-grid">
+                            <button type="button" class="quick-pill" data-field="naps" data-value="0">No naps</button>
+                            <button type="button" class="quick-pill" data-field="naps" data-value="15">~15 min</button>
+                            <button type="button" class="quick-pill" data-field="naps" data-value="30">~30 min</button>
+                            <button type="button" class="quick-pill" data-field="naps" data-value="45">~45 min</button>
+                            <button type="button" class="quick-pill" data-field="naps" data-value="60">~1 hour</button>
+                            <button type="button" class="quick-pill" data-field="naps" data-value="90">1+ hours</button>
+                        </div>
+                        <input type="hidden" id="diaryNaps" value="0">
+                    </div>
+
+                    <!-- Substances -->
+                    <div class="diary-section">
+                        <label class="diary-label">12. Substances consumed yesterday (select all that apply)</label>
+                        <div class="substance-grid">
+                            <label class="substance-check">
+                                <input type="checkbox" id="diaryCaffeine" name="substances" value="caffeine">
+                                <span class="substance-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                                    Caffeine
+                                </span>
+                            </label>
+                            <label class="substance-check">
+                                <input type="checkbox" id="diaryAlcohol" name="substances" value="alcohol">
+                                <span class="substance-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M8 22h8"/><path d="M12 11v11"/><path d="M5.28 3h13.44a1 1 0 0 1 .97 1.24L17 11a5 5 0 0 1-10 0L4.31 4.24A1 1 0 0 1 5.28 3z"/></svg>
+                                    Alcohol
+                                </span>
+                            </label>
+                            <label class="substance-check">
+                                <input type="checkbox" id="diarySleepAid" name="substances" value="sleepaid">
+                                <span class="substance-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M10.5 20.5L10 17c-2-2-4-3.5-4-6 0-3.31 2.69-6 6-6s6 2.69 6 6c0 2.5-2 4-4 6l-.5 3.5"/><path d="M8.5 17h7"/><path d="M12 22v-2"/></svg>
+                                    Sleep Aid
+                                </span>
+                            </label>
+                            <label class="substance-check">
+                                <input type="checkbox" id="diaryNone" name="substances" value="none">
+                                <span class="substance-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+                                    None
+                                </span>
+                            </label>
                         </div>
                     </div>
-                    <button type="submit" class="btn-primary">Save Entry</button>
+
+                    <!-- Notes -->
+                    <div class="diary-section">
+                        <label class="diary-label">13. Comments (optional)</label>
+                        <textarea id="diaryNotes" placeholder="Anything that may have affected your sleep (stress, illness, exercise, room conditions, etc.)" rows="3" style="width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 14px; resize: vertical;"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="width: 100%; padding: 16px; font-size: 16px; margin-top: 10px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                        Save Entry
+                    </button>
                 </form>
             </div>
 
-            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); margin-bottom: 20px;">Recent Entries</h3>
+            <!-- Calculated Metrics Display -->
+            <div id="diaryMetrics" style="display: none; margin-top: 20px; padding: 20px; background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%); border: 1px solid rgba(201, 169, 98, 0.2); border-radius: 12px;">
+                <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--navy); margin-bottom: 15px;">Last Night's Sleep Metrics</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 28px; font-weight: 600; color: var(--gold-dark);" id="metricTST">--</div>
+                        <div style="font-size: 11px; color: var(--text-light); text-transform: uppercase;">Total Sleep</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 28px; font-weight: 600; color: var(--gold-dark);" id="metricSE">--</div>
+                        <div style="font-size: 11px; color: var(--text-light); text-transform: uppercase;">Sleep Efficiency</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 28px; font-weight: 600; color: var(--gold-dark);" id="metricSOL">--</div>
+                        <div style="font-size: 11px; color: var(--text-light); text-transform: uppercase;">Sleep Onset</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 28px; font-weight: 600; color: var(--gold-dark);" id="metricWASO">--</div>
+                        <div style="font-size: 11px; color: var(--text-light); text-transform: uppercase;">WASO</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); margin: 30px 0 20px;">Recent Entries</h3>
             <div class="diary-history" id="diaryHistory">
                 <div class="empty-state">
                     <p>No diary entries yet. Start tracking your sleep above.</p>
@@ -1695,8 +2808,64 @@
                 Access evidence-based therapeutic content to improve your sleep. Resources are unlocked based on your assessment results and consultation with Dr. Alen.
             </p>
 
-            <div class="modules-grid" id="modulesGrid">
-                <!-- Populated by JS -->
+            <!-- Core Sleep Skills -->
+            <div class="resource-group">
+                <h3 class="resource-group-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                    Core Sleep Skills
+                </h3>
+                <p class="resource-group-desc">Foundational techniques for better sleep</p>
+                <div class="modules-grid" id="modulesGrid-core">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Cognitive & Behavioral -->
+            <div class="resource-group">
+                <h3 class="resource-group-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M12 2a4 4 0 0 0-4 4c0 1.1.4 2.1 1.1 2.9L12 12l2.9-3.1A4 4 0 0 0 12 2z"/><path d="M12 12v10"/><path d="M8 17h8"/></svg>
+                    Cognitive & Behavioral
+                </h3>
+                <p class="resource-group-desc">Evidence-based CBT-I techniques</p>
+                <div class="modules-grid" id="modulesGrid-cbt">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Relaxation & Stress Management -->
+            <div class="resource-group">
+                <h3 class="resource-group-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                    Relaxation & Stress Management
+                </h3>
+                <p class="resource-group-desc">Calming techniques for mind and body</p>
+                <div class="modules-grid" id="modulesGrid-relaxation">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Travel & Jet Lag -->
+            <div class="resource-group" id="travelResourceGroup" style="display: none;">
+                <h3 class="resource-group-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+                    Travel & Jet Lag
+                </h3>
+                <p class="resource-group-desc">Tools for travelers and frequent flyers</p>
+                <div class="modules-grid" id="modulesGrid-travel">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Additional Resources -->
+            <div class="resource-group">
+                <h3 class="resource-group-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    Additional Resources
+                </h3>
+                <p class="resource-group-desc">More tools to support your sleep journey</p>
+                <div class="modules-grid" id="modulesGrid-other">
+                    <!-- Populated by JS -->
+                </div>
             </div>
         </section>
 
@@ -1766,6 +2935,233 @@
     </div>
 </div>
 
+<!-- AI Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+    <div class="chat-panel">
+        <div class="chat-header">
+            <div class="chat-header-avatar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+            </div>
+            <div class="chat-header-info">
+                <h4>Sleep Assistant</h4>
+                <p>Ask me anything about sleep</p>
+            </div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message assistant">
+                <div class="chat-bubble">
+                    <p>Hello! I'm your Sleep Wellness assistant. I can help you:</p>
+                    <ul>
+                        <li>Understand sleep terms and metrics</li>
+                        <li>Navigate the portal</li>
+                        <li>Learn about healthy sleep habits</li>
+                        <li>Summarize your results</li>
+                    </ul>
+                    <p>How can I help you today?</p>
+                </div>
+            </div>
+            <div class="chat-suggestions" id="chatSuggestions">
+                <button class="chat-suggestion" onclick="askSuggestion('What is sleep efficiency?')">What is sleep efficiency?</button>
+                <button class="chat-suggestion" onclick="askSuggestion('How do I improve my sleep?')">Tips for better sleep</button>
+                <button class="chat-suggestion" onclick="askSuggestion('Summarize my sleep data')">Summarize my data</button>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <div class="chat-input-wrapper">
+                <textarea class="chat-input" id="chatInput" placeholder="Ask about sleep..." rows="1" onkeypress="handleChatKeypress(event)"></textarea>
+                <button class="chat-send" id="chatSendBtn" onclick="sendChatMessage()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"/>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <button class="chat-toggle" onclick="toggleChat()">
+        <svg class="chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+    </button>
+</div>
+
+<!-- Discharge/Satisfaction Questionnaire Modal -->
+<div class="modal" id="dischargeModal">
+    <div class="modal-content" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
+        <button class="modal-close" onclick="closeDischargeModal()">&times;</button>
+        <div class="modal-body">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" style="margin-bottom: 15px;">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--navy); margin-bottom: 10px;">Program Completion</h2>
+                <p style="color: var(--text-light); font-size: 14px;">
+                    Congratulations on completing your sleep wellness program! Your feedback helps us improve our service.
+                </p>
+            </div>
+
+            <form id="dischargeForm" onsubmit="submitDischargeSurvey(event)">
+                <!-- Overall Satisfaction -->
+                <div class="diary-section">
+                    <label class="diary-label">1. Overall, how satisfied are you with the Sleep Wellness program?</label>
+                    <div class="quality-rating satisfaction-rating">
+                        <button type="button" class="quality-star sat-btn" data-value="1" onclick="setSatisfaction(1)">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span>Very Unsatisfied</span>
+                        </button>
+                        <button type="button" class="quality-star sat-btn" data-value="2" onclick="setSatisfaction(2)">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span>Unsatisfied</span>
+                        </button>
+                        <button type="button" class="quality-star sat-btn" data-value="3" onclick="setSatisfaction(3)">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span>Neutral</span>
+                        </button>
+                        <button type="button" class="quality-star sat-btn" data-value="4" onclick="setSatisfaction(4)">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span>Satisfied</span>
+                        </button>
+                        <button type="button" class="quality-star sat-btn" data-value="5" onclick="setSatisfaction(5)">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span>Very Satisfied</span>
+                        </button>
+                    </div>
+                    <input type="hidden" id="dischargeSatisfaction" value="">
+                </div>
+
+                <!-- Sleep Improvement -->
+                <div class="diary-section">
+                    <label class="diary-label">2. How much has your sleep improved since starting the program?</label>
+                    <div class="quick-pick-grid">
+                        <button type="button" class="quick-pill discharge-pill" data-field="improvement" data-value="worse">Got Worse</button>
+                        <button type="button" class="quick-pill discharge-pill" data-field="improvement" data-value="same">No Change</button>
+                        <button type="button" class="quick-pill discharge-pill" data-field="improvement" data-value="slight">Slightly Better</button>
+                        <button type="button" class="quick-pill discharge-pill" data-field="improvement" data-value="moderate">Moderately Better</button>
+                        <button type="button" class="quick-pill discharge-pill" data-field="improvement" data-value="much">Much Better</button>
+                        <button type="button" class="quick-pill discharge-pill" data-field="improvement" data-value="resolved">Completely Resolved</button>
+                    </div>
+                    <input type="hidden" id="dischargeImprovement" value="">
+                </div>
+
+                <!-- NPS - Net Promoter Score -->
+                <div class="diary-section">
+                    <label class="diary-label">3. How likely are you to recommend Sleep Wellness to a friend or colleague?</label>
+                    <div class="nps-scale">
+                        <div class="nps-labels">
+                            <span>Not at all likely</span>
+                            <span>Extremely likely</span>
+                        </div>
+                        <div class="nps-buttons">
+                            <button type="button" class="nps-btn" data-value="0" onclick="setNPS(0)">0</button>
+                            <button type="button" class="nps-btn" data-value="1" onclick="setNPS(1)">1</button>
+                            <button type="button" class="nps-btn" data-value="2" onclick="setNPS(2)">2</button>
+                            <button type="button" class="nps-btn" data-value="3" onclick="setNPS(3)">3</button>
+                            <button type="button" class="nps-btn" data-value="4" onclick="setNPS(4)">4</button>
+                            <button type="button" class="nps-btn" data-value="5" onclick="setNPS(5)">5</button>
+                            <button type="button" class="nps-btn" data-value="6" onclick="setNPS(6)">6</button>
+                            <button type="button" class="nps-btn" data-value="7" onclick="setNPS(7)">7</button>
+                            <button type="button" class="nps-btn" data-value="8" onclick="setNPS(8)">8</button>
+                            <button type="button" class="nps-btn" data-value="9" onclick="setNPS(9)">9</button>
+                            <button type="button" class="nps-btn" data-value="10" onclick="setNPS(10)">10</button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="dischargeNPS" value="">
+                </div>
+
+                <!-- Most Helpful -->
+                <div class="diary-section">
+                    <label class="diary-label">4. What was most helpful about the program? (select all that apply)</label>
+                    <div class="substance-grid">
+                        <label class="substance-check">
+                            <input type="checkbox" name="helpful" value="assessment">
+                            <span class="substance-box">Initial Assessment</span>
+                        </label>
+                        <label class="substance-check">
+                            <input type="checkbox" name="helpful" value="diary">
+                            <span class="substance-box">Sleep Diary</span>
+                        </label>
+                        <label class="substance-check">
+                            <input type="checkbox" name="helpful" value="modules">
+                            <span class="substance-box">Learning Modules</span>
+                        </label>
+                        <label class="substance-check">
+                            <input type="checkbox" name="helpful" value="messaging">
+                            <span class="substance-box">Direct Messaging</span>
+                        </label>
+                        <label class="substance-check">
+                            <input type="checkbox" name="helpful" value="appointments">
+                            <span class="substance-box">Consultations</span>
+                        </label>
+                        <label class="substance-check">
+                            <input type="checkbox" name="helpful" value="questionnaires">
+                            <span class="substance-box">Questionnaires</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Communication Quality -->
+                <div class="diary-section">
+                    <label class="diary-label">5. How would you rate the communication with Dr. Alen?</label>
+                    <div class="quality-rating comm-rating">
+                        <button type="button" class="quality-star comm-btn" data-value="1" onclick="setCommunication(1)">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span>Poor</span>
+                        </button>
+                        <button type="button" class="quality-star comm-btn" data-value="2" onclick="setCommunication(2)">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span>Fair</span>
+                        </button>
+                        <button type="button" class="quality-star comm-btn" data-value="3" onclick="setCommunication(3)">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span>Good</span>
+                        </button>
+                        <button type="button" class="quality-star comm-btn" data-value="4" onclick="setCommunication(4)">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span>Very Good</span>
+                        </button>
+                        <button type="button" class="quality-star comm-btn" data-value="5" onclick="setCommunication(5)">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span>Excellent</span>
+                        </button>
+                    </div>
+                    <input type="hidden" id="dischargeCommunication" value="">
+                </div>
+
+                <!-- Open Feedback -->
+                <div class="diary-section">
+                    <label class="diary-label">6. What could we improve? (optional)</label>
+                    <textarea id="dischargeImprovements" rows="3" placeholder="Your suggestions help us serve future clients better..." style="width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 14px; resize: vertical;"></textarea>
+                </div>
+
+                <div class="diary-section">
+                    <label class="diary-label">7. Any other comments or testimonial you'd like to share? (optional)</label>
+                    <textarea id="dischargeTestimonial" rows="3" placeholder="We'd love to hear about your experience..." style="width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 14px; resize: vertical;"></textarea>
+                </div>
+
+                <!-- Permission to use testimonial -->
+                <div class="diary-section" style="margin-bottom: 0;">
+                    <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" id="dischargeTestimonialConsent" style="margin-top: 3px;">
+                        <span style="font-size: 13px; color: var(--text-light);">I give permission to use my testimonial (anonymously) for marketing purposes</span>
+                    </label>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 25px;">
+                    <button type="button" class="btn-secondary" onclick="closeDischargeModal()" style="flex: 1;">Skip for Now</button>
+                    <button type="submit" class="btn-primary" id="submitDischargeBtn" style="flex: 1;">Submit Feedback</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
@@ -1780,47 +3176,86 @@
     let userProfile = null;
     let conversationId = null;
     let messagesUnsubscribe = null;
-    let onboardingStep = 1;
-    const totalOnboardingSteps = 5;
+    // ==================== ONBOARDING SYSTEM ====================
 
-    // Onboarding steps content
-    const onboardingSteps = [
+    let tourStep = 0;
+    const totalTourSteps = 4;
+
+    // Personalized content based on client type
+    const clientTypeContent = {
+        athlete: {
+            badge: 'ATHLETE PROGRAM',
+            intro: "I'm Dr. Alen Juginovic, a Harvard sleep scientist and physician. Over the next few weeks, we'll work together to optimize your sleep for peak athletic performance, faster recovery, and reduced injury risk.",
+            features: [
+                { icon: 'chart', text: 'Performance-focused sleep analysis' },
+                { icon: 'recovery', text: 'Recovery optimization tracking' },
+                { icon: 'message', text: 'Direct access to Dr. Alen' }
+            ]
+        },
+        executive: {
+            badge: 'EXECUTIVE PROGRAM',
+            intro: "I'm Dr. Alen Juginovic, a Harvard sleep scientist and physician. Over the next few weeks, we'll work together to optimize your sleep for sharper decision-making, sustained energy, and peak cognitive performance.",
+            features: [
+                { icon: 'brain', text: 'Cognitive performance optimization' },
+                { icon: 'travel', text: 'Jet lag & travel sleep strategies' },
+                { icon: 'message', text: 'Direct access to Dr. Alen' }
+            ]
+        },
+        hotel: {
+            badge: 'WELLNESS PROGRAM',
+            intro: "I'm Dr. Alen Juginovic, a Harvard sleep scientist and physician. Over the next few weeks, we'll work together to help you achieve deeper, more restorative sleep and wake up feeling refreshed.",
+            features: [
+                { icon: 'sleep', text: 'Personalized sleep assessment' },
+                { icon: 'chart', text: 'Daily tracking & insights' },
+                { icon: 'message', text: 'Direct access to Dr. Alen' }
+            ]
+        }
+    };
+
+    // Tour steps - target elements and content
+    const tourSteps = [
         {
-            title: 'Complete Your Assessment',
-            text: 'Start with our comprehensive sleep assessment. This helps me understand your unique sleep patterns, challenges, and goals so I can create a personalized plan for you.',
-            highlight: 'The assessment takes about 5-10 minutes and covers your sleep habits, lifestyle, and any concerns you may have.',
-            icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>'
+            target: '.sidebar-nav li:first-child a',
+            title: 'Your Dashboard',
+            text: 'This is your home base. Check your sleep stats, recent activity, and any pending tasks at a glance.',
+            position: 'right'
         },
         {
-            title: 'Track Your Sleep',
-            text: 'Use the Sleep Diary to log your sleep each morning. This creates valuable data that helps us identify patterns and measure your progress over time.',
-            highlight: 'Consistent tracking for just 1-2 weeks can reveal important insights about your sleep.',
-            icon: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>'
+            target: '.sidebar-nav li:nth-child(2) a',
+            title: 'Sleep Assessments',
+            text: 'Complete assessments to help me understand your sleep patterns. Your first assessment is waiting!',
+            position: 'right'
         },
         {
-            title: 'Complete Questionnaires',
-            text: 'I may assign clinical questionnaires like the Insomnia Severity Index (ISI) or Epworth Sleepiness Scale (ESS). These validated tools help us precisely measure your sleep health.',
-            highlight: 'You will see a notification badge when new questionnaires are assigned.',
-            icon: '<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>'
+            target: '.sidebar-nav li:nth-child(4) a',
+            title: 'Sleep Diary',
+            text: 'Log your sleep each morning. Just 30 seconds a day helps track your progress over time.',
+            position: 'right'
         },
         {
-            title: 'Access Resources',
-            text: 'Based on your needs, I will unlock therapeutic modules - evidence-based techniques like relaxation exercises, cognitive strategies, and sleep hygiene optimization.',
-            highlight: 'Resources are unlocked progressively as we work through your personalized program.',
-            icon: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>'
-        },
-        {
-            title: 'Stay Connected',
-            text: 'Use the Messages feature to ask questions, share concerns, or update me on your progress. You can also schedule appointments for video consultations.',
-            highlight: 'I typically respond within 24-48 hours on business days.',
-            icon: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'
+            target: '.sidebar-nav li:nth-child(5) a',
+            title: 'Messages',
+            text: 'Have questions? Send me a message anytime. I typically respond within 24-48 hours.',
+            position: 'right'
         }
     ];
 
-    // Create floating particles for welcome screen
+    // Feature icons SVGs
+    const featureIcons = {
+        chart: '<path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/>',
+        recovery: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+        message: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+        brain: '<path d="M12 2a4 4 0 0 0-4 4c0 1.1.4 2.1 1.1 2.9L12 12l2.9-3.1A4 4 0 0 0 12 2z"/><path d="M12 12v10"/><path d="M8 17h8"/>',
+        travel: '<path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>',
+        sleep: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'
+    };
+
+    // Create floating particles
     function createParticles() {
         const container = document.getElementById('welcomeParticles');
-        for (let i = 0; i < 20; i++) {
+        if (!container) return;
+        container.innerHTML = '';
+        for (let i = 0; i < 25; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
             particle.style.left = Math.random() * 100 + '%';
@@ -1830,79 +3265,203 @@
         }
     }
 
-    // Show welcome overlay for new users
-    function showWelcomeOverlay(userName) {
-        const overlay = document.getElementById('welcomeOverlay');
+    // Show personalized welcome modal
+    function showWelcomeModal(userName, clientType) {
+        const modal = document.getElementById('welcomeModal');
+        const content = clientTypeContent[clientType] || clientTypeContent.hotel;
+
+        // Set personalized content
         document.getElementById('welcomeName').textContent = userName || 'Friend';
-        createParticles();
-        overlay.style.display = 'flex';
-    }
+        document.getElementById('welcomeBadge').textContent = content.badge;
+        document.getElementById('welcomeIntro').textContent = content.intro;
 
-    // Start onboarding tour
-    function startOnboarding() {
-        const overlay = document.getElementById('welcomeOverlay');
-        overlay.classList.add('fade-out');
-        setTimeout(() => {
-            overlay.style.display = 'none';
-            document.getElementById('onboardingModal').classList.add('active');
-            updateOnboardingStep(1);
-        }, 800);
-    }
+        // Build features HTML
+        const featuresHtml = content.features.map(f => `
+            <div class="welcome-feature">
+                <div class="welcome-feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${featureIcons[f.icon] || featureIcons.chart}</svg>
+                </div>
+                <span>${f.text}</span>
+            </div>
+        `).join('');
+        document.getElementById('welcomeFeatures').innerHTML = featuresHtml;
 
-    // Update onboarding step
-    function updateOnboardingStep(step) {
-        onboardingStep = step;
-        const stepData = onboardingSteps[step - 1];
-
-        // Update dots
-        document.querySelectorAll('.onboarding-dot').forEach((dot, i) => {
-            dot.classList.toggle('active', i < step);
+        // Setup consent checkbox
+        const consentCheckbox = document.getElementById('welcomeConsent');
+        const continueBtn = document.getElementById('welcomeContinueBtn');
+        consentCheckbox.addEventListener('change', () => {
+            continueBtn.disabled = !consentCheckbox.checked;
         });
 
-        // Update content with animation
-        const card = document.querySelector('.onboarding-card');
-        card.style.animation = 'none';
-        card.offsetHeight; // Trigger reflow
-        card.style.animation = 'slideIn 0.4s ease';
+        // Create particles and show
+        createParticles();
+        modal.classList.add('active');
+    }
 
-        document.getElementById('onboardingTitle').textContent = stepData.title;
-        document.getElementById('onboardingText').textContent = stepData.text;
-        document.getElementById('onboardingHighlight').textContent = stepData.highlight;
-        document.getElementById('onboardingIcon').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${stepData.icon}</svg>`;
+    // Start spotlight tour
+    function startTour() {
+        // Hide welcome modal
+        document.getElementById('welcomeModal').classList.remove('active');
 
-        // Update button text for last step
-        const nextBtn = document.querySelector('.onboarding-next');
-        if (step === totalOnboardingSteps) {
-            nextBtn.innerHTML = 'Get Started <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+        // Save consent to Firestore
+        if (currentUser) {
+            db.collection('users').doc(currentUser.uid).update({
+                onboardingConsentGiven: true,
+                onboardingConsentDate: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        }
+
+        // Start tour
+        tourStep = 0;
+        document.getElementById('tourOverlay').classList.add('active');
+        updateTourStep();
+    }
+
+    // Update tour step
+    function updateTourStep() {
+        const step = tourSteps[tourStep];
+        const targetEl = document.querySelector(step.target);
+
+        if (!targetEl) {
+            nextTourStep();
+            return;
+        }
+
+        const rect = targetEl.getBoundingClientRect();
+        const spotlight = document.getElementById('tourSpotlight');
+        const tooltip = document.getElementById('tourTooltip');
+        const arrow = document.getElementById('tourArrow');
+
+        // Position spotlight
+        const padding = 8;
+        spotlight.style.top = (rect.top - padding) + 'px';
+        spotlight.style.left = (rect.left - padding) + 'px';
+        spotlight.style.width = (rect.width + padding * 2) + 'px';
+        spotlight.style.height = (rect.height + padding * 2) + 'px';
+
+        // Update tooltip content
+        document.getElementById('tourTitle').textContent = step.title;
+        document.getElementById('tourText').textContent = step.text;
+
+        // Build step indicator
+        let dotsHtml = '';
+        for (let i = 0; i < totalTourSteps; i++) {
+            let cls = 'tour-step-dot';
+            if (i < tourStep) cls += ' completed';
+            if (i === tourStep) cls += ' active';
+            dotsHtml += `<div class="${cls}"></div>`;
+        }
+        document.getElementById('tourStepIndicator').innerHTML = dotsHtml;
+
+        // Position tooltip
+        tooltip.style.top = (rect.bottom + 20) + 'px';
+        tooltip.style.left = Math.max(10, rect.left - 20) + 'px';
+        arrow.className = 'tour-tooltip-arrow top';
+
+        // Update button text
+        const nextBtn = tooltip.querySelector('.tour-next');
+        if (tourStep === totalTourSteps - 1) {
+            nextBtn.innerHTML = 'Finish <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
         } else {
-            nextBtn.innerHTML = 'Next <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>';
+            nextBtn.innerHTML = 'Next <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>';
+        }
+
+        // Animate tooltip
+        tooltip.style.animation = 'none';
+        tooltip.offsetHeight;
+        tooltip.style.animation = 'slideIn 0.4s ease';
+    }
+
+    // Next tour step
+    function nextTourStep() {
+        if (tourStep < totalTourSteps - 1) {
+            tourStep++;
+            updateTourStep();
+        } else {
+            finishTour();
         }
     }
 
-    // Next onboarding step
-    function nextOnboardingStep() {
-        if (onboardingStep < totalOnboardingSteps) {
-            updateOnboardingStep(onboardingStep + 1);
-        } else {
-            finishOnboarding();
-        }
+    // Skip tour
+    function skipTour() {
+        finishTour();
     }
 
-    // Skip onboarding
-    function skipOnboarding() {
-        finishOnboarding();
-    }
+    // Finish tour
+    function finishTour() {
+        document.getElementById('tourOverlay').classList.remove('active');
 
-    // Finish onboarding
-    function finishOnboarding() {
-        document.getElementById('onboardingModal').classList.remove('active');
-        // Mark onboarding as complete in Firestore
+        // Mark onboarding complete
         if (currentUser) {
             db.collection('users').doc(currentUser.uid).update({
                 onboardingComplete: true,
                 onboardingCompletedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
         }
+
+        // Show assessment reminder
+        setTimeout(() => {
+            document.getElementById('assessmentModal').classList.add('active');
+        }, 500);
+    }
+
+    // Assessment modal functions
+    function dismissAssessmentModal() {
+        document.getElementById('assessmentModal').classList.remove('active');
+    }
+
+    function startAssessmentNow() {
+        document.getElementById('assessmentModal').classList.remove('active');
+        showSection('assessments');
+    }
+
+    // Privacy policy popup
+    function showPrivacyPolicy(e) {
+        e.preventDefault();
+        const modal = document.createElement('div');
+        modal.id = 'privacyModal';
+        modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 10001; display: flex; justify-content: center; align-items: center; padding: 20px;';
+        modal.innerHTML = `
+            <div style="background: white; max-width: 600px; max-height: 80vh; overflow-y: auto; padding: 30px; border-radius: 16px; position: relative;">
+                <button onclick="document.getElementById('privacyModal').remove()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: #999;">&times;</button>
+                <h2 style="font-family: 'Cormorant Garamond', serif; color: var(--navy); margin-bottom: 20px;">Privacy Policy</h2>
+                <div style="font-size: 14px; line-height: 1.7; color: #555;">
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 20px 0 10px;">Data We Collect</h3>
+                    <p>We collect the following information to provide sleep wellness services:</p>
+                    <ul style="padding-left: 20px; margin: 10px 0;">
+                        <li>Contact information (name, email)</li>
+                        <li>Sleep patterns and habits</li>
+                        <li>Assessment responses</li>
+                        <li>Sleep diary entries</li>
+                        <li>Messages with your consultant</li>
+                    </ul>
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 20px 0 10px;">How We Use Your Data</h3>
+                    <p>Your data is used exclusively to:</p>
+                    <ul style="padding-left: 20px; margin: 10px 0;">
+                        <li>Provide personalized sleep assessment and recommendations</li>
+                        <li>Track your progress over time</li>
+                        <li>Enable communication with Dr. Alen Juginovic</li>
+                    </ul>
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 20px 0 10px;">Your Rights (GDPR)</h3>
+                    <p>You have the right to:</p>
+                    <ul style="padding-left: 20px; margin: 10px 0;">
+                        <li>Access your personal data</li>
+                        <li>Request correction of inaccurate data</li>
+                        <li>Request deletion of your data</li>
+                        <li>Withdraw consent at any time</li>
+                    </ul>
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 20px 0 10px;">Contact</h3>
+                    <p>For any privacy-related inquiries, contact Dr. Alen Juginovic at alen_juginovic@hms.harvard.edu</p>
+                </div>
+                <button onclick="document.getElementById('privacyModal').remove()" style="margin-top: 20px; padding: 12px 24px; background: var(--gold); color: var(--deep-navy); border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Close</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    // Legacy function for backward compatibility
+    function showWelcomeOverlay(userName) {
+        showWelcomeModal(userName, userProfile?.clientType || 'hotel');
     }
 
     // Load user tasks
@@ -1910,13 +3469,21 @@
         if (!currentUser) return;
 
         try {
+            // Query without orderBy to avoid index issues, sort client-side
             const snapshot = await db.collection('clientTasks')
                 .where('clientId', '==', currentUser.uid)
                 .where('status', '==', 'pending')
-                .orderBy('dueDate', 'asc')
                 .get();
 
             const tasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            // Sort by deadline client-side
+            tasks.sort((a, b) => {
+                const aDate = a.deadline?.toDate?.() || new Date(9999, 11, 31);
+                const bDate = b.deadline?.toDate?.() || new Date(9999, 11, 31);
+                return aDate - bDate;
+            });
+
             const tasksBanner = document.getElementById('tasksBanner');
             const tasksList = document.getElementById('tasksList');
             const tasksSubtitle = document.getElementById('tasksSubtitle');
@@ -1930,17 +3497,17 @@
             tasksSubtitle.textContent = `You have ${tasks.length} task${tasks.length > 1 ? 's' : ''} to complete`;
 
             tasksList.innerHTML = tasks.slice(0, 5).map(task => {
-                const dueDate = task.dueDate?.toDate?.();
-                const isOverdue = dueDate && dueDate < new Date();
-                const isHighPriority = task.priority === 'high';
-                const dueDateText = dueDate ? (isOverdue ? 'Overdue' : 'Due ' + dueDate.toLocaleDateString()) : '';
+                const deadline = task.deadline?.toDate?.();
+                const isOverdue = deadline && deadline < new Date();
+                const isHighPriority = task.priority === 'high' || task.taskType === 'assessment';
+                const deadlineText = deadline ? (isOverdue ? 'Overdue' : 'Due ' + deadline.toLocaleDateString()) : '';
 
                 return `
                     <div class="task-item ${isHighPriority ? 'high-priority' : ''}" onclick="handleTaskClick('${task.id}', '${task.taskType}')">
                         <div class="task-checkbox"></div>
                         <div class="task-info">
                             <div class="task-title">${task.title}</div>
-                            <div class="task-due ${isOverdue ? 'overdue' : ''}">${dueDateText}</div>
+                            <div class="task-due ${isOverdue ? 'overdue' : ''}">${deadlineText}</div>
                         </div>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2">
                             <polyline points="9 18 15 12 9 6"/>
@@ -1958,6 +3525,9 @@
     function handleTaskClick(taskId, taskType) {
         // Navigate based on task type
         switch (taskType) {
+            case 'assessment':
+                showSection('assessments');
+                break;
             case 'diary':
             case 'diary-week':
                 showSection('diary');
@@ -1981,7 +3551,7 @@
                 break;
             default:
                 // For other tasks, just highlight them
-                alert('Task: ' + taskType + '\n\nPlease complete this task and it will be marked as done.');
+                showSection('assessments');
         }
     }
 
@@ -2014,9 +3584,13 @@
         document.getElementById('userAvatar').textContent = initials;
 
         // Check if this is a new user (never completed onboarding)
-        if (!profile.onboardingComplete) {
-            const firstName = (profile.displayName || '').split(' ')[0];
-            showWelcomeOverlay(firstName);
+        console.log('Onboarding check:', { onboardingComplete: profile.onboardingComplete, clientType: profile.clientType });
+        if (profile.onboardingComplete !== true) {
+            const firstName = (profile.displayName || '').split(' ')[0] || 'Friend';
+            console.log('Showing welcome modal for:', firstName);
+            setTimeout(() => {
+                showWelcomeModal(firstName, profile.clientType || 'hotel');
+            }, 500);
         }
 
         // Load dashboard data
@@ -2030,6 +3604,12 @@
 
         // Set default diary date
         document.getElementById('diaryDate').value = new Date().toISOString().split('T')[0];
+
+        // Check diary reminder
+        checkDiaryReminder();
+
+        // Check for pending discharge survey
+        checkForDischargeSurvey();
 
         // Set min date for appointments
         const tomorrow = new Date();
@@ -2155,40 +3735,234 @@
         }).join('');
     }
 
+    // ==================== DIARY HELPER FUNCTIONS ====================
+
+    // Set diary date (0 = today, -1 = yesterday)
+    function setDiaryDate(offset) {
+        const date = new Date();
+        date.setDate(date.getDate() + offset);
+        document.getElementById('diaryDate').value = date.toISOString().split('T')[0];
+
+        // Update pills
+        document.querySelectorAll('.date-pill').forEach(pill => pill.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+
+    // Setup diary pill click handlers
+    document.addEventListener('DOMContentLoaded', () => {
+        // Time pills - handle all time fields
+        document.querySelectorAll('.time-pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                const field = this.dataset.field;
+                const time = this.dataset.time;
+
+                // Map field to input ID
+                const fieldMap = {
+                    'bedtime': 'diaryBedtime',
+                    'lightsOut': 'diaryLightsOut',
+                    'finalWake': 'diaryFinalWake',
+                    'outOfBed': 'diaryOutOfBed'
+                };
+
+                const inputId = fieldMap[field];
+                if (inputId) {
+                    document.getElementById(inputId).value = time;
+                }
+
+                // Update active state
+                document.querySelectorAll(`.time-pill[data-field="${field}"]`).forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Quick pick pills - handle all quick-pick fields
+        document.querySelectorAll('.quick-pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                const field = this.dataset.field;
+                const value = this.dataset.value;
+
+                // Map field to input ID
+                const fieldMap = {
+                    'latency': 'diaryLatency',
+                    'awakenings': 'diaryAwakenings',
+                    'waso': 'diaryWASO',
+                    'naps': 'diaryNaps'
+                };
+
+                const inputId = fieldMap[field];
+                if (inputId) {
+                    document.getElementById(inputId).value = value;
+                }
+
+                // Update active state
+                document.querySelectorAll(`.quick-pill[data-field="${field}"]`).forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    });
+
+    // Set quality rating
+    function setQuality(value) {
+        document.getElementById('diaryQuality').value = value;
+
+        // Update stars (only non-rested ones)
+        document.querySelectorAll('.quality-star:not(.rested-btn)').forEach(star => {
+            star.classList.remove('active');
+            if (parseInt(star.dataset.value) === value) {
+                star.classList.add('active');
+            }
+        });
+    }
+
+    // Set restedness rating
+    function setRestedness(value) {
+        document.getElementById('diaryRestedness').value = value;
+
+        // Update rested buttons
+        document.querySelectorAll('.rested-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (parseInt(btn.dataset.value) === value) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    // Check if diary needs to be filled today
+    function checkDiaryReminder() {
+        const now = new Date();
+        const hour = now.getHours();
+
+        // Show reminder between 6 AM and 11 AM
+        if (hour >= 6 && hour < 11) {
+            // Check if already filled today
+            const lastDismiss = localStorage.getItem('diaryReminderDismissed');
+            const today = now.toISOString().split('T')[0];
+
+            if (lastDismiss !== today) {
+                document.getElementById('diaryReminder').style.display = 'flex';
+            }
+        }
+    }
+
+    // Dismiss diary reminder
+    function dismissDiaryReminder() {
+        document.getElementById('diaryReminder').style.display = 'none';
+        localStorage.setItem('diaryReminderDismissed', new Date().toISOString().split('T')[0]);
+    }
+
     // Save diary entry
     async function saveDiaryEntry(e) {
         e.preventDefault();
 
+        // Get all time fields
         const bedtime = document.getElementById('diaryBedtime').value;
-        const wakeTime = document.getElementById('diaryWakeTime').value;
+        const lightsOut = document.getElementById('diaryLightsOut').value;
+        const finalWake = document.getElementById('diaryFinalWake').value;
+        const outOfBed = document.getElementById('diaryOutOfBed').value;
+
+        // Validate required fields
+        if (!lightsOut || !finalWake) {
+            alert('Please select when you tried to sleep and your final wake time.');
+            return;
+        }
+
+        // Get numeric fields
         const latency = parseInt(document.getElementById('diaryLatency').value) || 0;
         const waso = parseInt(document.getElementById('diaryWASO').value) || 0;
+        const awakenings = parseInt(document.getElementById('diaryAwakenings').value) || 0;
+        const quality = parseInt(document.getElementById('diaryQuality').value) || 3;
+        const restedness = parseInt(document.getElementById('diaryRestedness').value) || 3;
+        const naps = parseInt(document.getElementById('diaryNaps').value) || 0;
 
-        // Calculate metrics
-        const [bedH, bedM] = bedtime.split(':').map(Number);
-        const [wakeH, wakeM] = wakeTime.split(':').map(Number);
-        let tib = (wakeH * 60 + wakeM) - (bedH * 60 + bedM);
-        if (tib < 0) tib += 24 * 60;
-        const tst = tib - latency - waso;
-        const sleepEfficiency = (tst / tib * 100);
+        // Get substances
+        const substances = [];
+        if (document.getElementById('diaryCaffeine').checked) substances.push('caffeine');
+        if (document.getElementById('diaryAlcohol').checked) substances.push('alcohol');
+        if (document.getElementById('diarySleepAid').checked) substances.push('sleepaid');
+        if (document.getElementById('diaryNone').checked) substances.push('none');
+
+        // Calculate sleep metrics (Consensus Sleep Diary formulas)
+        // Time in Bed (TIB) = Out of bed time - Bedtime (or lights out if no bedtime)
+        const tibStart = bedtime || lightsOut;
+        const tibEnd = outOfBed || finalWake;
+
+        const [tibStartH, tibStartM] = tibStart.split(':').map(Number);
+        const [tibEndH, tibEndM] = tibEnd.split(':').map(Number);
+        let timeInBed = (tibEndH * 60 + tibEndM) - (tibStartH * 60 + tibStartM);
+        if (timeInBed < 0) timeInBed += 24 * 60;
+
+        // Sleep Period Time (SPT) = Final wake - (Lights out + Sleep latency)
+        const [loH, loM] = lightsOut.split(':').map(Number);
+        const [fwH, fwM] = finalWake.split(':').map(Number);
+        let sleepPeriodTime = (fwH * 60 + fwM) - (loH * 60 + loM) - latency;
+        if (sleepPeriodTime < 0) sleepPeriodTime += 24 * 60;
+
+        // Total Sleep Time (TST) = SPT - WASO
+        const totalSleepTime = sleepPeriodTime - waso;
+
+        // Sleep Efficiency (SE) = (TST / TIB) * 100
+        const sleepEfficiency = timeInBed > 0 ? (totalSleepTime / timeInBed * 100) : 0;
+
+        // Sleep Onset Latency (SOL) = latency
+        const sleepOnsetLatency = latency;
 
         const entry = {
             date: document.getElementById('diaryDate').value,
-            bedtime,
-            wakeTime,
+            // Time fields
+            bedtime: bedtime || null,
+            lightsOut,
+            finalWake,
+            outOfBed: outOfBed || null,
+            // Duration fields
             sleepLatency: latency,
-            awakenings: parseInt(document.getElementById('diaryAwakenings').value) || 0,
+            awakenings,
             waso,
-            quality: parseInt(document.getElementById('diaryQuality').value),
-            timeInBed: tib,
-            totalSleepTime: tst,
-            sleepEfficiency
+            naps,
+            // Quality fields
+            quality,
+            restedness,
+            // Other
+            substances,
+            notes: document.getElementById('diaryNotes').value || '',
+            // Calculated metrics
+            timeInBed,
+            sleepPeriodTime,
+            totalSleepTime,
+            sleepEfficiency,
+            sleepOnsetLatency
         };
 
         await FirebaseDB.saveDiaryEntry(currentUser.uid, entry);
-        alert('Entry saved!');
+
+        // Show calculated metrics
+        document.getElementById('diaryMetrics').style.display = 'block';
+        document.getElementById('metricTST').textContent = `${Math.floor(totalSleepTime / 60)}h ${totalSleepTime % 60}m`;
+        document.getElementById('metricSE').textContent = `${sleepEfficiency.toFixed(0)}%`;
+        document.getElementById('metricSOL').textContent = `${latency}m`;
+        document.getElementById('metricWASO').textContent = `${waso}m`;
+
+        // Show success message
+        const btn = document.querySelector('#diaryForm button[type="submit"]');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><polyline points="20 6 9 17 4 12"/></svg> Saved!';
+        btn.style.background = '#4caf50';
+
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = '';
+        }, 2000);
+
+        // Reset form
         document.getElementById('diaryForm').reset();
         document.getElementById('diaryDate').value = new Date().toISOString().split('T')[0];
+        document.querySelectorAll('.time-pill, .quick-pill, .quality-star, .rested-btn').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.date-pill').forEach(p => {
+            p.classList.toggle('active', p.textContent.includes('Tonight'));
+        });
+
+        // Dismiss reminder
+        dismissDiaryReminder();
+
         loadDiaryEntries();
     }
 
@@ -2344,8 +4118,30 @@
         }).join('');
     }
 
-    // Load modules
+    // Load modules - grouped by category
     let userRequests = [];
+
+    // Module category mapping
+    const moduleCategories = {
+        // Core Sleep Skills
+        'sleep-hygiene': 'core',
+        'cbti-restriction': 'core',
+        'cbti-stimulus': 'core',
+        'sleep-diary': 'core',
+        // CBT-I Techniques
+        'cbti-cognitive': 'cbt',
+        'worry-management': 'cbt',
+        'paradoxical-intention': 'cbt',
+        // Relaxation & Mindfulness
+        'pmr': 'relaxation',
+        'breathing-478': 'relaxation',
+        'mindfulness-bodyscan': 'relaxation',
+        'guided-imagery': 'relaxation',
+        'autogenic-training': 'relaxation',
+        // Travel & Circadian
+        'jet-lag-calculator': 'travel',
+        'circadian-rhythm': 'travel'
+    };
 
     async function loadModules() {
         const [unlocks, requests] = await Promise.all([
@@ -2358,11 +4154,55 @@
         // Get pending request module IDs
         const pendingRequests = requests.filter(r => r.status === 'pending').map(r => r.moduleId);
 
-        const container = document.getElementById('modulesGrid');
         const modules = Content.modules;
 
-        container.innerHTML = Object.keys(modules).map(id => {
-            const m = modules[id];
+        // Group modules by category
+        const grouped = {
+            core: [],
+            cbt: [],
+            relaxation: [],
+            travel: [],
+            other: []
+        };
+
+        Object.keys(modules).forEach(id => {
+            const category = moduleCategories[id] || 'other';
+            grouped[category].push({ id, ...modules[id] });
+        });
+
+        // Show/hide travel section based on client type
+        const showTravel = userProfile?.clientType === 'executive' || userProfile?.clientType === 'hotel';
+        document.getElementById('travelResourceGroup').style.display = showTravel && grouped.travel.length > 0 ? 'block' : 'none';
+
+        // Render each category
+        renderModuleGroup('modulesGrid-core', grouped.core, hasAll, unlocks, pendingRequests);
+        renderModuleGroup('modulesGrid-cbt', grouped.cbt, hasAll, unlocks, pendingRequests);
+        renderModuleGroup('modulesGrid-relaxation', grouped.relaxation, hasAll, unlocks, pendingRequests);
+        renderModuleGroup('modulesGrid-travel', grouped.travel, hasAll, unlocks, pendingRequests);
+        renderModuleGroup('modulesGrid-other', grouped.other, hasAll, unlocks, pendingRequests);
+
+        // Hide empty groups
+        document.querySelectorAll('.resource-group').forEach(group => {
+            const grid = group.querySelector('.modules-grid');
+            if (grid && grid.children.length === 0) {
+                group.style.display = 'none';
+            } else {
+                group.style.display = '';
+            }
+        });
+    }
+
+    function renderModuleGroup(containerId, modules, hasAll, unlocks, pendingRequests) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        if (modules.length === 0) {
+            container.innerHTML = '';
+            return;
+        }
+
+        container.innerHTML = modules.map(m => {
+            const id = m.id;
             const isUnlocked = !m.locked || hasAll || unlocks.includes(id);
             const isPending = pendingRequests.includes(id);
 
@@ -2552,6 +4392,456 @@
     }
 
     // ========== END QUESTIONNAIRE FUNCTIONS ==========
+
+    // ========== DISCHARGE SURVEY FUNCTIONS ==========
+
+    function openDischargeModal() {
+        document.getElementById('dischargeModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        // Setup click handlers for discharge pills
+        document.querySelectorAll('.discharge-pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                const field = this.dataset.field;
+                const value = this.dataset.value;
+                document.getElementById('dischargeImprovement').value = value;
+                document.querySelectorAll(`.discharge-pill[data-field="${field}"]`).forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    }
+
+    function closeDischargeModal() {
+        document.getElementById('dischargeModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function setSatisfaction(value) {
+        document.getElementById('dischargeSatisfaction').value = value;
+        document.querySelectorAll('.sat-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (parseInt(btn.dataset.value) === value) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    function setNPS(value) {
+        document.getElementById('dischargeNPS').value = value;
+        document.querySelectorAll('.nps-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (parseInt(btn.dataset.value) === value) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    function setCommunication(value) {
+        document.getElementById('dischargeCommunication').value = value;
+        document.querySelectorAll('.comm-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (parseInt(btn.dataset.value) === value) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    async function submitDischargeSurvey(e) {
+        e.preventDefault();
+
+        const btn = document.getElementById('submitDischargeBtn');
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+
+        // Collect helpful items
+        const helpfulItems = [];
+        document.querySelectorAll('input[name="helpful"]:checked').forEach(cb => {
+            helpfulItems.push(cb.value);
+        });
+
+        const surveyData = {
+            satisfaction: parseInt(document.getElementById('dischargeSatisfaction').value) || null,
+            improvement: document.getElementById('dischargeImprovement').value || null,
+            nps: parseInt(document.getElementById('dischargeNPS').value),
+            communication: parseInt(document.getElementById('dischargeCommunication').value) || null,
+            helpfulItems,
+            improvements: document.getElementById('dischargeImprovements').value.trim() || null,
+            testimonial: document.getElementById('dischargeTestimonial').value.trim() || null,
+            testimonialConsent: document.getElementById('dischargeTestimonialConsent').checked,
+            userId: currentUser.uid,
+            userEmail: currentUser.email,
+            userName: userProfile?.displayName || null,
+            clientType: userProfile?.clientType || null,
+            submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        // Calculate NPS category
+        if (surveyData.nps !== null && !isNaN(surveyData.nps)) {
+            if (surveyData.nps <= 6) surveyData.npsCategory = 'detractor';
+            else if (surveyData.nps <= 8) surveyData.npsCategory = 'passive';
+            else surveyData.npsCategory = 'promoter';
+        }
+
+        try {
+            // Save to Firestore
+            await db.collection('dischargeSurveys').add(surveyData);
+
+            // Mark user as discharged
+            await db.collection('users').doc(currentUser.uid).update({
+                discharged: true,
+                dischargedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                dischargeNPS: surveyData.nps,
+                dischargeSatisfaction: surveyData.satisfaction
+            });
+
+            closeDischargeModal();
+
+            // Show thank you message
+            alert('Thank you for your feedback! We appreciate you taking the time to help us improve.');
+
+        } catch (error) {
+            console.error('Error submitting survey:', error);
+            alert('There was an error submitting your feedback. Please try again.');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Submit Feedback';
+        }
+    }
+
+    // Check if user should see discharge survey (can be triggered by admin)
+    async function checkForDischargeSurvey() {
+        if (!currentUser) return;
+
+        try {
+            const userDoc = await db.collection('users').doc(currentUser.uid).get();
+            const userData = userDoc.data();
+
+            // Check if marked for discharge but hasn't completed survey
+            if (userData?.pendingDischarge && !userData?.discharged) {
+                openDischargeModal();
+            }
+        } catch (error) {
+            console.error('Error checking discharge status:', error);
+        }
+    }
+
+    // ========== END DISCHARGE SURVEY FUNCTIONS ==========
+
+    // ========== AI CHATBOT FUNCTIONS ==========
+
+    let chatHistory = [];
+    let isChatProcessing = false;
+
+    // Sleep knowledge base for common questions
+    const sleepKnowledge = {
+        'sleep efficiency': {
+            answer: `<p><strong>Sleep Efficiency (SE)</strong> is one of the most important metrics we track. It's calculated as:</p>
+                    <p><em>SE = (Total Sleep Time / Time in Bed) × 100</em></p>
+                    <p>For example, if you're in bed for 8 hours but only sleeping for 6 hours, your SE is 75%.</p>
+                    <ul>
+                        <li><strong>85% or higher:</strong> Excellent</li>
+                        <li><strong>75-84%:</strong> Good</li>
+                        <li><strong>65-74%:</strong> Fair - room for improvement</li>
+                        <li><strong>Below 65%:</strong> Needs attention</li>
+                    </ul>
+                    <p>Improving sleep efficiency is often more impactful than extending time in bed.</p>`
+        },
+        'sleep latency': {
+            answer: `<p><strong>Sleep Onset Latency (SOL)</strong> is the time it takes you to fall asleep after getting into bed and turning off the lights.</p>
+                    <ul>
+                        <li><strong>Under 15 minutes:</strong> Normal</li>
+                        <li><strong>15-30 minutes:</strong> Mild difficulty</li>
+                        <li><strong>30-60 minutes:</strong> Moderate difficulty</li>
+                        <li><strong>Over 60 minutes:</strong> Significant difficulty</li>
+                    </ul>
+                    <p>If you're falling asleep in less than 5 minutes, you might actually be sleep-deprived!</p>`
+        },
+        'waso': {
+            answer: `<p><strong>WASO (Wake After Sleep Onset)</strong> measures the total time you spend awake during the night after initially falling asleep.</p>
+                    <ul>
+                        <li><strong>Under 20 minutes:</strong> Normal</li>
+                        <li><strong>20-40 minutes:</strong> Mild fragmentation</li>
+                        <li><strong>Over 40 minutes:</strong> Significant fragmentation</li>
+                    </ul>
+                    <p>Brief awakenings are normal, but prolonged wakefulness can affect sleep quality significantly.</p>`
+        },
+        'improve sleep': {
+            answer: `<p>Here are evidence-based tips for better sleep:</p>
+                    <ol>
+                        <li><strong>Consistent Schedule:</strong> Wake up at the same time every day, even weekends</li>
+                        <li><strong>Light Exposure:</strong> Get bright light in the morning, dim lights 2 hours before bed</li>
+                        <li><strong>Cool Environment:</strong> Keep bedroom at 65-68°F (18-20°C)</li>
+                        <li><strong>Caffeine Cutoff:</strong> No caffeine after 2 PM</li>
+                        <li><strong>Limit Alcohol:</strong> Avoid within 3 hours of bedtime</li>
+                        <li><strong>Wind-Down Routine:</strong> 30-60 minutes of relaxing activities before bed</li>
+                        <li><strong>Bed = Sleep:</strong> Only use your bed for sleep and intimacy</li>
+                    </ol>
+                    <p>Check the <strong>Resources</strong> section for detailed modules on each of these topics!</p>`
+        },
+        'circadian': {
+            answer: `<p><strong>Circadian Rhythm</strong> is your internal 24-hour body clock that regulates when you feel alert vs. sleepy.</p>
+                    <p>Key factors that influence it:</p>
+                    <ul>
+                        <li><strong>Light:</strong> The most powerful synchronizer - bright light in morning, dim at night</li>
+                        <li><strong>Meal timing:</strong> Eating at consistent times helps regulate your clock</li>
+                        <li><strong>Exercise:</strong> Morning or afternoon exercise can strengthen rhythms</li>
+                        <li><strong>Temperature:</strong> Core body temperature naturally drops at night</li>
+                    </ul>
+                    <p>Irregular schedules (like shift work or jet lag) can disrupt this rhythm.</p>`
+        },
+        'insomnia': {
+            answer: `<p><strong>Insomnia</strong> is difficulty falling asleep, staying asleep, or waking too early, despite having adequate opportunity to sleep.</p>
+                    <p>It's diagnosed when these issues occur at least 3 nights per week for 3+ months and cause daytime impairment.</p>
+                    <p>The good news: <strong>Cognitive Behavioral Therapy for Insomnia (CBT-I)</strong> is highly effective and is considered the first-line treatment.</p>`,
+            referToDoctor: true
+        },
+        'sleep apnea': {
+            answer: `<p><strong>Sleep Apnea</strong> is a condition where breathing repeatedly stops during sleep. Common signs include:</p>
+                    <ul>
+                        <li>Loud snoring</li>
+                        <li>Gasping or choking during sleep</li>
+                        <li>Excessive daytime sleepiness</li>
+                        <li>Morning headaches</li>
+                    </ul>
+                    <p>This requires proper medical evaluation and diagnosis.</p>`,
+            referToDoctor: true
+        },
+        'navigate': {
+            answer: `<p>Here's how to navigate the portal:</p>
+                    <ul>
+                        <li><strong>Dashboard:</strong> Your home base with stats and tasks</li>
+                        <li><strong>Assessments:</strong> Complete sleep health evaluations</li>
+                        <li><strong>Questionnaires:</strong> Standardized sleep questionnaires (ISI, ESS, etc.)</li>
+                        <li><strong>Sleep Diary:</strong> Log your sleep each morning</li>
+                        <li><strong>Messages:</strong> Direct communication with Dr. Alen</li>
+                        <li><strong>Appointments:</strong> Schedule consultations</li>
+                        <li><strong>Resources:</strong> Educational modules and techniques</li>
+                    </ul>
+                    <p>What would you like to do?</p>`
+        },
+        'summarize': {
+            answer: 'FETCH_USER_DATA'
+        }
+    };
+
+    // Medical advice detection keywords
+    const medicalKeywords = [
+        'diagnose', 'diagnosis', 'medication', 'medicine', 'drug', 'prescription',
+        'treatment', 'cure', 'disease', 'disorder', 'condition', 'symptom',
+        'should i take', 'what should i do about', 'is this serious',
+        'am i sick', 'do i have', 'sleeping pills', 'melatonin dose',
+        'side effects', 'doctor', 'physician', 'medical advice'
+    ];
+
+    function toggleChat() {
+        document.getElementById('chatWidget').classList.toggle('open');
+    }
+
+    function handleChatKeypress(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendChatMessage();
+        }
+    }
+
+    function askSuggestion(question) {
+        document.getElementById('chatInput').value = question;
+        sendChatMessage();
+        // Hide suggestions after use
+        document.getElementById('chatSuggestions').style.display = 'none';
+    }
+
+    async function sendChatMessage() {
+        if (isChatProcessing) return;
+
+        const input = document.getElementById('chatInput');
+        const message = input.value.trim();
+        if (!message) return;
+
+        input.value = '';
+        isChatProcessing = true;
+        document.getElementById('chatSendBtn').disabled = true;
+
+        // Add user message
+        addChatMessage(message, 'user');
+
+        // Show typing indicator
+        showTypingIndicator();
+
+        // Process and respond
+        setTimeout(async () => {
+            const response = await generateResponse(message);
+            hideTypingIndicator();
+            addChatMessage(response.text, 'assistant', response.showContactBtn);
+            isChatProcessing = false;
+            document.getElementById('chatSendBtn').disabled = false;
+        }, 800 + Math.random() * 700);
+    }
+
+    function addChatMessage(text, role, showContactBtn = false) {
+        const container = document.getElementById('chatMessages');
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `chat-message ${role}`;
+
+        let content = `<div class="chat-bubble">${text}</div>`;
+
+        if (showContactBtn) {
+            content = `<div class="chat-bubble">${text}
+                <button class="chat-contact-btn" onclick="contactDrAlen()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Contact Dr. Alen
+                </button>
+            </div>`;
+        }
+
+        msgDiv.innerHTML = content;
+        container.appendChild(msgDiv);
+        container.scrollTop = container.scrollHeight;
+
+        // Store in history
+        chatHistory.push({ role, content: text });
+    }
+
+    function showTypingIndicator() {
+        const container = document.getElementById('chatMessages');
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'chat-message assistant';
+        typingDiv.id = 'typingIndicator';
+        typingDiv.innerHTML = `<div class="chat-typing"><span></span><span></span><span></span></div>`;
+        container.appendChild(typingDiv);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    function hideTypingIndicator() {
+        const indicator = document.getElementById('typingIndicator');
+        if (indicator) indicator.remove();
+    }
+
+    async function generateResponse(message) {
+        const lowerMsg = message.toLowerCase();
+
+        // Check for medical advice requests
+        const needsMedical = medicalKeywords.some(keyword => lowerMsg.includes(keyword));
+
+        if (needsMedical) {
+            return {
+                text: `<p>I understand you have questions about this topic. While I can provide general sleep education, I'm not able to give medical or health advice.</p>
+                       <p>Dr. Alen would be the best person to discuss this with you directly. Would you like to send him a message?</p>`,
+                showContactBtn: true
+            };
+        }
+
+        // Check for data summary request
+        if (lowerMsg.includes('summarize') || lowerMsg.includes('my data') || lowerMsg.includes('my results') || lowerMsg.includes('my sleep')) {
+            return await generateDataSummary();
+        }
+
+        // Search knowledge base
+        for (const [topic, data] of Object.entries(sleepKnowledge)) {
+            if (lowerMsg.includes(topic)) {
+                if (data.answer === 'FETCH_USER_DATA') {
+                    return await generateDataSummary();
+                }
+                return {
+                    text: data.answer,
+                    showContactBtn: data.referToDoctor || false
+                };
+            }
+        }
+
+        // Check for navigation help
+        if (lowerMsg.includes('how do i') || lowerMsg.includes('where') || lowerMsg.includes('find') || lowerMsg.includes('navigate')) {
+            return { text: sleepKnowledge['navigate'].answer, showContactBtn: false };
+        }
+
+        // Check for greetings
+        if (lowerMsg.match(/^(hi|hello|hey|good morning|good evening)/)) {
+            const greeting = new Date().getHours() < 12 ? 'Good morning' : new Date().getHours() < 18 ? 'Good afternoon' : 'Good evening';
+            return {
+                text: `<p>${greeting}! How can I help you with your sleep wellness journey today?</p>`,
+                showContactBtn: false
+            };
+        }
+
+        // Default response
+        return {
+            text: `<p>I can help you understand sleep concepts, navigate the portal, or summarize your data.</p>
+                   <p>Try asking about:</p>
+                   <ul>
+                       <li>Sleep efficiency or other metrics</li>
+                       <li>Tips for better sleep</li>
+                       <li>How to use different sections of the portal</li>
+                       <li>A summary of your sleep data</li>
+                   </ul>
+                   <p>For personalized advice, you can always message Dr. Alen directly!</p>`,
+            showContactBtn: false
+        };
+    }
+
+    async function generateDataSummary() {
+        try {
+            // Fetch user's diary entries
+            const diaryEntries = await FirebaseDB.getDiaryEntries(currentUser.uid, 7);
+
+            if (diaryEntries.length === 0) {
+                return {
+                    text: `<p>You haven't logged any sleep diary entries yet.</p>
+                           <p>Start tracking your sleep in the <strong>Sleep Diary</strong> section, and I'll be able to summarize your patterns!</p>`,
+                    showContactBtn: false
+                };
+            }
+
+            // Calculate averages
+            const avgEfficiency = diaryEntries.reduce((sum, e) => sum + (e.sleepEfficiency || 0), 0) / diaryEntries.length;
+            const avgTST = diaryEntries.reduce((sum, e) => sum + (e.totalSleepTime || 0), 0) / diaryEntries.length;
+            const avgLatency = diaryEntries.reduce((sum, e) => sum + (e.sleepLatency || 0), 0) / diaryEntries.length;
+            const avgQuality = diaryEntries.reduce((sum, e) => sum + (e.quality || 0), 0) / diaryEntries.length;
+
+            const hours = Math.floor(avgTST / 60);
+            const mins = Math.round(avgTST % 60);
+
+            let efficiencyRating = avgEfficiency >= 85 ? 'excellent' : avgEfficiency >= 75 ? 'good' : avgEfficiency >= 65 ? 'fair' : 'needs improvement';
+
+            return {
+                text: `<p><strong>Your Sleep Summary (Last ${diaryEntries.length} nights):</strong></p>
+                       <ul>
+                           <li><strong>Average Sleep Time:</strong> ${hours}h ${mins}m per night</li>
+                           <li><strong>Sleep Efficiency:</strong> ${avgEfficiency.toFixed(0)}% (${efficiencyRating})</li>
+                           <li><strong>Sleep Latency:</strong> ~${Math.round(avgLatency)} minutes to fall asleep</li>
+                           <li><strong>Quality Rating:</strong> ${avgQuality.toFixed(1)}/5</li>
+                       </ul>
+                       <p>${avgEfficiency >= 85 ? "Great job! Your sleep efficiency is in the excellent range." :
+                          avgEfficiency >= 75 ? "Your sleep efficiency is good. There's still room to optimize!" :
+                          "Let's work on improving your sleep efficiency. The Resources section has helpful techniques."}</p>`,
+                showContactBtn: false
+            };
+        } catch (error) {
+            console.error('Error fetching sleep data:', error);
+            return {
+                text: `<p>I had trouble fetching your sleep data. Please try again or check the Sleep Diary section directly.</p>`,
+                showContactBtn: false
+            };
+        }
+    }
+
+    function contactDrAlen() {
+        // Navigate to messages section
+        showSection('messages');
+        toggleChat();
+
+        // Pre-fill with context
+        setTimeout(() => {
+            const input = document.getElementById('messageInput');
+            if (input) {
+                input.value = "Hi Dr. Alen, I have a question that the assistant suggested I ask you directly: ";
+                input.focus();
+            }
+        }, 300);
+    }
+
+    // ========== END AI CHATBOT FUNCTIONS ==========
 
     // Update profile
     async function updateProfile(e) {

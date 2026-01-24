@@ -134,6 +134,7 @@ const FirebaseDB = {
                     clientType: additionalData.clientType || null,
                     createdAt,
                     lastLogin: createdAt,
+                    onboardingComplete: false,
                     ...additionalData
                 });
             } catch (error) {
@@ -551,6 +552,316 @@ const FirebaseDB = {
             return true;
         }
         return false;
+    },
+
+    /**
+     * Request module access (client)
+     */
+    async requestModuleAccess(userId, moduleId, moduleName, reason) {
+        const request = {
+            userId,
+            moduleId,
+            moduleName,
+            reason: reason || '',
+            status: 'pending',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        const docRef = await db.collection('moduleRequests').add(request);
+        return docRef.id;
+    },
+
+    /**
+     * Get user's pending module requests
+     */
+    async getUserModuleRequests(userId) {
+        const snapshot = await db.collection('moduleRequests')
+            .where('userId', '==', userId)
+            .get();
+
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    },
+
+    /**
+     * Check if user already requested a module
+     */
+    async hasRequestedModule(userId, moduleId) {
+        const snapshot = await db.collection('moduleRequests')
+            .where('userId', '==', userId)
+            .where('moduleId', '==', moduleId)
+            .where('status', '==', 'pending')
+            .get();
+
+        return !snapshot.empty;
+    },
+
+    /**
+     * Get all pending module requests (admin)
+     */
+    async getPendingModuleRequests() {
+        const snapshot = await db.collection('moduleRequests')
+            .where('status', '==', 'pending')
+            .get();
+
+        const requests = [];
+        for (const doc of snapshot.docs) {
+            const data = doc.data();
+            const userProfile = await this.getUserProfile(data.userId);
+            requests.push({
+                id: doc.id,
+                ...data,
+                userName: userProfile?.displayName || userProfile?.email || 'Unknown',
+                userEmail: userProfile?.email || ''
+            });
+        }
+
+        // Sort by createdAt descending
+        requests.sort((a, b) => {
+            const aTime = a.createdAt?.toDate?.() || new Date(0);
+            const bTime = b.createdAt?.toDate?.() || new Date(0);
+            return bTime - aTime;
+        });
+
+        return requests;
+    },
+
+    /**
+     * Approve module request (admin)
+     */
+    async approveModuleRequest(requestId) {
+        const requestDoc = await db.collection('moduleRequests').doc(requestId).get();
+        if (!requestDoc.exists) return false;
+
+        const request = requestDoc.data();
+
+        // Grant the module access
+        await this.grantUnlock(request.userId, [request.moduleId], ADMIN_UID, 'Approved from request');
+
+        // Update request status
+        await db.collection('moduleRequests').doc(requestId).update({
+            status: 'approved',
+            resolvedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        return true;
+    },
+
+    /**
+     * Deny module request (admin)
+     */
+    async denyModuleRequest(requestId, reason = '') {
+        await db.collection('moduleRequests').doc(requestId).update({
+            status: 'denied',
+            denyReason: reason,
+            resolvedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        return true;
+    },
+
+    /**
+     * Get count of pending requests (admin)
+     */
+    async getPendingRequestsCount() {
+        const snapshot = await db.collection('moduleRequests')
+            .where('status', '==', 'pending')
+            .get();
+
+        return snapshot.size;
+    },
+
+    // ==================== QUESTIONNAIRE FUNCTIONS ====================
+
+    /**
+     * Assign questionnaire to client (admin)
+     */
+    async assignQuestionnaire(userId, instrumentId, instrumentName, dueDate = null, notes = '') {
+        const assignment = {
+            userId,
+            instrumentId,
+            instrumentName,
+            status: 'pending', // pending, in_progress, completed
+            dueDate: dueDate ? new Date(dueDate) : null,
+            notes,
+            assignedBy: ADMIN_UID,
+            assignedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            completedAt: null,
+            result: null
+        };
+
+        const docRef = await db.collection('questionnaireAssignments').add(assignment);
+        return docRef.id;
+    },
+
+    /**
+     * Get user's assigned questionnaires (client)
+     */
+    async getUserQuestionnaires(userId) {
+        const snapshot = await db.collection('questionnaireAssignments')
+            .where('userId', '==', userId)
+            .orderBy('assignedAt', 'desc')
+            .get();
+
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    },
+
+    /**
+     * Get user's pending questionnaires (client)
+     */
+    async getUserPendingQuestionnaires(userId) {
+        const snapshot = await db.collection('questionnaireAssignments')
+            .where('userId', '==', userId)
+            .where('status', 'in', ['pending', 'in_progress'])
+            .get();
+
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    },
+
+    /**
+     * Start a questionnaire (mark as in_progress)
+     */
+    async startQuestionnaire(assignmentId) {
+        await db.collection('questionnaireAssignments').doc(assignmentId).update({
+            status: 'in_progress',
+            startedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    },
+
+    /**
+     * Submit questionnaire results (client)
+     */
+    async submitQuestionnaireResult(assignmentId, answers, result) {
+        await db.collection('questionnaireAssignments').doc(assignmentId).update({
+            status: 'completed',
+            completedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            answers,
+            result: {
+                score: result.score,
+                maxScore: result.maxScore,
+                severity: result.severity,
+                label: result.label,
+                description: result.description
+            }
+        });
+
+        // Create notification for admin
+        await this.createNotification(
+            ADMIN_UID,
+            'questionnaire_completed',
+            `Questionnaire completed: ${result.instrumentName}`,
+            `Score: ${result.score}/${result.maxScore} - ${result.label}`,
+            { assignmentId, userId: (await db.collection('questionnaireAssignments').doc(assignmentId).get()).data().userId }
+        );
+
+        return true;
+    },
+
+    /**
+     * Get all questionnaire results for a user (admin)
+     */
+    async getUserQuestionnaireResults(userId) {
+        const snapshot = await db.collection('questionnaireAssignments')
+            .where('userId', '==', userId)
+            .where('status', '==', 'completed')
+            .orderBy('completedAt', 'desc')
+            .get();
+
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    },
+
+    /**
+     * Get all pending questionnaire assignments (admin)
+     */
+    async getAllPendingQuestionnaires() {
+        const snapshot = await db.collection('questionnaireAssignments')
+            .where('status', 'in', ['pending', 'in_progress'])
+            .get();
+
+        const assignments = [];
+        for (const doc of snapshot.docs) {
+            const data = doc.data();
+            const userProfile = await this.getUserProfile(data.userId);
+            assignments.push({
+                id: doc.id,
+                ...data,
+                userName: userProfile?.displayName || userProfile?.email || 'Unknown',
+                userEmail: userProfile?.email || ''
+            });
+        }
+
+        return assignments;
+    },
+
+    /**
+     * Get recently completed questionnaires (admin)
+     */
+    async getRecentCompletedQuestionnaires(limit = 10) {
+        const snapshot = await db.collection('questionnaireAssignments')
+            .where('status', '==', 'completed')
+            .orderBy('completedAt', 'desc')
+            .limit(limit)
+            .get();
+
+        const results = [];
+        for (const doc of snapshot.docs) {
+            const data = doc.data();
+            const userProfile = await this.getUserProfile(data.userId);
+            results.push({
+                id: doc.id,
+                ...data,
+                userName: userProfile?.displayName || userProfile?.email || 'Unknown',
+                userEmail: userProfile?.email || ''
+            });
+        }
+
+        return results;
+    },
+
+    /**
+     * Create a notification
+     */
+    async createNotification(userId, type, title, message, data = {}) {
+        await db.collection('notifications').add({
+            userId,
+            type,
+            title,
+            message,
+            data,
+            read: false,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    },
+
+    /**
+     * Get unread notifications for user
+     */
+    async getUnreadNotifications(userId) {
+        const snapshot = await db.collection('notifications')
+            .where('userId', '==', userId)
+            .where('read', '==', false)
+            .orderBy('createdAt', 'desc')
+            .get();
+
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    },
+
+    /**
+     * Mark notification as read
+     */
+    async markNotificationRead(notificationId) {
+        await db.collection('notifications').doc(notificationId).update({
+            read: true,
+            readAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    },
+
+    /**
+     * Get questionnaire assignment by ID
+     */
+    async getQuestionnaireAssignment(assignmentId) {
+        const doc = await db.collection('questionnaireAssignments').doc(assignmentId).get();
+        if (!doc.exists) return null;
+        return { id: doc.id, ...doc.data() };
     }
 };
 

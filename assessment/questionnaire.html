@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Questionnaire - Sleep Wellness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0f1c2e;
+            --gold: #C9A962;
+            --gold-dark: #a68a4a;
+            --cream: #FAF8F5;
+            --text-light: #6b7280;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--navy) 0%, #1a2d47 100%);
+            min-height: 100vh;
+            color: var(--navy);
+        }
+
+        .questionnaire-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .q-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .q-header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--cream);
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .q-header p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gold);
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Question Card */
+        .question-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.4s ease;
+        }
+
+        .question-card.slide-out {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .question-card.slide-in {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        .question-number {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            color: var(--navy);
+            line-height: 1.4;
+            margin-bottom: 35px;
+            font-weight: 500;
+        }
+
+        /* Options */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .option {
+            padding: 18px 24px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option:hover {
+            border-color: var(--gold);
+            background: rgba(201, 169, 98, 0.05);
+        }
+
+        .option.selected {
+            border-color: var(--gold);
+            background: rgba(201, 169, 98, 0.1);
+        }
+
+        .option-radio {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-radio {
+            border-color: var(--gold);
+            background: var(--gold);
+        }
+
+        .option.selected .option-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .option-label {
+            font-size: 15px;
+            color: var(--navy);
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .nav-btn {
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn-back {
+            background: transparent;
+            border: 1px solid #e5e7eb;
+            color: var(--text-light);
+        }
+
+        .nav-btn-back:hover {
+            border-color: var(--navy);
+            color: var(--navy);
+        }
+
+        .nav-btn-next {
+            background: var(--navy);
+            border: none;
+            color: white;
+        }
+
+        .nav-btn-next:hover {
+            background: #1a2d47;
+        }
+
+        .nav-btn-next:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+        }
+
+        .nav-btn-submit {
+            background: var(--gold);
+            border: none;
+            color: white;
+        }
+
+        .nav-btn-submit:hover {
+            background: var(--gold-dark);
+        }
+
+        /* Instructions Screen */
+        .instructions-screen {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .instructions-screen h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            color: var(--navy);
+            margin-bottom: 15px;
+        }
+
+        .instructions-screen .time-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(201, 169, 98, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--gold-dark);
+            margin-bottom: 25px;
+        }
+
+        .instructions-screen p {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .start-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            background: var(--gold-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Results Screen */
+        .results-screen {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .results-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+        }
+
+        .results-screen h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .score-display {
+            font-size: 48px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+
+        .score-label {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+        }
+
+        .special-note {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        .done-btn {
+            background: var(--navy);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .done-btn:hover {
+            background: #1a2d47;
+        }
+
+        /* Loading */
+        .loading-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(201, 169, 98, 0.2);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Mobile */
+        @media (max-width: 640px) {
+            .questionnaire-container { padding: 20px 15px; }
+            .question-card { padding: 25px 20px; }
+            .question-text { font-size: 22px; }
+            .option { padding: 14px 18px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="questionnaire-container">
+        <div class="q-header">
+            <h1 id="questionnaire-title">Loading...</h1>
+            <p id="questionnaire-subtitle"></p>
+        </div>
+
+        <div class="progress-container" id="progress-container" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-text">
+                <span id="progress-current">Question 1</span>
+                <span id="progress-total">of 7</span>
+            </div>
+        </div>
+
+        <div class="question-card" id="question-card">
+            <div class="loading-screen" id="loading-screen">
+                <div class="spinner"></div>
+                <p style="margin-top: 20px; color: var(--text-light);">Loading questionnaire...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="questionnaires.js"></script>
+
+    <script>
+        let currentUser = null;
+        let assignment = null;
+        let instrument = null;
+        let currentQuestionIndex = 0;
+        let answers = [];
+
+        // Get assignment ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const assignmentId = urlParams.get('id');
+
+        if (!assignmentId) {
+            document.getElementById('question-card').innerHTML = '<div class="loading-screen"><p style="color: #c62828;">No questionnaire specified. Please return to your dashboard.</p><a href="account.html" style="margin-top: 20px; color: var(--gold);">Go to Dashboard</a></div>';
+        }
+
+        // Auth check
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = 'auth.html?redirect=' + encodeURIComponent(window.location.href);
+                return;
+            }
+
+            currentUser = user;
+
+            if (assignmentId) {
+                await loadQuestionnaire();
+            }
+        });
+
+        async function loadQuestionnaire() {
+            try {
+                assignment = await FirebaseDB.getQuestionnaireAssignment(assignmentId);
+
+                if (!assignment) {
+                    showError('Questionnaire not found.');
+                    return;
+                }
+
+                if (assignment.userId !== currentUser.uid) {
+                    showError('You do not have access to this questionnaire.');
+                    return;
+                }
+
+                if (assignment.status === 'completed') {
+                    showResults(assignment.result);
+                    return;
+                }
+
+                instrument = Questionnaires.getInstrument(assignment.instrumentId);
+
+                if (!instrument) {
+                    showError('Questionnaire type not found.');
+                    return;
+                }
+
+                // Update header
+                document.getElementById('questionnaire-title').textContent = instrument.name;
+                document.getElementById('questionnaire-subtitle').textContent = instrument.category;
+
+                // Initialize answers array
+                answers = new Array(instrument.questions.length).fill(null);
+
+                // Show instructions
+                showInstructions();
+
+            } catch (error) {
+                console.error('Error loading questionnaire:', error);
+                showError('Error loading questionnaire. Please try again.');
+            }
+        }
+
+        function showError(message) {
+            document.getElementById('question-card').innerHTML = `
+                <div class="loading-screen">
+                    <p style="color: #c62828;">${message}</p>
+                    <a href="account.html" style="margin-top: 20px; color: var(--gold);">Go to Dashboard</a>
+                </div>
+            `;
+        }
+
+        function showInstructions() {
+            const dueText = assignment.dueDate ? `Due: ${new Date(assignment.dueDate.seconds * 1000).toLocaleDateString()}` : '';
+
+            document.getElementById('question-card').innerHTML = `
+                <div class="instructions-screen">
+                    <h2>${instrument.name}</h2>
+                    <div class="time-badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        ${instrument.timeToComplete}
+                    </div>
+                    <p>${instrument.instructions}</p>
+                    <p style="font-size: 13px; color: var(--text-light); margin-bottom: 30px;">
+                        This questionnaire has <strong>${instrument.questions.length} questions</strong>.
+                        ${dueText ? `<br><span style="color: var(--gold);">${dueText}</span>` : ''}
+                    </p>
+                    <button class="start-btn" onclick="startQuestionnaire()">
+                        Begin Questionnaire
+                    </button>
+                </div>
+            `;
+        }
+
+        async function startQuestionnaire() {
+            await FirebaseDB.startQuestionnaire(assignmentId);
+            document.getElementById('progress-container').style.display = 'block';
+            showQuestion(0);
+        }
+
+        function showQuestion(index, direction = 'next') {
+            currentQuestionIndex = index;
+            const question = instrument.questions[index];
+            const card = document.getElementById('question-card');
+
+            // Update progress
+            const progress = ((index + 1) / instrument.questions.length) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('progress-current').textContent = `Question ${index + 1}`;
+            document.getElementById('progress-total').textContent = `of ${instrument.questions.length}`;
+
+            // Animate out
+            card.classList.add(direction === 'next' ? 'slide-out' : 'slide-in');
+
+            setTimeout(() => {
+                card.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${instrument.questions.length}</div>
+                    <div class="question-text">${question.text}</div>
+                    <div class="options-container">
+                        ${question.options.map((opt, i) => `
+                            <div class="option ${answers[index]?.value === opt.value ? 'selected' : ''}" 
+                                 onclick="selectOption(${index}, ${opt.value}, '${opt.label.replace(/'/g, "\\'")}')">
+                                <div class="option-radio"></div>
+                                <div class="option-label">${opt.label}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="nav-buttons">
+                        ${index > 0 ? `
+                            <button class="nav-btn nav-btn-back" onclick="previousQuestion()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="15 18 9 12 15 6"/>
+                                </svg>
+                                Back
+                            </button>
+                        ` : '<div></div>'}
+                        ${index < instrument.questions.length - 1 ? `
+                            <button class="nav-btn nav-btn-next" id="next-btn" onclick="nextQuestion()" ${!answers[index] ? 'disabled' : ''}>
+                                Next
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="9 18 15 12 9 6"/>
+                                </svg>
+                            </button>
+                        ` : `
+                            <button class="nav-btn nav-btn-submit" id="submit-btn" onclick="submitQuestionnaire()" ${!answers[index] ? 'disabled' : ''}>
+                                Submit
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </button>
+                        `}
+                    </div>
+                `;
+
+                card.classList.remove('slide-out', 'slide-in');
+                card.classList.add(direction === 'next' ? 'slide-in' : 'slide-out');
+
+                setTimeout(() => {
+                    card.classList.remove('slide-out', 'slide-in');
+                }, 50);
+            }, 200);
+        }
+
+        function selectOption(questionIndex, value, label) {
+            answers[questionIndex] = { value, label };
+
+            // Update UI
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            // Enable next/submit button
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            if (nextBtn) nextBtn.disabled = false;
+            if (submitBtn) submitBtn.disabled = false;
+
+            // Auto-advance after short delay (optional UX enhancement)
+            if (currentQuestionIndex < instrument.questions.length - 1) {
+                setTimeout(() => nextQuestion(), 400);
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < instrument.questions.length - 1) {
+                showQuestion(currentQuestionIndex + 1, 'next');
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                showQuestion(currentQuestionIndex - 1, 'back');
+            }
+        }
+
+        async function submitQuestionnaire() {
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Submitting...';
+
+            try {
+                // Calculate result
+                const result = Questionnaires.calculateScore(instrument.id, answers);
+
+                // Submit to Firebase
+                await FirebaseDB.submitQuestionnaireResult(assignmentId, answers, result);
+
+                // Show results
+                showResults(result);
+
+            } catch (error) {
+                console.error('Error submitting:', error);
+                alert('Error submitting questionnaire. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Submit';
+            }
+        }
+
+        function showResults(result) {
+            document.getElementById('progress-container').style.display = 'none';
+            document.getElementById('questionnaire-title').textContent = 'Results';
+            document.getElementById('questionnaire-subtitle').textContent = instrument?.name || result.instrumentName;
+
+            const card = document.getElementById('question-card');
+
+            card.innerHTML = `
+                <div class="results-screen">
+                    <div class="results-icon" style="background: ${result.color}22;">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="${result.color}" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <h2>Questionnaire Complete</h2>
+                    <div class="score-display" style="color: ${result.color};">
+                        ${result.score}<span style="font-size: 24px; color: var(--text-light);">/${result.maxScore}</span>
+                    </div>
+                    <div class="score-label" style="background: ${result.color}22; color: ${result.color};">
+                        ${result.label}
+                    </div>
+                    <div class="result-description">
+                        ${result.description}
+                    </div>
+                    ${result.specialNote ? `
+                        <div class="special-note">
+                            <strong>Important:</strong> ${result.specialNote}
+                        </div>
+                    ` : ''}
+                    <p style="font-size: 13px; color: var(--text-light); margin-bottom: 25px;">
+                        Your results have been sent to Dr. Alen for review.
+                    </p>
+                    <button class="done-btn" onclick="window.location.href='account.html'">
+                        Return to Dashboard
+                    </button>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Build a Brand | A Guide for Sleep Wellness by Dr. Alen</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap');
+
+        :root {
+            --black: #0a0a0a;
+            --dark: #1a1a1a;
+            --gray-dark: #333;
+            --gray: #666;
+            --gray-light: #999;
+            --white: #fff;
+            --cream: #f8f6f3;
+            --accent: #C9A962;
+            --accent-light: #E8D5A3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--black);
+            padding: 20px 60px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-title {
+            font-size: 14px;
+            color: var(--white);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--gray-light);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Slide Styles */
+        .slide {
+            min-height: 100vh;
+            padding: 120px 80px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .slide-dark {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .slide-accent {
+            background: linear-gradient(135deg, #0f1c2e 0%, #1a2744 100%);
+            color: var(--white);
+        }
+
+        .slide-number {
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .slide-dark .slide-number,
+        .slide-accent .slide-number {
+            color: var(--accent);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        h4 {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: var(--gray);
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        .slide-dark .subtitle,
+        .slide-accent .subtitle {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Content Layouts */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 50px;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .four-column {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            padding: 40px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .card-dark {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .card-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--gray);
+            font-size: 15px;
+        }
+
+        .card-dark p {
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 16px;
+        }
+
+        li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20px;
+            width: 15px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        /* Quote */
+        .quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-style: italic;
+            line-height: 1.5;
+            max-width: 900px;
+            margin: 40px 0;
+        }
+
+        .quote-author {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-style: normal;
+            color: var(--gray);
+            margin-top: 20px;
+        }
+
+        .slide-dark .quote-author,
+        .slide-accent .quote-author {
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Example Brand */
+        .brand-example {
+            background: var(--white);
+            padding: 50px;
+            margin-top: 40px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .brand-example-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .brand-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .brand-type {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .brand-details {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .brand-detail h5 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .brand-detail p {
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        /* Pyramid */
+        .pyramid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin: 50px 0;
+        }
+
+        .pyramid-level {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            font-weight: 500;
+            transition: transform 0.3s;
+        }
+
+        .pyramid-level:hover {
+            transform: scale(1.02);
+        }
+
+        .pyramid-1 {
+            width: 200px;
+            height: 80px;
+            background: var(--accent);
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            padding-top: 30px;
+        }
+
+        .pyramid-2 {
+            width: 350px;
+            height: 70px;
+            background: #1a2744;
+        }
+
+        .pyramid-3 {
+            width: 500px;
+            height: 70px;
+            background: #2d3e5f;
+        }
+
+        .pyramid-4 {
+            width: 650px;
+            height: 70px;
+            background: #4a6085;
+        }
+
+        .pyramid-5 {
+            width: 800px;
+            height: 70px;
+            background: var(--gray);
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: var(--accent);
+            color: var(--black);
+            padding: 40px;
+            margin: 30px 0;
+        }
+
+        .highlight-box h3 {
+            color: var(--black);
+        }
+
+        /* Comparison Table */
+        .comparison {
+            margin-top: 40px;
+            border: 1px solid rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .comparison-header {
+            background: var(--dark);
+            color: var(--white);
+        }
+
+        .comparison-cell {
+            padding: 25px 30px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .comparison-header .comparison-cell {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 12px;
+            border-bottom: none;
+        }
+
+        .comparison-row:not(.comparison-header) .comparison-cell:first-child {
+            background: rgba(0,0,0,0.02);
+            font-weight: 500;
+        }
+
+        /* Section divider */
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            margin: 30px 0;
+        }
+
+        /* Framework diagram */
+        .framework {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .framework-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .framework-step::after {
+            content: '';
+            position: absolute;
+            top: 40px;
+            right: -10px;
+            width: 20px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .framework-step:last-child::after {
+            display: none;
+        }
+
+        .framework-circle {
+            width: 80px;
+            height: 80px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--accent);
+        }
+
+        .framework-step h5 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .framework-step p {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        /* Application section */
+        .application {
+            background: linear-gradient(135deg, #0f1c2e 0%, #1a2744 100%);
+            padding: 50px;
+            margin-top: 50px;
+            color: var(--white);
+        }
+
+        .application h3 {
+            color: var(--accent);
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .application-content {
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        /* Progress indicator */
+        .progress {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--dark);
+            color: var(--white);
+            padding: 15px 25px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            z-index: 1000;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 100px 40px 60px;
+            }
+
+            h1 {
+                font-size: 48px;
+            }
+
+            h2 {
+                font-size: 36px;
+            }
+
+            .two-column,
+            .three-column,
+            .four-column {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .brand-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .framework {
+                grid-template-columns: 1fr;
+            }
+
+            .framework-step::after {
+                display: none;
+            }
+
+            .pyramid-level {
+                width: 100% !important;
+                max-width: 400px;
+                clip-path: none !important;
+                padding-top: 0 !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .quote {
+                font-size: 24px;
+            }
+
+            .brand-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+    <span class="nav-title">Brand Building Guide</span>
+    <div class="nav-links">
+        <a href="#what">What is a Brand</a>
+        <a href="#why">Why It Matters</a>
+        <a href="#elements">Elements</a>
+        <a href="#examples">Examples</a>
+        <a href="#framework">Framework</a>
+        <a href="#apply">Apply</a>
+    </div>
+</nav>
+
+<!-- SLIDE 1: Title -->
+<section class="slide slide-dark" id="intro">
+    <p class="slide-number">Brand Building 101</p>
+    <h1>How to Build<br>a Brand</h1>
+    <p class="subtitle">
+        A practical guide with real-world examples, frameworks, and direct application
+        to Sleep Wellness by Dr. Alen
+    </p>
+</section>
+
+<!-- SLIDE 2: What is a Brand -->
+<section class="slide" id="what">
+    <p class="slide-number">Part 01</p>
+    <h2>What is a Brand, Really?</h2>
+    <div class="divider"></div>
+
+    <p class="quote">
+        "A brand is not what you say it is. It's what they say it is."
+    </p>
+    <p class="quote-author">— Marty Neumeier, The Brand Gap</p>
+
+    <div class="two-column">
+        <div>
+            <h4>A Brand is NOT</h4>
+            <ul>
+                <li>Just a logo</li>
+                <li>Just colors and fonts</li>
+                <li>Just a tagline</li>
+                <li>Just a website</li>
+                <li>Something you can fully control</li>
+            </ul>
+        </div>
+        <div>
+            <h4>A Brand IS</h4>
+            <ul>
+                <li>A person's gut feeling about you</li>
+                <li>The sum of all experiences with you</li>
+                <li>A promise you make and keep</li>
+                <li>Trust built over time</li>
+                <li>Your reputation when you're not in the room</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 3: Brand vs Logo -->
+<section class="slide slide-accent">
+    <p class="slide-number">The Distinction</p>
+    <h2>Logo vs. Identity vs. Brand</h2>
+
+    <div class="three-column" style="margin-top: 60px;">
+        <div class="card card-dark">
+            <div class="card-number">1</div>
+            <h3>Logo</h3>
+            <p>A symbol that identifies your company. The simplest, most recognizable element.</p>
+            <p style="margin-top: 20px; color: var(--accent);">Example: The Nike Swoosh</p>
+        </div>
+        <div class="card card-dark">
+            <div class="card-number">2</div>
+            <h3>Visual Identity</h3>
+            <p>The complete visual system: logo, colors, typography, imagery, design patterns.</p>
+            <p style="margin-top: 20px; color: var(--accent);">Example: Nike's black/white, bold type, athlete photography</p>
+        </div>
+        <div class="card card-dark">
+            <div class="card-number">3</div>
+            <h3>Brand</h3>
+            <p>Everything people think and feel about you. Built through every interaction.</p>
+            <p style="margin-top: 20px; color: var(--accent);">Example: Nike = athletic excellence, pushing limits, "Just Do It" mindset</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 4: Why Brand Matters -->
+<section class="slide" id="why">
+    <p class="slide-number">Part 02</p>
+    <h2>Why Brand Matters</h2>
+    <div class="divider"></div>
+
+    <div class="three-column">
+        <div class="card">
+            <h4>Premium Pricing</h4>
+            <h3>Command Higher Fees</h3>
+            <p>Strong brands can charge 20-200% more than competitors. People pay for trust, not just service.</p>
+        </div>
+        <div class="card">
+            <h4>Recognition</h4>
+            <h3>Be Remembered</h3>
+            <p>In a crowded market, a distinctive brand cuts through noise. You become the obvious choice.</p>
+        </div>
+        <div class="card">
+            <h4>Loyalty</h4>
+            <h3>Keep Clients Forever</h3>
+            <p>Brand loyalty reduces acquisition costs. Existing clients become evangelists who refer others.</p>
+        </div>
+    </div>
+
+    <div class="application">
+        <h3>For Sleep Wellness by Dr. Alen</h3>
+        <p class="application-content">
+            A strong brand positions you as THE sleep expert for discerning clients—not just "a sleep consultant."
+            Hotels will pay premium rates because they're getting "Dr. Alen" not generic advice.
+            Athletes will seek you out by name. Your Harvard credentials become amplified by professional branding.
+        </p>
+    </div>
+</section>
+
+<!-- SLIDE 5: Brand Pyramid -->
+<section class="slide slide-dark">
+    <p class="slide-number">The Structure</p>
+    <h2>The Brand Pyramid</h2>
+    <p class="subtitle">Every strong brand is built from the bottom up. Most people start at the top (logo) and wonder why their brand feels hollow.</p>
+
+    <div class="pyramid">
+        <div class="pyramid-level pyramid-1">Logo</div>
+        <div class="pyramid-level pyramid-2">Visual Identity</div>
+        <div class="pyramid-level pyramid-3">Voice & Messaging</div>
+        <div class="pyramid-level pyramid-4">Brand Personality & Values</div>
+        <div class="pyramid-level pyramid-5">Purpose & Positioning</div>
+    </div>
+
+    <p style="text-align: center; color: rgba(255,255,255,0.6); margin-top: 30px;">
+        Start at the foundation. Everything else flows from your purpose.
+    </p>
+</section>
+
+<!-- SLIDE 6: Core Elements -->
+<section class="slide" id="elements">
+    <p class="slide-number">Part 03</p>
+    <h2>The 7 Core Elements of a Brand</h2>
+    <div class="divider"></div>
+
+    <div class="four-column">
+        <div class="card">
+            <div class="card-number">01</div>
+            <h3>Purpose</h3>
+            <p>Why you exist beyond making money. The change you want to create in the world.</p>
+        </div>
+        <div class="card">
+            <div class="card-number">02</div>
+            <h3>Positioning</h3>
+            <p>How you're different from competitors. The unique space you occupy in people's minds.</p>
+        </div>
+        <div class="card">
+            <div class="card-number">03</div>
+            <h3>Personality</h3>
+            <p>The human traits of your brand. Are you sophisticated? Friendly? Authoritative? Warm?</p>
+        </div>
+        <div class="card">
+            <div class="card-number">04</div>
+            <h3>Values</h3>
+            <p>The principles that guide every decision. What you will and won't compromise on.</p>
+        </div>
+    </div>
+
+    <div class="three-column" style="margin-top: 30px;">
+        <div class="card">
+            <div class="card-number">05</div>
+            <h3>Voice</h3>
+            <p>How you communicate. Your tone, vocabulary, and style of speaking to your audience.</p>
+        </div>
+        <div class="card">
+            <div class="card-number">06</div>
+            <h3>Visual Identity</h3>
+            <p>Logo, colors, typography, imagery. The visual system that makes you recognizable.</p>
+        </div>
+        <div class="card">
+            <div class="card-number">07</div>
+            <h3>Experience</h3>
+            <p>Every touchpoint with your brand. How it feels to interact with you at every stage.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 7: Element 1 - Purpose -->
+<section class="slide slide-accent">
+    <p class="slide-number">Element 01</p>
+    <h2>Purpose: Your "Why"</h2>
+
+    <p class="quote">
+        "People don't buy what you do, they buy why you do it."
+    </p>
+    <p class="quote-author">— Simon Sinek</p>
+
+    <div class="two-column" style="margin-top: 40px;">
+        <div>
+            <h4>The Golden Circle</h4>
+            <ul>
+                <li><strong>WHAT:</strong> Sleep consulting services</li>
+                <li><strong>HOW:</strong> Evidence-based protocols from Harvard research</li>
+                <li><strong>WHY:</strong> Because exceptional people deserve exceptional rest. Because the world needs well-rested leaders making better decisions.</li>
+            </ul>
+        </div>
+        <div class="card card-dark">
+            <h4>Sleep Wellness Purpose</h4>
+            <h3 style="color: var(--accent);">"To transform human performance through the science of restorative sleep"</h3>
+            <p style="margin-top: 20px;">You're not selling sleep tips. You're selling peak performance, better decisions, longer careers, healthier lives.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 8: Element 2 - Positioning -->
+<section class="slide">
+    <p class="slide-number">Element 02</p>
+    <h2>Positioning: Your Unique Space</h2>
+    <div class="divider"></div>
+
+    <h4>The Positioning Statement Formula</h4>
+    <p style="font-size: 20px; background: var(--cream); padding: 30px; border-left: 4px solid var(--accent); margin: 30px 0;">
+        For <strong>[target audience]</strong> who <strong>[need/want]</strong>,<br>
+        <strong>[Brand Name]</strong> is the <strong>[category]</strong><br>
+        that <strong>[key benefit]</strong><br>
+        because <strong>[reason to believe]</strong>.
+    </p>
+
+    <div class="brand-example">
+        <div class="brand-example-header">
+            <span class="brand-logo" style="color: var(--accent);">Sleep Wellness by Dr. Alen</span>
+            <span class="brand-type">Positioning Statement</span>
+        </div>
+        <p style="font-size: 18px; line-height: 1.8;">
+            For <strong>luxury hotels, elite athletes, and corporate leaders</strong> who <strong>demand peak performance</strong>,<br>
+            <strong>Sleep Wellness by Dr. Alen</strong> is the <strong>physician-led sleep optimization consultancy</strong><br>
+            that <strong>transforms rest into a competitive advantage</strong><br>
+            because <strong>Dr. Alen combines Harvard Medical School research with real-world application,
+            backed by publications in Cell and features in The New York Times</strong>.
+        </p>
+    </div>
+
+    <div class="comparison" style="margin-top: 40px;">
+        <div class="comparison-row comparison-header">
+            <div class="comparison-cell">Generic Sleep Consultant</div>
+            <div class="comparison-cell">Sleep Wellness by Dr. Alen</div>
+        </div>
+        <div class="comparison-row">
+            <div class="comparison-cell">Offers sleep tips</div>
+            <div class="comparison-cell">Delivers performance transformation</div>
+        </div>
+        <div class="comparison-row">
+            <div class="comparison-cell">Has certifications</div>
+            <div class="comparison-cell">Has Harvard research + Cell publication</div>
+        </div>
+        <div class="comparison-row">
+            <div class="comparison-cell">Works with anyone</div>
+            <div class="comparison-cell">Serves elite clients who demand excellence</div>
+        </div>
+        <div class="comparison-row">
+            <div class="comparison-cell">Competes on price</div>
+            <div class="comparison-cell">Commands premium as the category leader</div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 9: Element 3 - Personality -->
+<section class="slide slide-dark">
+    <p class="slide-number">Element 03</p>
+    <h2>Personality: Human Traits</h2>
+
+    <p class="subtitle">If your brand were a person, who would they be? This guides every decision about how you communicate and present yourself.</p>
+
+    <div class="four-column" style="margin-top: 50px;">
+        <div class="card card-dark">
+            <h4>Archetype</h4>
+            <h3>The Sage</h3>
+            <p>Wisdom, expertise, truth-seeking. Helps others understand the world through knowledge.</p>
+            <p style="margin-top: 15px; color: var(--accent);">Examples: Harvard, McKinsey, The Economist</p>
+        </div>
+        <div class="card card-dark">
+            <h4>+ Secondary</h4>
+            <h3>The Caregiver</h3>
+            <p>Nurturing, protective, service-oriented. Genuinely wants to help others thrive.</p>
+            <p style="margin-top: 15px; color: var(--accent);">Examples: Mayo Clinic, Johnson & Johnson</p>
+        </div>
+        <div class="card card-dark">
+            <h4>Personality Traits</h4>
+            <h3>Key Attributes</h3>
+            <ul style="margin-top: 10px;">
+                <li>Authoritative but warm</li>
+                <li>Scientific but accessible</li>
+                <li>Sophisticated but not cold</li>
+                <li>Confident but not arrogant</li>
+            </ul>
+        </div>
+        <div class="card card-dark">
+            <h4>Brand Character</h4>
+            <h3>The Trusted Expert</h3>
+            <p>Like a world-class physician who happens to also be genuinely kind and approachable.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 10: Element 4 - Values -->
+<section class="slide">
+    <p class="slide-number">Element 04</p>
+    <h2>Values: Your Non-Negotiables</h2>
+    <div class="divider"></div>
+
+    <p class="subtitle">Values aren't aspirational posters on a wall. They're the principles that guide difficult decisions.</p>
+
+    <div class="three-column" style="margin-top: 50px;">
+        <div class="card">
+            <h3>Evidence-Based</h3>
+            <p>Every recommendation backed by peer-reviewed research. No trends, no fads, no pseudoscience. If it's not proven, we don't recommend it.</p>
+            <p style="margin-top: 20px; font-size: 13px; color: var(--gray);"><strong>In practice:</strong> You cite sources. You say "I don't know" when you don't. You update recommendations when new research emerges.</p>
+        </div>
+        <div class="card">
+            <h3>Excellence</h3>
+            <p>We work with clients who demand the best because we demand it of ourselves. Premium service requires premium commitment from both sides.</p>
+            <p style="margin-top: 20px; font-size: 13px; color: var(--gray);"><strong>In practice:</strong> You don't discount. You don't compromise on quality. You say no to clients who aren't serious.</p>
+        </div>
+        <div class="card">
+            <h3>Transformation</h3>
+            <p>We're not here to make small improvements. We're here to fundamentally change how people and organizations approach rest and recovery.</p>
+            <p style="margin-top: 20px; font-size: 13px; color: var(--gray);"><strong>In practice:</strong> You measure outcomes. You track before/after. You only claim results you can demonstrate.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 11: Element 5 - Voice -->
+<section class="slide slide-accent">
+    <p class="slide-number">Element 05</p>
+    <h2>Voice: How You Speak</h2>
+
+    <div class="two-column" style="margin-top: 50px;">
+        <div>
+            <h4>Voice Attributes</h4>
+            <div class="card card-dark" style="margin-top: 20px;">
+                <h3>Authoritative</h3>
+                <p>Speak from expertise. Use declarative statements. Don't hedge unnecessarily.</p>
+                <p style="margin-top: 15px; color: var(--accent);">Not: "Sleep might help with recovery"<br>But: "Sleep is when 70% of growth hormone is released"</p>
+            </div>
+            <div class="card card-dark" style="margin-top: 20px;">
+                <h3>Warm</h3>
+                <p>Professional doesn't mean cold. Connect personally. Show you care about outcomes.</p>
+                <p style="margin-top: 15px; color: var(--accent);">Not: "Clients will receive protocols"<br>But: "We design protocols around your life"</p>
+            </div>
+            <div class="card card-dark" style="margin-top: 20px;">
+                <h3>Clear</h3>
+                <p>Translate complex science into accessible insights. Never use jargon to impress.</p>
+                <p style="margin-top: 15px; color: var(--accent);">Not: "Circadian rhythm dysregulation"<br>But: "When your internal clock is out of sync"</p>
+            </div>
+        </div>
+        <div>
+            <h4>Tone Spectrum</h4>
+            <div class="card card-dark" style="margin-top: 20px; padding: 30px;">
+                <p style="margin-bottom: 20px;"><strong>More formal</strong> → Website, proposals, publications</p>
+                <p style="margin-bottom: 20px;"><strong>Balanced</strong> → Consultations, presentations, newsletters</p>
+                <p><strong>More casual</strong> → Social media, personal emails, interviews</p>
+            </div>
+
+            <h4 style="margin-top: 40px;">Words We Use</h4>
+            <div class="card card-dark" style="margin-top: 20px;">
+                <p>Optimize, transform, precision, evidence-based, performance, restorative, strategic, elite</p>
+            </div>
+
+            <h4 style="margin-top: 40px;">Words We Avoid</h4>
+            <div class="card card-dark" style="margin-top: 20px;">
+                <p>Hack, trick, secret, revolutionary, miracle, guaranteed, disrupting</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 12: Element 6 - Visual Identity -->
+<section class="slide">
+    <p class="slide-number">Element 06</p>
+    <h2>Visual Identity: The Look</h2>
+    <div class="divider"></div>
+
+    <div class="two-column">
+        <div>
+            <h4>Color Psychology</h4>
+            <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <div style="width: 80px; height: 80px; background: #0f1c2e; margin-bottom: 10px;"></div>
+                    <p style="font-size: 12px;"><strong>Deep Navy</strong><br>Trust, expertise, depth</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 80px; height: 80px; background: #C9A962; margin-bottom: 10px;"></div>
+                    <p style="font-size: 12px;"><strong>Gold</strong><br>Premium, excellence, warmth</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 80px; height: 80px; background: #FAF8F5; border: 1px solid #ddd; margin-bottom: 10px;"></div>
+                    <p style="font-size: 12px;"><strong>Cream</strong><br>Calm, clean, sophisticated</p>
+                </div>
+            </div>
+
+            <h4 style="margin-top: 40px;">Typography</h4>
+            <div class="card" style="margin-top: 20px;">
+                <p style="font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 15px;">Cormorant Garamond</p>
+                <p style="font-size: 14px; color: var(--gray);">Elegant serif for headlines. Conveys sophistication, tradition, authority.</p>
+                <p style="font-family: 'Inter', sans-serif; font-size: 16px; margin-top: 20px; margin-bottom: 10px;">Montserrat</p>
+                <p style="font-size: 14px; color: var(--gray);">Clean sans-serif for body. Modern, readable, professional.</p>
+            </div>
+        </div>
+        <div>
+            <h4>Visual Principles</h4>
+            <ul>
+                <li><strong>Generous white space</strong> — Luxury brands breathe. Don't crowd.</li>
+                <li><strong>High contrast</strong> — Navy on cream, gold accents. Clear hierarchy.</li>
+                <li><strong>Elegant simplicity</strong> — Refined, not busy. Quality over quantity.</li>
+                <li><strong>Professional photography</strong> — No stock photos of people fake-sleeping.</li>
+                <li><strong>Subtle textures</strong> — Hints of warmth, not sterile clinical white.</li>
+            </ul>
+
+            <h4 style="margin-top: 40px;">Imagery Style</h4>
+            <div class="card" style="margin-top: 20px;">
+                <p><strong>Do:</strong> Elegant bedroom environments, professional headshots, abstract representations of rest, architectural details of luxury hotels, athletes in peak condition</p>
+                <p style="margin-top: 15px;"><strong>Don't:</strong> Cheesy stock photos, clip art, generic business imagery, cartoons, busy collages</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 13: Element 7 - Experience -->
+<section class="slide slide-dark">
+    <p class="slide-number">Element 07</p>
+    <h2>Experience: Every Touchpoint</h2>
+
+    <p class="subtitle">Your brand is built or destroyed at every interaction. Map every touchpoint and make each one intentional.</p>
+
+    <div class="four-column" style="margin-top: 50px;">
+        <div class="card card-dark">
+            <h4>Awareness</h4>
+            <h3>First Impression</h3>
+            <ul>
+                <li>Website visit</li>
+                <li>Social media post</li>
+                <li>Media feature</li>
+                <li>Word of mouth</li>
+                <li>Speaking event</li>
+            </ul>
+        </div>
+        <div class="card card-dark">
+            <h4>Consideration</h4>
+            <h3>Evaluation</h3>
+            <ul>
+                <li>Discovery call</li>
+                <li>Proposal/deck</li>
+                <li>Email exchanges</li>
+                <li>References check</li>
+                <li>Pricing discussion</li>
+            </ul>
+        </div>
+        <div class="card card-dark">
+            <h4>Purchase</h4>
+            <h3>Commitment</h3>
+            <ul>
+                <li>Contract signing</li>
+                <li>Onboarding process</li>
+                <li>First session</li>
+                <li>Welcome materials</li>
+                <li>Payment experience</li>
+            </ul>
+        </div>
+        <div class="card card-dark">
+            <h4>Loyalty</h4>
+            <h3>Relationship</h3>
+            <ul>
+                <li>Ongoing service</li>
+                <li>Check-ins</li>
+                <li>Results reporting</li>
+                <li>Referral program</li>
+                <li>Continued value</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 50px;">
+        <h3>The Experience Question</h3>
+        <p style="font-size: 18px; margin-top: 15px;">
+            At each touchpoint, ask: "Does this feel like a Harvard-trained sleep physician who works with elite clients?"
+            If not, fix it. Everything communicates—your email signature, your Zoom background, your invoice design.
+        </p>
+    </div>
+</section>
+
+<!-- SLIDE 14: Real Examples - Apple -->
+<section class="slide" id="examples">
+    <p class="slide-number">Part 04 — Real Examples</p>
+    <h2>Apple: The Masterclass</h2>
+    <div class="divider"></div>
+
+    <div class="brand-example">
+        <div class="brand-example-header">
+            <span class="brand-logo">Apple</span>
+            <span class="brand-type">Technology / Consumer Electronics</span>
+        </div>
+        <div class="brand-details">
+            <div class="brand-detail">
+                <h5>Purpose</h5>
+                <p>Challenge the status quo. Think different. Make technology human.</p>
+            </div>
+            <div class="brand-detail">
+                <h5>Positioning</h5>
+                <p>Premium technology that "just works" for creative, discerning people.</p>
+            </div>
+            <div class="brand-detail">
+                <h5>Personality</h5>
+                <p>Innovative, sleek, confident, minimalist, premium.</p>
+            </div>
+            <div class="brand-detail">
+                <h5>Values</h5>
+                <p>Simplicity, innovation, premium quality, user experience, privacy.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="two-column" style="margin-top: 40px;">
+        <div>
+            <h4>Why Apple Works</h4>
+            <ul>
+                <li><strong>Consistency:</strong> Every touchpoint feels "Apple"—stores, packaging, software, ads</li>
+                <li><strong>Clarity:</strong> You know exactly what Apple stands for</li>
+                <li><strong>Premium positioning:</strong> Never competes on price, always on value</li>
+                <li><strong>Emotional connection:</strong> "Think Different" appeals to identity, not specs</li>
+            </ul>
+        </div>
+        <div>
+            <h4>Lesson for Sleep Wellness</h4>
+            <ul>
+                <li>Every touchpoint should feel "Dr. Alen"—sophisticated, scientific, warm</li>
+                <li>Never compete on price with generic sleep coaches</li>
+                <li>Appeal to identity: "For those who demand excellence"</li>
+                <li>Packaging matters: proposals, reports, materials should all feel premium</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 15: Real Examples - Mayo Clinic -->
+<section class="slide slide-accent">
+    <p class="slide-number">Real Example</p>
+    <h2>Mayo Clinic: Trust Through Excellence</h2>
+
+    <div class="brand-example" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1);">
+        <div class="brand-example-header" style="border-color: rgba(255,255,255,0.1);">
+            <span class="brand-logo" style="color: var(--white);">Mayo Clinic</span>
+            <span class="brand-type" style="color: rgba(255,255,255,0.6);">Healthcare</span>
+        </div>
+        <div class="brand-details">
+            <div class="brand-detail">
+                <h5 style="color: rgba(255,255,255,0.6);">Purpose</h5>
+                <p style="color: var(--white);">The needs of the patient come first.</p>
+            </div>
+            <div class="brand-detail">
+                <h5 style="color: rgba(255,255,255,0.6);">Positioning</h5>
+                <p style="color: var(--white);">The destination for complex cases. Where you go when it really matters.</p>
+            </div>
+            <div class="brand-detail">
+                <h5 style="color: rgba(255,255,255,0.6);">Personality</h5>
+                <p style="color: var(--white);">Trustworthy, expert, caring, thorough, world-class.</p>
+            </div>
+            <div class="brand-detail">
+                <h5 style="color: rgba(255,255,255,0.6);">Values</h5>
+                <p style="color: var(--white);">Patient-first, excellence, teamwork, integrity, innovation.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="two-column" style="margin-top: 40px;">
+        <div>
+            <h4>Why Mayo Works</h4>
+            <ul>
+                <li><strong>Reputation built over decades:</strong> Consistent excellence creates unshakeable trust</li>
+                <li><strong>Expert positioning:</strong> "When it really matters" justifies premium</li>
+                <li><strong>Patient-centric:</strong> Values are lived, not just stated</li>
+                <li><strong>Thought leadership:</strong> Research, publications, media presence</li>
+            </ul>
+        </div>
+        <div>
+            <h4>Lesson for Sleep Wellness</h4>
+            <ul>
+                <li>Your Harvard credentials = similar trust signal</li>
+                <li>Position as "when sleep really matters"—not casual advice</li>
+                <li>Thought leadership: publications, media, speaking</li>
+                <li>Build trust through demonstrated expertise over time</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 16: Real Examples - Four Seasons -->
+<section class="slide">
+    <p class="slide-number">Real Example</p>
+    <h2>Four Seasons: Luxury Service</h2>
+    <div class="divider"></div>
+
+    <div class="brand-example">
+        <div class="brand-example-header">
+            <span class="brand-logo">Four Seasons</span>
+            <span class="brand-type">Luxury Hospitality</span>
+        </div>
+        <div class="brand-details">
+            <div class="brand-detail">
+                <h5>Purpose</h5>
+                <p>To perfect the travel experience through innovation and service.</p>
+            </div>
+            <div class="brand-detail">
+                <h5>Positioning</h5>
+                <p>The world's leading luxury hospitality brand. Uncompromising quality.</p>
+            </div>
+            <div class="brand-detail">
+                <h5>Personality</h5>
+                <p>Warm, attentive, sophisticated, understated, anticipatory.</p>
+            </div>
+            <div class="brand-detail">
+                <h5>Values</h5>
+                <p>Golden Rule (treat others as you wish to be treated), excellence, innovation.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="highlight-box" style="background: #0f1c2e; color: var(--white);">
+        <h4 style="color: var(--accent);">The Four Seasons Lesson</h4>
+        <p style="font-size: 18px; margin-top: 15px;">
+            Luxury isn't about showing off—it's about anticipating needs before they're expressed.
+            Four Seasons staff remember your name, your preferences, your morning coffee order.
+            <strong>For Sleep Wellness:</strong> Remember client details. Follow up unprompted.
+            Anticipate questions before they ask. This is how you justify premium pricing.
+        </p>
+    </div>
+</section>
+
+<!-- SLIDE 17: The Framework -->
+<section class="slide slide-dark" id="framework">
+    <p class="slide-number">Part 05</p>
+    <h2>The Brand Building Framework</h2>
+    <p class="subtitle">A practical 5-step process to build your brand systematically.</p>
+
+    <div class="framework">
+        <div class="framework-step">
+            <div class="framework-circle">1</div>
+            <h5>Discover</h5>
+            <p>Audit current state. Research competitors. Interview clients. Understand perceptions.</p>
+        </div>
+        <div class="framework-step">
+            <div class="framework-circle">2</div>
+            <h5>Define</h5>
+            <p>Purpose, positioning, personality, values. The strategic foundation.</p>
+        </div>
+        <div class="framework-step">
+            <div class="framework-circle">3</div>
+            <h5>Design</h5>
+            <p>Visual identity, voice guidelines, messaging framework. The system.</p>
+        </div>
+        <div class="framework-step">
+            <div class="framework-circle">4</div>
+            <h5>Deploy</h5>
+            <p>Website, materials, templates, touchpoints. Consistent execution.</p>
+        </div>
+        <div class="framework-step">
+            <div class="framework-circle">5</div>
+            <h5>Develop</h5>
+            <p>Ongoing refinement. Gather feedback. Evolve while staying consistent.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 18: Apply - Sleep Wellness -->
+<section class="slide" id="apply">
+    <p class="slide-number">Part 06 — Application</p>
+    <h2>Sleep Wellness by Dr. Alen:<br>Brand Summary</h2>
+    <div class="divider"></div>
+
+    <div class="two-column">
+        <div>
+            <div class="card" style="margin-bottom: 30px;">
+                <h4>Purpose</h4>
+                <h3>"Transform human performance through the science of restorative sleep"</h3>
+            </div>
+            <div class="card" style="margin-bottom: 30px;">
+                <h4>Positioning</h4>
+                <p style="font-size: 16px;">The physician-led sleep optimization consultancy for elite clients who demand peak performance—backed by Harvard research and real-world results.</p>
+            </div>
+            <div class="card">
+                <h4>Target Audiences</h4>
+                <ul>
+                    <li><strong>Luxury Hotels:</strong> Create differentiated guest experiences</li>
+                    <li><strong>Elite Athletes:</strong> Optimize recovery and extend careers</li>
+                    <li><strong>Corporate Leaders:</strong> Sharpen decision-making and stamina</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <div class="card" style="margin-bottom: 30px;">
+                <h4>Personality</h4>
+                <p style="font-size: 16px;"><strong>Archetype:</strong> The Sage + Caregiver</p>
+                <p style="margin-top: 10px;">Authoritative yet warm. Scientific yet accessible. Sophisticated yet approachable. A world-class physician who genuinely cares.</p>
+            </div>
+            <div class="card" style="margin-bottom: 30px;">
+                <h4>Values</h4>
+                <ul>
+                    <li><strong>Evidence-Based:</strong> Every claim backed by research</li>
+                    <li><strong>Excellence:</strong> Premium service, premium results</li>
+                    <li><strong>Transformation:</strong> Meaningful, measurable change</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h4>Voice</h4>
+                <p style="font-size: 16px;">Authoritative, warm, clear. Speak from expertise. Translate complexity into clarity. Never use jargon to impress.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 19: Visual System Summary -->
+<section class="slide slide-accent">
+    <p class="slide-number">Visual System</p>
+    <h2>Sleep Wellness Visual Identity</h2>
+
+    <div class="three-column" style="margin-top: 50px;">
+        <div class="card card-dark">
+            <h4>Colors</h4>
+            <div style="display: flex; gap: 10px; margin: 20px 0;">
+                <div style="width: 50px; height: 50px; background: #0f1c2e;"></div>
+                <div style="width: 50px; height: 50px; background: #C9A962;"></div>
+                <div style="width: 50px; height: 50px; background: #FAF8F5; border: 1px solid rgba(255,255,255,0.2);"></div>
+            </div>
+            <p>Deep Navy + Gold + Cream. Trust + Premium + Calm.</p>
+        </div>
+        <div class="card card-dark">
+            <h4>Typography</h4>
+            <p style="font-family: 'Playfair Display', serif; font-size: 24px; margin: 20px 0;">Cormorant Garamond</p>
+            <p style="font-family: 'Inter', sans-serif; font-size: 16px; margin-bottom: 20px;">Montserrat</p>
+            <p>Elegant serif headlines, clean sans body.</p>
+        </div>
+        <div class="card card-dark">
+            <h4>Tagline</h4>
+            <p style="font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic; margin: 20px 0; color: var(--accent);">"The Science of Restorative Sleep"</p>
+            <p>Captures both credibility (science) and benefit (restoration).</p>
+        </div>
+    </div>
+
+    <div class="card card-dark" style="margin-top: 40px; text-align: center; padding: 60px;">
+        <p style="font-size: 12px; letter-spacing: 3px; margin-bottom: 10px;">THE BRAND MARK</p>
+        <p style="font-family: 'Playfair Display', serif; font-size: 36px; letter-spacing: 4px;">SLEEP WELLNESS</p>
+        <p style="font-size: 12px; color: var(--accent); letter-spacing: 2px; margin-top: 5px;">by Dr. Alen</p>
+    </div>
+</section>
+
+<!-- SLIDE 20: Next Steps -->
+<section class="slide">
+    <p class="slide-number">Next Steps</p>
+    <h2>Building the Brand:<br>Your Action Plan</h2>
+    <div class="divider"></div>
+
+    <div class="four-column">
+        <div class="card">
+            <div class="card-number">01</div>
+            <h3>Finalize Strategy</h3>
+            <p>Review and refine purpose, positioning, values. Make sure they feel authentic to you.</p>
+            <p style="margin-top: 15px; font-size: 13px; color: var(--gray);"><strong>Deliverable:</strong> One-page brand strategy document</p>
+        </div>
+        <div class="card">
+            <div class="card-number">02</div>
+            <h3>Create Guidelines</h3>
+            <p>Document visual identity, voice, messaging. Create templates for consistency.</p>
+            <p style="margin-top: 15px; font-size: 13px; color: var(--gray);"><strong>Deliverable:</strong> Brand guidelines PDF</p>
+        </div>
+        <div class="card">
+            <div class="card-number">03</div>
+            <h3>Build Touchpoints</h3>
+            <p>Website, proposal templates, email signatures, social profiles, presentation decks.</p>
+            <p style="margin-top: 15px; font-size: 13px; color: var(--gray);"><strong>Deliverable:</strong> Branded assets library</p>
+        </div>
+        <div class="card">
+            <div class="card-number">04</div>
+            <h3>Launch & Iterate</h3>
+            <p>Put it in the world. Gather feedback. Refine based on what resonates.</p>
+            <p style="margin-top: 15px; font-size: 13px; color: var(--gray);"><strong>Deliverable:</strong> Ongoing brand development</p>
+        </div>
+    </div>
+
+    <div class="application">
+        <h3>Remember</h3>
+        <p class="application-content">
+            A brand is built over years, not weeks. The visual identity is just the beginning.
+            Every email you send, every consultation you deliver, every piece of content you create either
+            strengthens or weakens your brand. Consistency is everything. Start with the foundation,
+            and build systematically.
+        </p>
+    </div>
+</section>
+
+<!-- SLIDE 21: Final -->
+<section class="slide slide-dark" style="text-align: center;">
+    <p class="slide-number">Conclusion</p>
+    <h1>A brand is a promise<br>kept over time.</h1>
+    <p class="subtitle" style="margin: 30px auto;">
+        Every interaction either builds or erodes trust.<br>
+        Be intentional. Be consistent. Be excellent.
+    </p>
+    <div style="margin-top: 60px;">
+        <p style="font-family: 'Playfair Display', serif; font-size: 28px; letter-spacing: 3px; color: var(--accent);">SLEEP WELLNESS</p>
+        <p style="font-size: 12px; letter-spacing: 2px; margin-top: 5px; color: rgba(255,255,255,0.6);">by Dr. Alen</p>
+    </div>
+</section>
+
+<script>
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

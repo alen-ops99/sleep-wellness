@@ -8,11 +8,9 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <!-- Force content visibility -->
+    <!-- Assessment styles -->
     <style>
-        .assessment-content { display: block !important; visibility: visible !important; opacity: 1 !important; }
-        .step-section[data-step="welcome"] { display: block !important; }
-        .step-section.active { display: block !important; visibility: visible !important; }
+        .assessment-content { display: block; visibility: visible; opacity: 1; }
     </style>
 </head>
 <body>
@@ -65,10 +63,10 @@
     </div>
 
     <!-- Assessment Content -->
-    <div class="assessment-content" id="assessmentContent" style="display: block !important;">
+    <div class="assessment-content" id="assessmentContent">
 
         <!-- Step 1: Welcome -->
-        <section class="step-section active" data-step="welcome" style="display: block !important;">
+        <section class="step-section active" data-step="welcome">
             <div class="welcome-hero">
                 <p class="step-label">Comprehensive Sleep Assessment</p>
                 <h1 class="step-title">Understand Your Sleep</h1>
@@ -1021,6 +1019,28 @@
             }
         }
     };
+
+    // Debug helper - make functions available globally
+    window.debugApp = function() {
+        console.log('App state:', {
+            currentStep: App.currentStep,
+            steps: App.steps,
+            responses: App.responses,
+            clientType: App.clientType
+        });
+    };
+
+    // Helper to manually advance steps if needed
+    window.forceNextStep = function() {
+        App.nextStep();
+    };
+
+    // Clear stuck state on fresh start
+    if (!sessionStorage.getItem('assessmentStarted')) {
+        localStorage.removeItem('sleepAssessment_currentStep');
+        localStorage.removeItem('sleepAssessment_responses');
+        sessionStorage.setItem('assessmentStarted', 'true');
+    }
 </script>
 
 </body>

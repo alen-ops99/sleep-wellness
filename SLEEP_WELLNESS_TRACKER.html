@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Wellness - Business Tracker</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #0f1c2e;
+            color: white;
+            padding: 30px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #C9A962;
+            font-size: 14px;
+        }
+
+        .overall-progress {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .overall-progress-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .overall-progress-fill {
+            height: 100%;
+            background: #C9A962;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .overall-progress-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #C9A962;
+            min-width: 45px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .goal-box {
+            background: white;
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            border-left: 4px solid #C9A962;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .goal-box h3 {
+            color: #0f1c2e;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .goal-box p {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .editable {
+            cursor: text;
+            padding: 2px 5px;
+            margin: -2px -5px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .editable:hover {
+            background: rgba(201, 169, 98, 0.15);
+        }
+
+        .editable:focus {
+            outline: none;
+            background: rgba(201, 169, 98, 0.25);
+        }
+
+        .phase {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .phase-header {
+            background: linear-gradient(135deg, #0f1c2e 0%, #1a2744 100%);
+            color: white;
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .phase-title {
+            flex: 1;
+        }
+
+        .phase-title h2 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .phase-title h2 .editable:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .phase-title h2 .editable:focus {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .phase-progress {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .phase-progress-bar {
+            width: 100px;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .phase-progress-fill {
+            height: 100%;
+            background: #C9A962;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .phase-progress-text {
+            font-size: 13px;
+            color: #C9A962;
+            min-width: 35px;
+            text-align: right;
+        }
+
+        .phase-toggle {
+            color: #C9A962;
+            font-size: 20px;
+            transition: transform 0.3s;
+            cursor: pointer;
+            padding: 5px 10px;
+            margin-left: 10px;
+        }
+
+        .phase-toggle:hover {
+            color: white;
+        }
+
+        .phase.collapsed .phase-toggle {
+            transform: rotate(-90deg);
+        }
+
+        .phase-content {
+            padding: 25px;
+            display: block;
+        }
+
+        .phase.collapsed .phase-content {
+            display: none;
+        }
+
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+        }
+
+        .task-item:hover {
+            background: #f0f0f0;
+        }
+
+        .task-item.completed {
+            background: #f0fdf4;
+        }
+
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .checkbox:hover {
+            border-color: #C9A962;
+        }
+
+        .task-item.completed .checkbox {
+            background: #22c55e;
+            border-color: #22c55e;
+        }
+
+        .checkbox::after {
+            content: "";
+            width: 6px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            opacity: 0;
+        }
+
+        .task-item.completed .checkbox::after {
+            opacity: 1;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-text {
+            font-size: 15px;
+            color: #333;
+        }
+
+        .task-note {
+            font-size: 13px;
+            color: #888;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .owner {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .owner:hover {
+            transform: scale(1.05);
+        }
+
+        .owner.laura {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .owner.alen {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .owner.both {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 5px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .task-item:hover .task-actions {
+            opacity: 1;
+        }
+
+        .task-action-btn {
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .task-action-btn:hover {
+            background: #ccc;
+        }
+
+        .task-action-btn.delete:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .add-task-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            background: none;
+            color: #999;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+
+        .add-task-btn:hover {
+            border-color: #C9A962;
+            color: #C9A962;
+        }
+
+        .targets-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .targets-section h3 {
+            font-size: 18px;
+            color: #0f1c2e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .targets-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .target-card {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .target-card .number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #C9A962;
+        }
+
+        .target-card .number .editable:hover {
+            background: rgba(201, 169, 98, 0.2);
+        }
+
+        .target-card .label {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .info-section h3 {
+            font-size: 16px;
+            color: #0f1c2e;
+            margin-bottom: 15px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .info-item {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .info-item strong {
+            color: #0f1c2e;
+        }
+
+        .info-item a {
+            color: #C9A962;
+            text-decoration: none;
+        }
+
+        .btn-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .reset-btn {
+            background: none;
+            border: 1px solid #ddd;
+            color: #999;
+        }
+
+        .reset-btn:hover {
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+
+        .edit-hint {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 20px;
+            }
+            .container {
+                padding: 20px 15px;
+            }
+            .phase-header {
+                padding: 15px 20px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .phase-content {
+                padding: 20px;
+            }
+            .targets-grid, .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .phase-progress-bar {
+                width: 60px;
+            }
+            .task-item {
+                flex-wrap: wrap;
+            }
+            .owner {
+                margin-left: 36px;
+                margin-top: 5px;
+            }
+            .task-actions {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Sleep Wellness Business Tracker</h1>
+    <p>Alen & Laura</p>
+    <div class="overall-progress">
+        <div class="overall-progress-bar">
+            <div class="overall-progress-fill" id="overallFill" style="width: 0%"></div>
+        </div>
+        <div class="overall-progress-text" id="overallText">0%</div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="goal-box">
+        <h3>The Goal</h3>
+        <p><span class="editable" contenteditable="true" data-field="goal">Land paying clients for sleep consulting - hotels, athletes, and corporate executives.</span></p>
+    </div>
+
+    <!-- Phases will be rendered by JavaScript -->
+    <div id="phases-container"></div>
+
+    <!-- Targets -->
+    <div class="targets-section">
+        <h3><span class="editable" contenteditable="true" data-field="targetsTitle">3-Month Targets</span></h3>
+        <div class="targets-grid">
+            <div class="target-card">
+                <div class="number"><span class="editable" contenteditable="true" data-field="target1Num">200</span></div>
+                <div class="label"><span class="editable" contenteditable="true" data-field="target1Label">emails sent</span></div>
+            </div>
+            <div class="target-card">
+                <div class="number"><span class="editable" contenteditable="true" data-field="target2Num">20</span></div>
+                <div class="label"><span class="editable" contenteditable="true" data-field="target2Label">calls booked</span></div>
+            </div>
+            <div class="target-card">
+                <div class="number"><span class="editable" contenteditable="true" data-field="target3Num">3</span></div>
+                <div class="label"><span class="editable" contenteditable="true" data-field="target3Label">clients signed</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Reference -->
+    <div class="info-section">
+        <h3>Quick Reference</h3>
+        <div class="info-grid">
+            <div class="info-item"><strong>Email:</strong> <span class="editable" contenteditable="true" data-field="email">alen_juginovic@hms.harvard.edu</span></div>
+            <div class="info-item"><strong>Zoom:</strong> <span class="editable" contenteditable="true" data-field="zoom">harvard.zoom.us/my/alen1</span></div>
+            <div class="info-item"><strong>Pricing:</strong> <span class="editable" contenteditable="true" data-field="pricing">Custom quotes only</span></div>
+            <div class="info-item"><span class="editable" contenteditable="true" data-field="note">No discounts - full price always</span></div>
+        </div>
+    </div>
+
+    <div class="edit-hint">
+        Click any text to edit it. Click the owner badge to change who's responsible. All changes are saved automatically.
+    </div>
+
+    <div class="btn-row">
+        <button class="btn reset-btn" onclick="resetProgress()">Reset Progress</button>
+        <button class="btn reset-btn" onclick="resetAll()">Reset Everything</button>
+    </div>
+
+</div>
+
+<script>
+    // Default data
+    const defaultData = {
+        goal: "Land paying clients for sleep consulting - hotels, athletes, and corporate executives.",
+        targetsTitle: "3-Month Targets",
+        target1Num: "200",
+        target1Label: "emails sent",
+        target2Num: "20",
+        target2Label: "calls booked",
+        target3Num: "3",
+        target3Label: "clients signed",
+        email: "alen_juginovic@hms.harvard.edu",
+        zoom: "harvard.zoom.us/my/alen1",
+        pricing: "Custom quotes only",
+        note: "No discounts - full price always",
+        phases: [
+            {
+                id: 1,
+                title: "Phase 1: Prepare",
+                collapsed: false,
+                tasks: [
+                    { id: "1-1", text: "Define what we're offering for each audience", note: "Hotels, athletes, corporate - what exactly do they get?", owner: "both", completed: false },
+                    { id: "1-2", text: "Decide on pricing ranges", note: "Even if custom, know ballpark figures for calls", owner: "both", completed: false },
+                    { id: "1-3", text: "Make sure website contact forms work", note: "Test by submitting a form yourself", owner: "laura", completed: false },
+                    { id: "1-4", text: "Review existing hotel email templates and proposal", owner: "both", completed: false },
+                    { id: "1-5", text: "Write email template for athletes/teams", owner: "both", completed: false },
+                    { id: "1-6", text: "Write email template for corporate", owner: "both", completed: false }
+                ]
+            },
+            {
+                id: 2,
+                title: "Phase 2: Find People to Contact",
+                collapsed: false,
+                tasks: [
+                    { id: "2-1", text: "Update the existing hotel prospect list", owner: "laura", completed: false },
+                    { id: "2-2", text: "Add 20 new luxury hotels to the list", note: "Four Seasons, Aman, Six Senses, Mandarin Oriental, etc.", owner: "laura", completed: false },
+                    { id: "2-3", text: "Find contact info for hotel General Managers", owner: "laura", completed: false },
+                    { id: "2-4", text: "Create list of sports teams to contact", note: "NBA, NFL, MLB teams, European soccer clubs", owner: "laura", completed: false },
+                    { id: "2-5", text: "Find performance directors or team doctors", owner: "laura", completed: false },
+                    { id: "2-6", text: "Create list of companies to contact", note: "Big companies with wellness programs, consulting firms", owner: "laura", completed: false },
+                    { id: "2-7", text: "Find HR heads or wellness program managers", owner: "laura", completed: false }
+                ]
+            },
+            {
+                id: 3,
+                title: "Phase 3: Reach Out",
+                collapsed: false,
+                tasks: [
+                    { id: "3-1", text: "Send first batch of outreach emails (10-15)", owner: "laura", completed: false },
+                    { id: "3-2", text: "Follow up on emails with no response after 5 days", owner: "laura", completed: false },
+                    { id: "3-3", text: "Keep sending 10-15 new emails every week", owner: "laura", completed: false },
+                    { id: "3-4", text: "First interested response received", owner: "both", completed: false },
+                    { id: "3-5", text: "First call scheduled", owner: "both", completed: false }
+                ]
+            },
+            {
+                id: 4,
+                title: "Phase 4: Close Deals",
+                collapsed: false,
+                tasks: [
+                    { id: "4-1", text: "Complete first discovery call", owner: "alen", completed: false },
+                    { id: "4-2", text: "Send follow-up email after call", owner: "both", completed: false },
+                    { id: "4-3", text: "Send first proposal", owner: "both", completed: false },
+                    { id: "4-4", text: "First client signed!", owner: "both", completed: false },
+                    { id: "4-5", text: "Ask first client for testimonial", owner: "both", completed: false },
+                    { id: "4-6", text: "Second client signed", owner: "both", completed: false },
+                    { id: "4-7", text: "Third client signed", owner: "both", completed: false }
+                ]
+            }
+        ]
+    };
+
+    // Load or initialize data
+    let data = JSON.parse(localStorage.getItem('sleepWellnessData')) || JSON.parse(JSON.stringify(defaultData));
+
+    // Save data
+    function saveData() {
+        localStorage.setItem('sleepWellnessData', JSON.stringify(data));
+    }
+
+    // Render phases
+    function renderPhases() {
+        const container = document.getElementById('phases-container');
+        container.innerHTML = '';
+
+        data.phases.forEach((phase, phaseIndex) => {
+            const phaseEl = document.createElement('div');
+            phaseEl.className = `phase${phase.collapsed ? ' collapsed' : ''}`;
+            phaseEl.dataset.phase = phase.id;
+
+            phaseEl.innerHTML = `
+                <div class="phase-header">
+                    <div class="phase-title">
+                        <h2><span class="editable" contenteditable="true" data-phase-title="${phaseIndex}">${phase.title}</span></h2>
+                    </div>
+                    <div class="phase-progress">
+                        <div class="phase-progress-bar">
+                            <div class="phase-progress-fill" id="phase${phase.id}Fill" style="width: 0%"></div>
+                        </div>
+                        <div class="phase-progress-text" id="phase${phase.id}Text">0%</div>
+                        <div class="phase-toggle" onclick="togglePhase(${phaseIndex})">▼</div>
+                    </div>
+                </div>
+                <div class="phase-content">
+                    <ul class="task-list" id="tasks-${phase.id}">
+                        ${phase.tasks.map((task, taskIndex) => renderTask(task, phaseIndex, taskIndex)).join('')}
+                    </ul>
+                    <button class="add-task-btn" onclick="addTask(${phaseIndex})">+ Add Task</button>
+                </div>
+            `;
+
+            container.appendChild(phaseEl);
+        });
+
+        // Add event listeners for editable phase titles
+        document.querySelectorAll('[data-phase-title]').forEach(el => {
+            el.addEventListener('blur', function() {
+                const idx = parseInt(this.dataset.phaseTitle);
+                data.phases[idx].title = this.textContent;
+                saveData();
+            });
+        });
+
+        updateAllProgress();
+    }
+
+    // Render single task
+    function renderTask(task, phaseIndex, taskIndex) {
+        return `
+            <li class="task-item${task.completed ? ' completed' : ''}" data-task="${task.id}">
+                <div class="checkbox" onclick="toggleTask(${phaseIndex}, ${taskIndex})"></div>
+                <div class="task-content">
+                    <div class="task-text editable" contenteditable="true" data-task-text="${phaseIndex}-${taskIndex}">${task.text}</div>
+                    ${task.note ? `<div class="task-note editable" contenteditable="true" data-task-note="${phaseIndex}-${taskIndex}">${task.note}</div>` : ''}
+                </div>
+                <span class="owner ${task.owner}" onclick="cycleOwner(${phaseIndex}, ${taskIndex})">${task.owner === 'both' ? 'Both' : task.owner.charAt(0).toUpperCase() + task.owner.slice(1)}</span>
+                <div class="task-actions">
+                    <button class="task-action-btn delete" onclick="deleteTask(${phaseIndex}, ${taskIndex})">×</button>
+                </div>
+            </li>
+        `;
+    }
+
+    // Toggle task completion
+    function toggleTask(phaseIndex, taskIndex) {
+        data.phases[phaseIndex].tasks[taskIndex].completed = !data.phases[phaseIndex].tasks[taskIndex].completed;
+        saveData();
+        renderPhases();
+    }
+
+    // Toggle phase collapse
+    function togglePhase(phaseIndex) {
+        data.phases[phaseIndex].collapsed = !data.phases[phaseIndex].collapsed;
+        saveData();
+        renderPhases();
+    }
+
+    // Cycle owner
+    function cycleOwner(phaseIndex, taskIndex) {
+        const owners = ['laura', 'alen', 'both'];
+        const current = data.phases[phaseIndex].tasks[taskIndex].owner;
+        const nextIndex = (owners.indexOf(current) + 1) % owners.length;
+        data.phases[phaseIndex].tasks[taskIndex].owner = owners[nextIndex];
+        saveData();
+        renderPhases();
+    }
+
+    // Add task
+    function addTask(phaseIndex) {
+        const newId = `${data.phases[phaseIndex].id}-${Date.now()}`;
+        data.phases[phaseIndex].tasks.push({
+            id: newId,
+            text: "New task",
+            note: "",
+            owner: "both",
+            completed: false
+        });
+        saveData();
+        renderPhases();
+    }
+
+    // Delete task
+    function deleteTask(phaseIndex, taskIndex) {
+        data.phases[phaseIndex].tasks.splice(taskIndex, 1);
+        saveData();
+        renderPhases();
+    }
+
+    // Update progress bars
+    function updateAllProgress() {
+        let totalTasks = 0;
+        let totalCompleted = 0;
+
+        data.phases.forEach(phase => {
+            const tasks = phase.tasks;
+            const completed = tasks.filter(t => t.completed);
+
+            const percent = tasks.length > 0 ? Math.round((completed.length / tasks.length) * 100) : 0;
+
+            const fillEl = document.getElementById(`phase${phase.id}Fill`);
+            const textEl = document.getElementById(`phase${phase.id}Text`);
+            if (fillEl) fillEl.style.width = percent + '%';
+            if (textEl) textEl.textContent = percent + '%';
+
+            totalTasks += tasks.length;
+            totalCompleted += completed.length;
+        });
+
+        const overallPercent = totalTasks > 0 ? Math.round((totalCompleted / totalTasks) * 100) : 0;
+        document.getElementById('overallFill').style.width = overallPercent + '%';
+        document.getElementById('overallText').textContent = overallPercent + '%';
+    }
+
+    // Reset progress only
+    function resetProgress() {
+        if (confirm('Reset all task progress? (Tasks will remain, just unchecked)')) {
+            data.phases.forEach(phase => {
+                phase.tasks.forEach(task => {
+                    task.completed = false;
+                });
+            });
+            saveData();
+            renderPhases();
+        }
+    }
+
+    // Reset everything
+    function resetAll() {
+        if (confirm('Reset EVERYTHING to defaults? All your edits will be lost.')) {
+            localStorage.removeItem('sleepWellnessData');
+            data = JSON.parse(JSON.stringify(defaultData));
+            saveData();
+            renderPhases();
+            loadFieldData();
+        }
+    }
+
+    // Load editable field data
+    function loadFieldData() {
+        document.querySelectorAll('.editable[data-field]').forEach(el => {
+            const field = el.dataset.field;
+            if (data[field]) {
+                el.textContent = data[field];
+            }
+        });
+    }
+
+    // Save editable field data
+    document.addEventListener('blur', function(e) {
+        if (e.target.classList.contains('editable')) {
+            const field = e.target.dataset.field;
+            const phaseTitle = e.target.dataset.phaseTitle;
+            const taskText = e.target.dataset.taskText;
+            const taskNote = e.target.dataset.taskNote;
+
+            if (field) {
+                data[field] = e.target.textContent;
+                saveData();
+            } else if (taskText) {
+                const [pi, ti] = taskText.split('-').map(Number);
+                data.phases[pi].tasks[ti].text = e.target.textContent;
+                saveData();
+            } else if (taskNote) {
+                const [pi, ti] = taskNote.split('-').map(Number);
+                data.phases[pi].tasks[ti].note = e.target.textContent;
+                saveData();
+            }
+        }
+    }, true);
+
+    // Initialize
+    loadFieldData();
+    renderPhases();
+</script>
+
+</body>
+</html>

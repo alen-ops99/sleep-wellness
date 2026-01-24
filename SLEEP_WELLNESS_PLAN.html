@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Wellness - Business Plan</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 40px;
+            background: white;
+        }
+
+        h1 {
+            color: #0f1c2e;
+            font-size: 28px;
+            border-bottom: 3px solid #C9A962;
+            padding-bottom: 15px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: #0f1c2e;
+            margin-top: 50px;
+            font-size: 20px;
+        }
+
+        .big-goal {
+            background: #0f1c2e;
+            color: white;
+            padding: 30px 35px;
+            border-radius: 10px;
+            margin: 30px 0;
+            font-size: 18px;
+        }
+
+        .big-goal strong {
+            color: #C9A962;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .audience-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .audience-card h4 {
+            color: #0f1c2e;
+            margin: 0 0 8px 0;
+            font-size: 15px;
+        }
+
+        .audience-card p {
+            color: #666;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .phase {
+            background: linear-gradient(135deg, #C9A962 0%, #E8D5A3 100%);
+            color: #0f1c2e;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 45px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .phase span {
+            font-weight: 400;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .task-section {
+            margin: 25px 0;
+        }
+
+        .task-section h4 {
+            color: #0f1c2e;
+            font-size: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .task-section h4::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: #C9A962;
+            border-radius: 50%;
+        }
+
+        .owner {
+            display: inline-block;
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .owner.laura {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .owner.alen {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .owner.both {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .simple-list {
+            background: #f8f9fa;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .simple-list ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .simple-list li {
+            margin-bottom: 10px;
+        }
+
+        .target-box {
+            border: 2px solid #C9A962;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .target-box h4 {
+            margin: 0 0 15px 0;
+            color: #0f1c2e;
+        }
+
+        .target-numbers {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .target-num {
+            text-align: center;
+        }
+
+        .target-num .num {
+            font-size: 32px;
+            font-weight: 700;
+            color: #C9A962;
+        }
+
+        .target-num .label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .info-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 20px 25px;
+            margin: 25px 0;
+        }
+
+        .info-box.tip {
+            background: #fffbeb;
+            border-left-color: #f59e0b;
+        }
+
+        .weekly-rhythm {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px 20px;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .weekly-rhythm .day {
+            font-weight: 600;
+            color: #0f1c2e;
+        }
+
+        .contact-box {
+            background: #0f1c2e;
+            color: white;
+            padding: 25px 30px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .contact-box p {
+            margin: 8px 0;
+        }
+
+        .contact-box strong {
+            color: #C9A962;
+        }
+
+        .contact-box a {
+            color: #C9A962;
+        }
+
+        .credentials {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .credential {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            color: #999;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .audience-grid, .credentials {
+                grid-template-columns: 1fr;
+            }
+            .target-numbers {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sleep Wellness Business Plan</h1>
+    <p class="subtitle">Alen & Laura - January 2026</p>
+
+    <div class="big-goal">
+        <strong>Our Goal</strong>
+        Turn Alen's sleep expertise into a consulting business serving luxury hotels, elite athletes, and corporate executives. Land our first paying clients and build from there.
+    </div>
+
+    <h2>Who We're Going After</h2>
+
+    <div class="audience-grid">
+        <div class="audience-card">
+            <h4>Luxury Hotels</h4>
+            <p>Sleep programs that make their guest experience stand out</p>
+        </div>
+        <div class="audience-card">
+            <h4>Elite Athletes</h4>
+            <p>Better recovery, fewer injuries, longer careers</p>
+        </div>
+        <div class="audience-card">
+            <h4>Corporate Leaders</h4>
+            <p>Sharper thinking, better decisions, less jet lag</p>
+        </div>
+    </div>
+
+    <h2>What Makes Us Different</h2>
+    <p>When we reach out to people, these are the credentials that matter:</p>
+
+    <div class="credentials">
+        <div class="credential">Harvard Medical School</div>
+        <div class="credential">Published in Cell (top journal)</div>
+        <div class="credential">NY Times & Forbes features</div>
+        <div class="credential">Book author (Springer)</div>
+    </div>
+
+    <!-- PHASE 1 -->
+    <div class="phase">Phase 1: Get Ready <span>Week 1</span></div>
+
+    <p>Before we start reaching out, we need a few things in place.</p>
+
+    <div class="task-section">
+        <h4>Finish Website Setup <span class="owner laura">Laura</span></h4>
+        <div class="simple-list">
+            <ul>
+                <li>Set up Formspree account (so contact forms work)</li>
+                <li>Set up Google Analytics (so we can see website traffic)</li>
+                <li>Test that all forms actually send emails</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="task-section">
+        <h4>Prepare Outreach Materials <span class="owner both">Both</span></h4>
+        <div class="simple-list">
+            <ul>
+                <li>Review existing hotel email templates and proposal</li>
+                <li>Draft email templates for athletes and corporate</li>
+                <li>Alen reviews and approves all templates</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="phase">Phase 2: Build Prospect Lists <span>Week 2</span></div>
+
+    <p>Find the right people to contact in each category.</p>
+
+    <div class="task-section">
+        <h4>Hotels <span class="owner laura">Laura</span></h4>
+        <div class="simple-list">
+            <ul>
+                <li>Update the existing hotel tracker</li>
+                <li>Add 20 more luxury hotels (Four Seasons, Aman, Six Senses, etc.)</li>
+                <li>Find contact info for General Managers or Guest Experience Directors</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="task-section">
+        <h4>Athletes & Teams <span class="owner laura">Laura</span></h4>
+        <div class="simple-list">
+            <ul>
+                <li>Create a new tracker spreadsheet</li>
+                <li>Research NBA, NFL, MLB teams - find performance directors</li>
+                <li>Look into European soccer clubs</li>
+                <li>Find sports agencies (CAA, Wasserman)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="task-section">
+        <h4>Corporate <span class="owner laura">Laura</span></h4>
+        <div class="simple-list">
+            <ul>
+                <li>Create a new tracker spreadsheet</li>
+                <li>Research Fortune 500 companies with wellness programs</li>
+                <li>Look into consulting firms and investment banks</li>
+                <li>Find Chief People Officers or HR heads</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="phase">Phase 3: Start Outreach <span>Week 3+</span></div>
+
+    <p>Now we start reaching out and keep it consistent every week.</p>
+
+    <div class="task-section">
+        <h4>Weekly Rhythm <span class="owner laura">Laura</span></h4>
+    </div>
+
+    <div class="weekly-rhythm">
+        <div class="day">Monday</div>
+        <div>Send 10-15 personalized outreach emails</div>
+        <div class="day">Wednesday</div>
+        <div>Follow up on emails from last week (no reply after 5 days)</div>
+        <div class="day">Friday</div>
+        <div>Update tracker, review responses, schedule any calls</div>
+    </div>
+
+    <div class="info-box tip">
+        <strong>Email Approach:</strong> Keep it short. Mention Harvard + Cell publication. Ask if they'd be open to a brief conversation. Don't sell hard - just open doors.
+    </div>
+
+    <div class="task-section">
+        <h4>When Someone Responds</h4>
+        <div class="simple-list">
+            <ul>
+                <li><strong>Interested →</strong> Schedule 30-min call with Alen</li>
+                <li><strong>"Not now" →</strong> Add to list, follow up in 3 months</li>
+                <li><strong>No response →</strong> 3 follow-ups, then move on</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="phase">Phase 4: Close Deals <span>Ongoing</span></div>
+
+    <p>When we get calls booked, here's how we handle them.</p>
+
+    <div class="task-section">
+        <h4>Before the Call <span class="owner laura">Laura</span></h4>
+        <div class="simple-list">
+            <ul>
+                <li>Research the person/company</li>
+                <li>Send calendar invite with Zoom link</li>
+                <li>Prepare a short brief for Alen</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="task-section">
+        <h4>The Call <span class="owner alen">Alen</span></h4>
+        <div class="simple-list">
+            <ul>
+                <li>Understand their needs</li>
+                <li>Explain how we can help</li>
+                <li>Discuss scope and next steps</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="task-section">
+        <h4>After the Call <span class="owner both">Both</span></h4>
+        <div class="simple-list">
+            <ul>
+                <li>Alen drafts follow-up email</li>
+                <li>Laura sends it + attaches proposal</li>
+                <li>Update tracker with notes</li>
+                <li>Follow up if no response in a week</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TARGETS -->
+    <h2>Our Targets</h2>
+
+    <div class="target-box">
+        <h4>First 3 Months</h4>
+        <div class="target-numbers">
+            <div class="target-num">
+                <div class="num">200</div>
+                <div class="label">emails sent</div>
+            </div>
+            <div class="target-num">
+                <div class="num">20</div>
+                <div class="label">calls booked</div>
+            </div>
+            <div class="target-num">
+                <div class="num">3</div>
+                <div class="label">clients signed</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KEY INFO -->
+    <h2>Quick Reference</h2>
+
+    <div class="contact-box">
+        <p><strong>Email:</strong> alen_juginovic@hms.harvard.edu</p>
+        <p><strong>Zoom:</strong> <a href="https://harvard.zoom.us/my/alen1">harvard.zoom.us/my/alen1</a></p>
+        <p><strong>Pricing:</strong> Custom quotes only (no fixed prices)</p>
+        <p><strong>Website:</strong> Share the relevant page (hotels.html, athletes.html, corporate.html)</p>
+    </div>
+
+    <div class="info-box">
+        <strong>Remember:</strong> We're not offering discounts or "pilot" pricing. Full price from day one - we're premium, not bargain.
+    </div>
+
+    <div class="footer">
+        <p>Let's get this going.</p>
+        <p style="color: #ccc; font-size: 11px;">January 2026</p>
+    </div>
+
+</body>
+</html>

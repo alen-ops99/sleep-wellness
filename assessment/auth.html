@@ -601,6 +601,37 @@
                 console.log('Consent update will be saved on next login');
             }
 
+            // Auto-assign the sleep assessment to new user
+            try {
+                const oneWeekFromNow = new Date();
+                oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
+
+                // Create task for sleep assessment
+                await db.collection('clientTasks').add({
+                    clientId: result.user.uid,
+                    taskType: 'assessment',
+                    title: 'Complete Sleep Assessment',
+                    description: 'Complete your comprehensive sleep assessment to help Dr. Alen understand your sleep patterns and create a personalized plan for you.',
+                    deadline: oneWeekFromNow,
+                    status: 'pending',
+                    assignedBy: ADMIN_UID,
+                    assignedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                // Create welcome notification
+                await db.collection('notifications').add({
+                    userId: result.user.uid,
+                    type: 'welcome',
+                    title: 'Welcome to Sleep Wellness!',
+                    message: 'Start your journey by completing your sleep assessment.',
+                    data: { taskType: 'assessment' },
+                    read: false,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            } catch (err) {
+                console.log('Auto-assignment will be handled on first login:', err);
+            }
+
             window.location.href = 'account.html';
         } else {
             error.textContent = result.error;

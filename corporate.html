@@ -1024,15 +1024,14 @@
     </div>
 </section>
 
-<!-- Testimonial -->
+<!-- Research Insight -->
 <section class="testimonial">
     <p class="testimonial-quote">
-        "I used to pride myself on getting by with little sleep. Working with Dr. Alen
-        showed me how much cognitive capacity I was leaving on the table. The jet lag
-        protocols alone have transformed my international business travel."
+        "Sleep-deprived individuals show impaired prefrontal cortex activity, leading to poor judgment
+        and decision-making - often without awareness of the decline."
     </p>
-    <p class="testimonial-author">Michael R.</p>
-    <p class="testimonial-role">CEO, Technology Company</p>
+    <p class="testimonial-author">Killgore, 2010</p>
+    <p class="testimonial-role">Progress in Brain Research</p>
 </section>
 
 <!-- About -->
@@ -1103,7 +1102,15 @@
         Let's discuss how physician-designed sleep optimization can sharpen your thinking
         and sustain your performance.
     </p>
-    <a href="mailto:alen_juginovic@hms.harvard.edu" class="cta-primary">Schedule a Consultation</a>
+    <!-- TODO: Set up Formspree account and replace CORPORATE_FORM_ID below -->
+    <form class="cta-form" action="https://formspree.io/f/CORPORATE_FORM_ID" method="POST" style="max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
+        <input type="hidden" name="_subject" value="Executive/Corporate Inquiry">
+        <input type="text" name="name" placeholder="Your Name" required style="padding: 14px 18px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; text-align: center;">
+        <input type="email" name="email" placeholder="Your Email" required style="padding: 14px 18px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; text-align: center;">
+        <input type="text" name="company" placeholder="Company (Optional)" style="padding: 14px 18px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; text-align: center;">
+        <button type="submit" class="cta-primary" style="border: none; cursor: pointer;">Schedule a Consultation</button>
+    </form>
+    <p style="margin-top: 20px; font-size: 14px; opacity: 0.7;">Or email directly: <a href="mailto:alen_juginovic@hms.harvard.edu" style="color: var(--gold);">alen_juginovic@hms.harvard.edu</a></p>
 </section>
 
 <!-- Footer -->

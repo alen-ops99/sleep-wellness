@@ -258,7 +258,15 @@ const App = {
      * Start the assessment
      */
     startAssessment() {
-        this.goToStep('clientType');
+        console.log('startAssessment() called');
+        console.log('Current step before:', this.currentStep);
+        this.currentStep = 'clientType';
+        Storage.saveCurrentStep('clientType');
+        this.showStep('clientType');
+        this.updateProgress();
+        this.renderStepIndicators();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        console.log('Current step after:', this.currentStep);
     },
 
     /**
@@ -391,10 +399,14 @@ const App = {
     showStep(stepName) {
         console.log('showStep called with:', stepName);
 
-        // Hide all steps
-        document.querySelectorAll('.step-section').forEach(section => {
+        // Hide all steps first
+        const allSections = document.querySelectorAll('.step-section');
+        console.log('Found', allSections.length, 'step sections');
+
+        allSections.forEach(section => {
             section.classList.remove('active');
             section.style.display = 'none';
+            section.style.visibility = 'hidden';
         });
 
         // Show target step
@@ -402,9 +414,16 @@ const App = {
         if (targetSection) {
             targetSection.classList.add('active');
             targetSection.style.display = 'block';
-            console.log('Showing section:', stepName, targetSection);
+            targetSection.style.visibility = 'visible';
+            console.log('SUCCESS: Showing section:', stepName);
         } else {
-            console.error('Section not found:', stepName);
+            console.error('ERROR: Section not found for step:', stepName);
+            // Fallback - show welcome
+            const welcomeSection = document.querySelector('[data-step="welcome"]');
+            if (welcomeSection) {
+                welcomeSection.classList.add('active');
+                welcomeSection.style.display = 'block';
+            }
         }
 
         // Update client-specific section if needed

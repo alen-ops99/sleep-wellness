@@ -141,11 +141,59 @@
     </div>
 </div>
 
+<!-- Admin Login Section -->
+<div id="adminLoginSection" style="background: #1a2a3a; border: 1px solid rgba(201, 169, 98, 0.3); border-radius: 12px; padding: 25px; margin-bottom: 25px;">
+    <h3 style="color: var(--gold); margin: 0 0 10px 0;">Step 1: Sign In as Admin</h3>
+    <p style="color: rgba(255,255,255,0.7); font-size: 13px; margin-bottom: 15px;">
+        You must be signed in to create data. Use your admin credentials.
+    </p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 15px; align-items: end;">
+        <div>
+            <label style="display: block; font-size: 11px; color: var(--gold); margin-bottom: 5px; text-transform: uppercase;">Admin Email</label>
+            <input type="email" id="adminEmail" placeholder="admin@example.com" style="width: 100%; padding: 12px; border: 1px solid rgba(201, 169, 98, 0.3); background: var(--navy); color: white; border-radius: 4px; font-size: 14px;">
+        </div>
+        <div>
+            <label style="display: block; font-size: 11px; color: var(--gold); margin-bottom: 5px; text-transform: uppercase;">Password</label>
+            <input type="password" id="adminPassword" placeholder="Password" style="width: 100%; padding: 12px; border: 1px solid rgba(201, 169, 98, 0.3); background: var(--navy); color: white; border-radius: 4px; font-size: 14px;">
+        </div>
+        <button class="btn" onclick="signInAdmin()">Sign In</button>
+    </div>
+    <p id="adminStatus" style="margin-top: 15px; font-size: 13px; display: none;"></p>
+</div>
+
+<!-- Quick Test Account -->
+<div style="background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.05)); border: 2px solid #4caf50; border-radius: 12px; padding: 25px; margin-bottom: 25px;">
+    <h3 style="color: #4caf50; margin: 0 0 10px 0;">Step 2: One-Click Test Account</h3>
+    <p style="color: rgba(255,255,255,0.7); font-size: 13px; margin-bottom: 20px;">
+        Creates a fresh test account with onboarding ready. Use these credentials to experience the full welcome flow.
+    </p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+        <div>
+            <label style="display: block; font-size: 11px; color: #4caf50; margin-bottom: 5px; text-transform: uppercase;">Email</label>
+            <input type="email" id="quickTestEmail" value="test@sleepwellness.com" style="width: 100%; padding: 12px; border: 1px solid rgba(76, 175, 80, 0.3); background: var(--navy); color: white; border-radius: 4px; font-size: 14px;">
+        </div>
+        <div>
+            <label style="display: block; font-size: 11px; color: #4caf50; margin-bottom: 5px; text-transform: uppercase;">Password</label>
+            <input type="text" id="quickTestPassword" value="Test1234!" style="width: 100%; padding: 12px; border: 1px solid rgba(76, 175, 80, 0.3); background: var(--navy); color: white; border-radius: 4px; font-size: 14px;">
+        </div>
+        <div>
+            <label style="display: block; font-size: 11px; color: #4caf50; margin-bottom: 5px; text-transform: uppercase;">Client Type</label>
+            <select id="quickTestType" style="width: 100%; padding: 12px; border: 1px solid rgba(76, 175, 80, 0.3); background: var(--navy); color: white; border-radius: 4px; font-size: 14px;">
+                <option value="athlete">Athlete</option>
+                <option value="executive">Executive</option>
+                <option value="hotel">Traveler / Individual</option>
+            </select>
+        </div>
+    </div>
+    <button class="btn" onclick="createQuickTestAccount()" style="width: 100%; background: #4caf50; font-size: 16px; padding: 18px;">Create Test Account & Show Credentials</button>
+    <p id="quickTestResult" style="margin-top: 15px; font-size: 13px; display: none;"></p>
+</div>
+
 <!-- Test User Account Section -->
 <div style="background: rgba(201, 169, 98, 0.1); border: 1px solid var(--gold); border-radius: 12px; padding: 25px; margin-bottom: 25px;">
-    <h3 style="color: var(--gold); margin: 0 0 10px 0;">Create Test User Account</h3>
+    <h3 style="color: var(--gold); margin: 0 0 10px 0;">Or: Custom Test User</h3>
     <p style="color: rgba(255,255,255,0.7); font-size: 13px; margin-bottom: 20px;">
-        Create a real user account you can log into to experience the client dashboard.
+        Create a user with custom details.
     </p>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
         <div>
@@ -171,8 +219,33 @@
             </select>
         </div>
     </div>
-    <button class="btn" onclick="createTestUserAccount()" style="width: 100%;">Create Test User Account</button>
+    <button class="btn" onclick="createTestUserAccount()" style="width: 100%;">Create Custom Test User</button>
     <p id="testUserResult" style="margin-top: 15px; font-size: 13px; display: none;"></p>
+
+    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(201, 169, 98, 0.3);">
+        <h4 style="color: rgba(255,255,255,0.8); margin: 0 0 10px 0; font-size: 14px;">Or create an invite code for manual signup:</h4>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <input type="text" id="customInviteCode" placeholder="e.g. SLEEP2026" value="DRALEN2026" style="padding: 12px; border: 1px solid rgba(201, 169, 98, 0.3); background: var(--navy); color: white; border-radius: 4px; font-size: 14px; text-transform: uppercase; width: 180px;">
+            <button class="btn" onclick="createCustomInviteCode()" style="background: transparent; border: 1px solid var(--gold); color: var(--gold);">Create Invite Code</button>
+        </div>
+        <p id="inviteCodeResult" style="margin-top: 10px; font-size: 13px; display: none;"></p>
+    </div>
+</div>
+
+<!-- Reset Onboarding Section -->
+<div style="background: rgba(100, 181, 246, 0.1); border: 1px solid #64b5f6; border-radius: 12px; padding: 25px; margin-bottom: 25px;">
+    <h3 style="color: #64b5f6; margin: 0 0 10px 0;">Step 3: Reset Onboarding (For Testing)</h3>
+    <p style="color: rgba(255,255,255,0.7); font-size: 13px; margin-bottom: 20px;">
+        If you already have an account and want to see the welcome animation again, enter your email below to reset onboarding status and get the sleep assessment assigned.
+    </p>
+    <div style="display: grid; grid-template-columns: 1fr auto; gap: 15px; align-items: end;">
+        <div>
+            <label style="display: block; font-size: 11px; color: #64b5f6; margin-bottom: 5px; text-transform: uppercase;">User Email</label>
+            <input type="email" id="resetOnboardingEmail" placeholder="your@email.com" style="width: 100%; padding: 12px; border: 1px solid rgba(100, 181, 246, 0.3); background: var(--navy); color: white; border-radius: 4px; font-size: 14px;">
+        </div>
+        <button class="btn" onclick="resetOnboardingForUser()" style="background: #64b5f6; color: var(--deep-navy);">Reset Onboarding</button>
+    </div>
+    <p id="resetOnboardingResult" style="margin-top: 15px; font-size: 13px; display: none;"></p>
 </div>
 
 <button class="btn" onclick="seedAllData()">Create All Test Data</button>
@@ -962,6 +1035,177 @@
         { code: 'SW-USED-0003', used: true, usedBy: 'test-exec-002', clientEmail: 'sarah.mitchell@example.com' }
     ];
 
+    // ======================== ADMIN SIGN IN ========================
+    async function signInAdmin() {
+        const email = document.getElementById('adminEmail').value.trim();
+        const password = document.getElementById('adminPassword').value;
+        const statusEl = document.getElementById('adminStatus');
+
+        if (!email || !password) {
+            statusEl.textContent = 'Please enter email and password.';
+            statusEl.style.color = '#f44336';
+            statusEl.style.display = 'block';
+            return;
+        }
+
+        statusEl.textContent = 'Signing in...';
+        statusEl.style.color = 'var(--gold)';
+        statusEl.style.display = 'block';
+
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            statusEl.innerHTML = '<span style="color: #4caf50;">Signed in successfully! You can now create data.</span>';
+            document.getElementById('adminLoginSection').style.borderColor = '#4caf50';
+        } catch (error) {
+            console.error('Sign in error:', error);
+            statusEl.textContent = 'Sign in failed: ' + error.message;
+            statusEl.style.color = '#f44336';
+        }
+    }
+
+    // Check if already signed in
+    auth.onAuthStateChanged((user) => {
+        const statusEl = document.getElementById('adminStatus');
+        if (user) {
+            statusEl.innerHTML = `<span style="color: #4caf50;">Signed in as: ${user.email}</span>`;
+            statusEl.style.display = 'block';
+            document.getElementById('adminLoginSection').style.borderColor = '#4caf50';
+        }
+    });
+
+    // ======================== QUICK TEST ACCOUNT ========================
+    async function createQuickTestAccount() {
+        const email = document.getElementById('quickTestEmail').value.trim();
+        const password = document.getElementById('quickTestPassword').value;
+        const clientType = document.getElementById('quickTestType').value;
+        const resultEl = document.getElementById('quickTestResult');
+
+        resultEl.textContent = 'Creating test account...';
+        resultEl.style.color = '#4caf50';
+        resultEl.style.display = 'block';
+
+        try {
+            // Try to delete existing user first (if exists)
+            try {
+                const existingUser = await auth.signInWithEmailAndPassword(email, password);
+                if (existingUser.user) {
+                    // Delete Firestore profile
+                    await db.collection('users').doc(existingUser.user.uid).delete();
+                    // Delete auth user
+                    await existingUser.user.delete();
+                    resultEl.textContent = 'Deleted existing account, creating fresh one...';
+                }
+            } catch (e) {
+                // User doesn't exist, that's fine
+            }
+
+            // Create new Firebase Auth user
+            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            const user = userCredential.user;
+
+            // Update display name
+            const displayName = clientType === 'athlete' ? 'Alex Runner' : clientType === 'executive' ? 'Jordan Executive' : 'Taylor Guest';
+            await user.updateProfile({ displayName });
+
+            // Create user profile with onboardingComplete: false
+            await db.collection('users').doc(user.uid).set({
+                email: email,
+                displayName: displayName,
+                clientType: clientType,
+                status: 'active',
+                role: 'client',
+                onboardingComplete: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            // Create welcome task
+            const oneWeekFromNow = new Date();
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
+            await db.collection('clientTasks').add({
+                clientId: user.uid,
+                taskType: 'assessment',
+                title: 'Complete Sleep Assessment',
+                description: 'Complete your comprehensive sleep assessment.',
+                deadline: oneWeekFromNow,
+                status: 'pending',
+                assignedBy: ADMIN_UID,
+                assignedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            // Sign out so user can log in fresh
+            await auth.signOut();
+
+            resultEl.innerHTML = `
+                <div style="background: rgba(76, 175, 80, 0.2); border: 1px solid #4caf50; border-radius: 8px; padding: 20px; margin-top: 10px;">
+                    <div style="font-size: 18px; font-weight: bold; color: #4caf50; margin-bottom: 15px;">Test Account Ready!</div>
+                    <div style="margin-bottom: 10px;">
+                        <span style="color: rgba(255,255,255,0.6);">Email:</span>
+                        <code style="background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 4px; margin-left: 10px; font-size: 15px;">${email}</code>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <span style="color: rgba(255,255,255,0.6);">Password:</span>
+                        <code style="background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 4px; margin-left: 10px; font-size: 15px;">${password}</code>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <span style="color: rgba(255,255,255,0.6);">Type:</span>
+                        <code style="background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 4px; margin-left: 10px; font-size: 15px;">${clientType}</code>
+                    </div>
+                    <a href="../auth.html" style="display: inline-block; padding: 12px 24px; background: #4caf50; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;">Go to Login Page →</a>
+                </div>
+            `;
+        } catch (error) {
+            console.error('Error creating test account:', error);
+            let errorMsg = error.message;
+            if (error.code === 'auth/email-already-in-use') {
+                errorMsg = 'Email already exists. Try a different email or use Reset Onboarding (Step 3) for existing accounts.';
+            }
+            resultEl.innerHTML = `<span style="color: #f44336;">Error: ${errorMsg}</span>`;
+        }
+    }
+
+    // ======================== CREATE INVITE CODE ========================
+    async function createCustomInviteCode() {
+        const codeInput = document.getElementById('customInviteCode');
+        const code = codeInput.value.toUpperCase().trim();
+        const resultEl = document.getElementById('inviteCodeResult');
+
+        if (!code) {
+            resultEl.textContent = 'Please enter an invite code.';
+            resultEl.style.color = '#f44336';
+            resultEl.style.display = 'block';
+            return;
+        }
+
+        resultEl.textContent = 'Creating invite code...';
+        resultEl.style.color = 'var(--gold)';
+        resultEl.style.display = 'block';
+
+        try {
+            await db.collection('inviteCodes').doc(code).set({
+                code: code,
+                used: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                createdBy: auth.currentUser?.uid || 'admin'
+            });
+
+            resultEl.innerHTML = `
+                <span style="color: #4caf50;">Invite code created!</span><br>
+                Use code: <code style="background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 3px; font-size: 16px; font-weight: bold;">${code}</code>
+            `;
+        } catch (error) {
+            console.error('Error creating invite code:', error);
+            resultEl.textContent = 'Error creating invite code: ' + error.message;
+            resultEl.style.color = '#f44336';
+        }
+    }
+
+    // Legacy function
+    async function createInviteCode() {
+        document.getElementById('customInviteCode').value = 'WELCOME2026';
+        await createCustomInviteCode();
+    }
+
     // ======================== CREATE TEST USER ACCOUNT ========================
     async function createTestUserAccount() {
         const email = document.getElementById('testUserEmail').value.trim();
@@ -1039,6 +1283,95 @@
                 errorMessage = 'Invalid email address format.';
             }
             resultEl.textContent = errorMessage;
+            resultEl.style.color = '#f44336';
+        }
+    }
+
+    // ======================== RESET ONBOARDING ========================
+    async function resetOnboardingForUser() {
+        const email = document.getElementById('resetOnboardingEmail').value.trim();
+        const resultEl = document.getElementById('resetOnboardingResult');
+
+        if (!email) {
+            resultEl.textContent = 'Please enter an email address.';
+            resultEl.style.color = '#f44336';
+            resultEl.style.display = 'block';
+            return;
+        }
+
+        resultEl.textContent = 'Searching for user...';
+        resultEl.style.color = '#64b5f6';
+        resultEl.style.display = 'block';
+
+        try {
+            // Find user by email
+            const usersSnapshot = await db.collection('users')
+                .where('email', '==', email)
+                .limit(1)
+                .get();
+
+            if (usersSnapshot.empty) {
+                resultEl.textContent = 'No user found with that email address.';
+                resultEl.style.color = '#f44336';
+                return;
+            }
+
+            const userDoc = usersSnapshot.docs[0];
+            const userId = userDoc.id;
+            const userName = userDoc.data().displayName || email;
+
+            resultEl.textContent = `Found user: ${userName}. Resetting onboarding...`;
+
+            // Reset onboarding status
+            await db.collection('users').doc(userId).update({
+                onboardingComplete: false
+            });
+
+            // Check if sleep assessment is already assigned
+            const existingTasks = await db.collection('clientTasks')
+                .where('clientId', '==', userId)
+                .where('taskType', '==', 'assessment')
+                .where('status', '==', 'pending')
+                .get();
+
+            // Only create assessment task if none exists
+            if (existingTasks.empty) {
+                const oneWeekFromNow = new Date();
+                oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
+
+                await db.collection('clientTasks').add({
+                    clientId: userId,
+                    taskType: 'assessment',
+                    title: 'Complete Sleep Assessment',
+                    description: 'Complete your comprehensive sleep assessment to help Dr. Alen understand your sleep patterns and create a personalized plan for you.',
+                    deadline: oneWeekFromNow,
+                    status: 'pending',
+                    assignedBy: ADMIN_UID,
+                    assignedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            }
+
+            // Create welcome notification
+            await db.collection('notifications').add({
+                userId: userId,
+                type: 'welcome',
+                title: 'Welcome to Sleep Wellness!',
+                message: 'Start your journey by completing your sleep assessment.',
+                data: { taskType: 'assessment' },
+                read: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            resultEl.innerHTML = `
+                <span style="color: #4caf50; font-weight: 600;">Onboarding reset successfully!</span><br><br>
+                <strong>${userName}</strong>'s account has been reset.<br>
+                The welcome animation and onboarding tour will appear on next login.<br>
+                Sleep assessment has been assigned.<br><br>
+                <a href="../auth.html" style="color: #64b5f6;">Go to Login Page →</a>
+            `;
+        } catch (error) {
+            console.error('Error resetting onboarding:', error);
+            resultEl.textContent = 'Error: ' + error.message;
             resultEl.style.color = '#f44336';
         }
     }

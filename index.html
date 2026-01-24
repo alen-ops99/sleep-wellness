@@ -1673,53 +1673,50 @@
     </div>
 </section>
 
-<!-- Testimonials -->
+<!-- Research & Publications -->
 <section class="testimonials">
     <div class="section-header">
-        <p class="section-label">Trust</p>
-        <h2 class="section-title">Words from Those We Serve</h2>
+        <p class="section-label">Research</p>
+        <h2 class="section-title">Published Sleep Science</h2>
     </div>
 
     <div class="testimonials-grid">
         <div class="testimonial-card">
-            <p class="testimonial-quote">
-                "Dr. Alen's program transformed how we think about guest experience.
-                Sleep is now our signature differentiator."
+            <p class="testimonial-quote" style="font-size: 18px; font-style: normal;">
+                A gut-secreted peptide controls arousability through modulation of dopaminergic neurons
             </p>
             <div class="testimonial-author">
-                <div class="testimonial-avatar">MH</div>
+                <div class="testimonial-avatar" style="background: var(--gold); color: var(--navy);">Cell</div>
                 <div class="testimonial-info">
-                    <h5>Marco H.</h5>
-                    <p>General Manager</p>
-                    <p class="testimonial-type">Luxury Hotel</p>
+                    <h5>Titos, Juginovic et al.</h5>
+                    <p>Cell (2023)</p>
+                    <p class="testimonial-type">Top-tier Journal</p>
                 </div>
             </div>
         </div>
         <div class="testimonial-card">
-            <p class="testimonial-quote">
-                "The travel protocols alone have been game-changing. I arrive ready to compete,
-                not recover."
+            <p class="testimonial-quote" style="font-size: 18px; font-style: normal;">
+                Sleep spindle density as a predictor of cardiovascular outcomes
             </p>
             <div class="testimonial-author">
-                <div class="testimonial-avatar">SK</div>
+                <div class="testimonial-avatar" style="background: var(--gold); color: var(--navy);">SM</div>
                 <div class="testimonial-info">
-                    <h5>Stefan K.</h5>
-                    <p>Professional Athlete</p>
-                    <p class="testimonial-type">Elite Sports</p>
+                    <h5>Juginovic, Aranza & Bilos</h5>
+                    <p>Sleep Medicine (2025)</p>
+                    <p class="testimonial-type">Peer-Reviewed</p>
                 </div>
             </div>
         </div>
         <div class="testimonial-card">
-            <p class="testimonial-quote">
-                "My decision-making has never been sharper. Sleep optimization is now
-                part of my leadership practice."
+            <p class="testimonial-quote" style="font-size: 18px; font-style: normal;">
+                The Crucial Role of Sleep for Athletes: A Comprehensive Guide
             </p>
             <div class="testimonial-author">
-                <div class="testimonial-avatar">LT</div>
+                <div class="testimonial-avatar" style="background: var(--gold); color: var(--navy);">Book</div>
                 <div class="testimonial-info">
-                    <h5>Laura T.</h5>
-                    <p>CEO</p>
-                    <p class="testimonial-type">Corporate</p>
+                    <h5>Sleep Science Made Simple</h5>
+                    <p>Springer Nature (2025)</p>
+                    <p class="testimonial-type">Published Author</p>
                 </div>
             </div>
         </div>
@@ -1781,7 +1778,9 @@
             Join 4,000+ readers getting the latest sleep science, practical tips,
             and exclusive insights delivered to your inbox.
         </p>
-        <form class="newsletter-form" action="https://formspree.io/f/your-form-id" method="POST">
+        <!-- TODO: Set up Formspree account and replace FORM_ID below -->
+        <form class="newsletter-form" action="https://formspree.io/f/FORM_ID" method="POST">
+            <input type="hidden" name="_subject" value="New Sleepletter Subscriber">
             <input type="email" name="email" placeholder="Enter your email" required>
             <button type="submit">Subscribe</button>
         </form>
@@ -1793,10 +1792,22 @@
 <section class="contact" id="contact">
     <div class="contact-container">
         <div class="contact-col">
-            <h4>Get in Touch</h4>
-            <p><a href="mailto:alen_juginovic@hms.harvard.edu">alen_juginovic@hms.harvard.edu</a></p>
-            <p>+1 (617) 982-8835</p>
-            <p>+385 99 190 4488</p>
+            <h4>Start a Conversation</h4>
+            <!-- TODO: Set up Formspree account and replace CONTACT_FORM_ID below -->
+            <form class="contact-form" action="https://formspree.io/f/CONTACT_FORM_ID" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="hidden" name="_subject" value="Sleep Wellness Inquiry">
+                <input type="text" name="name" placeholder="Your Name" required style="padding: 12px 15px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px;">
+                <input type="email" name="email" placeholder="Your Email" required style="padding: 12px 15px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px;">
+                <select name="interest" required style="padding: 12px 15px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px;">
+                    <option value="" disabled selected style="color: #666;">Area of Interest</option>
+                    <option value="hotels" style="color: #333;">Luxury Hotels</option>
+                    <option value="athletes" style="color: #333;">Elite Athletes</option>
+                    <option value="corporate" style="color: #333;">Corporate / Executive</option>
+                    <option value="other" style="color: #333;">Other</option>
+                </select>
+                <textarea name="message" placeholder="Tell us about your goals..." rows="3" style="padding: 12px 15px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; resize: vertical;"></textarea>
+                <button type="submit" style="background: var(--gold); color: var(--deep-navy); border: none; padding: 14px 30px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: background 0.3s;">Schedule Consultation</button>
+            </form>
         </div>
         <div class="contact-col">
             <h4>Programs</h4>
@@ -1805,6 +1816,9 @@
                 <li><a href="athletes.html">For Elite Athletes</a></li>
                 <li><a href="corporate.html">For Corporate Leaders</a></li>
             </ul>
+            <h4 style="margin-top: 30px;">Direct Contact</h4>
+            <p><a href="mailto:alen_juginovic@hms.harvard.edu">alen_juginovic@hms.harvard.edu</a></p>
+            <p>+1 (617) 982-8835</p>
         </div>
         <div class="contact-col">
             <h4>Location</h4>
@@ -1864,7 +1878,130 @@
             document.body.style.overflow = '';
         });
     });
+
+    // Contact Widget
+    const contactWidget = document.getElementById('contactWidget');
+    const contactToggle = document.getElementById('contactToggle');
+    const contactPanel = document.getElementById('contactPanel');
+
+    contactToggle.addEventListener('click', () => {
+        contactPanel.classList.toggle('active');
+        contactToggle.classList.toggle('active');
+    });
+
+    // Close panel when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!contactWidget.contains(e.target) && contactPanel.classList.contains('active')) {
+            contactPanel.classList.remove('active');
+            contactToggle.classList.remove('active');
+        }
+    });
 </script>
+
+<!-- Contact Widget -->
+<div id="contactWidget" style="position: fixed; bottom: 30px; right: 30px; z-index: 9999;">
+    <!-- Contact Panel -->
+    <div id="contactPanel" style="position: absolute; bottom: 75px; right: 0; width: 340px; background: white; border-radius: 16px; box-shadow: 0 10px 50px rgba(15, 28, 46, 0.2); opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.3s ease; overflow: hidden;">
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, var(--deep-navy), var(--navy)); padding: 25px; color: white;">
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 5px;">How can we help?</div>
+            <div style="font-size: 13px; opacity: 0.8;">Get personalized sleep guidance</div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div style="padding: 20px;">
+            <!-- Schedule Consultation -->
+            <a href="#contact" onclick="document.getElementById('contactPanel').classList.remove('active'); document.getElementById('contactToggle').classList.remove('active');" style="display: flex; align-items: center; gap: 15px; padding: 15px; background: var(--cream); border-radius: 10px; text-decoration: none; color: var(--deep-navy); margin-bottom: 12px; transition: all 0.2s;">
+                <div style="width: 44px; height: 44px; background: var(--gold); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </div>
+                <div>
+                    <div style="font-weight: 600; font-size: 14px;">Schedule Consultation</div>
+                    <div style="font-size: 12px; color: var(--text-light);">Book a personalized session</div>
+                </div>
+            </a>
+
+            <!-- Email -->
+            <a href="mailto:alen_juginovic@hms.harvard.edu?subject=Sleep Wellness Inquiry" style="display: flex; align-items: center; gap: 15px; padding: 15px; background: var(--cream); border-radius: 10px; text-decoration: none; color: var(--deep-navy); margin-bottom: 12px; transition: all 0.2s;">
+                <div style="width: 44px; height: 44px; background: var(--navy-light); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div>
+                    <div style="font-weight: 600; font-size: 14px;">Send Email</div>
+                    <div style="font-size: 12px; color: var(--text-light);">alen_juginovic@hms.harvard.edu</div>
+                </div>
+            </a>
+
+            <!-- Learn More -->
+            <a href="#about" onclick="document.getElementById('contactPanel').classList.remove('active'); document.getElementById('contactToggle').classList.remove('active');" style="display: flex; align-items: center; gap: 15px; padding: 15px; background: var(--cream); border-radius: 10px; text-decoration: none; color: var(--deep-navy); transition: all 0.2s;">
+                <div style="width: 44px; height: 44px; background: var(--athletes-accent); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                </div>
+                <div>
+                    <div style="font-weight: 600; font-size: 14px;">About Dr. Alen</div>
+                    <div style="font-size: 12px; color: var(--text-light);">Harvard researcher & physician</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div style="padding: 15px 20px; background: rgba(201, 169, 98, 0.1); border-top: 1px solid rgba(201, 169, 98, 0.2);">
+            <div style="font-size: 12px; color: var(--text-light); text-align: center;">
+                Typical response time: <strong style="color: var(--deep-navy);">Within 24 hours</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toggle Button -->
+    <button id="contactToggle" style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); border: none; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 20px rgba(201, 169, 98, 0.4); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+        <svg id="contactIcon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="transition: all 0.3s ease;">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+    </button>
+</div>
+
+<style>
+    #contactPanel.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+    }
+
+    #contactToggle:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 30px rgba(201, 169, 98, 0.5);
+    }
+
+    #contactToggle.active {
+        background: linear-gradient(135deg, var(--deep-navy), var(--navy));
+    }
+
+    #contactToggle.active svg {
+        transform: rotate(90deg);
+    }
+
+    #contactPanel a:hover {
+        background: rgba(201, 169, 98, 0.15) !important;
+        transform: translateX(5px);
+    }
+
+    @media (max-width: 768px) {
+        #contactWidget {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        #contactPanel {
+            width: calc(100vw - 40px);
+            right: -10px;
+        }
+
+        #contactToggle {
+            width: 55px;
+            height: 55px;
+        }
+    }
+</style>
 
 </body>
 </html>
