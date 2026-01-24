@@ -2191,9 +2191,6 @@
         <span class="nav-brand-sub">by Dr. Alen</span>
     </a>
     <div class="nav-links">
-        <a href="../hotels.html">Hotels</a>
-        <a href="../athletes.html">Athletes</a>
-        <a href="../corporate.html">Corporate</a>
         <a href="account.html" class="active" data-auth="logged-in">My Account</a>
         <a href="auth.html" data-auth="logged-out">Sign In</a>
     </div>
@@ -3580,8 +3577,18 @@
         userProfile = profile;
 
         // Update avatar
-        const initials = (profile.displayName || user.email).split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        const displayName = profile.displayName || user.email.split('@')[0];
+        const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
         document.getElementById('userAvatar').textContent = initials;
+
+        // Update all user name displays
+        document.querySelectorAll('[data-user-name]').forEach(el => {
+            if (el.tagName === 'INPUT') {
+                el.value = displayName;
+            } else {
+                el.textContent = displayName;
+            }
+        });
 
         // Check if this is a new user (never completed onboarding)
         console.log('Onboarding check:', { onboardingComplete: profile.onboardingComplete, clientType: profile.clientType });

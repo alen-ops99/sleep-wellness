@@ -357,6 +357,70 @@ const Questionnaires = {
 
     getAllInstruments() {
         return Object.values(this.instruments);
+    },
+
+    // Render questions to a container - used by app.js
+    renderQuestions(questionnaire, containerId, savedResponses = {}) {
+        const container = document.getElementById(containerId);
+        if (!container || !questionnaire || !questionnaire.questions) return;
+
+        let html = '';
+        questionnaire.questions.forEach((q, index) => {
+            const questionId = `${questionnaire.id || containerId}_q${q.id || index}`;
+            const savedValue = savedResponses[questionId];
+
+            html += `<div class="questionnaire-item">
+                <div class="question">${index + 1}. ${q.text}</div>
+                <div class="options">`;
+
+            if (q.options) {
+                q.options.forEach(opt => {
+                    const isSelected = savedValue == opt.value ? 'selected' : '';
+                    html += `<button type="button" class="option-btn ${isSelected}"
+                        data-question="${questionId}" data-value="${opt.value}">${opt.label}</button>`;
+                });
+            }
+
+            html += `</div></div>`;
+        });
+
+        container.innerHTML = html;
+
+        // Add click handlers
+        container.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const questionId = btn.dataset.question;
+                const value = btn.dataset.value;
+                btn.parentElement.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                if (window.App) {
+                    App.saveResponse(questionId, value);
+                }
+            });
+        });
+    },
+
+    // Aliases for backwards compatibility with app.js
+    get epworth() {
+        return this.instruments.ess || { id: 'ess', questions: [] };
+    },
+    get isi() {
+        return this.instruments.isi || { id: 'isi', questions: [] };
+    },
+    get stopbang() {
+        return this.instruments.stopbang || { id: 'stopbang', questions: [] };
+    },
+    get rls() {
+        return this.instruments.rls || { id: 'rls', questions: [] };
+    },
+    get parasomnias() {
+        return this.instruments.csds || { id: 'csds', questions: [] };
+    },
+    get remBehavior() {
+        return this.instruments.csds || { id: 'csds', questions: [] };
+    },
+    get circadian() {
+        return this.instruments.csds || { id: 'csds', questions: [] };
     }
 };
 
