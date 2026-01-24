@@ -3477,10 +3477,10 @@
 
             const tasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-            // Sort by deadline client-side
+            // Sort by dueDate client-side (field name matches admin's assignTaskToClient)
             tasks.sort((a, b) => {
-                const aDate = a.deadline?.toDate?.() || new Date(9999, 11, 31);
-                const bDate = b.deadline?.toDate?.() || new Date(9999, 11, 31);
+                const aDate = a.dueDate?.toDate?.() || new Date(9999, 11, 31);
+                const bDate = b.dueDate?.toDate?.() || new Date(9999, 11, 31);
                 return aDate - bDate;
             });
 
@@ -3497,10 +3497,10 @@
             tasksSubtitle.textContent = `You have ${tasks.length} task${tasks.length > 1 ? 's' : ''} to complete`;
 
             tasksList.innerHTML = tasks.slice(0, 5).map(task => {
-                const deadline = task.deadline?.toDate?.();
-                const isOverdue = deadline && deadline < new Date();
+                const dueDate = task.dueDate?.toDate?.();
+                const isOverdue = dueDate && dueDate < new Date();
                 const isHighPriority = task.priority === 'high' || task.taskType === 'assessment';
-                const deadlineText = deadline ? (isOverdue ? 'Overdue' : 'Due ' + deadline.toLocaleDateString()) : '';
+                const deadlineText = dueDate ? (isOverdue ? 'Overdue' : 'Due ' + dueDate.toLocaleDateString()) : '';
 
                 return `
                     <div class="task-item ${isHighPriority ? 'high-priority' : ''}" onclick="handleTaskClick('${task.id}', '${task.taskType}')">
@@ -4532,99 +4532,11 @@
     let chatHistory = [];
     let isChatProcessing = false;
 
-    // Sleep knowledge base for common questions
-    const sleepKnowledge = {
-        'sleep efficiency': {
-            answer: `<p><strong>Sleep Efficiency (SE)</strong> is one of the most important metrics we track. It's calculated as:</p>
-                    <p><em>SE = (Total Sleep Time / Time in Bed) × 100</em></p>
-                    <p>For example, if you're in bed for 8 hours but only sleeping for 6 hours, your SE is 75%.</p>
-                    <ul>
-                        <li><strong>85% or higher:</strong> Excellent</li>
-                        <li><strong>75-84%:</strong> Good</li>
-                        <li><strong>65-74%:</strong> Fair - room for improvement</li>
-                        <li><strong>Below 65%:</strong> Needs attention</li>
-                    </ul>
-                    <p>Improving sleep efficiency is often more impactful than extending time in bed.</p>`
-        },
-        'sleep latency': {
-            answer: `<p><strong>Sleep Onset Latency (SOL)</strong> is the time it takes you to fall asleep after getting into bed and turning off the lights.</p>
-                    <ul>
-                        <li><strong>Under 15 minutes:</strong> Normal</li>
-                        <li><strong>15-30 minutes:</strong> Mild difficulty</li>
-                        <li><strong>30-60 minutes:</strong> Moderate difficulty</li>
-                        <li><strong>Over 60 minutes:</strong> Significant difficulty</li>
-                    </ul>
-                    <p>If you're falling asleep in less than 5 minutes, you might actually be sleep-deprived!</p>`
-        },
-        'waso': {
-            answer: `<p><strong>WASO (Wake After Sleep Onset)</strong> measures the total time you spend awake during the night after initially falling asleep.</p>
-                    <ul>
-                        <li><strong>Under 20 minutes:</strong> Normal</li>
-                        <li><strong>20-40 minutes:</strong> Mild fragmentation</li>
-                        <li><strong>Over 40 minutes:</strong> Significant fragmentation</li>
-                    </ul>
-                    <p>Brief awakenings are normal, but prolonged wakefulness can affect sleep quality significantly.</p>`
-        },
-        'improve sleep': {
-            answer: `<p>Here are evidence-based tips for better sleep:</p>
-                    <ol>
-                        <li><strong>Consistent Schedule:</strong> Wake up at the same time every day, even weekends</li>
-                        <li><strong>Light Exposure:</strong> Get bright light in the morning, dim lights 2 hours before bed</li>
-                        <li><strong>Cool Environment:</strong> Keep bedroom at 65-68°F (18-20°C)</li>
-                        <li><strong>Caffeine Cutoff:</strong> No caffeine after 2 PM</li>
-                        <li><strong>Limit Alcohol:</strong> Avoid within 3 hours of bedtime</li>
-                        <li><strong>Wind-Down Routine:</strong> 30-60 minutes of relaxing activities before bed</li>
-                        <li><strong>Bed = Sleep:</strong> Only use your bed for sleep and intimacy</li>
-                    </ol>
-                    <p>Check the <strong>Resources</strong> section for detailed modules on each of these topics!</p>`
-        },
-        'circadian': {
-            answer: `<p><strong>Circadian Rhythm</strong> is your internal 24-hour body clock that regulates when you feel alert vs. sleepy.</p>
-                    <p>Key factors that influence it:</p>
-                    <ul>
-                        <li><strong>Light:</strong> The most powerful synchronizer - bright light in morning, dim at night</li>
-                        <li><strong>Meal timing:</strong> Eating at consistent times helps regulate your clock</li>
-                        <li><strong>Exercise:</strong> Morning or afternoon exercise can strengthen rhythms</li>
-                        <li><strong>Temperature:</strong> Core body temperature naturally drops at night</li>
-                    </ul>
-                    <p>Irregular schedules (like shift work or jet lag) can disrupt this rhythm.</p>`
-        },
-        'insomnia': {
-            answer: `<p><strong>Insomnia</strong> is difficulty falling asleep, staying asleep, or waking too early, despite having adequate opportunity to sleep.</p>
-                    <p>It's diagnosed when these issues occur at least 3 nights per week for 3+ months and cause daytime impairment.</p>
-                    <p>The good news: <strong>Cognitive Behavioral Therapy for Insomnia (CBT-I)</strong> is highly effective and is considered the first-line treatment.</p>`,
-            referToDoctor: true
-        },
-        'sleep apnea': {
-            answer: `<p><strong>Sleep Apnea</strong> is a condition where breathing repeatedly stops during sleep. Common signs include:</p>
-                    <ul>
-                        <li>Loud snoring</li>
-                        <li>Gasping or choking during sleep</li>
-                        <li>Excessive daytime sleepiness</li>
-                        <li>Morning headaches</li>
-                    </ul>
-                    <p>This requires proper medical evaluation and diagnosis.</p>`,
-            referToDoctor: true
-        },
-        'navigate': {
-            answer: `<p>Here's how to navigate the portal:</p>
-                    <ul>
-                        <li><strong>Dashboard:</strong> Your home base with stats and tasks</li>
-                        <li><strong>Assessments:</strong> Complete sleep health evaluations</li>
-                        <li><strong>Questionnaires:</strong> Standardized sleep questionnaires (ISI, ESS, etc.)</li>
-                        <li><strong>Sleep Diary:</strong> Log your sleep each morning</li>
-                        <li><strong>Messages:</strong> Direct communication with Dr. Alen</li>
-                        <li><strong>Appointments:</strong> Schedule consultations</li>
-                        <li><strong>Resources:</strong> Educational modules and techniques</li>
-                    </ul>
-                    <p>What would you like to do?</p>`
-        },
-        'summarize': {
-            answer: 'FETCH_USER_DATA'
-        }
-    };
+    // Cloud Function URL - matches Firebase project ID from firebase-config.js
+    // For local development, use: http://localhost:5001/sleep-wellness-48d57/us-central1/chatWithClaude
+    const CHAT_API_URL = 'https://us-central1-sleep-wellness-48d57.cloudfunctions.net/chatWithClaude';
 
-    // Medical advice detection keywords
+    // Medical advice detection keywords (used as fallback)
     const medicalKeywords = [
         'diagnose', 'diagnosis', 'medication', 'medicine', 'drug', 'prescription',
         'treatment', 'cure', 'disease', 'disorder', 'condition', 'symptom',
@@ -4720,64 +4632,70 @@
     }
 
     async function generateResponse(message) {
-        const lowerMsg = message.toLowerCase();
+        try {
+            // Build conversation history for API
+            const conversationHistory = chatHistory.slice(-10).map(msg => ({
+                role: msg.role === 'user' ? 'user' : 'assistant',
+                content: msg.content
+            }));
 
-        // Check for medical advice requests
-        const needsMedical = medicalKeywords.some(keyword => lowerMsg.includes(keyword));
+            // Call Claude API via Cloud Function
+            const response = await fetch(CHAT_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: message,
+                    userId: currentUser ? currentUser.uid : null,
+                    conversationHistory: conversationHistory
+                })
+            });
 
-        if (needsMedical) {
+            if (!response.ok) {
+                throw new Error(`API error: ${response.status}`);
+            }
+
+            const data = await response.json();
+
             return {
-                text: `<p>I understand you have questions about this topic. While I can provide general sleep education, I'm not able to give medical or health advice.</p>
-                       <p>Dr. Alen would be the best person to discuss this with you directly. Would you like to send him a message?</p>`,
+                text: data.message,
+                showContactBtn: data.showContactBtn || false
+            };
+
+        } catch (error) {
+            console.error('Error calling Claude API:', error);
+
+            // Fallback to local response on error
+            const lowerMsg = message.toLowerCase();
+
+            // Check for medical advice requests
+            const needsMedical = medicalKeywords.some(keyword => lowerMsg.includes(keyword));
+
+            if (needsMedical) {
+                return {
+                    text: `<p>I understand you have questions about this topic. While I can provide general sleep education, I'm not able to give medical or health advice.</p>
+                           <p>Dr. Alen would be the best person to discuss this with you directly. Would you like to send him a message?</p>`,
+                    showContactBtn: true
+                };
+            }
+
+            // Check for greetings
+            if (lowerMsg.match(/^(hi|hello|hey|good morning|good evening)/)) {
+                const greeting = new Date().getHours() < 12 ? 'Good morning' : new Date().getHours() < 18 ? 'Good afternoon' : 'Good evening';
+                return {
+                    text: `<p>${greeting}! How can I help you with your sleep wellness journey today?</p>`,
+                    showContactBtn: false
+                };
+            }
+
+            // Default fallback
+            return {
+                text: `<p>I'm having trouble connecting right now. Please try again in a moment.</p>
+                       <p>In the meantime, you can explore the <strong>Resources</strong> section or send a message to Dr. Alen directly.</p>`,
                 showContactBtn: true
             };
         }
-
-        // Check for data summary request
-        if (lowerMsg.includes('summarize') || lowerMsg.includes('my data') || lowerMsg.includes('my results') || lowerMsg.includes('my sleep')) {
-            return await generateDataSummary();
-        }
-
-        // Search knowledge base
-        for (const [topic, data] of Object.entries(sleepKnowledge)) {
-            if (lowerMsg.includes(topic)) {
-                if (data.answer === 'FETCH_USER_DATA') {
-                    return await generateDataSummary();
-                }
-                return {
-                    text: data.answer,
-                    showContactBtn: data.referToDoctor || false
-                };
-            }
-        }
-
-        // Check for navigation help
-        if (lowerMsg.includes('how do i') || lowerMsg.includes('where') || lowerMsg.includes('find') || lowerMsg.includes('navigate')) {
-            return { text: sleepKnowledge['navigate'].answer, showContactBtn: false };
-        }
-
-        // Check for greetings
-        if (lowerMsg.match(/^(hi|hello|hey|good morning|good evening)/)) {
-            const greeting = new Date().getHours() < 12 ? 'Good morning' : new Date().getHours() < 18 ? 'Good afternoon' : 'Good evening';
-            return {
-                text: `<p>${greeting}! How can I help you with your sleep wellness journey today?</p>`,
-                showContactBtn: false
-            };
-        }
-
-        // Default response
-        return {
-            text: `<p>I can help you understand sleep concepts, navigate the portal, or summarize your data.</p>
-                   <p>Try asking about:</p>
-                   <ul>
-                       <li>Sleep efficiency or other metrics</li>
-                       <li>Tips for better sleep</li>
-                       <li>How to use different sections of the portal</li>
-                       <li>A summary of your sleep data</li>
-                   </ul>
-                   <p>For personalized advice, you can always message Dr. Alen directly!</p>`,
-            showContactBtn: false
-        };
     }
 
     async function generateDataSummary() {

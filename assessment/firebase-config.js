@@ -862,6 +862,147 @@ const FirebaseDB = {
         const doc = await db.collection('questionnaireAssignments').doc(assignmentId).get();
         if (!doc.exists) return null;
         return { id: doc.id, ...doc.data() };
+    },
+
+    // ==================== TASK FUNCTIONS ====================
+
+    /**
+     * Create a task for a client (admin)
+     */
+    async createClientTask(clientId, taskData) {
+        const task = {
+            clientId,
+            ...taskData,
+            status: 'pending',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            createdBy: ADMIN_UID
+        };
+
+        const docRef = await db.collection('clientTasks').add(task);
+        return docRef.id;
+    },
+
+    /**
+     * Get user's pending tasks (client)
+     */
+    async getUserTasks(userId, status = 'pending') {
+        try {
+            const snapshot = await db.collection('clientTasks')
+                .where('clientId', '==', userId)
+                .where('status', '==', status)
+                .get();
+
+            const tasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            // Sort by dueDate client-side
+            tasks.sort((a, b) => {
+                const aDate = a.dueDate?.toDate?.() || new Date(9999, 11, 31);
+                const bDate = b.dueDate?.toDate?.() || new Date(9999, 11, 31);
+                return aDate - bDate;
+            });
+
+            return tasks;
+        } catch (error) {
+            console.error('Error getting user tasks:', error);
+            return [];
+        }
+    },
+
+    /**
+     * Complete a task (client)
+     */
+    async completeTask(taskId) {
+        await db.collection('clientTasks').doc(taskId).update({
+            status: 'completed',
+            completedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Notify admin
+        const task = await db.collection('clientTasks').doc(taskId).get();
+        if (task.exists) {
+            const taskData = task.data();
+            await this.createNotification(
+                ADMIN_UID,
+                'task_completed',
+                'Task Completed',
+                `${taskData.clientName || 'A client'} completed: "${taskData.title}"`,
+                { taskId, clientId: taskData.clientId }
+            );
+        }
+    },
+
+    /**
+     * Get all client tasks (admin)
+     */
+    async getAllClientTasks(status = null) {
+        try {
+            let query = db.collection('clientTasks');
+
+            if (status) {
+                query = query.where('status', '==', status);
+            }
+
+            const snapshot = await query.get();
+            const tasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            // Sort by createdAt descending
+            tasks.sort((a, b) => {
+                const aTime = a.createdAt?.toDate?.() || new Date(0);
+                const bTime = b.createdAt?.toDate?.() || new Date(0);
+                return bTime - aTime;
+            });
+
+            return tasks;
+        } catch (error) {
+            console.error('Error getting client tasks:', error);
+            return [];
+        }
+    },
+
+    /**
+     * Get tasks for a specific client (admin)
+     */
+    async getClientTasks(clientId, status = null) {
+        try {
+            let query = db.collection('clientTasks')
+                .where('clientId', '==', clientId);
+
+            if (status) {
+                query = query.where('status', '==', status);
+            }
+
+            const snapshot = await query.get();
+            const tasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            tasks.sort((a, b) => {
+                const aDate = a.dueDate?.toDate?.() || new Date(9999, 11, 31);
+                const bDate = b.dueDate?.toDate?.() || new Date(9999, 11, 31);
+                return aDate - bDate;
+            });
+
+            return tasks;
+        } catch (error) {
+            console.error('Error getting client tasks:', error);
+            return [];
+        }
+    },
+
+    /**
+     * Delete a task (admin)
+     */
+    async deleteTask(taskId) {
+        await db.collection('clientTasks').doc(taskId).delete();
+    },
+
+    /**
+     * Update task status (admin)
+     */
+    async updateTaskStatus(taskId, status, notes = '') {
+        await db.collection('clientTasks').doc(taskId).update({
+            status,
+            adminNotes: notes,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
     }
 };
 
