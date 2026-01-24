@@ -3,52 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seed Test Data</title>
+    <title>Seed Comprehensive Test Data | Sleep Wellness Admin</title>
     <style>
+        :root {
+            --deep-navy: #0f1c2e;
+            --navy: #1a2a3a;
+            --gold: #C9A962;
+            --cream: #FAF8F5;
+        }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0f1c2e;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--deep-navy);
             color: white;
             padding: 40px;
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
         }
-        h1 { color: #C9A962; }
+        h1 {
+            color: var(--gold);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 30px;
+        }
         .btn {
-            background: #C9A962;
-            color: #0f1c2e;
+            background: var(--gold);
+            color: var(--deep-navy);
             border: none;
-            padding: 15px 30px;
-            font-size: 16px;
+            padding: 16px 32px;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
-            margin: 10px 0;
-            display: block;
-            width: 100%;
+            margin: 10px 10px 10px 0;
+            border-radius: 4px;
+            transition: all 0.2s;
         }
-        .btn:hover { background: #d4b978; }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn:hover {
+            background: #d4b978;
+            transform: translateY(-1px);
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-danger {
+            background: #c62828;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #d32f2f;
+        }
         .log {
-            background: #1a2a3a;
+            background: var(--navy);
             padding: 20px;
-            margin-top: 20px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 14px;
-            max-height: 400px;
+            margin-top: 30px;
+            border-radius: 12px;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            font-size: 13px;
+            max-height: 500px;
             overflow-y: auto;
+            border: 1px solid rgba(201, 169, 98, 0.2);
         }
-        .log-item { margin: 8px 0; }
+        .log-item {
+            margin: 8px 0;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .log-item:last-child { border-bottom: none; }
         .success { color: #4caf50; }
         .error { color: #f44336; }
+        .info { color: var(--gold); }
+        .section { color: #64b5f6; font-weight: bold; margin-top: 15px; }
+        .stats-preview {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .stat-box {
+            background: var(--navy);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        .stat-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+        .note {
+            background: rgba(201, 169, 98, 0.1);
+            border-left: 3px solid var(--gold);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<h1>Seed Test Data</h1>
-<p>This will create test clients and assessments so you can see how the admin dashboard works.</p>
+<h1>Seed Comprehensive Test Data</h1>
+<p class="subtitle">Create realistic mock data to preview the full admin dashboard experience</p>
 
-<button class="btn" onclick="seedTestData()">Create Test Clients & Data</button>
-<button class="btn" onclick="clearTestData()" style="background: #d32f2f; color: white;">Clear Test Data</button>
+<div class="note">
+    This will create 6 test clients (2 per type), each with completed assessments, questionnaire results, sleep diary entries, messages, appointments, and module access.
+</div>
+
+<div class="stats-preview">
+    <div class="stat-box">
+        <div class="stat-number">6</div>
+        <div class="stat-label">Clients</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-number">24+</div>
+        <div class="stat-label">Questionnaires</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-number">42+</div>
+        <div class="stat-label">Diary Entries</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-number">12+</div>
+        <div class="stat-label">Messages</div>
+    </div>
+</div>
+
+<!-- Test User Account Section -->
+<div style="background: rgba(201, 169, 98, 0.1); border: 1px solid var(--gold); border-radius: 12px; padding: 25px; margin-bottom: 25px;">
+    <h3 style="color: var(--gold); margin: 0 0 10px 0;">Create Test User Account</h3>
+    <p style="color: rgba(255,255,255,0.7); font-size: 13px; margin-bottom: 20px;">
+        Create a real user account you can log into to experience the client dashboard.
+    </p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+        <div>
+            <label style="display: block; font-size: 11px; color: var(--gold); margin-bottom: 5px; text-transform: uppercase;">Email</label>
+            <input type="email" id="testUserEmail" value="sarah.client@example.com" style="width: 100%; padding: 12px; border: 1px solid rgba(201, 169, 98, 0.3); background: var(--navy); color: white; border-radius: 4px; font-size: 14px;">
+        </div>
+        <div>
+            <label style="display: block; font-size: 11px; color: var(--gold); margin-bottom: 5px; text-transform: uppercase;">Password</label>
+            <input type="text" id="testUserPassword" value="SleepWell2026!" style="width: 100%; padding: 12px; border: 1px solid rgba(201, 169, 98, 0.3); background: var(--navy); color: white; border-radius: 4px; font-size: 14px;">
+        </div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+        <div>
+            <label style="display: block; font-size: 11px; color: var(--gold); margin-bottom: 5px; text-transform: uppercase;">Full Name</label>
+            <input type="text" id="testUserName" value="Sarah Mitchell" style="width: 100%; padding: 12px; border: 1px solid rgba(201, 169, 98, 0.3); background: var(--navy); color: white; border-radius: 4px; font-size: 14px;">
+        </div>
+        <div>
+            <label style="display: block; font-size: 11px; color: var(--gold); margin-bottom: 5px; text-transform: uppercase;">Client Type</label>
+            <select id="testUserType" style="width: 100%; padding: 12px; border: 1px solid rgba(201, 169, 98, 0.3); background: var(--navy); color: white; border-radius: 4px; font-size: 14px;">
+                <option value="executive">Executive</option>
+                <option value="athlete">Athlete</option>
+                <option value="hotel">Hotel Guest / Traveler</option>
+            </select>
+        </div>
+    </div>
+    <button class="btn" onclick="createTestUserAccount()" style="width: 100%;">Create Test User Account</button>
+    <p id="testUserResult" style="margin-top: 15px; font-size: 13px; display: none;"></p>
+</div>
+
+<button class="btn" onclick="seedAllData()">Create All Test Data</button>
+<button class="btn btn-danger" onclick="clearAllTestData()">Clear All Test Data</button>
 
 <div class="log" id="log"></div>
 
@@ -64,238 +192,1017 @@
     function log(message, type = '') {
         const item = document.createElement('div');
         item.className = 'log-item ' + type;
-        item.textContent = '> ' + message;
+        item.textContent = (type === 'section' ? '\n' : '> ') + message;
         logDiv.appendChild(item);
         logDiv.scrollTop = logDiv.scrollHeight;
     }
 
+    // Helper to create dates relative to now
+    const daysAgo = (days) => new Date(Date.now() - days * 24 * 60 * 60 * 1000);
+    const daysFromNow = (days) => new Date(Date.now() + days * 24 * 60 * 60 * 1000);
+
+    // ======================== TEST CLIENTS ========================
     const testClients = [
+        // ATHLETES
         {
-            id: 'test-client-athlete-001',
-            email: 'michael.johnson@example.com',
-            displayName: 'Michael Johnson',
+            id: 'test-athlete-001',
+            email: 'marcus.thompson@example.com',
+            displayName: 'Marcus Thompson',
             clientType: 'athlete',
             photoURL: '',
-            role: 'client'
+            role: 'client',
+            status: 'active',
+            age: 28,
+            sex: 'Male',
+            phone: '+1 (555) 123-4567',
+            sport: 'Professional Basketball',
+            occupation: 'Professional Basketball Player',
+            team: 'Boston Celtics',
+            primaryGoal: 'Optimize pre-game sleep to improve on-court performance and reduce game-night anxiety',
+            notes: 'NBA player, struggling with sleep before games. Focus on performance optimization.',
+            timezone: 'America/New_York',
+            programStartDate: daysAgo(21),
+            programDuration: 8
         },
         {
-            id: 'test-client-executive-001',
-            email: 'sarah.chen@example.com',
-            displayName: 'Sarah Chen',
+            id: 'test-athlete-002',
+            email: 'emma.rodriguez@example.com',
+            displayName: 'Emma Rodriguez',
+            clientType: 'athlete',
+            photoURL: '',
+            role: 'client',
+            status: 'active',
+            age: 24,
+            sex: 'Female',
+            phone: '+1 (555) 234-5678',
+            sport: 'Olympic Swimming',
+            occupation: 'Olympic Swimmer',
+            team: 'USA Swimming',
+            primaryGoal: 'Manage travel-induced sleep disruption and optimize recovery between training sessions',
+            notes: 'Preparing for Paris 2024. Travel schedule affects sleep significantly.',
+            timezone: 'America/Los_Angeles',
+            programStartDate: daysAgo(35),
+            programDuration: 12
+        },
+        // EXECUTIVES
+        {
+            id: 'test-exec-001',
+            email: 'david.chen@example.com',
+            displayName: 'David Chen',
             clientType: 'executive',
             photoURL: '',
-            role: 'client'
+            role: 'client',
+            status: 'active',
+            age: 52,
+            sex: 'Male',
+            phone: '+1 (555) 345-6789',
+            company: 'Chen Ventures',
+            title: 'CEO & Founder',
+            occupation: 'CEO & Venture Capitalist',
+            primaryGoal: 'Improve sleep quality to enhance decision-making and reduce daytime fatigue during critical meetings',
+            notes: 'Venture capitalist, frequent international travel. High stress, irregular schedule. Possible sleep apnea.',
+            timezone: 'America/New_York',
+            programStartDate: daysAgo(30),
+            programDuration: 16
         },
         {
-            id: 'test-client-hotel-001',
+            id: 'test-exec-002',
+            email: 'sarah.mitchell@example.com',
+            displayName: 'Sarah Mitchell',
+            clientType: 'executive',
+            photoURL: '',
+            role: 'client',
+            status: 'active',
+            age: 45,
+            sex: 'Female',
+            phone: '+1 (555) 456-7890',
+            company: 'Mitchell & Partners Law',
+            title: 'Managing Partner',
+            occupation: 'Attorney - Managing Partner',
+            primaryGoal: 'Break the chronic insomnia cycle and reduce reliance on sleep medications',
+            notes: 'Works late nights, high-stakes litigation. History of insomnia. Currently on CBT-I week 3.',
+            timezone: 'America/Chicago',
+            programStartDate: daysAgo(45),
+            programDuration: 8
+        },
+        // HOTEL/TRAVELERS
+        {
+            id: 'test-hotel-001',
             email: 'james.wilson@example.com',
             displayName: 'James Wilson',
             clientType: 'hotel',
             photoURL: '',
-            role: 'client'
+            role: 'client',
+            status: 'active',
+            age: 38,
+            sex: 'Male',
+            phone: '+1 (555) 567-8901',
+            occupation: 'Management Consultant',
+            primaryGoal: 'Develop portable sleep routine that works across different hotel environments',
+            notes: 'Travels 4 days/week, different hotels constantly. Jet lag is primary concern.',
+            timezone: 'America/New_York',
+            programStartDate: daysAgo(14),
+            programDuration: 6
+        },
+        {
+            id: 'test-hotel-002',
+            email: 'lisa.nakamura@example.com',
+            displayName: 'Lisa Nakamura',
+            clientType: 'hotel',
+            photoURL: '',
+            role: 'client',
+            status: 'active',
+            age: 41,
+            sex: 'Female',
+            phone: '+1 (555) 678-9012',
+            occupation: 'International Sales Director',
+            primaryGoal: 'Master jet lag management for US-Europe-Asia travel circuit and reduce sleep aid dependency',
+            notes: 'Monthly trips between US, Europe, and Asia. Needs comprehensive jet lag protocol. Currently relies on Ambien.',
+            timezone: 'Asia/Tokyo',
+            programStartDate: daysAgo(7),
+            programDuration: 10
         }
     ];
 
+    // ======================== ASSESSMENTS ========================
     const testAssessments = [
+        // Marcus Thompson - Athlete (Good overall, some pre-game anxiety)
         {
-            id: 'test-assessment-001',
-            userId: 'test-client-athlete-001',
-            overallScore: 72,
-            scores: {
-                ess: 8,
-                isi: 10,
-                stopbang: 2
-            },
-            findings: [
-                'Mild daytime sleepiness detected',
-                'Subthreshold insomnia symptoms',
-                'Low sleep apnea risk'
-            ],
-            recommendations: [
-                'Optimize sleep schedule around training',
-                'Consider sleep hygiene improvements'
-            ],
-            clientType: 'athlete',
-            status: 'submitted'
-        },
-        {
-            id: 'test-assessment-002',
-            userId: 'test-client-executive-001',
-            overallScore: 54,
-            scores: {
-                ess: 14,
-                isi: 18,
-                stopbang: 3
-            },
-            findings: [
-                'Excessive daytime sleepiness',
-                'Moderate insomnia severity',
-                'Intermediate sleep apnea risk',
-                'High stress levels reported'
-            ],
-            recommendations: [
-                'Consider CBT-I therapy',
-                'Evaluate for sleep study',
-                'Stress management techniques'
-            ],
-            clientType: 'executive',
-            status: 'submitted'
-        },
-        {
-            id: 'test-assessment-003',
-            userId: 'test-client-hotel-001',
-            overallScore: 81,
-            scores: {
-                ess: 6,
-                isi: 7,
-                stopbang: 1
-            },
+            id: 'test-assess-001',
+            userId: 'test-athlete-001',
+            assessmentType: 'athlete',
+            overallScore: 76,
+            scores: { ess: 7, isi: 9, stopbang: 1 },
             findings: [
                 'Normal daytime alertness',
-                'No clinical insomnia',
-                'Low sleep apnea risk',
-                'Some travel-related sleep disruption'
+                'Mild sleep onset difficulty before games',
+                'Excellent sleep duration (7.5-8 hrs)',
+                'Some pre-competition anxiety'
             ],
             recommendations: [
-                'Sleep hygiene tips for travel',
-                'Jet lag management strategies'
+                'Pre-game relaxation protocol',
+                'Consistent sleep schedule around travel',
+                'Consider 4-7-8 breathing before games'
             ],
-            clientType: 'hotel',
+            status: 'reviewed',
+            reviewedBy: ADMIN_UID,
+            reviewNotes: 'Good baseline. Focus on pre-game routine.'
+        },
+        // Emma Rodriguez - Athlete (Moderate issues due to travel)
+        {
+            id: 'test-assess-002',
+            userId: 'test-athlete-002',
+            assessmentType: 'athlete',
+            overallScore: 62,
+            scores: { ess: 12, isi: 14, stopbang: 0 },
+            findings: [
+                'Mild excessive daytime sleepiness',
+                'Moderate insomnia symptoms',
+                'Significant impact from travel/time zones',
+                'Training performance affected'
+            ],
+            recommendations: [
+                'Structured light exposure protocol',
+                'Melatonin timing strategy for travel',
+                'Sleep restriction therapy consideration',
+                'Recovery sleep optimization'
+            ],
+            status: 'reviewed'
+        },
+        // David Chen - Executive (Significant issues)
+        {
+            id: 'test-assess-003',
+            userId: 'test-exec-001',
+            assessmentType: 'executive',
+            overallScore: 48,
+            scores: { ess: 15, isi: 19, stopbang: 4 },
+            findings: [
+                'Moderate excessive daytime sleepiness',
+                'Moderate-severe clinical insomnia',
+                'Intermediate OSA risk - recommend sleep study',
+                'High stress impacting sleep quality',
+                'Irregular schedule disrupting circadian rhythm'
+            ],
+            recommendations: [
+                'Priority: Sleep study for OSA evaluation',
+                'CBT-I therapy strongly recommended',
+                'Stress management techniques',
+                'Protected sleep window (11pm-6am)',
+                'No devices in bedroom'
+            ],
+            status: 'submitted'
+        },
+        // Sarah Mitchell - Executive (Chronic insomnia)
+        {
+            id: 'test-assess-004',
+            userId: 'test-exec-002',
+            assessmentType: 'executive',
+            overallScore: 52,
+            scores: { ess: 11, isi: 17, stopbang: 2 },
+            findings: [
+                'Mild excessive daytime sleepiness',
+                'Moderate clinical insomnia',
+                'Low OSA risk',
+                'Work-related anxiety affecting sleep onset',
+                'Caffeine consumption too late in day'
+            ],
+            recommendations: [
+                'CBT-I: Sleep restriction therapy',
+                'CBT-I: Stimulus control',
+                'Caffeine cutoff at 2pm',
+                'Wind-down routine 1hr before bed',
+                'Worry journaling before sleep'
+            ],
+            status: 'reviewed'
+        },
+        // James Wilson - Hotel/Traveler (Jet lag focused)
+        {
+            id: 'test-assess-005',
+            userId: 'test-hotel-001',
+            assessmentType: 'hotel',
+            overallScore: 71,
+            scores: { ess: 9, isi: 11, stopbang: 2 },
+            findings: [
+                'Normal daytime alertness when not traveling',
+                'Subthreshold insomnia',
+                'Sleep quality drops significantly in hotels',
+                'Difficulty adjusting to new time zones'
+            ],
+            recommendations: [
+                'Jet lag protocol with light exposure',
+                'Travel sleep kit (eye mask, earplugs, white noise)',
+                'Hotel room optimization checklist',
+                'Strategic caffeine/melatonin timing'
+            ],
+            status: 'reviewed'
+        },
+        // Lisa Nakamura - Hotel/Traveler (Severe jet lag issues)
+        {
+            id: 'test-assess-006',
+            userId: 'test-hotel-002',
+            assessmentType: 'hotel',
+            overallScore: 58,
+            scores: { ess: 14, isi: 15, stopbang: 1 },
+            findings: [
+                'Moderate excessive daytime sleepiness',
+                'Moderate insomnia severity',
+                'Significant circadian disruption',
+                'Multi-timezone travel causing chronic issues',
+                'Relying on sleep aids too frequently'
+            ],
+            recommendations: [
+                'Comprehensive jet lag management plan',
+                'Reduce/eliminate sleep aid dependency',
+                'Light therapy device for travel',
+                'Pre-trip circadian adjustment protocol',
+                'Regular exercise to anchor rhythm'
+            ],
             status: 'submitted'
         }
     ];
 
-    const testAppointments = [
+    // ======================== QUESTIONNAIRE ASSIGNMENTS ========================
+    const testQuestionnaireAssignments = [
+        // Marcus - Completed questionnaires
         {
-            id: 'test-appointment-001',
-            userId: 'test-client-executive-001',
-            type: 'Follow-up Consultation',
-            dateTime: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
-            status: 'pending',
-            notes: 'Want to discuss assessment results and treatment options'
+            id: 'test-qa-001',
+            userId: 'test-athlete-001',
+            instrumentId: 'isi',
+            instrumentName: 'Insomnia Severity Index',
+            status: 'completed',
+            assignedAt: daysAgo(14),
+            completedAt: daysAgo(13),
+            result: { score: 9, maxScore: 28, severity: 'mild', label: 'Subthreshold Insomnia' },
+            answers: [1, 1, 1, 2, 1, 2, 1]
         },
         {
-            id: 'test-appointment-002',
-            userId: 'test-client-athlete-001',
-            type: 'Initial Consultation',
-            dateTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+            id: 'test-qa-002',
+            userId: 'test-athlete-001',
+            instrumentId: 'ess',
+            instrumentName: 'Epworth Sleepiness Scale',
+            status: 'completed',
+            assignedAt: daysAgo(14),
+            completedAt: daysAgo(13),
+            result: { score: 7, maxScore: 24, severity: 'normal', label: 'Normal Daytime Sleepiness' },
+            answers: [1, 1, 0, 1, 2, 0, 1, 1]
+        },
+        {
+            id: 'test-qa-003',
+            userId: 'test-athlete-001',
+            instrumentId: 'psqi',
+            instrumentName: 'Pittsburgh Sleep Quality Index',
             status: 'pending',
-            notes: 'Preparing for upcoming competition, need sleep optimization'
+            assignedAt: daysAgo(2),
+            dueDate: daysFromNow(5)
+        },
+        // Emma - Completed questionnaires
+        {
+            id: 'test-qa-004',
+            userId: 'test-athlete-002',
+            instrumentId: 'isi',
+            instrumentName: 'Insomnia Severity Index',
+            status: 'completed',
+            assignedAt: daysAgo(21),
+            completedAt: daysAgo(20),
+            result: { score: 14, maxScore: 28, severity: 'mild', label: 'Subthreshold Insomnia' },
+            answers: [2, 2, 2, 3, 1, 2, 2]
+        },
+        {
+            id: 'test-qa-005',
+            userId: 'test-athlete-002',
+            instrumentId: 'ess',
+            instrumentName: 'Epworth Sleepiness Scale',
+            status: 'completed',
+            assignedAt: daysAgo(21),
+            completedAt: daysAgo(20),
+            result: { score: 12, maxScore: 24, severity: 'mild', label: 'Mild Excessive Sleepiness' },
+            answers: [2, 2, 1, 2, 2, 1, 1, 1]
+        },
+        // David Chen - Multiple completed + pending
+        {
+            id: 'test-qa-006',
+            userId: 'test-exec-001',
+            instrumentId: 'isi',
+            instrumentName: 'Insomnia Severity Index',
+            status: 'completed',
+            assignedAt: daysAgo(30),
+            completedAt: daysAgo(29),
+            result: { score: 19, maxScore: 28, severity: 'moderate', label: 'Moderate Clinical Insomnia' },
+            answers: [3, 3, 2, 3, 2, 3, 3]
+        },
+        {
+            id: 'test-qa-007',
+            userId: 'test-exec-001',
+            instrumentId: 'ess',
+            instrumentName: 'Epworth Sleepiness Scale',
+            status: 'completed',
+            assignedAt: daysAgo(30),
+            completedAt: daysAgo(29),
+            result: { score: 15, maxScore: 24, severity: 'moderate', label: 'Moderate Excessive Sleepiness' },
+            answers: [2, 2, 2, 2, 3, 1, 2, 1]
+        },
+        {
+            id: 'test-qa-008',
+            userId: 'test-exec-001',
+            instrumentId: 'stopbang',
+            instrumentName: 'STOP-BANG Questionnaire',
+            status: 'completed',
+            assignedAt: daysAgo(30),
+            completedAt: daysAgo(29),
+            result: { score: 4, maxScore: 8, severity: 'intermediate', label: 'Intermediate Risk for OSA' },
+            answers: [1, 1, 0, 1, 0, 1, 0, 0]
+        },
+        {
+            id: 'test-qa-009',
+            userId: 'test-exec-001',
+            instrumentId: 'phq9',
+            instrumentName: 'Patient Health Questionnaire-9',
+            status: 'completed',
+            assignedAt: daysAgo(28),
+            completedAt: daysAgo(27),
+            result: { score: 12, maxScore: 27, severity: 'moderate', label: 'Moderate Depression' },
+            answers: [2, 1, 2, 2, 1, 1, 2, 0, 1]
+        },
+        {
+            id: 'test-qa-010',
+            userId: 'test-exec-001',
+            instrumentId: 'gad7',
+            instrumentName: 'Generalized Anxiety Disorder-7',
+            status: 'pending',
+            assignedAt: daysAgo(1),
+            dueDate: daysFromNow(6)
+        },
+        // Sarah Mitchell
+        {
+            id: 'test-qa-011',
+            userId: 'test-exec-002',
+            instrumentId: 'isi',
+            instrumentName: 'Insomnia Severity Index',
+            status: 'completed',
+            assignedAt: daysAgo(45),
+            completedAt: daysAgo(44),
+            result: { score: 17, maxScore: 28, severity: 'moderate', label: 'Moderate Clinical Insomnia' },
+            answers: [3, 2, 2, 3, 2, 3, 2]
+        },
+        {
+            id: 'test-qa-012',
+            userId: 'test-exec-002',
+            instrumentId: 'isi',
+            instrumentName: 'Insomnia Severity Index',
+            status: 'completed',
+            assignedAt: daysAgo(14),
+            completedAt: daysAgo(13),
+            result: { score: 13, maxScore: 28, severity: 'mild', label: 'Subthreshold Insomnia' },
+            answers: [2, 2, 1, 2, 2, 2, 2],
+            notes: 'Follow-up after 1 month of treatment'
+        },
+        {
+            id: 'test-qa-013',
+            userId: 'test-exec-002',
+            instrumentId: 'dbas',
+            instrumentName: 'Dysfunctional Beliefs About Sleep',
+            status: 'in_progress',
+            assignedAt: daysAgo(3),
+            startedAt: daysAgo(2)
+        },
+        // James Wilson
+        {
+            id: 'test-qa-014',
+            userId: 'test-hotel-001',
+            instrumentId: 'isi',
+            instrumentName: 'Insomnia Severity Index',
+            status: 'completed',
+            assignedAt: daysAgo(20),
+            completedAt: daysAgo(19),
+            result: { score: 11, maxScore: 28, severity: 'mild', label: 'Subthreshold Insomnia' },
+            answers: [2, 2, 1, 2, 1, 2, 1]
+        },
+        {
+            id: 'test-qa-015',
+            userId: 'test-hotel-001',
+            instrumentId: 'ess',
+            instrumentName: 'Epworth Sleepiness Scale',
+            status: 'completed',
+            assignedAt: daysAgo(20),
+            completedAt: daysAgo(19),
+            result: { score: 9, maxScore: 24, severity: 'normal', label: 'Normal Daytime Sleepiness' },
+            answers: [1, 1, 1, 2, 2, 0, 1, 1]
+        },
+        // Lisa Nakamura
+        {
+            id: 'test-qa-016',
+            userId: 'test-hotel-002',
+            instrumentId: 'isi',
+            instrumentName: 'Insomnia Severity Index',
+            status: 'completed',
+            assignedAt: daysAgo(35),
+            completedAt: daysAgo(34),
+            result: { score: 15, maxScore: 28, severity: 'moderate', label: 'Moderate Clinical Insomnia' },
+            answers: [2, 3, 2, 3, 2, 2, 1]
+        },
+        {
+            id: 'test-qa-017',
+            userId: 'test-hotel-002',
+            instrumentId: 'ess',
+            instrumentName: 'Epworth Sleepiness Scale',
+            status: 'completed',
+            assignedAt: daysAgo(35),
+            completedAt: daysAgo(34),
+            result: { score: 14, maxScore: 24, severity: 'mild', label: 'Mild Excessive Sleepiness' },
+            answers: [2, 2, 1, 2, 3, 1, 2, 1]
+        },
+        {
+            id: 'test-qa-018',
+            userId: 'test-hotel-002',
+            instrumentId: 'fosq',
+            instrumentName: 'Functional Outcomes of Sleep',
+            status: 'pending',
+            assignedAt: daysAgo(1),
+            dueDate: daysFromNow(7)
         }
     ];
 
+    // ======================== SLEEP DIARY ENTRIES ========================
+    function generateDiaryEntries(userId, baseQuality, variance, count) {
+        const entries = [];
+        for (let i = 0; i < count; i++) {
+            const date = daysAgo(i);
+            const quality = Math.max(1, Math.min(10, baseQuality + (Math.random() * variance * 2 - variance)));
+            const sleepTime = new Date(date);
+            sleepTime.setHours(22 + Math.floor(Math.random() * 2), Math.floor(Math.random() * 60));
+            const wakeTime = new Date(date);
+            wakeTime.setDate(wakeTime.getDate() + 1);
+            wakeTime.setHours(6 + Math.floor(Math.random() * 2), Math.floor(Math.random() * 60));
+
+            entries.push({
+                id: `diary-${userId}-${i}`,
+                userId,
+                date: date.toISOString().split('T')[0],
+                bedTime: sleepTime.toTimeString().slice(0,5),
+                sleepTime: new Date(sleepTime.getTime() + Math.random() * 30 * 60000).toTimeString().slice(0,5),
+                wakeTime: wakeTime.toTimeString().slice(0,5),
+                outOfBedTime: new Date(wakeTime.getTime() + Math.random() * 15 * 60000).toTimeString().slice(0,5),
+                sleepQuality: Math.round(quality),
+                nightWakings: Math.floor(Math.random() * 3),
+                caffeine: Math.random() > 0.4,
+                alcohol: Math.random() > 0.7,
+                exercise: Math.random() > 0.5,
+                nap: Math.random() > 0.8,
+                notes: ['', 'Felt rested', 'Woke up early', 'Had trouble falling asleep', 'Good night', 'Stressful day'][Math.floor(Math.random() * 6)]
+            });
+        }
+        return entries;
+    }
+
+    const testDiaryEntries = [
+        ...generateDiaryEntries('test-athlete-001', 7.5, 1.5, 14),
+        ...generateDiaryEntries('test-athlete-002', 6, 2, 14),
+        ...generateDiaryEntries('test-exec-001', 4.5, 2, 7),
+        ...generateDiaryEntries('test-exec-002', 5.5, 1.5, 21),
+        ...generateDiaryEntries('test-hotel-001', 6.5, 2, 10),
+        ...generateDiaryEntries('test-hotel-002', 5, 2.5, 7)
+    ];
+
+    // ======================== MODULE UNLOCKS ========================
+    const testUnlocks = [
+        { userId: 'test-athlete-001', modules: ['sleep-hygiene', 'breathing-478', 'pmr'], notes: 'Initial modules for performance optimization' },
+        { userId: 'test-athlete-002', modules: ['sleep-hygiene', 'breathing-478', 'jet-lag'], notes: 'Focus on travel and recovery' },
+        { userId: 'test-exec-001', modules: ['sleep-hygiene', 'cbti-restriction', 'cbti-stimulus', 'cognitive-restructuring'], notes: 'Full CBT-I suite' },
+        { userId: 'test-exec-002', modules: ['sleep-hygiene', 'breathing-478', 'pmr', 'cbti-restriction'], notes: 'Gradual CBT-I introduction' },
+        { userId: 'test-hotel-001', modules: ['sleep-hygiene', 'jet-lag', 'breathing-478'], notes: 'Travel-focused modules' },
+        { userId: 'test-hotel-002', modules: ['sleep-hygiene', 'jet-lag', 'pmr', 'light-therapy'], notes: 'Comprehensive jet lag toolkit' }
+    ];
+
+    // ======================== APPOINTMENTS ========================
+    const testAppointments = [
+        {
+            id: 'test-apt-001',
+            userId: 'test-exec-001',
+            type: 'Follow-up Consultation',
+            dateTime: daysFromNow(3),
+            duration: 45,
+            status: 'pending',
+            notes: 'Discuss assessment results and CBT-I treatment plan',
+            requestedAt: daysAgo(5)
+        },
+        {
+            id: 'test-apt-002',
+            userId: 'test-athlete-001',
+            type: 'Performance Review',
+            dateTime: daysFromNow(7),
+            duration: 30,
+            status: 'confirmed',
+            notes: 'Pre-season sleep optimization check-in',
+            requestedAt: daysAgo(10),
+            confirmedAt: daysAgo(9)
+        },
+        {
+            id: 'test-apt-003',
+            userId: 'test-hotel-002',
+            type: 'Initial Consultation',
+            dateTime: daysFromNow(2),
+            duration: 60,
+            status: 'pending',
+            notes: 'Comprehensive jet lag management plan discussion',
+            requestedAt: daysAgo(3)
+        },
+        {
+            id: 'test-apt-004',
+            userId: 'test-exec-002',
+            type: 'CBT-I Session',
+            dateTime: daysFromNow(5),
+            duration: 45,
+            status: 'confirmed',
+            notes: 'Week 3 of sleep restriction therapy',
+            requestedAt: daysAgo(7),
+            confirmedAt: daysAgo(6)
+        },
+        {
+            id: 'test-apt-005',
+            userId: 'test-athlete-002',
+            type: 'Travel Protocol Review',
+            dateTime: daysFromNow(10),
+            duration: 30,
+            status: 'pending',
+            notes: 'Review travel schedule for upcoming competitions',
+            requestedAt: daysAgo(1)
+        }
+    ];
+
+    // ======================== CONVERSATIONS & MESSAGES ========================
     const testConversations = [
         {
             id: 'test-conv-001',
-            participants: ['test-client-executive-001', 'iHDuOEJXsQe7dL5C4QwA3fLX9zi2'],
-            lastMessage: 'Thank you for the assessment, when can we discuss the results?',
-            lastSenderId: 'test-client-executive-001'
+            participants: ['test-exec-001', ADMIN_UID],
+            lastMessage: 'Thank you Dr. Alen, I will try the sleep restriction starting tonight.',
+            lastSenderId: 'test-exec-001',
+            createdAt: daysAgo(15)
+        },
+        {
+            id: 'test-conv-002',
+            participants: ['test-athlete-001', ADMIN_UID],
+            lastMessage: 'The breathing exercises have been helping a lot before games!',
+            lastSenderId: 'test-athlete-001',
+            createdAt: daysAgo(10)
+        },
+        {
+            id: 'test-conv-003',
+            participants: ['test-hotel-002', ADMIN_UID],
+            lastMessage: 'When should I take the melatonin for my Tokyo trip next week?',
+            lastSenderId: 'test-hotel-002',
+            createdAt: daysAgo(2)
+        },
+        {
+            id: 'test-conv-004',
+            participants: ['test-exec-002', ADMIN_UID],
+            lastMessage: 'My sleep efficiency improved to 87% this week!',
+            lastSenderId: 'test-exec-002',
+            createdAt: daysAgo(1)
         }
     ];
 
     const testMessages = [
+        // David Chen conversation
+        { conversationId: 'test-conv-001', senderId: 'test-exec-001', text: 'Hi Dr. Alen, I just completed my sleep assessment. The results concern me.', createdAt: daysAgo(15), read: true },
+        { conversationId: 'test-conv-001', senderId: ADMIN_UID, text: 'Thank you for completing the assessment, David. I see you scored moderate on insomnia and intermediate risk for sleep apnea. I would like to discuss some treatment options and recommend a sleep study.', createdAt: daysAgo(14), read: true },
+        { conversationId: 'test-conv-001', senderId: 'test-exec-001', text: 'A sleep study? I travel so much, is that really necessary?', createdAt: daysAgo(14), read: true },
+        { conversationId: 'test-conv-001', senderId: ADMIN_UID, text: 'Given your symptoms and risk factors, yes. We can arrange a home sleep test that works with your schedule. In the meantime, lets start with some behavioral interventions. I am unlocking the CBT-I modules for you.', createdAt: daysAgo(13), read: true },
+        { conversationId: 'test-conv-001', senderId: 'test-exec-001', text: 'Thank you Dr. Alen, I will try the sleep restriction starting tonight.', createdAt: daysAgo(12), read: false },
+
+        // Marcus conversation
+        { conversationId: 'test-conv-002', senderId: 'test-athlete-001', text: 'Dr. Alen, I have a big game coming up and I always struggle to sleep the night before.', createdAt: daysAgo(10), read: true },
+        { conversationId: 'test-conv-002', senderId: ADMIN_UID, text: 'This is very common among athletes, Marcus. Pre-competition anxiety affects many elite performers. Let me teach you the 4-7-8 breathing technique - its excellent for calming pre-game nerves.', createdAt: daysAgo(9), read: true },
+        { conversationId: 'test-conv-002', senderId: 'test-athlete-001', text: 'The breathing exercises have been helping a lot before games!', createdAt: daysAgo(3), read: false },
+
+        // Lisa conversation
+        { conversationId: 'test-conv-003', senderId: 'test-hotel-002', text: 'I have a trip to Tokyo next week and I am dreading the jet lag.', createdAt: daysAgo(4), read: true },
+        { conversationId: 'test-conv-003', senderId: ADMIN_UID, text: 'I will create a detailed protocol for you. With the 14-hour time difference, we will need to start adjusting 3 days before departure. What day is your flight?', createdAt: daysAgo(3), read: true },
+        { conversationId: 'test-conv-003', senderId: 'test-hotel-002', text: 'Flying out next Tuesday, arriving Wednesday evening Tokyo time.', createdAt: daysAgo(3), read: true },
+        { conversationId: 'test-conv-003', senderId: 'test-hotel-002', text: 'When should I take the melatonin for my Tokyo trip next week?', createdAt: daysAgo(2), read: false },
+
+        // Sarah conversation
+        { conversationId: 'test-conv-004', senderId: 'test-exec-002', text: 'The sleep restriction has been tough but I think its working.', createdAt: daysAgo(5), read: true },
+        { conversationId: 'test-conv-004', senderId: ADMIN_UID, text: 'Thats great to hear, Sarah! The first two weeks are always the hardest. Whats your current sleep efficiency based on the diary?', createdAt: daysAgo(4), read: true },
+        { conversationId: 'test-conv-004', senderId: 'test-exec-002', text: 'My sleep efficiency improved to 87% this week!', createdAt: daysAgo(1), read: false }
+    ];
+
+    // ======================== TASKS ========================
+    const testTasks = [
         {
-            conversationId: 'test-conv-001',
-            senderId: 'test-client-executive-001',
-            text: 'Hi Dr. Alen, I just completed my sleep assessment.',
-            createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000)
+            id: 'test-task-001',
+            title: 'Review David Chen sleep study results',
+            description: 'Home sleep test completed, awaiting interpretation',
+            priority: 'high',
+            status: 'pending',
+            dueDate: daysFromNow(2),
+            clientId: 'test-exec-001'
         },
         {
-            conversationId: 'test-conv-001',
-            senderId: 'test-client-executive-001',
-            text: 'Thank you for the assessment, when can we discuss the results?',
-            createdAt: new Date(Date.now() - 1 * 60 * 60 * 1000)
+            id: 'test-task-002',
+            title: 'Send jet lag protocol to Lisa',
+            description: 'Prepare detailed melatonin/light exposure schedule for Tokyo trip',
+            priority: 'high',
+            status: 'pending',
+            dueDate: daysFromNow(1),
+            clientId: 'test-hotel-002'
+        },
+        {
+            id: 'test-task-003',
+            title: 'Follow up with Marcus on pre-game routine',
+            description: 'Check if breathing exercises are helping consistently',
+            priority: 'medium',
+            status: 'completed',
+            dueDate: daysAgo(2),
+            completedAt: daysAgo(1),
+            clientId: 'test-athlete-001'
+        },
+        {
+            id: 'test-task-004',
+            title: 'Expand Sarah sleep window',
+            description: 'Sleep efficiency >85% for 2 weeks - can expand by 15 min',
+            priority: 'medium',
+            status: 'pending',
+            dueDate: daysFromNow(3),
+            clientId: 'test-exec-002'
+        },
+        {
+            id: 'test-task-005',
+            title: 'Order home sleep test for David',
+            description: 'Arrange WatchPAT device delivery',
+            priority: 'medium',
+            status: 'completed',
+            dueDate: daysAgo(10),
+            completedAt: daysAgo(9),
+            clientId: 'test-exec-001'
         }
     ];
 
-    async function seedTestData() {
-        log('Starting to seed test data...');
+    // ======================== CLIENT ACTIONS (Next Steps) ========================
+    const testClientActions = [
+        // Marcus Thompson
+        { clientId: 'test-athlete-001', text: 'Practice 4-7-8 breathing 2x daily for 2 weeks', priority: 'high', status: 'active', dueDate: daysFromNow(14) },
+        { clientId: 'test-athlete-001', text: 'Complete sleep diary for 7 consecutive days', priority: 'normal', status: 'active', dueDate: daysFromNow(7) },
+        { clientId: 'test-athlete-001', text: 'Review pre-game visualization routine', priority: 'normal', status: 'pending', dueDate: daysFromNow(10) },
+
+        // Emma Rodriguez
+        { clientId: 'test-athlete-002', text: 'Start light box therapy 30min each morning', priority: 'high', status: 'active', dueDate: daysFromNow(7) },
+        { clientId: 'test-athlete-002', text: 'Create travel sleep kit checklist', priority: 'normal', status: 'completed', completedAt: daysAgo(3) },
+        { clientId: 'test-athlete-002', text: 'Establish consistent 10pm bedtime during home training', priority: 'high', status: 'active', dueDate: daysFromNow(14) },
+
+        // David Chen
+        { clientId: 'test-exec-001', text: 'Complete home sleep study', priority: 'high', status: 'completed', completedAt: daysAgo(5) },
+        { clientId: 'test-exec-001', text: 'Begin CBT-I sleep restriction protocol', priority: 'high', status: 'active', dueDate: daysFromNow(7) },
+        { clientId: 'test-exec-001', text: 'Remove all devices from bedroom', priority: 'normal', status: 'pending', dueDate: daysFromNow(3) },
+        { clientId: 'test-exec-001', text: 'Schedule follow-up to review sleep study results', priority: 'high', status: 'active', dueDate: daysFromNow(5) },
+
+        // Sarah Mitchell
+        { clientId: 'test-exec-002', text: 'Maintain strict 1am-6am sleep window (week 3)', priority: 'high', status: 'active', dueDate: daysFromNow(7) },
+        { clientId: 'test-exec-002', text: 'Practice stimulus control: leave bed after 20min awake', priority: 'high', status: 'active', dueDate: daysFromNow(14) },
+        { clientId: 'test-exec-002', text: 'Complete worry journal each evening at 8pm', priority: 'normal', status: 'active', dueDate: daysFromNow(14) },
+        { clientId: 'test-exec-002', text: 'Caffeine cutoff moved to 12pm (was 2pm)', priority: 'normal', status: 'completed', completedAt: daysAgo(7) },
+
+        // James Wilson
+        { clientId: 'test-hotel-001', text: 'Create portable sleep environment kit', priority: 'high', status: 'completed', completedAt: daysAgo(10) },
+        { clientId: 'test-hotel-001', text: 'Practice PMR during first night in new hotels', priority: 'normal', status: 'active', dueDate: daysFromNow(14) },
+        { clientId: 'test-hotel-001', text: 'Request quiet room on high floor for all bookings', priority: 'low', status: 'active', dueDate: daysFromNow(30) },
+
+        // Lisa Nakamura
+        { clientId: 'test-hotel-002', text: 'Taper Ambien use: reduce to 5mg for 1 week', priority: 'high', status: 'active', dueDate: daysFromNow(7) },
+        { clientId: 'test-hotel-002', text: 'Purchase light therapy glasses for travel', priority: 'normal', status: 'pending', dueDate: daysFromNow(5) },
+        { clientId: 'test-hotel-002', text: 'Begin circadian adjustment 3 days before Tokyo trip', priority: 'high', status: 'pending', dueDate: daysFromNow(4) },
+        { clientId: 'test-hotel-002', text: 'Complete Functional Outcomes of Sleep questionnaire', priority: 'normal', status: 'active', dueDate: daysFromNow(7) }
+    ];
+
+    // ======================== NOTIFICATIONS ========================
+    const testNotifications = [
+        {
+            userId: ADMIN_UID,
+            type: 'questionnaire_completed',
+            title: 'Questionnaire Completed',
+            message: 'Sarah Mitchell completed ISI - Score: 13/28 (Subthreshold Insomnia)',
+            data: { clientId: 'test-exec-002', instrumentId: 'isi' },
+            read: false,
+            createdAt: daysAgo(1)
+        },
+        {
+            userId: ADMIN_UID,
+            type: 'new_message',
+            title: 'New Message',
+            message: 'Marcus Thompson sent you a message',
+            data: { conversationId: 'test-conv-002' },
+            read: false,
+            createdAt: daysAgo(3)
+        },
+        {
+            userId: ADMIN_UID,
+            type: 'appointment_request',
+            title: 'Appointment Requested',
+            message: 'Lisa Nakamura requested an Initial Consultation',
+            data: { appointmentId: 'test-apt-003' },
+            read: false,
+            createdAt: daysAgo(3)
+        },
+        {
+            userId: ADMIN_UID,
+            type: 'assessment_submitted',
+            title: 'Assessment Submitted',
+            message: 'David Chen submitted a new sleep assessment',
+            data: { assessmentId: 'test-assess-003' },
+            read: true,
+            createdAt: daysAgo(5)
+        }
+    ];
+
+    // ======================== INVITE CODES ========================
+    const testInviteCodes = [
+        { code: 'SW-DEMO-0001', used: false, clientEmail: 'new.client@example.com', notes: 'Demo unused code' },
+        { code: 'SW-DEMO-0002', used: false, clientEmail: '', notes: 'Available for assignment' },
+        { code: 'SW-USED-0001', used: true, usedBy: 'test-athlete-001', clientEmail: 'marcus.thompson@example.com' },
+        { code: 'SW-USED-0002', used: true, usedBy: 'test-exec-001', clientEmail: 'david.chen@example.com' },
+        { code: 'SW-USED-0003', used: true, usedBy: 'test-exec-002', clientEmail: 'sarah.mitchell@example.com' }
+    ];
+
+    // ======================== CREATE TEST USER ACCOUNT ========================
+    async function createTestUserAccount() {
+        const email = document.getElementById('testUserEmail').value.trim();
+        const password = document.getElementById('testUserPassword').value;
+        const name = document.getElementById('testUserName').value.trim();
+        const clientType = document.getElementById('testUserType').value;
+        const resultEl = document.getElementById('testUserResult');
+
+        if (!email || !password || !name) {
+            resultEl.textContent = 'Please fill in all fields.';
+            resultEl.style.color = '#f44336';
+            resultEl.style.display = 'block';
+            return;
+        }
+
+        if (password.length < 6) {
+            resultEl.textContent = 'Password must be at least 6 characters.';
+            resultEl.style.color = '#f44336';
+            resultEl.style.display = 'block';
+            return;
+        }
+
+        resultEl.textContent = 'Creating account...';
+        resultEl.style.color = 'var(--gold)';
+        resultEl.style.display = 'block';
 
         try {
-            // Create test clients
+            // Create Firebase Auth user
+            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            const user = userCredential.user;
+
+            // Update display name
+            await user.updateProfile({ displayName: name });
+
+            // Create user profile in Firestore
+            await db.collection('users').doc(user.uid).set({
+                email: email,
+                displayName: name,
+                clientType: clientType,
+                status: 'active',
+                role: 'client',
+                onboardingComplete: false, // Will trigger welcome screen
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            // Create a welcome notification
+            await db.collection('notifications').add({
+                userId: user.uid,
+                type: 'welcome',
+                title: 'Welcome to Sleep Wellness!',
+                message: 'Thank you for joining. Complete your initial assessment to get started on your personalized sleep optimization journey.',
+                read: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            // Sign out so the user can log in manually
+            await auth.signOut();
+
+            resultEl.innerHTML = `
+                <span style="color: #4caf50; font-weight: 600;">Account created successfully!</span><br><br>
+                <strong>Login Credentials:</strong><br>
+                Email: <code style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 3px;">${email}</code><br>
+                Password: <code style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 3px;">${password}</code><br><br>
+                <a href="../auth.html" style="color: var(--gold);">Go to Login Page →</a>
+            `;
+        } catch (error) {
+            console.error('Error creating user:', error);
+            let errorMessage = 'Error creating account.';
+            if (error.code === 'auth/email-already-in-use') {
+                errorMessage = 'This email is already registered. Try logging in or use a different email.';
+            } else if (error.code === 'auth/weak-password') {
+                errorMessage = 'Password is too weak. Use at least 6 characters.';
+            } else if (error.code === 'auth/invalid-email') {
+                errorMessage = 'Invalid email address format.';
+            }
+            resultEl.textContent = errorMessage;
+            resultEl.style.color = '#f44336';
+        }
+    }
+
+    // ======================== SEEDING FUNCTIONS ========================
+    async function seedAllData() {
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(b => b.disabled = true);
+        log('Starting comprehensive data seeding...', 'section');
+
+        try {
+            // 1. Create clients
+            log('Creating test clients...', 'section');
             for (const client of testClients) {
-                log(`Creating client: ${client.displayName}...`);
                 await db.collection('users').doc(client.id).set({
                     ...client,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     lastLogin: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                log(`Created: ${client.displayName}`, 'success');
+                log(`Created: ${client.displayName} (${client.clientType})`, 'success');
             }
 
-            // Create test assessments
+            // 2. Create assessments
+            log('Creating assessments...', 'section');
             for (const assessment of testAssessments) {
-                log(`Creating assessment for user: ${assessment.userId}...`);
                 await db.collection('assessments').doc(assessment.id).set({
                     ...assessment,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    createdAt: daysAgo(Math.floor(Math.random() * 30) + 7)
                 });
-                log(`Created assessment: ${assessment.id}`, 'success');
+                log(`Created assessment for ${assessment.userId}: Score ${assessment.overallScore}`, 'success');
             }
 
-            // Create test appointments
+            // 3. Create questionnaire assignments
+            log('Creating questionnaire assignments...', 'section');
+            for (const qa of testQuestionnaireAssignments) {
+                await db.collection('questionnaireAssignments').doc(qa.id).set({
+                    ...qa,
+                    assignedBy: ADMIN_UID
+                });
+                log(`Created: ${qa.instrumentName} for ${qa.userId} (${qa.status})`, 'success');
+            }
+
+            // 4. Create diary entries
+            log('Creating sleep diary entries...', 'section');
+            let diaryCount = 0;
+            for (const entry of testDiaryEntries) {
+                await db.collection('diaryEntries').doc(entry.id).set({
+                    ...entry,
+                    createdAt: new Date(entry.date)
+                });
+                diaryCount++;
+            }
+            log(`Created ${diaryCount} diary entries`, 'success');
+
+            // 5. Create module unlocks
+            log('Creating module unlocks...', 'section');
+            for (const unlock of testUnlocks) {
+                await db.collection('unlocks').add({
+                    ...unlock,
+                    grantedBy: ADMIN_UID,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                log(`Unlocked ${unlock.modules.length} modules for ${unlock.userId}`, 'success');
+            }
+
+            // 6. Create appointments
+            log('Creating appointments...', 'section');
             for (const apt of testAppointments) {
-                log(`Creating appointment: ${apt.type}...`);
                 await db.collection('appointments').doc(apt.id).set({
                     ...apt,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                log(`Created appointment: ${apt.id}`, 'success');
+                log(`Created: ${apt.type} - ${apt.status}`, 'success');
             }
 
-            // Create test conversations
+            // 7. Create conversations
+            log('Creating conversations...', 'section');
             for (const conv of testConversations) {
-                log(`Creating conversation: ${conv.id}...`);
                 await db.collection('conversations').doc(conv.id).set({
                     ...conv,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    lastMessageAt: firebase.firestore.FieldValue.serverTimestamp()
+                    lastMessageAt: conv.createdAt
                 });
                 log(`Created conversation: ${conv.id}`, 'success');
             }
 
-            // Create test messages
+            // 8. Create messages
+            log('Creating messages...', 'section');
             for (const msg of testMessages) {
-                log(`Creating message in conversation...`);
                 await db.collection('conversations').doc(msg.conversationId)
                     .collection('messages').add({
                         senderId: msg.senderId,
                         text: msg.text,
                         createdAt: msg.createdAt,
-                        read: false
+                        read: msg.read
                     });
-                log(`Created message`, 'success');
+            }
+            log(`Created ${testMessages.length} messages`, 'success');
+
+            // 9. Create tasks
+            log('Creating tasks...', 'section');
+            for (const task of testTasks) {
+                await db.collection('tasks').doc(task.id).set({
+                    ...task,
+                    createdBy: ADMIN_UID,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                log(`Created task: ${task.title}`, 'success');
             }
 
-            // Create some invite codes
-            log('Creating sample invite codes...');
-            await db.collection('inviteCodes').doc('SW-TEST-0001').set({
-                code: 'SW-TEST-0001',
-                createdBy: 'iHDuOEJXsQe7dL5C4QwA3fLX9zi2',
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                clientEmail: 'potential.client@example.com',
-                notes: 'Sample unused invite code',
-                used: false,
-                usedBy: null,
-                usedAt: null
-            });
-            log('Created invite code: SW-TEST-0001', 'success');
+            // 9b. Create client actions (next steps)
+            log('Creating client actions (next steps)...', 'section');
+            for (const action of testClientActions) {
+                await db.collection('clientActions').add({
+                    ...action,
+                    createdBy: ADMIN_UID,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            }
+            log(`Created ${testClientActions.length} client actions`, 'success');
 
-            log('');
-            log('=== ALL TEST DATA CREATED SUCCESSFULLY ===', 'success');
-            log('');
-            log('Now go to your Admin Dashboard and refresh the page!', 'success');
+            // 10. Create notifications
+            log('Creating notifications...', 'section');
+            for (const notif of testNotifications) {
+                await db.collection('notifications').add({
+                    ...notif,
+                    createdAt: notif.createdAt
+                });
+            }
+            log(`Created ${testNotifications.length} notifications`, 'success');
+
+            // 11. Create invite codes
+            log('Creating invite codes...', 'section');
+            for (const invite of testInviteCodes) {
+                await db.collection('inviteCodes').doc(invite.code).set({
+                    ...invite,
+                    createdBy: ADMIN_UID,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    usedAt: invite.used ? firebase.firestore.FieldValue.serverTimestamp() : null
+                });
+                log(`Created invite: ${invite.code} (${invite.used ? 'used' : 'available'})`, 'success');
+            }
+
+            log('', '');
+            log('========================================', 'info');
+            log('ALL TEST DATA CREATED SUCCESSFULLY!', 'info');
+            log('========================================', 'info');
+            log('', '');
+            log('Refresh your Admin Dashboard to see the data.', 'success');
+            log('URL: admin/index.html', 'success');
 
         } catch (error) {
             log('Error: ' + error.message, 'error');
             console.error(error);
         }
+
+        buttons.forEach(b => b.disabled = false);
     }
 
-    async function clearTestData() {
-        if (!confirm('Are you sure you want to delete all test data?')) return;
+    async function clearAllTestData() {
+        if (!confirm('This will delete ALL test data. Are you sure?')) return;
 
-        log('Clearing test data...');
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(b => b.disabled = true);
+        log('Clearing all test data...', 'section');
 
         try {
             // Delete test clients
@@ -307,37 +1214,85 @@
             // Delete test assessments
             for (const assessment of testAssessments) {
                 await db.collection('assessments').doc(assessment.id).delete();
-                log(`Deleted assessment: ${assessment.id}`, 'success');
             }
+            log('Deleted all test assessments', 'success');
 
-            // Delete test appointments
-            for (const apt of testAppointments) {
-                await db.collection('appointments').doc(apt.id).delete();
-                log(`Deleted appointment: ${apt.id}`, 'success');
+            // Delete questionnaire assignments
+            for (const qa of testQuestionnaireAssignments) {
+                await db.collection('questionnaireAssignments').doc(qa.id).delete();
             }
+            log('Deleted all questionnaire assignments', 'success');
 
-            // Delete test conversations and messages
-            for (const conv of testConversations) {
-                const messagesSnapshot = await db.collection('conversations').doc(conv.id)
-                    .collection('messages').get();
-                for (const doc of messagesSnapshot.docs) {
+            // Delete diary entries
+            for (const entry of testDiaryEntries) {
+                await db.collection('diaryEntries').doc(entry.id).delete();
+            }
+            log('Deleted all diary entries', 'success');
+
+            // Delete unlocks for test users
+            for (const client of testClients) {
+                const unlocks = await db.collection('unlocks').where('userId', '==', client.id).get();
+                for (const doc of unlocks.docs) {
                     await doc.ref.delete();
                 }
-                await db.collection('conversations').doc(conv.id).delete();
-                log(`Deleted conversation: ${conv.id}`, 'success');
             }
+            log('Deleted all module unlocks', 'success');
 
-            // Delete test invite code
-            await db.collection('inviteCodes').doc('SW-TEST-0001').delete();
-            log('Deleted invite code: SW-TEST-0001', 'success');
+            // Delete appointments
+            for (const apt of testAppointments) {
+                await db.collection('appointments').doc(apt.id).delete();
+            }
+            log('Deleted all appointments', 'success');
 
-            log('');
-            log('=== ALL TEST DATA CLEARED ===', 'success');
+            // Delete conversations and messages
+            for (const conv of testConversations) {
+                const messages = await db.collection('conversations').doc(conv.id).collection('messages').get();
+                for (const msg of messages.docs) {
+                    await msg.ref.delete();
+                }
+                await db.collection('conversations').doc(conv.id).delete();
+            }
+            log('Deleted all conversations and messages', 'success');
+
+            // Delete tasks
+            for (const task of testTasks) {
+                await db.collection('tasks').doc(task.id).delete();
+            }
+            log('Deleted all tasks', 'success');
+
+            // Delete client actions for test users
+            for (const client of testClients) {
+                const actions = await db.collection('clientActions').where('clientId', '==', client.id).get();
+                for (const doc of actions.docs) {
+                    await doc.ref.delete();
+                }
+            }
+            log('Deleted all client actions', 'success');
+
+            // Delete notifications for admin
+            const notifications = await db.collection('notifications').where('userId', '==', ADMIN_UID).get();
+            for (const doc of notifications.docs) {
+                if (doc.data().type && ['questionnaire_completed', 'new_message', 'appointment_request', 'assessment_submitted'].includes(doc.data().type)) {
+                    await doc.ref.delete();
+                }
+            }
+            log('Deleted test notifications', 'success');
+
+            // Delete invite codes
+            for (const invite of testInviteCodes) {
+                await db.collection('inviteCodes').doc(invite.code).delete();
+            }
+            log('Deleted all test invite codes', 'success');
+
+            log('', '');
+            log('ALL TEST DATA CLEARED', 'info');
 
         } catch (error) {
             log('Error: ' + error.message, 'error');
             console.error(error);
         }
+
+        buttons.forEach(b => b.disabled = false);
     }
 </script>
 
