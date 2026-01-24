@@ -624,6 +624,75 @@
             gap: 20px;
         }
 
+        /* Questionnaires */
+        .questionnaires-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .questionnaire-card {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s;
+        }
+
+        .questionnaire-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .questionnaire-card.pending {
+            border-left: 4px solid var(--gold);
+        }
+
+        .questionnaire-card.completed {
+            border-left: 4px solid #2e7d32;
+        }
+
+        .questionnaire-card.overdue {
+            border-left: 4px solid #c62828;
+            background: #fff5f5;
+        }
+
+        .questionnaire-info h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: var(--navy);
+            margin-bottom: 5px;
+        }
+
+        .questionnaire-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .questionnaire-result {
+            text-align: right;
+        }
+
+        .questionnaire-score {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .questionnaire-severity {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 500;
+            color: white;
+        }
+
         /* Profile */
         .profile-form {
             background: white;
@@ -808,6 +877,14 @@
                     <line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
                 </svg>
                 <span>Assessments</span>
+            </a></li>
+            <li><a href="#questionnaires" onclick="showSection('questionnaires')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 11l3 3L22 4"/>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                </svg>
+                <span>Questionnaires</span>
+                <span class="badge" id="questionnaireBadge" style="display: none;">0</span>
             </a></li>
             <li><a href="#diary" onclick="showSection('diary')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1082,6 +1159,33 @@
             </div>
         </section>
 
+        <!-- Questionnaires Section -->
+        <section class="dashboard-section" id="section-questionnaires">
+            <div class="section-header">
+                <h1>Questionnaires</h1>
+            </div>
+
+            <p style="font-size: 15px; color: var(--text-light); margin-bottom: 25px;">
+                Complete clinical questionnaires assigned by Dr. Alen to help track your progress and guide your treatment plan.
+            </p>
+
+            <!-- Pending Questionnaires -->
+            <div id="pendingQuestionnairesSection" style="margin-bottom: 30px;">
+                <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 15px;">Pending Questionnaires</h3>
+                <div id="pendingQuestionnaires" class="questionnaires-list">
+                    <p style="color: var(--text-light); font-size: 14px;">No pending questionnaires.</p>
+                </div>
+            </div>
+
+            <!-- Completed Questionnaires -->
+            <div>
+                <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 15px;">Completed Questionnaires</h3>
+                <div id="completedQuestionnaires" class="questionnaires-list">
+                    <p style="color: var(--text-light); font-size: 14px;">No completed questionnaires.</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Modules Section -->
         <section class="dashboard-section" id="section-modules">
             <div class="section-header">
@@ -1141,6 +1245,28 @@
     </div>
 </div>
 
+<!-- Request Access Modal -->
+<div class="modal" id="requestModal">
+    <div class="modal-content" style="max-width: 480px;">
+        <button class="modal-close" onclick="closeRequestModal()">&times;</button>
+        <div class="modal-body">
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--navy); margin-bottom: 10px;">Request Access</h2>
+            <p style="color: var(--text-light); font-size: 14px; margin-bottom: 25px;">
+                Request access to <strong id="requestModuleName"></strong>. Dr. Alen will review your request.
+            </p>
+            <input type="hidden" id="requestModuleId">
+            <div class="form-group">
+                <label for="requestReason">Why would you like access to this module? (optional)</label>
+                <textarea id="requestReason" rows="3" placeholder="e.g., I have trouble falling asleep due to racing thoughts..." style="width: 100%; padding: 12px; border: 1px solid rgba(201, 169, 98, 0.3); font-family: 'Montserrat', sans-serif; font-size: 14px;"></textarea>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn-secondary" onclick="closeRequestModal()" style="flex: 1;">Cancel</button>
+                <button class="btn-primary" onclick="submitModuleRequest()" id="submitRequestBtn" style="flex: 1;">Send Request</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
@@ -1148,6 +1274,7 @@
 <script src="firebase-config.js"></script>
 <script src="auth.js"></script>
 <script src="content.js"></script>
+<script src="questionnaires.js"></script>
 
 <script>
     let currentUser = null;
@@ -1171,6 +1298,7 @@
         if (section === 'messages') initMessages();
         if (section === 'appointments') loadAppointments();
         if (section === 'modules') loadModules();
+        if (section === 'questionnaires') loadUserQuestionnaires();
     }
 
     // Initialize dashboard
@@ -1184,6 +1312,9 @@
 
         // Load dashboard data
         loadDashboardStats();
+
+        // Load questionnaire badge count
+        updateQuestionnaireBadge();
 
         // Set default diary date
         document.getElementById('diaryDate').value = new Date().toISOString().split('T')[0];
@@ -1502,9 +1633,18 @@
     }
 
     // Load modules
+    let userRequests = [];
+
     async function loadModules() {
-        const unlocks = await FirebaseDB.getUserUnlocks(currentUser.uid);
+        const [unlocks, requests] = await Promise.all([
+            FirebaseDB.getUserUnlocks(currentUser.uid),
+            FirebaseDB.getUserModuleRequests(currentUser.uid)
+        ]);
         const hasAll = unlocks.includes('all');
+        userRequests = requests;
+
+        // Get pending request module IDs
+        const pendingRequests = requests.filter(r => r.status === 'pending').map(r => r.moduleId);
 
         const container = document.getElementById('modulesGrid');
         const modules = Content.modules;
@@ -1512,17 +1652,194 @@
         container.innerHTML = Object.keys(modules).map(id => {
             const m = modules[id];
             const isUnlocked = !m.locked || hasAll || unlocks.includes(id);
+            const isPending = pendingRequests.includes(id);
 
-            return `
-                <div class="module-card ${isUnlocked ? '' : 'locked'}" onclick="${isUnlocked ? `Content.openModule('${id}')` : ''}">
-                    ${!isUnlocked ? '<svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : ''}
-                    <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${Content.getModuleIconSVG(m.icon)}</svg>
-                    <h4>${m.title}</h4>
-                    <p>${m.description}</p>
-                </div>
-            `;
+            if (isUnlocked) {
+                return `
+                    <div class="module-card" onclick="Content.openModule('${id}')" style="cursor: pointer;">
+                        <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${Content.getModuleIconSVG(m.icon)}</svg>
+                        <h4>${m.title}</h4>
+                        <p>${m.description}</p>
+                    </div>
+                `;
+            } else if (isPending) {
+                return `
+                    <div class="module-card locked" style="cursor: default;">
+                        <span class="pending-badge" style="position: absolute; top: 15px; right: 15px; background: var(--warning); color: white; font-size: 10px; padding: 4px 10px; border-radius: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Pending</span>
+                        <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${Content.getModuleIconSVG(m.icon)}</svg>
+                        <h4>${m.title}</h4>
+                        <p>${m.description}</p>
+                        <p style="font-size: 12px; color: var(--warning); margin-top: 10px;">Request submitted - awaiting approval</p>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="module-card locked" style="cursor: default; position: relative;">
+                        <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${Content.getModuleIconSVG(m.icon)}</svg>
+                        <h4>${m.title}</h4>
+                        <p>${m.description}</p>
+                        <button class="btn-request" onclick="openRequestModal('${id}', '${m.title.replace(/'/g, "\\'")}'); event.stopPropagation();" style="margin-top: 12px; width: 100%; padding: 10px; background: transparent; border: 1px solid var(--gold); color: var(--gold-dark); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.5px;">
+                            Request Access
+                        </button>
+                    </div>
+                `;
+            }
         }).join('');
     }
+
+    // Request modal functions
+    function openRequestModal(moduleId, moduleName) {
+        document.getElementById('requestModuleId').value = moduleId;
+        document.getElementById('requestModuleName').textContent = moduleName;
+        document.getElementById('requestReason').value = '';
+        document.getElementById('requestModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeRequestModal() {
+        document.getElementById('requestModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    async function submitModuleRequest() {
+        const moduleId = document.getElementById('requestModuleId').value;
+        const moduleName = document.getElementById('requestModuleName').textContent;
+        const reason = document.getElementById('requestReason').value.trim();
+        const btn = document.getElementById('submitRequestBtn');
+
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+
+        try {
+            await FirebaseDB.requestModuleAccess(currentUser.uid, moduleId, moduleName, reason);
+            closeRequestModal();
+            alert('Request sent! Dr. Alen will review your request.');
+            loadModules(); // Refresh to show pending status
+        } catch (error) {
+            console.error('Error submitting request:', error);
+            alert('Error sending request. Please try again.');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Send Request';
+        }
+    }
+
+    // ========== QUESTIONNAIRE FUNCTIONS ==========
+
+    async function loadUserQuestionnaires() {
+        const pendingContainer = document.getElementById('pendingQuestionnaires');
+        const completedContainer = document.getElementById('completedQuestionnaires');
+
+        try {
+            // Get user's questionnaire assignments and results
+            const [assignments, results] = await Promise.all([
+                FirebaseDB.getUserQuestionnaires(currentUser.uid),
+                getUserQuestionnaireResults()
+            ]);
+
+            // Filter pending assignments
+            const pending = assignments.filter(a => a.status === 'pending');
+            const completedIds = results.map(r => r.assignmentId);
+
+            // Update badge
+            const badge = document.getElementById('questionnaireBadge');
+            if (pending.length > 0) {
+                badge.textContent = pending.length;
+                badge.style.display = '';
+            } else {
+                badge.style.display = 'none';
+            }
+
+            // Render pending questionnaires
+            if (pending.length === 0) {
+                pendingContainer.innerHTML = '<p style="color: var(--text-light); font-size: 14px;">No pending questionnaires.</p>';
+            } else {
+                pendingContainer.innerHTML = pending.map(q => {
+                    const dueDate = q.dueDate?.toDate?.();
+                    const isOverdue = dueDate && dueDate < new Date();
+                    const instrument = Questionnaires?.getInstrument(q.questionnaireId);
+
+                    return `
+                        <div class="questionnaire-card ${isOverdue ? 'overdue' : 'pending'}">
+                            <div class="questionnaire-info">
+                                <h4>${q.questionnaireName || q.questionnaireId}</h4>
+                                <div class="questionnaire-meta">
+                                    <span>${instrument?.timeToComplete || '2-3 minutes'}</span>
+                                    <span>${instrument?.questions?.length || '?'} questions</span>
+                                    ${dueDate ? `<span style="${isOverdue ? 'color: #c62828; font-weight: 600;' : ''}">Due: ${dueDate.toLocaleDateString()}${isOverdue ? ' (Overdue)' : ''}</span>` : ''}
+                                </div>
+                                ${q.notes ? `<p style="font-size: 13px; color: var(--text-light); margin-top: 8px;">${q.notes}</p>` : ''}
+                            </div>
+                            <button onclick="startQuestionnaire('${q.id}', '${q.questionnaireId}')" class="btn-primary" style="white-space: nowrap;">
+                                Start
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Render completed questionnaires
+            if (results.length === 0) {
+                completedContainer.innerHTML = '<p style="color: var(--text-light); font-size: 14px;">No completed questionnaires.</p>';
+            } else {
+                completedContainer.innerHTML = results.map(r => {
+                    const completedDate = r.completedAt?.toDate?.();
+
+                    return `
+                        <div class="questionnaire-card completed">
+                            <div class="questionnaire-info">
+                                <h4>${r.questionnaireName || r.questionnaireId}</h4>
+                                <div class="questionnaire-meta">
+                                    <span>Completed: ${completedDate ? completedDate.toLocaleDateString() : 'N/A'}</span>
+                                </div>
+                            </div>
+                            <div class="questionnaire-result">
+                                <div class="questionnaire-score">${r.score}/${r.maxScore}</div>
+                                <span class="questionnaire-severity" style="background: ${r.color || '#666'};">${r.interpretation || 'N/A'}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        } catch (error) {
+            console.error('Error loading questionnaires:', error);
+            pendingContainer.innerHTML = '<p style="color: red;">Error loading questionnaires</p>';
+        }
+    }
+
+    async function getUserQuestionnaireResults() {
+        const snapshot = await db.collection('questionnaireResults')
+            .where('userId', '==', currentUser.uid)
+            .orderBy('completedAt', 'desc')
+            .get();
+
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    }
+
+    function startQuestionnaire(assignmentId, questionnaireId) {
+        // Navigate to questionnaire page with assignment ID
+        window.location.href = `questionnaire.html?assignment=${assignmentId}&q=${questionnaireId}`;
+    }
+
+    async function updateQuestionnaireBadge() {
+        try {
+            const assignments = await FirebaseDB.getUserQuestionnaires(currentUser.uid);
+            const pending = assignments.filter(a => a.status === 'pending');
+            const badge = document.getElementById('questionnaireBadge');
+
+            if (pending.length > 0) {
+                badge.textContent = pending.length;
+                badge.style.display = '';
+            } else {
+                badge.style.display = 'none';
+            }
+        } catch (error) {
+            console.error('Error updating questionnaire badge:', error);
+        }
+    }
+
+    // ========== END QUESTIONNAIRE FUNCTIONS ==========
 
     // Update profile
     async function updateProfile(e) {
