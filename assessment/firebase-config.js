@@ -108,6 +108,22 @@ service cloud.firestore {
 // Admin UID - Dr. Alen Juginovic
 const ADMIN_UID = 'iHDuOEJXsQe7dL5C4QwA3fLX9zi2';
 
+// Admin emails - users with these emails will automatically become admins
+const ADMIN_EMAILS = [
+    'juginovic.alen@gmail.com',
+    'alen_juginovic@hms.harvard.edu',
+    'laura.rodman@medx.hr'
+];
+
+/**
+ * Check if user should be admin
+ */
+function isAdminUser(user) {
+    if (user.uid === ADMIN_UID) return true;
+    if (user.email && ADMIN_EMAILS.includes(user.email.toLowerCase())) return true;
+    return false;
+}
+
 /**
  * Firebase Helper Functions
  */
@@ -130,7 +146,7 @@ const FirebaseDB = {
                     email,
                     displayName: displayName || additionalData.displayName || '',
                     photoURL: photoURL || '',
-                    role: user.uid === ADMIN_UID ? 'admin' : 'client',
+                    role: isAdminUser(user) ? 'admin' : 'client',
                     clientType: additionalData.clientType || null,
                     createdAt,
                     lastLogin: createdAt,
