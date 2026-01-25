@@ -6,28 +6,37 @@
     <title>My Account | Sleep Wellness by Dr. Alen</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* Apple-inspired consistent border radius */
+        :root {
+            --radius-xl: 20px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --radius-pill: 100px;
+        }
+
         .dashboard-layout {
             display: flex;
             min-height: 100vh;
-            padding-top: 70px;
+            padding-top: 56px;
         }
 
         /* Sidebar */
         .sidebar {
-            width: 260px;
+            width: 200px;
             background: var(--deep-navy);
-            padding: 30px 0;
+            padding: 20px 0;
             position: fixed;
-            top: 70px;
+            top: 56px;
             left: 0;
             bottom: 0;
             overflow-y: auto;
         }
 
         .sidebar-header {
-            padding: 25px;
+            padding: 15px 20px;
             border-bottom: 1px solid rgba(201, 169, 98, 0.2);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .sidebar-user {
@@ -38,15 +47,15 @@
         }
 
         .sidebar-avatar {
-            width: 45px;
-            height: 45px;
+            width: 38px;
+            height: 38px;
             background: var(--gold);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 18px;
+            font-size: 16px;
             color: var(--deep-navy);
         }
 
@@ -72,11 +81,11 @@
         .sidebar-nav a {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 14px 25px;
+            gap: 10px;
+            padding: 12px 18px;
             color: rgba(255,255,255,0.7);
             text-decoration: none;
-            font-size: 13px;
+            font-size: 12px;
             transition: all 0.3s;
         }
 
@@ -107,7 +116,7 @@
         }
 
         .sidebar-footer {
-            padding: 20px 25px;
+            padding: 15px 18px;
             border-top: 1px solid rgba(201, 169, 98, 0.2);
             margin-top: auto;
         }
@@ -132,8 +141,8 @@
         /* Main Content */
         .dashboard-main {
             flex: 1;
-            margin-left: 260px;
-            padding: 30px 40px;
+            margin-left: 200px;
+            padding: 25px 35px;
             background: var(--cream);
         }
 
@@ -150,12 +159,100 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
+            padding-top: 15px;
+        }
+
+        .section-header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.3);
+            border-radius: var(--radius-sm);
+            color: var(--navy);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--deep-navy);
+        }
+
+        .back-btn svg {
+            width: 18px;
+            height: 18px;
         }
 
         .section-header h1 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 32px;
+            font-size: 28px;
             color: var(--navy);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .quick-action-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.3);
+            border-radius: var(--radius-md);
+            color: var(--navy);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .quick-action-btn:hover {
+            background: var(--gold);
+            color: var(--deep-navy);
+            border-color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(201, 169, 98, 0.3);
+        }
+
+        .quick-action-btn svg {
+            width: 18px;
+            height: 18px;
+            color: var(--gold-dark);
+        }
+
+        .quick-action-btn:hover svg {
+            color: var(--deep-navy);
+        }
+
+        .quick-action-btn.primary {
+            background: var(--gold);
+            color: var(--deep-navy);
+            border-color: var(--gold);
+        }
+
+        .quick-action-btn.primary:hover {
+            background: var(--gold-light);
+        }
+
+        .quick-action-btn.primary svg {
+            color: var(--deep-navy);
         }
 
         /* Dashboard Cards */
@@ -169,6 +266,7 @@
         .dashboard-card {
             background: white;
             border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
             padding: 25px;
         }
 
@@ -186,7 +284,7 @@
             width: 45px;
             height: 45px;
             background: rgba(201, 169, 98, 0.15);
-            border-radius: 50%;
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -221,6 +319,8 @@
         .activity-list {
             background: white;
             border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
         }
 
         .activity-item {
@@ -238,7 +338,7 @@
             width: 40px;
             height: 40px;
             background: var(--cream);
-            border-radius: 50%;
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -278,6 +378,7 @@
         .assessment-item {
             background: white;
             border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
             padding: 25px;
             display: flex;
             align-items: center;
@@ -287,7 +388,7 @@
         .assessment-score {
             width: 70px;
             height: 70px;
-            border-radius: 50%;
+            border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -327,7 +428,9 @@
             gap: 0;
             background: white;
             border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
             height: 600px;
+            overflow: hidden;
         }
 
         .messages-list {
@@ -386,14 +489,14 @@
 
         .message.received {
             background: var(--cream);
-            border-radius: 0 15px 15px 15px;
+            border-radius: var(--radius-md) var(--radius-lg) var(--radius-lg) var(--radius-lg);
             align-self: flex-start;
         }
 
         .message.sent {
             background: var(--navy);
             color: var(--cream);
-            border-radius: 15px 0 15px 15px;
+            border-radius: var(--radius-lg) var(--radius-md) var(--radius-lg) var(--radius-lg);
             align-self: flex-end;
         }
 
@@ -418,6 +521,7 @@
             flex: 1;
             padding: 12px 16px;
             border: 1px solid rgba(201, 169, 98, 0.3);
+            border-radius: var(--radius-md);
             font-size: 14px;
             font-family: 'Montserrat', sans-serif;
         }
@@ -432,10 +536,12 @@
             background: var(--gold);
             color: var(--deep-navy);
             border: none;
+            border-radius: var(--radius-md);
             font-family: 'Montserrat', sans-serif;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s;
         }
 
         .messages-input button:hover {
@@ -452,15 +558,20 @@
         .appointment-card {
             background: white;
             border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
             padding: 25px;
         }
 
         .appointment-card.pending {
             border-left: 4px solid var(--warning);
+            border-top-left-radius: var(--radius-sm);
+            border-bottom-left-radius: var(--radius-sm);
         }
 
         .appointment-card.confirmed {
             border-left: 4px solid var(--success);
+            border-top-left-radius: var(--radius-sm);
+            border-bottom-left-radius: var(--radius-sm);
         }
 
         .appointment-date {
@@ -507,7 +618,7 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            border-radius: 3px;
+            border-radius: var(--radius-sm);
         }
 
         .appointment-status.pending {
@@ -524,6 +635,7 @@
         .book-appointment-form {
             background: white;
             border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
             padding: 30px;
             max-width: 500px;
         }
@@ -543,7 +655,7 @@
             padding: 15px 20px;
             background: linear-gradient(135deg, #fff3e0 0%, #fffde7 100%);
             border: 1px solid #ffcc80;
-            border-radius: 12px;
+            border-radius: var(--radius-lg);
             margin-bottom: 25px;
         }
 
@@ -590,7 +702,7 @@
             padding: 10px 18px;
             background: #f5f5f5;
             border: 2px solid transparent;
-            border-radius: 25px;
+            border-radius: var(--radius-md);
             font-size: 14px;
             font-weight: 500;
             color: #555;
@@ -623,7 +735,7 @@
             padding: 15px 10px;
             background: #f8f8f8;
             border: 2px solid transparent;
-            border-radius: 12px;
+            border-radius: var(--radius-md);
             cursor: pointer;
             transition: all 0.2s;
         }
@@ -676,6 +788,7 @@
         .diary-form {
             background: white;
             border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
             padding: 30px;
             margin-bottom: 30px;
         }
@@ -697,6 +810,7 @@
         .diary-chart {
             background: white;
             border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
             padding: 25px;
         }
 
@@ -709,6 +823,7 @@
         .diary-entry {
             background: white;
             border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
             padding: 20px;
             display: flex;
             align-items: center;
@@ -755,11 +870,625 @@
             color: var(--navy);
         }
 
+        /* Sleep Diary Tabs */
+        .diary-tabs {
+            display: flex;
+            gap: 5px;
+            background: rgba(15, 28, 46, 0.05);
+            padding: 5px;
+            border-radius: var(--radius-md);
+            margin-bottom: 25px;
+        }
+
+        .diary-tab {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .diary-tab:hover {
+            color: var(--navy);
+            background: rgba(255,255,255,0.5);
+        }
+
+        .diary-tab.active {
+            background: white;
+            color: var(--navy);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .diary-tab svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .diary-tab-content {
+            display: none;
+        }
+
+        .diary-tab-content.active {
+            display: block;
+        }
+
+        /* Sleep Analytics Dashboard */
+        .analytics-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .analytics-period {
+            display: flex;
+            gap: 8px;
+        }
+
+        .period-btn {
+            padding: 8px 16px;
+            border: 1px solid rgba(201, 169, 98, 0.3);
+            background: white;
+            color: var(--text);
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .period-btn:hover {
+            border-color: var(--gold);
+        }
+
+        .period-btn.active {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        /* Sleep Score Card */
+        .sleep-score-card {
+            background: linear-gradient(135deg, var(--navy) 0%, #1a2d47 100%);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sleep-score-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(201, 169, 98, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .sleep-score-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .sleep-score-circle {
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+
+        .sleep-score-ring {
+            transform: rotate(-90deg);
+        }
+
+        .sleep-score-ring-bg {
+            fill: none;
+            stroke: rgba(255,255,255,0.1);
+            stroke-width: 8;
+        }
+
+        .sleep-score-ring-progress {
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .sleep-score-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .sleep-score-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            color: white;
+            line-height: 1;
+        }
+
+        .sleep-score-label {
+            font-size: 10px;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sleep-score-details {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .sleep-score-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .sleep-score-subtitle {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 15px;
+        }
+
+        .sleep-score-breakdown {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .score-component {
+            text-align: center;
+        }
+
+        .score-component-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .score-component-label {
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+        }
+
+        /* Streak Badge */
+        .streak-badge {
+            background: rgba(201, 169, 98, 0.2);
+            border: 1px solid var(--gold);
+            border-radius: var(--radius-md);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .streak-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .streak-info {
+            text-align: left;
+        }
+
+        .streak-count {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            color: white;
+        }
+
+        .streak-label {
+            font-size: 11px;
+            color: var(--gold);
+        }
+
+        /* Analytics Charts Grid */
+        .analytics-charts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .chart-card {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: var(--navy);
+        }
+
+        .chart-trend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .chart-trend.up {
+            color: #2E7D32;
+        }
+
+        .chart-trend.down {
+            color: #C62828;
+        }
+
+        .chart-trend.neutral {
+            color: var(--text-light);
+        }
+
+        .chart-container {
+            height: 200px;
+            position: relative;
+        }
+
+        /* Weekly Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .summary-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .summary-icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 12px;
+            background: rgba(201, 169, 98, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .summary-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--gold-dark);
+        }
+
+        .summary-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            color: var(--navy);
+            line-height: 1.2;
+        }
+
+        .summary-label {
+            font-size: 11px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-change {
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        .summary-change.positive {
+            color: #2E7D32;
+        }
+
+        .summary-change.negative {
+            color: #C62828;
+        }
+
+        /* Insights Section */
+        .insights-section {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .insights-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .insights-icon {
+            width: 35px;
+            height: 35px;
+            background: rgba(201, 169, 98, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .insights-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            color: var(--navy);
+        }
+
+        .insight-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--gold);
+        }
+
+        .insight-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .insight-type {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gold-dark);
+            margin-bottom: 5px;
+        }
+
+        .insight-text {
+            font-size: 14px;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .insight-action {
+            margin-top: 10px;
+            font-size: 13px;
+            color: var(--navy);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Achievement Badges */
+        .achievements-grid {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .achievement-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            transition: all 0.3s;
+        }
+
+        .achievement-badge.earned {
+            border-color: var(--gold);
+            background: linear-gradient(135deg, rgba(201, 169, 98, 0.05) 0%, rgba(255,255,255,1) 100%);
+        }
+
+        .achievement-badge.locked {
+            opacity: 0.5;
+        }
+
+        .achievement-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .achievement-badge.earned .achievement-icon {
+            background: var(--gold);
+        }
+
+        .achievement-badge.locked .achievement-icon {
+            background: #e0e0e0;
+        }
+
+        .achievement-info h5 {
+            font-size: 13px;
+            color: var(--navy);
+            margin-bottom: 2px;
+        }
+
+        .achievement-info p {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        /* Evening Check-in */
+        .checkin-card {
+            background: linear-gradient(135deg, #f0f7ff 0%, #fff 100%);
+            border: 1px solid rgba(74, 96, 133, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .checkin-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .checkin-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checkin-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            color: var(--navy);
+        }
+
+        .checkin-subtitle {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .checkin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .checkin-item {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.15);
+            border-radius: var(--radius-md);
+            padding: 15px;
+        }
+
+        .checkin-item label {
+            display: block;
+            font-size: 13px;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .checkin-slider {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .checkin-value {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            .analytics-charts {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sleep-score-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .streak-badge {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .diary-tabs {
+                flex-direction: column;
+            }
+        }
+
         /* Modules */
         .modules-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
+        }
+
+        .module-card {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .module-card.locked {
+            opacity: 0.7;
+        }
+
+        .module-card h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .module-card p {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .module-card .module-meta {
+            font-size: 11px;
+            color: var(--gold-dark);
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         /* Resource Groups */
@@ -822,7 +1551,7 @@
             padding: 14px 16px;
             background: #f5f5f5;
             border: 2px solid transparent;
-            border-radius: 10px;
+            border-radius: var(--radius-md);
             font-size: 14px;
             color: #555;
             transition: all 0.2s;
@@ -872,7 +1601,7 @@
             height: 42px;
             border: 2px solid #e0e0e0;
             background: #f8f8f8;
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             font-size: 14px;
             font-weight: 600;
             color: #666;
@@ -936,7 +1665,7 @@
         .chat-toggle {
             width: 60px;
             height: 60px;
-            border-radius: 50%;
+            border-radius: var(--radius-lg);
             background: linear-gradient(135deg, var(--gold) 0%, #b8923c 100%);
             border: none;
             cursor: pointer;
@@ -977,7 +1706,7 @@
             width: 380px;
             height: 520px;
             background: white;
-            border-radius: 16px;
+            border-radius: var(--radius-xl);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
             display: none;
             flex-direction: column;
@@ -1006,7 +1735,7 @@
             width: 40px;
             height: 40px;
             background: var(--gold);
-            border-radius: 50%;
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1055,7 +1784,7 @@
         .chat-bubble {
             max-width: 85%;
             padding: 12px 16px;
-            border-radius: 16px;
+            border-radius: var(--radius-lg);
             font-size: 14px;
             line-height: 1.5;
         }
@@ -1063,14 +1792,14 @@
         .chat-message.user .chat-bubble {
             background: var(--deep-navy);
             color: white;
-            border-bottom-right-radius: 4px;
+            border-bottom-right-radius: var(--radius-sm);
         }
 
         .chat-message.assistant .chat-bubble {
             background: white;
             color: #333;
             border: 1px solid #e0e0e0;
-            border-bottom-left-radius: 4px;
+            border-bottom-left-radius: var(--radius-sm);
         }
 
         .chat-bubble p {
@@ -1096,8 +1825,8 @@
             padding: 12px 16px;
             background: white;
             border: 1px solid #e0e0e0;
-            border-radius: 16px;
-            border-bottom-left-radius: 4px;
+            border-radius: var(--radius-lg);
+            border-bottom-left-radius: var(--radius-sm);
             width: fit-content;
         }
 
@@ -1131,7 +1860,7 @@
             background: var(--gold);
             color: var(--deep-navy);
             border: none;
-            border-radius: 8px;
+            border-radius: var(--radius-md);
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
@@ -1158,7 +1887,7 @@
             flex: 1;
             padding: 12px 16px;
             border: 1px solid #e0e0e0;
-            border-radius: 24px;
+            border-radius: var(--radius-lg);
             font-size: 14px;
             font-family: inherit;
             resize: none;
@@ -1174,7 +1903,7 @@
         .chat-send {
             width: 44px;
             height: 44px;
-            border-radius: 50%;
+            border-radius: var(--radius-md);
             background: var(--gold);
             border: none;
             cursor: pointer;
@@ -1211,7 +1940,7 @@
             padding: 8px 14px;
             background: rgba(201, 169, 98, 0.1);
             border: 1px solid rgba(201, 169, 98, 0.3);
-            border-radius: 20px;
+            border-radius: var(--radius-md);
             font-size: 12px;
             color: var(--navy);
             cursor: pointer;
@@ -1243,7 +1972,7 @@
             background: white;
             border: 1px solid rgba(201, 169, 98, 0.2);
             padding: 20px;
-            border-radius: 8px;
+            border-radius: var(--radius-lg);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1257,15 +1986,21 @@
 
         .questionnaire-card.pending {
             border-left: 4px solid var(--gold);
+            border-top-left-radius: var(--radius-sm);
+            border-bottom-left-radius: var(--radius-sm);
         }
 
         .questionnaire-card.completed {
             border-left: 4px solid #2e7d32;
+            border-top-left-radius: var(--radius-sm);
+            border-bottom-left-radius: var(--radius-sm);
         }
 
         .questionnaire-card.overdue {
             border-left: 4px solid #c62828;
             background: #fff5f5;
+            border-top-left-radius: var(--radius-sm);
+            border-bottom-left-radius: var(--radius-sm);
         }
 
         .questionnaire-info h4 {
@@ -1295,7 +2030,7 @@
         .questionnaire-severity {
             display: inline-block;
             padding: 4px 12px;
-            border-radius: 15px;
+            border-radius: var(--radius-sm);
             font-size: 11px;
             font-weight: 500;
             color: white;
@@ -1305,6 +2040,7 @@
         .profile-form {
             background: white;
             border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
             padding: 30px;
             max-width: 600px;
         }
@@ -1322,6 +2058,7 @@
             padding: 60px 40px;
             background: white;
             border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
         }
 
         .empty-state svg {
@@ -1405,7 +2142,7 @@
 
         .welcome-card {
             background: white;
-            border-radius: 20px;
+            border-radius: var(--radius-xl);
             max-width: 520px;
             width: 90%;
             overflow: hidden;
@@ -1840,7 +2577,7 @@
         .tasks-banner {
             background: linear-gradient(135deg, #fff8e6 0%, #fffdf8 100%);
             border: 1px solid rgba(201, 169, 98, 0.3);
-            border-radius: 12px;
+            border-radius: var(--radius-lg);
             padding: 20px 25px;
             margin-bottom: 25px;
             display: none;
@@ -1862,7 +2599,7 @@
             width: 45px;
             height: 45px;
             background: var(--gold);
-            border-radius: 50%;
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -2256,12 +2993,19 @@
                 </svg>
                 <span>Appointments</span>
             </a></li>
+            <li><a href="#education" onclick="showSection('education')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                </svg>
+                <span>Learn About Sleep</span>
+            </a></li>
             <li><a href="#modules" onclick="showSection('modules')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="12 2 2 7 12 12 22 7 12 2"/>
                     <polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
                 </svg>
-                <span>Resources</span>
+                <span>Sleep Resources</span>
             </a></li>
             <li><a href="#profile" onclick="showSection('profile')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2289,7 +3033,40 @@
         <section class="dashboard-section active" id="section-dashboard">
             <div class="section-header">
                 <h1>Welcome back, <span data-user-name>User</span></h1>
-                <a href="index.html" class="btn-primary">Take Assessment</a>
+                <a href="take-assessment.html" class="btn-primary">Take Assessment</a>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <a href="#appointments" onclick="showSection('appointments')" class="quick-action-btn primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                        <line x1="12" y1="14" x2="12" y2="18"/>
+                        <line x1="10" y1="16" x2="14" y2="16"/>
+                    </svg>
+                    Schedule Appointment
+                </a>
+                <a href="#messages" onclick="showSection('messages')" class="quick-action-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Messages
+                </a>
+                <a href="mailto:alen_juginovic@hms.harvard.edu?subject=Sleep%20Wellness%20Inquiry" class="quick-action-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    Email Dr. Alen
+                </a>
+                <a href="#diary" onclick="showSection('diary')" class="quick-action-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                    </svg>
+                    Log Sleep
+                </a>
             </div>
 
             <!-- Tasks Banner -->
@@ -2375,8 +3152,13 @@
         <!-- Assessments Section -->
         <section class="dashboard-section" id="section-assessments">
             <div class="section-header">
-                <h1>My Assessments</h1>
-                <a href="index.html" class="btn-primary">Take New Assessment</a>
+                <div class="section-header-left">
+                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <h1>My Assessments</h1>
+                </div>
+                <a href="take-assessment.html" class="btn-primary">Take New Assessment</a>
             </div>
 
             <div class="assessment-list" id="assessmentList">
@@ -2387,7 +3169,7 @@
                     </svg>
                     <h3>No Assessments Yet</h3>
                     <p>Complete your first sleep assessment to track your progress.</p>
-                    <a href="index.html" class="btn-primary">Take Assessment</a>
+                    <a href="take-assessment.html" class="btn-primary">Take Assessment</a>
                 </div>
             </div>
         </section>
@@ -2395,7 +3177,12 @@
         <!-- Sleep Diary Section - Based on Consensus Sleep Diary -->
         <section class="dashboard-section" id="section-diary">
             <div class="section-header">
-                <h1>Sleep Diary</h1>
+                <div class="section-header-left">
+                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <h1>Sleep Diary</h1>
+                </div>
             </div>
 
             <!-- Diary Reminder Banner -->
@@ -2409,6 +3196,28 @@
                 <button class="diary-reminder-dismiss" onclick="dismissDiaryReminder()">×</button>
             </div>
 
+            <!-- Diary Tabs -->
+            <div class="diary-tabs">
+                <button class="diary-tab active" onclick="switchDiaryTab('log')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    Log Entry
+                </button>
+                <button class="diary-tab" onclick="switchDiaryTab('history')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    History
+                </button>
+                <button class="diary-tab" onclick="switchDiaryTab('analytics')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    Analytics
+                </button>
+                <button class="diary-tab" onclick="switchDiaryTab('evening')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    Evening Check-in
+                </button>
+            </div>
+
+            <!-- Log Entry Tab -->
+            <div class="diary-tab-content active" id="diary-tab-log">
             <div class="diary-form">
                 <h3>Log Your Sleep</h3>
                 <p style="color: var(--text-light); margin-bottom: 25px; font-size: 14px;">Based on the Consensus Sleep Diary - Complete each morning</p>
@@ -2680,11 +3489,325 @@
                     </div>
                 </div>
             </div>
+            </div><!-- End diary-tab-log -->
 
-            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); margin: 30px 0 20px;">Recent Entries</h3>
-            <div class="diary-history" id="diaryHistory">
-                <div class="empty-state">
-                    <p>No diary entries yet. Start tracking your sleep above.</p>
+            <!-- History Tab -->
+            <div class="diary-tab-content" id="diary-tab-history">
+                <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); margin-bottom: 20px;">Sleep History</h3>
+                <div class="diary-history" id="diaryHistory">
+                    <div class="empty-state">
+                        <p>No diary entries yet. Start tracking your sleep in the Log Entry tab.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div class="diary-tab-content" id="diary-tab-analytics">
+                <!-- Sleep Score Card -->
+                <div class="sleep-score-card">
+                    <div class="sleep-score-content">
+                        <div class="sleep-score-circle">
+                            <svg class="sleep-score-ring" width="120" height="120" viewBox="0 0 120 120">
+                                <circle class="sleep-score-ring-bg" cx="60" cy="60" r="52"/>
+                                <circle class="sleep-score-ring-progress" id="sleepScoreRing" cx="60" cy="60" r="52" stroke-dasharray="326.73" stroke-dashoffset="326.73"/>
+                            </svg>
+                            <div class="sleep-score-value">
+                                <div class="sleep-score-number" id="sleepScoreNumber">--</div>
+                                <div class="sleep-score-label">Sleep Score</div>
+                            </div>
+                        </div>
+                        <div class="sleep-score-details">
+                            <h3 class="sleep-score-title" id="sleepScoreTitle">Calculating...</h3>
+                            <p class="sleep-score-subtitle" id="sleepScoreSubtitle">Log at least 3 nights to see your score</p>
+                            <div class="sleep-score-breakdown" id="sleepScoreBreakdown">
+                                <div class="score-component">
+                                    <div class="score-component-value" id="scoreDuration">--</div>
+                                    <div class="score-component-label">Duration</div>
+                                </div>
+                                <div class="score-component">
+                                    <div class="score-component-value" id="scoreEfficiency">--</div>
+                                    <div class="score-component-label">Efficiency</div>
+                                </div>
+                                <div class="score-component">
+                                    <div class="score-component-value" id="scoreQuality">--</div>
+                                    <div class="score-component-label">Quality</div>
+                                </div>
+                                <div class="score-component">
+                                    <div class="score-component-value" id="scoreConsistency">--</div>
+                                    <div class="score-component-label">Consistency</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="streak-badge" id="streakBadge">
+                            <div class="streak-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" width="20" height="20"><path d="M12 2v20M2 12h20"/></svg>
+                            </div>
+                            <div class="streak-info">
+                                <div class="streak-count" id="streakCount">0 days</div>
+                                <div class="streak-label">Current Streak</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Period Selector -->
+                <div class="analytics-header">
+                    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy);">Your Sleep Trends</h3>
+                    <div class="analytics-period">
+                        <button class="period-btn active" onclick="setAnalyticsPeriod(7)">7 Days</button>
+                        <button class="period-btn" onclick="setAnalyticsPeriod(14)">14 Days</button>
+                        <button class="period-btn" onclick="setAnalyticsPeriod(30)">30 Days</button>
+                    </div>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="summary-grid" id="summaryGrid">
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                        </div>
+                        <div class="summary-value" id="avgSleepTime">--</div>
+                        <div class="summary-label">Avg Sleep Time</div>
+                        <div class="summary-change" id="avgSleepTimeChange"></div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        </div>
+                        <div class="summary-value" id="avgBedtime">--</div>
+                        <div class="summary-label">Avg Bedtime</div>
+                        <div class="summary-change" id="avgBedtimeChange"></div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <div class="summary-value" id="avgEfficiencySum">--</div>
+                        <div class="summary-label">Avg Efficiency</div>
+                        <div class="summary-change" id="avgEfficiencyChange"></div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <div class="summary-value" id="avgQualitySum">--</div>
+                        <div class="summary-label">Avg Quality</div>
+                        <div class="summary-change" id="avgQualityChange"></div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>
+                        </div>
+                        <div class="summary-value" id="avgAwakenings">--</div>
+                        <div class="summary-label">Avg Awakenings</div>
+                        <div class="summary-change" id="avgAwakeningsChange"></div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        </div>
+                        <div class="summary-value" id="totalNights">--</div>
+                        <div class="summary-label">Nights Logged</div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="analytics-charts">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h4 class="chart-title">Sleep Duration</h4>
+                            <div class="chart-trend" id="durationTrend">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                                <span>--</span>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="durationChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h4 class="chart-title">Sleep Efficiency</h4>
+                            <div class="chart-trend" id="efficiencyTrend">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                                <span>--</span>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="efficiencyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-charts">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h4 class="chart-title">Sleep Quality Ratings</h4>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="qualityChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h4 class="chart-title">Bedtime Consistency</h4>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="bedtimeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Insights Section -->
+                <div class="insights-section" id="insightsSection">
+                    <div class="insights-header">
+                        <div class="insights-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        </div>
+                        <h3 class="insights-title">Personalized Insights</h3>
+                    </div>
+                    <div id="insightsList">
+                        <div class="insight-card">
+                            <div class="insight-type">Getting Started</div>
+                            <p class="insight-text">Log at least 7 nights of sleep to unlock personalized insights about your sleep patterns.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievements Section -->
+                <div class="insights-section">
+                    <div class="insights-header">
+                        <div class="insights-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="2" width="18" height="18"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                        </div>
+                        <h3 class="insights-title">Achievements</h3>
+                    </div>
+                    <div class="achievements-grid" id="achievementsGrid">
+                        <div class="achievement-badge locked" id="badge-first-log">
+                            <div class="achievement-icon">1</div>
+                            <div class="achievement-info">
+                                <h5>First Entry</h5>
+                                <p>Log your first sleep night</p>
+                            </div>
+                        </div>
+                        <div class="achievement-badge locked" id="badge-week-streak">
+                            <div class="achievement-icon">7</div>
+                            <div class="achievement-info">
+                                <h5>Week Warrior</h5>
+                                <p>7-day logging streak</p>
+                            </div>
+                        </div>
+                        <div class="achievement-badge locked" id="badge-month-streak">
+                            <div class="achievement-icon">30</div>
+                            <div class="achievement-info">
+                                <h5>Consistency Champion</h5>
+                                <p>30-day logging streak</p>
+                            </div>
+                        </div>
+                        <div class="achievement-badge locked" id="badge-efficiency-master">
+                            <div class="achievement-icon">85</div>
+                            <div class="achievement-info">
+                                <h5>Efficiency Master</h5>
+                                <p>Avg efficiency above 85%</p>
+                            </div>
+                        </div>
+                        <div class="achievement-badge locked" id="badge-quality-sleeper">
+                            <div class="achievement-icon">4+</div>
+                            <div class="achievement-info">
+                                <h5>Quality Sleeper</h5>
+                                <p>Avg quality rating 4+</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Evening Check-in Tab -->
+            <div class="diary-tab-content" id="diary-tab-evening">
+                <div class="checkin-card">
+                    <div class="checkin-header">
+                        <div class="checkin-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--cream)" stroke-width="2" width="24" height="24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="checkin-title">Evening Check-in</h3>
+                            <p class="checkin-subtitle">Track factors that may affect tonight's sleep</p>
+                        </div>
+                    </div>
+
+                    <form id="eveningCheckinForm" onsubmit="saveEveningCheckin(event)">
+                        <input type="hidden" id="checkinDate" value="">
+
+                        <div class="checkin-grid">
+                            <div class="checkin-item">
+                                <label>Stress Level Today</label>
+                                <input type="range" class="checkin-slider" id="checkinStress" min="1" max="10" value="5" oninput="updateSliderLabel(this, 'stressLabel')">
+                                <div class="checkin-value" id="stressLabel">5 - Moderate</div>
+                            </div>
+                            <div class="checkin-item">
+                                <label>Physical Activity</label>
+                                <input type="range" class="checkin-slider" id="checkinExercise" min="0" max="5" value="2" oninput="updateSliderLabel(this, 'exerciseLabel')">
+                                <div class="checkin-value" id="exerciseLabel">2 - Light activity</div>
+                            </div>
+                            <div class="checkin-item">
+                                <label>Last Caffeine (hours ago)</label>
+                                <input type="range" class="checkin-slider" id="checkinCaffeine" min="0" max="12" value="8" oninput="updateSliderLabel(this, 'caffeineLabel')">
+                                <div class="checkin-value" id="caffeineLabel">8+ hours ago</div>
+                            </div>
+                            <div class="checkin-item">
+                                <label>Screen Time Before Bed</label>
+                                <input type="range" class="checkin-slider" id="checkinScreens" min="0" max="4" value="1" oninput="updateSliderLabel(this, 'screensLabel')">
+                                <div class="checkin-value" id="screensLabel">1 - 30 min or less</div>
+                            </div>
+                            <div class="checkin-item">
+                                <label>Meal Timing (hours before bed)</label>
+                                <input type="range" class="checkin-slider" id="checkinMeals" min="0" max="6" value="3" oninput="updateSliderLabel(this, 'mealsLabel')">
+                                <div class="checkin-value" id="mealsLabel">3+ hours</div>
+                            </div>
+                            <div class="checkin-item">
+                                <label>Overall Mood</label>
+                                <input type="range" class="checkin-slider" id="checkinMood" min="1" max="5" value="3" oninput="updateSliderLabel(this, 'moodLabel')">
+                                <div class="checkin-value" id="moodLabel">3 - Neutral</div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <label style="display: block; font-size: 13px; color: var(--text); margin-bottom: 10px;">Any concerns about tonight's sleep?</label>
+                            <textarea id="checkinNotes" rows="3" placeholder="E.g., big presentation tomorrow, feeling under the weather, unusual noise outside..." style="width: 100%; padding: 12px; border: 1px solid rgba(201, 169, 98, 0.3); border-radius: 8px; font-family: inherit; resize: vertical;"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 20px; padding: 14px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="margin-right: 8px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+                            Save Evening Check-in
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Today's Factors Summary -->
+                <div class="insights-section" id="todaysFactors" style="display: none;">
+                    <div class="insights-header">
+                        <div class="insights-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="2" width="18" height="18"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <h3 class="insights-title">Today's Check-in Summary</h3>
+                    </div>
+                    <div id="factorsSummary"></div>
+                </div>
+
+                <!-- Tips Based on Check-in -->
+                <div class="insights-section">
+                    <div class="insights-header">
+                        <div class="insights-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="2" width="18" height="18"><path d="M9 18l6-6-6-6"/></svg>
+                        </div>
+                        <h3 class="insights-title">Tonight's Sleep Tips</h3>
+                    </div>
+                    <div id="eveningTips">
+                        <div class="insight-card">
+                            <div class="insight-type">Tip</div>
+                            <p class="insight-text">Complete your evening check-in to receive personalized tips for better sleep tonight.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -2692,7 +3815,12 @@
         <!-- Messages Section -->
         <section class="dashboard-section" id="section-messages">
             <div class="section-header">
-                <h1>Messages</h1>
+                <div class="section-header-left">
+                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <h1>Messages</h1>
+                </div>
             </div>
 
             <div class="messages-container">
@@ -2721,7 +3849,12 @@
         <!-- Appointments Section -->
         <section class="dashboard-section" id="section-appointments">
             <div class="section-header">
-                <h1>Appointments</h1>
+                <div class="section-header-left">
+                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <h1>Appointments</h1>
+                </div>
             </div>
 
             <div class="book-appointment-form">
@@ -2771,7 +3904,12 @@
         <!-- Questionnaires Section -->
         <section class="dashboard-section" id="section-questionnaires">
             <div class="section-header">
-                <h1>Questionnaires</h1>
+                <div class="section-header-left">
+                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <h1>Questionnaires</h1>
+                </div>
             </div>
 
             <p style="font-size: 15px; color: var(--text-light); margin-bottom: 25px;">
@@ -2795,14 +3933,158 @@
             </div>
         </section>
 
+        <!-- Sleep Education Section -->
+        <section class="dashboard-section" id="section-education">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <h1>Learn About Sleep</h1>
+                </div>
+            </div>
+
+            <p style="font-size: 15px; color: var(--text-light); margin-bottom: 30px;">
+                Explore the science of sleep with our free educational resources. Understanding how sleep works is the first step toward better rest.
+            </p>
+
+            <!-- Interactive Presentation -->
+            <div style="background: linear-gradient(135deg, var(--navy) 0%, #1a2d47 100%); border-radius: var(--radius-lg); padding: 35px; margin-bottom: 35px; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(201, 169, 98, 0.15) 0%, transparent 70%); border-radius: 50%;"></div>
+                <div style="position: relative; z-index: 1;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
+                        <div style="width: 45px; height: 45px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" width="22" height="22">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <span style="font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px;">Interactive Guide</span>
+                        </div>
+                    </div>
+                    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--cream); margin-bottom: 10px;">Understanding Sleep</h2>
+                    <p style="font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 20px; max-width: 500px;">
+                        An interactive journey through the science of sleep - from how it works to why it matters for your health and performance.
+                    </p>
+                    <button onclick="openSleepPresentation()" class="btn-primary" style="background: var(--gold); color: var(--navy); border: none; padding: 14px 28px; border-radius: var(--radius-md); font-weight: 600; cursor: pointer;">
+                        Start Learning
+                    </button>
+                </div>
+            </div>
+
+            <!-- Educational PDFs -->
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); margin-bottom: 20px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" style="vertical-align: middle; margin-right: 8px; color: var(--gold-dark);">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                Downloadable Guides
+            </h3>
+            <p style="font-size: 14px; color: var(--text-light); margin-bottom: 20px;">
+                In-depth guides tailored to your specific needs. Download and read at your own pace.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                <!-- General Audience -->
+                <div class="module-card" style="cursor: pointer;" onclick="downloadPDF('general')">
+                    <div style="display: flex; align-items: flex-start; gap: 15px;">
+                        <div style="width: 50px; height: 50px; background: rgba(201, 169, 98, 0.15); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="1.5" width="24" height="24">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--navy); margin-bottom: 5px;">The Science of Better Sleep</h4>
+                            <p style="font-size: 13px; color: var(--text-light); margin-bottom: 10px;">A comprehensive guide for everyone wanting to understand and improve their sleep.</p>
+                            <span style="font-size: 12px; color: var(--gold-dark); display: flex; align-items: center; gap: 5px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Download PDF
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Athletes -->
+                <div class="module-card" style="cursor: pointer;" onclick="downloadPDF('athletes')">
+                    <div style="display: flex; align-items: flex-start; gap: 15px;">
+                        <div style="width: 50px; height: 50px; background: rgba(201, 169, 98, 0.15); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="1.5" width="24" height="24">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 2a10 10 0 0 1 0 20M12 2a10 10 0 0 0 0 20M2 12h20"/>
+                            </svg>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--navy); margin-bottom: 5px;">Sleep for Peak Performance</h4>
+                            <p style="font-size: 13px; color: var(--text-light); margin-bottom: 10px;">How elite athletes use sleep to enhance recovery, reaction time, and competitive edge.</p>
+                            <span style="font-size: 12px; color: var(--gold-dark); display: flex; align-items: center; gap: 5px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Download PDF
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Executives -->
+                <div class="module-card" style="cursor: pointer;" onclick="downloadPDF('executives')">
+                    <div style="display: flex; align-items: flex-start; gap: 15px;">
+                        <div style="width: 50px; height: 50px; background: rgba(201, 169, 98, 0.15); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="1.5" width="24" height="24">
+                                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                                <path d="M8 21h8"/><path d="M12 17v4"/>
+                            </svg>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--navy); margin-bottom: 5px;">Executive Sleep Guide</h4>
+                            <p style="font-size: 13px; color: var(--text-light); margin-bottom: 10px;">Optimize decision-making, manage jet lag, and maintain peak performance under pressure.</p>
+                            <span style="font-size: 12px; color: var(--gold-dark); display: flex; align-items: center; gap: 5px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Download PDF
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Facts Section -->
+            <div style="margin-top: 40px; padding: 30px; background: var(--cream); border-radius: var(--radius-lg);">
+                <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); margin-bottom: 20px; text-align: center;">Did You Know?</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px;">
+                    <div style="text-align: center;">
+                        <div style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--gold-dark); margin-bottom: 5px;">7-9</div>
+                        <p style="font-size: 13px; color: var(--text-light);">Hours of sleep recommended for adults</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--gold-dark); margin-bottom: 5px;">4-6</div>
+                        <p style="font-size: 13px; color: var(--text-light);">Sleep cycles per night</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--gold-dark); margin-bottom: 5px;">90</div>
+                        <p style="font-size: 13px; color: var(--text-light);">Minutes per complete sleep cycle</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--gold-dark); margin-bottom: 5px;">25%</div>
+                        <p style="font-size: 13px; color: var(--text-light);">Of sleep spent in REM stage</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Modules Section -->
         <section class="dashboard-section" id="section-modules">
             <div class="section-header">
-                <h1>Therapeutic Resources</h1>
+                <div class="section-header-left">
+                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <h1>Sleep Resources</h1>
+                </div>
             </div>
 
             <p style="font-size: 15px; color: var(--text-light); margin-bottom: 25px;">
-                Access evidence-based therapeutic content to improve your sleep. Resources are unlocked based on your assessment results and consultation with Dr. Alen.
+                Access evidence-based content and techniques to improve your sleep. Resources are unlocked based on your assessment results and consultation with Dr. Alen.
             </p>
 
             <!-- Core Sleep Skills -->
@@ -2869,36 +4151,140 @@
         <!-- Profile Section -->
         <section class="dashboard-section" id="section-profile">
             <div class="section-header">
-                <h1>My Profile</h1>
+                <div class="section-header-left">
+                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <h1>My Profile</h1>
+                </div>
             </div>
 
-            <div class="profile-form">
-                <h3>Personal Information</h3>
-                <form id="profileForm" onsubmit="updateProfile(event)">
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" id="profileName" data-user-name>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <!-- Left Column - Editable Info -->
+                <div class="profile-form">
+                    <h3>Personal Information</h3>
+                    <form id="profileForm" onsubmit="updateProfile(event)">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="profileName" data-user-name>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="profileEmail" data-user-email disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone (optional)</label>
+                            <input type="tel" id="profilePhone">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="number" id="profileAge" min="18" max="120" placeholder="Enter age">
+                            </div>
+                            <div class="form-group">
+                                <label>Sex</label>
+                                <select id="profileSex">
+                                    <option value="">Select...</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other / Prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div class="form-group">
+                                <label>Height (cm)</label>
+                                <input type="number" id="profileHeight" min="100" max="250" placeholder="e.g., 175">
+                            </div>
+                            <div class="form-group">
+                                <label>Weight (kg)</label>
+                                <input type="number" id="profileWeight" min="30" max="300" placeholder="e.g., 70">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Client Type</label>
+                            <select id="profileClientType">
+                                <option value="athlete">Athlete</option>
+                                <option value="executive">Executive</option>
+                                <option value="hotel">Traveler</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Timezone</label>
+                            <select id="profileTimezone">
+                                <option value="America/New_York">Eastern Time (ET)</option>
+                                <option value="America/Chicago">Central Time (CT)</option>
+                                <option value="America/Denver">Mountain Time (MT)</option>
+                                <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                                <option value="Europe/London">London (GMT/BST)</option>
+                                <option value="Europe/Paris">Central European (CET)</option>
+                                <option value="Europe/Zagreb">Zagreb (CET)</option>
+                                <option value="Asia/Dubai">Dubai (GST)</option>
+                                <option value="Asia/Tokyo">Tokyo (JST)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary">Save Changes</button>
+                    </form>
+                </div>
+
+                <!-- Right Column - Assessment Summary -->
+                <div>
+                    <div class="profile-form">
+                        <h3>Health Summary</h3>
+                        <div id="profileHealthSummary" style="padding: 15px 0;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                                <div style="text-align: center; padding: 20px; background: var(--cream); border-radius: var(--radius-md);">
+                                    <div style="font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">BMI</div>
+                                    <div id="profileBMI" style="font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--navy);">--</div>
+                                    <div id="profileBMILabel" style="font-size: 12px; color: var(--text-light);">Not calculated</div>
+                                </div>
+                                <div style="text-align: center; padding: 20px; background: var(--cream); border-radius: var(--radius-md);">
+                                    <div style="font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Sleep Score</div>
+                                    <div id="profileSleepScore" style="font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--navy);">--</div>
+                                    <div style="font-size: 12px; color: var(--text-light);">Latest assessment</div>
+                                </div>
+                            </div>
+                            <p style="font-size: 13px; color: var(--text-light); margin-bottom: 15px;">
+                                Complete your assessment to populate your health summary and receive personalized recommendations.
+                            </p>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" id="profileEmail" data-user-email disabled>
+
+                    <div class="profile-form" style="margin-top: 20px;">
+                        <h3>Sleep Goals</h3>
+                        <div class="form-group">
+                            <label>Primary Sleep Goal</label>
+                            <select id="profileSleepGoal">
+                                <option value="">Select your main goal...</option>
+                                <option value="fall_asleep_faster">Fall asleep faster</option>
+                                <option value="stay_asleep">Stay asleep through the night</option>
+                                <option value="feel_rested">Wake up feeling more rested</option>
+                                <option value="consistent_schedule">Maintain consistent sleep schedule</option>
+                                <option value="reduce_snoring">Reduce snoring/sleep apnea</option>
+                                <option value="manage_shift_work">Manage shift work sleep</option>
+                                <option value="jet_lag">Better manage jet lag</option>
+                                <option value="performance">Optimize performance</option>
+                                <option value="general">General sleep improvement</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Notes for Dr. Alen (optional)</label>
+                            <textarea id="profileNotes" rows="3" placeholder="Any additional information about your sleep concerns..." style="width: 100%; padding: 12px; border: 1px solid rgba(201, 169, 98, 0.3); border-radius: var(--radius-sm); font-family: 'Montserrat', sans-serif; font-size: 14px;"></textarea>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Phone (optional)</label>
-                        <input type="tel" id="profilePhone">
-                    </div>
-                    <div class="form-group">
-                        <label>Client Type</label>
-                        <select id="profileClientType">
-                            <option value="athlete">Athlete</option>
-                            <option value="executive">Executive</option>
-                            <option value="hotel">Traveler</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn-primary">Save Changes</button>
-                </form>
+                </div>
             </div>
         </section>
+
+        <!-- Footer Disclaimer -->
+        <footer style="margin-top: 40px; padding: 20px 0; border-top: 1px solid rgba(201, 169, 98, 0.15);">
+            <p style="font-size: 11px; color: var(--text-light); line-height: 1.6; margin: 0; text-align: center;">
+                Sleep Wellness by Dr. Alen is a consulting service providing sleep education and wellness guidance.
+                This portal does not provide medical advice, diagnosis, or treatment.
+                Always consult a qualified healthcare provider for medical concerns.
+                <a href="#" onclick="showTermsModal()" style="color: var(--gold-dark); text-decoration: none; margin-left: 5px;">Terms of Service</a>
+            </p>
+        </footer>
     </main>
 </div>
 
@@ -3167,6 +4553,9 @@
 <script src="auth.js"></script>
 <script src="content.js"></script>
 <script src="questionnaires.js"></script>
+<!-- Chart.js for sleep analytics -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
 <script>
     let currentUser = null;
@@ -3716,7 +5105,7 @@
                     </svg>
                     <h3>No Assessments Yet</h3>
                     <p>Complete your first sleep assessment to track your progress.</p>
-                    <a href="index.html" class="btn-primary">Take Assessment</a>
+                    <a href="take-assessment.html" class="btn-primary">Take Assessment</a>
                 </div>
             `;
             return;
@@ -4012,6 +5401,734 @@
                 </div>
             `;
         }).join('');
+    }
+
+    // ==================== SLEEP ANALYTICS SYSTEM ====================
+
+    let analyticsCharts = {};
+    let currentAnalyticsPeriod = 7;
+    let allDiaryEntries = [];
+
+    // Switch diary tabs
+    function switchDiaryTab(tabName) {
+        // Update tab buttons
+        document.querySelectorAll('.diary-tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelector(`.diary-tab[onclick="switchDiaryTab('${tabName}')"]`).classList.add('active');
+
+        // Update tab content
+        document.querySelectorAll('.diary-tab-content').forEach(content => content.classList.remove('active'));
+        document.getElementById(`diary-tab-${tabName}`).classList.add('active');
+
+        // Load data for specific tabs
+        if (tabName === 'analytics') {
+            loadAnalytics();
+        } else if (tabName === 'history') {
+            loadDiaryEntries();
+        } else if (tabName === 'evening') {
+            initEveningCheckin();
+        }
+    }
+
+    // Set analytics period
+    function setAnalyticsPeriod(days) {
+        currentAnalyticsPeriod = days;
+        document.querySelectorAll('.period-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`.period-btn[onclick="setAnalyticsPeriod(${days})"]`).classList.add('active');
+        loadAnalytics();
+    }
+
+    // Load analytics data
+    async function loadAnalytics() {
+        try {
+            allDiaryEntries = await FirebaseDB.getDiaryEntries(currentUser.uid, 90);
+
+            if (allDiaryEntries.length === 0) {
+                showEmptyAnalytics();
+                return;
+            }
+
+            const periodEntries = filterEntriesByPeriod(allDiaryEntries, currentAnalyticsPeriod);
+
+            calculateAndDisplaySleepScore(allDiaryEntries);
+            calculateStreak(allDiaryEntries);
+            updateSummaryCards(periodEntries);
+            createCharts(periodEntries);
+            generateInsights(allDiaryEntries, periodEntries);
+            updateAchievements(allDiaryEntries);
+        } catch (error) {
+            console.error('Error loading analytics:', error);
+        }
+    }
+
+    function filterEntriesByPeriod(entries, days) {
+        const cutoff = new Date();
+        cutoff.setDate(cutoff.getDate() - days);
+        return entries.filter(e => new Date(e.date) >= cutoff);
+    }
+
+    function showEmptyAnalytics() {
+        document.getElementById('sleepScoreNumber').textContent = '--';
+        document.getElementById('sleepScoreTitle').textContent = 'Start Tracking';
+        document.getElementById('sleepScoreSubtitle').textContent = 'Log your first night to begin your sleep journey';
+    }
+
+    // Calculate composite sleep score (0-100)
+    function calculateAndDisplaySleepScore(entries) {
+        if (entries.length < 3) {
+            document.getElementById('sleepScoreTitle').textContent = 'Keep Logging';
+            document.getElementById('sleepScoreSubtitle').textContent = `${3 - entries.length} more nights needed for your score`;
+            return;
+        }
+
+        const recentEntries = entries.slice(0, 7);
+
+        // Duration score (7-9 hours is optimal)
+        const avgDuration = recentEntries.reduce((sum, e) => sum + (e.totalSleepTime || 0), 0) / recentEntries.length;
+        const durationHours = avgDuration / 60;
+        let durationScore;
+        if (durationHours >= 7 && durationHours <= 9) {
+            durationScore = 100;
+        } else if (durationHours >= 6 && durationHours < 7) {
+            durationScore = 70 + (durationHours - 6) * 30;
+        } else if (durationHours > 9 && durationHours <= 10) {
+            durationScore = 100 - (durationHours - 9) * 20;
+        } else if (durationHours < 6) {
+            durationScore = Math.max(0, durationHours / 6 * 70);
+        } else {
+            durationScore = Math.max(0, 80 - (durationHours - 10) * 20);
+        }
+
+        // Efficiency score
+        const avgEfficiency = recentEntries.reduce((sum, e) => sum + (e.sleepEfficiency || 0), 0) / recentEntries.length;
+        const efficiencyScore = Math.min(100, avgEfficiency * 1.18); // 85% efficiency = 100 score
+
+        // Quality score (1-5 scale to 0-100)
+        const avgQuality = recentEntries.reduce((sum, e) => sum + (e.quality || 3), 0) / recentEntries.length;
+        const qualityScore = ((avgQuality - 1) / 4) * 100;
+
+        // Consistency score (based on bedtime variance)
+        const bedtimes = recentEntries.filter(e => e.bedtime).map(e => {
+            const [h, m] = e.bedtime.split(':').map(Number);
+            return h < 12 ? h + 24 + m/60 : h + m/60; // Normalize to continuous scale
+        });
+        let consistencyScore = 100;
+        if (bedtimes.length >= 3) {
+            const mean = bedtimes.reduce((a, b) => a + b, 0) / bedtimes.length;
+            const variance = bedtimes.reduce((sum, bt) => sum + Math.pow(bt - mean, 2), 0) / bedtimes.length;
+            const stdDev = Math.sqrt(variance);
+            consistencyScore = Math.max(0, 100 - stdDev * 20); // Penalize variance
+        }
+
+        // Weighted composite score
+        const compositeScore = Math.round(
+            durationScore * 0.30 +
+            efficiencyScore * 0.30 +
+            qualityScore * 0.25 +
+            consistencyScore * 0.15
+        );
+
+        // Update UI
+        document.getElementById('sleepScoreNumber').textContent = compositeScore;
+        document.getElementById('scoreDuration').textContent = Math.round(durationScore);
+        document.getElementById('scoreEfficiency').textContent = Math.round(efficiencyScore);
+        document.getElementById('scoreQuality').textContent = Math.round(qualityScore);
+        document.getElementById('scoreConsistency').textContent = Math.round(consistencyScore);
+
+        // Update ring animation
+        const ring = document.getElementById('sleepScoreRing');
+        const circumference = 326.73;
+        const offset = circumference - (compositeScore / 100) * circumference;
+        ring.style.strokeDashoffset = offset;
+
+        // Update title based on score
+        let title, subtitle;
+        if (compositeScore >= 90) {
+            title = 'Excellent Sleep';
+            subtitle = 'Your sleep is outstanding. Keep it up!';
+        } else if (compositeScore >= 75) {
+            title = 'Good Sleep';
+            subtitle = 'Your sleep is healthy with room for improvement';
+        } else if (compositeScore >= 60) {
+            title = 'Fair Sleep';
+            subtitle = 'There are opportunities to improve your sleep';
+        } else {
+            title = 'Needs Attention';
+            subtitle = 'Consider reviewing your sleep habits';
+        }
+        document.getElementById('sleepScoreTitle').textContent = title;
+        document.getElementById('sleepScoreSubtitle').textContent = subtitle;
+    }
+
+    // Calculate logging streak
+    function calculateStreak(entries) {
+        if (entries.length === 0) {
+            document.getElementById('streakCount').textContent = '0 days';
+            return 0;
+        }
+
+        const sortedDates = entries.map(e => e.date).sort().reverse();
+        const today = new Date().toISOString().split('T')[0];
+        const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+
+        let streak = 0;
+        let checkDate = sortedDates[0] === today || sortedDates[0] === yesterday ?
+            new Date(sortedDates[0]) : null;
+
+        if (!checkDate) {
+            document.getElementById('streakCount').textContent = '0 days';
+            return 0;
+        }
+
+        const dateSet = new Set(sortedDates);
+        while (dateSet.has(checkDate.toISOString().split('T')[0])) {
+            streak++;
+            checkDate.setDate(checkDate.getDate() - 1);
+        }
+
+        document.getElementById('streakCount').textContent = streak === 1 ? '1 day' : `${streak} days`;
+
+        // Update streak icon based on streak length
+        const streakIcon = document.querySelector('.streak-icon');
+        if (streak >= 30) {
+            streakIcon.innerHTML = '<span style="font-size: 20px;">&#128293;</span>'; // Fire emoji
+        } else if (streak >= 7) {
+            streakIcon.innerHTML = '<span style="font-size: 20px;">&#11088;</span>'; // Star emoji
+        } else if (streak >= 3) {
+            streakIcon.innerHTML = '<span style="font-size: 20px;">&#9889;</span>'; // Lightning emoji
+        }
+
+        return streak;
+    }
+
+    // Update summary cards
+    function updateSummaryCards(entries) {
+        if (entries.length === 0) return;
+
+        // Average sleep time
+        const avgTST = entries.reduce((sum, e) => sum + (e.totalSleepTime || 0), 0) / entries.length;
+        const hours = Math.floor(avgTST / 60);
+        const mins = Math.round(avgTST % 60);
+        document.getElementById('avgSleepTime').textContent = `${hours}h ${mins}m`;
+
+        // Average bedtime
+        const bedtimes = entries.filter(e => e.bedtime).map(e => e.bedtime);
+        if (bedtimes.length > 0) {
+            const avgBedtimeMinutes = bedtimes.reduce((sum, bt) => {
+                const [h, m] = bt.split(':').map(Number);
+                return sum + (h < 12 ? (h + 24) * 60 + m : h * 60 + m);
+            }, 0) / bedtimes.length;
+            const avgHour = Math.floor(avgBedtimeMinutes / 60) % 24;
+            const avgMin = Math.round(avgBedtimeMinutes % 60);
+            const period = avgHour >= 12 ? 'PM' : 'AM';
+            const displayHour = avgHour % 12 || 12;
+            document.getElementById('avgBedtime').textContent = `${displayHour}:${avgMin.toString().padStart(2, '0')} ${period}`;
+        }
+
+        // Average efficiency
+        const avgEff = entries.reduce((sum, e) => sum + (e.sleepEfficiency || 0), 0) / entries.length;
+        document.getElementById('avgEfficiencySum').textContent = `${avgEff.toFixed(0)}%`;
+
+        // Average quality
+        const avgQual = entries.reduce((sum, e) => sum + (e.quality || 0), 0) / entries.length;
+        document.getElementById('avgQualitySum').textContent = `${avgQual.toFixed(1)}/5`;
+
+        // Average awakenings
+        const avgAwk = entries.reduce((sum, e) => sum + (e.awakenings || 0), 0) / entries.length;
+        document.getElementById('avgAwakenings').textContent = avgAwk.toFixed(1);
+
+        // Total nights
+        document.getElementById('totalNights').textContent = entries.length;
+    }
+
+    // Create charts
+    function createCharts(entries) {
+        if (entries.length === 0) return;
+
+        // Destroy existing charts
+        Object.values(analyticsCharts).forEach(chart => chart?.destroy());
+
+        const sortedEntries = [...entries].sort((a, b) => new Date(a.date) - new Date(b.date));
+        const labels = sortedEntries.map(e => {
+            const date = new Date(e.date);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        });
+
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: { font: { size: 10 }, color: '#666' }
+                },
+                y: {
+                    grid: { color: 'rgba(0,0,0,0.05)' },
+                    ticks: { font: { size: 10 }, color: '#666' }
+                }
+            }
+        };
+
+        // Duration chart
+        const durationCtx = document.getElementById('durationChart').getContext('2d');
+        analyticsCharts.duration = new Chart(durationCtx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: sortedEntries.map(e => (e.totalSleepTime || 0) / 60),
+                    borderColor: '#C9A962',
+                    backgroundColor: 'rgba(201, 169, 98, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#C9A962'
+                }]
+            },
+            options: {
+                ...chartOptions,
+                scales: {
+                    ...chartOptions.scales,
+                    y: {
+                        ...chartOptions.scales.y,
+                        min: 0,
+                        max: 12,
+                        ticks: {
+                            ...chartOptions.scales.y.ticks,
+                            callback: value => `${value}h`
+                        }
+                    }
+                }
+            }
+        });
+
+        // Update duration trend
+        updateTrend('durationTrend', sortedEntries.map(e => e.totalSleepTime || 0));
+
+        // Efficiency chart
+        const efficiencyCtx = document.getElementById('efficiencyChart').getContext('2d');
+        analyticsCharts.efficiency = new Chart(efficiencyCtx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: sortedEntries.map(e => e.sleepEfficiency || 0),
+                    borderColor: '#0f1c2e',
+                    backgroundColor: 'rgba(15, 28, 46, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#0f1c2e'
+                }]
+            },
+            options: {
+                ...chartOptions,
+                scales: {
+                    ...chartOptions.scales,
+                    y: {
+                        ...chartOptions.scales.y,
+                        min: 0,
+                        max: 100,
+                        ticks: {
+                            ...chartOptions.scales.y.ticks,
+                            callback: value => `${value}%`
+                        }
+                    }
+                }
+            }
+        });
+
+        // Update efficiency trend
+        updateTrend('efficiencyTrend', sortedEntries.map(e => e.sleepEfficiency || 0));
+
+        // Quality chart (bar)
+        const qualityCtx = document.getElementById('qualityChart').getContext('2d');
+        analyticsCharts.quality = new Chart(qualityCtx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: sortedEntries.map(e => e.quality || 0),
+                    backgroundColor: sortedEntries.map(e => {
+                        const q = e.quality || 0;
+                        if (q >= 4) return '#2E7D32';
+                        if (q >= 3) return '#F57C00';
+                        return '#C62828';
+                    }),
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                ...chartOptions,
+                scales: {
+                    ...chartOptions.scales,
+                    y: {
+                        ...chartOptions.scales.y,
+                        min: 0,
+                        max: 5
+                    }
+                }
+            }
+        });
+
+        // Bedtime consistency chart
+        const bedtimeData = sortedEntries.filter(e => e.bedtime).map(e => {
+            const [h, m] = e.bedtime.split(':').map(Number);
+            return h < 12 ? h + 24 + m/60 : h + m/60;
+        });
+        const bedtimeLabels = sortedEntries.filter(e => e.bedtime).map(e => {
+            const date = new Date(e.date);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        });
+
+        if (bedtimeData.length > 0) {
+            const bedtimeCtx = document.getElementById('bedtimeChart').getContext('2d');
+            analyticsCharts.bedtime = new Chart(bedtimeCtx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        data: bedtimeData.map((bt, i) => ({ x: i, y: bt })),
+                        backgroundColor: '#4A6085',
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    ...chartOptions,
+                    scales: {
+                        x: {
+                            ...chartOptions.scales.x,
+                            ticks: {
+                                ...chartOptions.scales.x.ticks,
+                                callback: (value, index) => bedtimeLabels[index] || ''
+                            }
+                        },
+                        y: {
+                            ...chartOptions.scales.y,
+                            min: 20, // 8 PM
+                            max: 28, // 4 AM
+                            ticks: {
+                                ...chartOptions.scales.y.ticks,
+                                callback: value => {
+                                    const h = Math.floor(value) % 24;
+                                    return `${h % 12 || 12}${h >= 12 ? 'AM' : 'PM'}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function updateTrend(elementId, data) {
+        if (data.length < 2) return;
+
+        const firstHalf = data.slice(0, Math.floor(data.length / 2));
+        const secondHalf = data.slice(Math.floor(data.length / 2));
+
+        const firstAvg = firstHalf.reduce((a, b) => a + b, 0) / firstHalf.length;
+        const secondAvg = secondHalf.reduce((a, b) => a + b, 0) / secondHalf.length;
+
+        const change = ((secondAvg - firstAvg) / firstAvg * 100).toFixed(1);
+        const trendEl = document.getElementById(elementId);
+
+        if (change > 0) {
+            trendEl.className = 'chart-trend up';
+            trendEl.querySelector('span').textContent = `+${change}%`;
+        } else if (change < 0) {
+            trendEl.className = 'chart-trend down';
+            trendEl.querySelector('span').textContent = `${change}%`;
+        } else {
+            trendEl.className = 'chart-trend neutral';
+            trendEl.querySelector('span').textContent = 'No change';
+        }
+    }
+
+    // Generate personalized insights
+    function generateInsights(allEntries, periodEntries) {
+        const insights = [];
+
+        if (allEntries.length < 7) {
+            document.getElementById('insightsList').innerHTML = `
+                <div class="insight-card">
+                    <div class="insight-type">Getting Started</div>
+                    <p class="insight-text">Log ${7 - allEntries.length} more nights to unlock personalized insights.</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Caffeine correlation
+        const caffeineNights = allEntries.filter(e => e.substances?.includes('caffeine'));
+        const noCaffeineNights = allEntries.filter(e => !e.substances?.includes('caffeine'));
+        if (caffeineNights.length >= 3 && noCaffeineNights.length >= 3) {
+            const caffeineEfficiency = caffeineNights.reduce((sum, e) => sum + (e.sleepEfficiency || 0), 0) / caffeineNights.length;
+            const noCaffeineEfficiency = noCaffeineNights.reduce((sum, e) => sum + (e.sleepEfficiency || 0), 0) / noCaffeineNights.length;
+            if (noCaffeineEfficiency - caffeineEfficiency > 5) {
+                insights.push({
+                    type: 'Pattern Detected',
+                    text: `Your sleep efficiency is ${(noCaffeineEfficiency - caffeineEfficiency).toFixed(0)}% higher on nights without caffeine. Consider reducing afternoon caffeine intake.`,
+                    action: 'Try limiting caffeine after 2 PM'
+                });
+            }
+        }
+
+        // Alcohol correlation
+        const alcoholNights = allEntries.filter(e => e.substances?.includes('alcohol'));
+        const noAlcoholNights = allEntries.filter(e => !e.substances?.includes('alcohol'));
+        if (alcoholNights.length >= 3 && noAlcoholNights.length >= 3) {
+            const alcoholQuality = alcoholNights.reduce((sum, e) => sum + (e.quality || 0), 0) / alcoholNights.length;
+            const noAlcoholQuality = noAlcoholNights.reduce((sum, e) => sum + (e.quality || 0), 0) / noAlcoholNights.length;
+            if (noAlcoholQuality - alcoholQuality > 0.5) {
+                insights.push({
+                    type: 'Pattern Detected',
+                    text: `Your sleep quality rating is ${(noAlcoholQuality - alcoholQuality).toFixed(1)} points higher on nights without alcohol.`,
+                    action: 'Consider alcohol-free nights for better rest'
+                });
+            }
+        }
+
+        // Weekend vs weekday
+        const weekendEntries = allEntries.filter(e => {
+            const day = new Date(e.date).getDay();
+            return day === 0 || day === 6;
+        });
+        const weekdayEntries = allEntries.filter(e => {
+            const day = new Date(e.date).getDay();
+            return day !== 0 && day !== 6;
+        });
+        if (weekendEntries.length >= 3 && weekdayEntries.length >= 5) {
+            const weekendSleep = weekendEntries.reduce((sum, e) => sum + (e.totalSleepTime || 0), 0) / weekendEntries.length;
+            const weekdaySleep = weekdayEntries.reduce((sum, e) => sum + (e.totalSleepTime || 0), 0) / weekdayEntries.length;
+            if (Math.abs(weekendSleep - weekdaySleep) > 60) {
+                insights.push({
+                    type: 'Consistency',
+                    text: `You sleep ${Math.abs((weekendSleep - weekdaySleep) / 60).toFixed(1)} hours ${weekendSleep > weekdaySleep ? 'more' : 'less'} on weekends. Large variations can disrupt your circadian rhythm.`,
+                    action: 'Try to maintain consistent sleep times all week'
+                });
+            }
+        }
+
+        // Latency issues
+        const avgLatency = allEntries.reduce((sum, e) => sum + (e.sleepLatency || 0), 0) / allEntries.length;
+        if (avgLatency > 30) {
+            insights.push({
+                type: 'Sleep Onset',
+                text: `Your average time to fall asleep is ${Math.round(avgLatency)} minutes, which is above the ideal 15-20 minutes.`,
+                action: 'Consider a wind-down routine before bed'
+            });
+        }
+
+        // Positive insight
+        const avgEfficiency = periodEntries.reduce((sum, e) => sum + (e.sleepEfficiency || 0), 0) / periodEntries.length;
+        if (avgEfficiency >= 85) {
+            insights.push({
+                type: 'Great Progress',
+                text: `Your sleep efficiency of ${avgEfficiency.toFixed(0)}% is excellent! This indicates you're spending your time in bed actually sleeping.`,
+                action: 'Keep up the good work!'
+            });
+        }
+
+        // Render insights
+        if (insights.length > 0) {
+            document.getElementById('insightsList').innerHTML = insights.map(insight => `
+                <div class="insight-card">
+                    <div class="insight-type">${insight.type}</div>
+                    <p class="insight-text">${insight.text}</p>
+                    ${insight.action ? `<div class="insight-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 18l6-6-6-6"/></svg> ${insight.action}</div>` : ''}
+                </div>
+            `).join('');
+        }
+    }
+
+    // Update achievements
+    function updateAchievements(entries) {
+        const streak = calculateStreak(entries);
+        const avgEfficiency = entries.length > 0 ?
+            entries.reduce((sum, e) => sum + (e.sleepEfficiency || 0), 0) / entries.length : 0;
+        const avgQuality = entries.length > 0 ?
+            entries.reduce((sum, e) => sum + (e.quality || 0), 0) / entries.length : 0;
+
+        // First log
+        if (entries.length >= 1) {
+            document.getElementById('badge-first-log').classList.remove('locked');
+            document.getElementById('badge-first-log').classList.add('earned');
+        }
+
+        // Week streak
+        if (streak >= 7) {
+            document.getElementById('badge-week-streak').classList.remove('locked');
+            document.getElementById('badge-week-streak').classList.add('earned');
+        }
+
+        // Month streak
+        if (streak >= 30) {
+            document.getElementById('badge-month-streak').classList.remove('locked');
+            document.getElementById('badge-month-streak').classList.add('earned');
+        }
+
+        // Efficiency master
+        if (avgEfficiency >= 85 && entries.length >= 7) {
+            document.getElementById('badge-efficiency-master').classList.remove('locked');
+            document.getElementById('badge-efficiency-master').classList.add('earned');
+        }
+
+        // Quality sleeper
+        if (avgQuality >= 4 && entries.length >= 7) {
+            document.getElementById('badge-quality-sleeper').classList.remove('locked');
+            document.getElementById('badge-quality-sleeper').classList.add('earned');
+        }
+    }
+
+    // ==================== EVENING CHECK-IN ====================
+
+    function initEveningCheckin() {
+        // Set today's date
+        document.getElementById('checkinDate').value = new Date().toISOString().split('T')[0];
+
+        // Initialize slider labels
+        updateSliderLabel(document.getElementById('checkinStress'), 'stressLabel');
+        updateSliderLabel(document.getElementById('checkinExercise'), 'exerciseLabel');
+        updateSliderLabel(document.getElementById('checkinCaffeine'), 'caffeineLabel');
+        updateSliderLabel(document.getElementById('checkinScreens'), 'screensLabel');
+        updateSliderLabel(document.getElementById('checkinMeals'), 'mealsLabel');
+        updateSliderLabel(document.getElementById('checkinMood'), 'moodLabel');
+
+        // Check if already submitted today
+        loadTodaysCheckin();
+    }
+
+    function updateSliderLabel(slider, labelId) {
+        const value = parseInt(slider.value);
+        const labels = {
+            'stressLabel': ['1 - Very low', '2 - Low', '3 - Mild', '4 - Mild', '5 - Moderate', '6 - Moderate', '7 - High', '8 - High', '9 - Very high', '10 - Extreme'],
+            'exerciseLabel': ['0 - None', '1 - Very light', '2 - Light activity', '3 - Moderate', '4 - Vigorous', '5 - Intense workout'],
+            'caffeineLabel': ['Just had some', '1 hour ago', '2 hours ago', '3 hours ago', '4 hours ago', '5 hours ago', '6 hours ago', '7 hours ago', '8+ hours ago', '9+ hours', '10+ hours', '11+ hours', 'No caffeine today'],
+            'screensLabel': ['0 - No screens', '1 - 30 min or less', '2 - 1 hour', '3 - 2+ hours', '4 - Right before bed'],
+            'mealsLabel': ['Just ate', '1 hour', '2 hours', '3+ hours', '4+ hours', '5+ hours', '6+ hours'],
+            'moodLabel': ['1 - Very low', '2 - Low', '3 - Neutral', '4 - Good', '5 - Great']
+        };
+        document.getElementById(labelId).textContent = labels[labelId]?.[value] || value;
+    }
+
+    async function loadTodaysCheckin() {
+        const today = new Date().toISOString().split('T')[0];
+        try {
+            const snapshot = await db.collection('eveningCheckins')
+                .where('userId', '==', currentUser.uid)
+                .where('date', '==', today)
+                .get();
+
+            if (!snapshot.empty) {
+                const checkin = snapshot.docs[0].data();
+                showCheckinSummary(checkin);
+                generateEveningTips(checkin);
+            }
+        } catch (error) {
+            console.error('Error loading checkin:', error);
+        }
+    }
+
+    async function saveEveningCheckin(e) {
+        e.preventDefault();
+
+        const checkin = {
+            userId: currentUser.uid,
+            date: document.getElementById('checkinDate').value || new Date().toISOString().split('T')[0],
+            stress: parseInt(document.getElementById('checkinStress').value),
+            exercise: parseInt(document.getElementById('checkinExercise').value),
+            caffeine: parseInt(document.getElementById('checkinCaffeine').value),
+            screens: parseInt(document.getElementById('checkinScreens').value),
+            meals: parseInt(document.getElementById('checkinMeals').value),
+            mood: parseInt(document.getElementById('checkinMood').value),
+            notes: document.getElementById('checkinNotes').value,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        try {
+            await db.collection('eveningCheckins').add(checkin);
+            showCheckinSummary(checkin);
+            generateEveningTips(checkin);
+            alert('Evening check-in saved! Check below for personalized tips.');
+        } catch (error) {
+            console.error('Error saving checkin:', error);
+            alert('Error saving check-in. Please try again.');
+        }
+    }
+
+    function showCheckinSummary(checkin) {
+        document.getElementById('todaysFactors').style.display = 'block';
+        document.getElementById('factorsSummary').innerHTML = `
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-top: 15px;">
+                <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <div style="font-size: 24px; color: var(--navy);">${checkin.stress}/10</div>
+                    <div style="font-size: 11px; color: var(--text-light);">Stress</div>
+                </div>
+                <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <div style="font-size: 24px; color: var(--navy);">${checkin.exercise}/5</div>
+                    <div style="font-size: 11px; color: var(--text-light);">Exercise</div>
+                </div>
+                <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <div style="font-size: 24px; color: var(--navy);">${checkin.mood}/5</div>
+                    <div style="font-size: 11px; color: var(--text-light);">Mood</div>
+                </div>
+            </div>
+        `;
+    }
+
+    function generateEveningTips(checkin) {
+        const tips = [];
+
+        if (checkin.stress >= 7) {
+            tips.push({
+                type: 'Stress Management',
+                text: 'High stress detected. Try the 4-7-8 breathing technique before bed: inhale for 4 seconds, hold for 7, exhale for 8.'
+            });
+        }
+
+        if (checkin.caffeine <= 4) {
+            tips.push({
+                type: 'Caffeine Alert',
+                text: 'You had caffeine recently. Consider drinking extra water and avoiding additional stimulants tonight.'
+            });
+        }
+
+        if (checkin.screens >= 3) {
+            tips.push({
+                type: 'Blue Light',
+                text: 'High screen time today. Enable night mode on devices and consider reading a physical book for 20 minutes before bed.'
+            });
+        }
+
+        if (checkin.meals <= 1) {
+            tips.push({
+                type: 'Digestion',
+                text: 'You ate recently. Light activity like a gentle walk can help digestion before bed.'
+            });
+        }
+
+        if (checkin.exercise >= 4) {
+            tips.push({
+                type: 'Recovery',
+                text: 'Intense exercise today - great! Make sure to stay hydrated and give your body time to cool down before bed.'
+            });
+        }
+
+        if (tips.length === 0) {
+            tips.push({
+                type: 'Looking Good',
+                text: 'Your evening habits look healthy tonight! Stick to your regular bedtime routine for optimal rest.'
+            });
+        }
+
+        document.getElementById('eveningTips').innerHTML = tips.map(tip => `
+            <div class="insight-card">
+                <div class="insight-type">${tip.type}</div>
+                <p class="insight-text">${tip.text}</p>
+            </div>
+        `).join('');
     }
 
     // Init messages
@@ -4421,6 +6538,395 @@
     function closeDischargeModal() {
         document.getElementById('dischargeModal').classList.remove('active');
         document.body.style.overflow = '';
+    }
+
+    // Sleep Education - Interactive Presentation
+    function openSleepPresentation() {
+        const modal = document.createElement('div');
+        modal.id = 'sleepPresentationModal';
+        modal.className = 'modal active';
+        modal.innerHTML = `
+            <div class="modal-content" style="max-width: 900px; height: 85vh; padding: 0; overflow: hidden;">
+                <button class="modal-close" onclick="closeSleepPresentation()" style="position: absolute; top: 15px; right: 20px; z-index: 100;">&times;</button>
+                <div id="presentationContainer" style="height: 100%; display: flex; flex-direction: column;">
+                    <div id="slideContent" style="flex: 1; overflow-y: auto;"></div>
+                    <div style="padding: 20px; border-top: 1px solid rgba(201, 169, 98, 0.2); display: flex; justify-content: space-between; align-items: center; background: var(--cream);">
+                        <button onclick="prevSlide()" id="prevBtn" class="btn-secondary" style="padding: 10px 20px;">Previous</button>
+                        <span id="slideIndicator" style="font-size: 13px; color: var(--text-light);">1 / 8</span>
+                        <button onclick="nextSlide()" id="nextBtn" class="btn-primary" style="padding: 10px 20px;">Next</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        document.body.style.overflow = 'hidden';
+        currentSlide = 0;
+        showSlide(0);
+    }
+
+    function closeSleepPresentation() {
+        const modal = document.getElementById('sleepPresentationModal');
+        if (modal) modal.remove();
+        document.body.style.overflow = '';
+    }
+
+    let currentSlide = 0;
+    const slides = [
+        {
+            title: "What is Sleep?",
+            content: `
+                <div style="padding: 50px 60px; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--gold) 0%, #d4b76d 100%); border-radius: 50%; margin: 0 auto 30px; display: flex; align-items: center; justify-content: center;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5" width="40" height="40">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </div>
+                    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--navy); margin-bottom: 25px;">What is Sleep?</h2>
+                    <p style="font-size: 18px; color: var(--text-light); max-width: 600px; margin: 0 auto 30px; line-height: 1.7;">
+                        Sleep is a naturally recurring state of reduced consciousness and sensory activity. Far from being "downtime," it's when your body and brain perform critical maintenance and restoration.
+                    </p>
+                    <div style="display: flex; justify-content: center; gap: 40px; margin-top: 40px;">
+                        <div style="text-align: center;">
+                            <div style="font-family: 'Cormorant Garamond', serif; font-size: 42px; color: var(--gold-dark);">1/3</div>
+                            <p style="font-size: 13px; color: var(--text-light);">of your life spent sleeping</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-family: 'Cormorant Garamond', serif; font-size: 42px; color: var(--gold-dark);">100+</div>
+                            <p style="font-size: 13px; color: var(--text-light);">biological processes during sleep</p>
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+        {
+            title: "The Two-Process Model",
+            content: `
+                <div style="padding: 50px 60px;">
+                    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--navy); margin-bottom: 15px; text-align: center;">How Sleep is Regulated</h2>
+                    <p style="font-size: 15px; color: var(--text-light); text-align: center; margin-bottom: 40px;">Two key processes work together to control when you feel sleepy and when you feel alert.</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                        <div style="background: linear-gradient(135deg, var(--navy) 0%, #1a2d47 100%); padding: 30px; border-radius: 16px; color: white;">
+                            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--gold); margin-bottom: 15px;">Process S: Sleep Pressure</h3>
+                            <p style="font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.8);">
+                                The longer you're awake, the more <strong>adenosine</strong> builds up in your brain, creating "sleep pressure." This is why you feel increasingly tired as the day goes on.
+                            </p>
+                            <p style="font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.8); margin-top: 15px;">
+                                <em>Caffeine works by blocking adenosine receptors, masking sleepiness but not eliminating the sleep debt.</em>
+                            </p>
+                        </div>
+                        <div style="background: var(--cream); padding: 30px; border-radius: 16px;">
+                            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--navy); margin-bottom: 15px;">Process C: Circadian Rhythm</h3>
+                            <p style="font-size: 14px; line-height: 1.7; color: var(--text-light);">
+                                Your internal 24-hour clock, located in the <strong>suprachiasmatic nucleus</strong>, responds to light and regulates your sleep-wake cycle.
+                            </p>
+                            <p style="font-size: 14px; line-height: 1.7; color: var(--text-light); margin-top: 15px;">
+                                <em>This is why jet lag occurs - your clock needs time to adjust to new time zones.</em>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+        {
+            title: "Sleep Stages",
+            content: `
+                <div style="padding: 50px 60px;">
+                    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--navy); margin-bottom: 30px; text-align: center;">The Architecture of Sleep</h2>
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <div style="display: flex; align-items: center; gap: 20px; padding: 20px; background: rgba(201, 169, 98, 0.08); border-radius: 12px; border-left: 4px solid #a8d5ba;">
+                            <div style="width: 60px; height: 60px; background: #a8d5ba; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 24px; color: white;">N1</div>
+                            <div style="flex: 1;">
+                                <h4 style="font-size: 16px; color: var(--navy); margin-bottom: 5px;">Stage 1: Light Sleep</h4>
+                                <p style="font-size: 13px; color: var(--text-light);">Transition between wakefulness and sleep. Lasts 5-10 minutes. Easy to wake from.</p>
+                            </div>
+                            <div style="font-size: 14px; color: var(--text-light);">~5%</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 20px; padding: 20px; background: rgba(201, 169, 98, 0.08); border-radius: 12px; border-left: 4px solid #7ec8e3;">
+                            <div style="width: 60px; height: 60px; background: #7ec8e3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 24px; color: white;">N2</div>
+                            <div style="flex: 1;">
+                                <h4 style="font-size: 16px; color: var(--navy); margin-bottom: 5px;">Stage 2: True Sleep</h4>
+                                <p style="font-size: 13px; color: var(--text-light);">Body temperature drops, heart rate slows. Sleep spindles help with memory consolidation.</p>
+                            </div>
+                            <div style="font-size: 14px; color: var(--text-light);">~45%</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 20px; padding: 20px; background: rgba(201, 169, 98, 0.08); border-radius: 12px; border-left: 4px solid #5b7db1;">
+                            <div style="width: 60px; height: 60px; background: #5b7db1; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 24px; color: white;">N3</div>
+                            <div style="flex: 1;">
+                                <h4 style="font-size: 16px; color: var(--navy); margin-bottom: 5px;">Stage 3: Deep Sleep</h4>
+                                <p style="font-size: 13px; color: var(--text-light);">Physical restoration, immune function, growth hormone release. Hardest to wake from.</p>
+                            </div>
+                            <div style="font-size: 14px; color: var(--text-light);">~25%</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 20px; padding: 20px; background: rgba(201, 169, 98, 0.08); border-radius: 12px; border-left: 4px solid var(--gold);">
+                            <div style="width: 60px; height: 60px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy);">REM</div>
+                            <div style="flex: 1;">
+                                <h4 style="font-size: 16px; color: var(--navy); margin-bottom: 5px;">REM Sleep</h4>
+                                <p style="font-size: 13px; color: var(--text-light);">Dreaming, emotional processing, creativity. Brain is highly active, body is paralyzed.</p>
+                            </div>
+                            <div style="font-size: 14px; color: var(--text-light);">~25%</div>
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+        {
+            title: "Sleep Cycles",
+            content: `
+                <div style="padding: 50px 60px; text-align: center;">
+                    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--navy); margin-bottom: 15px;">Sleep Cycles Through the Night</h2>
+                    <p style="font-size: 15px; color: var(--text-light); margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                        Each night, you cycle through all sleep stages multiple times. Each cycle lasts approximately 90 minutes.
+                    </p>
+                    <div style="background: var(--cream); padding: 30px; border-radius: 16px; margin-bottom: 30px;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end; height: 150px; padding: 0 20px;">
+                            <div style="text-align: center; flex: 1;">
+                                <div style="height: 120px; background: linear-gradient(to top, #5b7db1 60%, var(--gold) 40%); border-radius: 8px 8px 0 0; margin-bottom: 10px;"></div>
+                                <span style="font-size: 12px; color: var(--text-light);">Cycle 1</span>
+                            </div>
+                            <div style="text-align: center; flex: 1;">
+                                <div style="height: 110px; background: linear-gradient(to top, #5b7db1 50%, var(--gold) 50%); border-radius: 8px 8px 0 0; margin-bottom: 10px;"></div>
+                                <span style="font-size: 12px; color: var(--text-light);">Cycle 2</span>
+                            </div>
+                            <div style="text-align: center; flex: 1;">
+                                <div style="height: 100px; background: linear-gradient(to top, #5b7db1 40%, var(--gold) 60%); border-radius: 8px 8px 0 0; margin-bottom: 10px;"></div>
+                                <span style="font-size: 12px; color: var(--text-light);">Cycle 3</span>
+                            </div>
+                            <div style="text-align: center; flex: 1;">
+                                <div style="height: 90px; background: linear-gradient(to top, #5b7db1 30%, var(--gold) 70%); border-radius: 8px 8px 0 0; margin-bottom: 10px;"></div>
+                                <span style="font-size: 12px; color: var(--text-light);">Cycle 4</span>
+                            </div>
+                            <div style="text-align: center; flex: 1;">
+                                <div style="height: 80px; background: linear-gradient(to top, #5b7db1 20%, var(--gold) 80%); border-radius: 8px 8px 0 0; margin-bottom: 10px;"></div>
+                                <span style="font-size: 12px; color: var(--text-light);">Cycle 5</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: center; gap: 30px; margin-top: 20px;">
+                            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 16px; height: 16px; background: #5b7db1; border-radius: 3px;"></div><span style="font-size: 12px; color: var(--text-light);">Deep Sleep</span></div>
+                            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 16px; height: 16px; background: var(--gold); border-radius: 3px;"></div><span style="font-size: 12px; color: var(--text-light);">REM Sleep</span></div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-light); font-style: italic;">
+                        Deep sleep dominates early cycles, while REM sleep increases toward morning. This is why sleeping in can give you vivid dreams!
+                    </p>
+                </div>
+            `
+        },
+        {
+            title: "Why Sleep Matters",
+            content: `
+                <div style="padding: 50px 60px;">
+                    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--navy); margin-bottom: 30px; text-align: center;">The Power of Sleep</h2>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                        <div style="padding: 25px; background: white; border-radius: 12px; border: 1px solid rgba(201, 169, 98, 0.2);">
+                            <div style="width: 45px; height: 45px; background: rgba(201, 169, 98, 0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="1.5" width="22" height="22"><path d="M12 2a4 4 0 0 0-4 4c0 1.1.4 2.1 1.1 2.9L12 12l2.9-3.1A4 4 0 0 0 12 2z"/><path d="M12 12v10"/></svg>
+                            </div>
+                            <h4 style="font-size: 16px; color: var(--navy); margin-bottom: 8px;">Brain Health</h4>
+                            <p style="font-size: 13px; color: var(--text-light); line-height: 1.6;">Memory consolidation, toxin clearance via the glymphatic system, emotional regulation.</p>
+                        </div>
+                        <div style="padding: 25px; background: white; border-radius: 12px; border: 1px solid rgba(201, 169, 98, 0.2);">
+                            <div style="width: 45px; height: 45px; background: rgba(201, 169, 98, 0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="1.5" width="22" height="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                            </div>
+                            <h4 style="font-size: 16px; color: var(--navy); margin-bottom: 8px;">Heart Health</h4>
+                            <p style="font-size: 13px; color: var(--text-light); line-height: 1.6;">Blood pressure regulation, reduced inflammation, cardiovascular recovery.</p>
+                        </div>
+                        <div style="padding: 25px; background: white; border-radius: 12px; border: 1px solid rgba(201, 169, 98, 0.2);">
+                            <div style="width: 45px; height: 45px; background: rgba(201, 169, 98, 0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="1.5" width="22" height="22"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                            </div>
+                            <h4 style="font-size: 16px; color: var(--navy); margin-bottom: 8px;">Metabolism</h4>
+                            <p style="font-size: 13px; color: var(--text-light); line-height: 1.6;">Hormone balance, appetite regulation (ghrelin/leptin), blood sugar control.</p>
+                        </div>
+                        <div style="padding: 25px; background: white; border-radius: 12px; border: 1px solid rgba(201, 169, 98, 0.2);">
+                            <div style="width: 45px; height: 45px; background: rgba(201, 169, 98, 0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="1.5" width="22" height="22"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </div>
+                            <h4 style="font-size: 16px; color: var(--navy); margin-bottom: 8px;">Immune Function</h4>
+                            <p style="font-size: 13px; color: var(--text-light); line-height: 1.6;">T-cell production, antibody response, faster recovery from illness.</p>
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+        {
+            title: "Sleep Deprivation",
+            content: `
+                <div style="padding: 50px 60px;">
+                    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--navy); margin-bottom: 15px; text-align: center;">The Cost of Poor Sleep</h2>
+                    <p style="font-size: 15px; color: var(--text-light); text-align: center; margin-bottom: 35px;">Even modest sleep loss has measurable effects on your body and mind.</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 25px;">
+                        <div style="text-align: center; padding: 25px; background: rgba(239, 68, 68, 0.05); border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2);">
+                            <div style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: #dc2626; margin-bottom: 10px;">24h</div>
+                            <h4 style="font-size: 14px; color: var(--navy); margin-bottom: 8px;">After 1 Day</h4>
+                            <p style="font-size: 12px; color: var(--text-light);">Impaired judgment similar to 0.1% blood alcohol. Reduced reaction time.</p>
+                        </div>
+                        <div style="text-align: center; padding: 25px; background: rgba(239, 68, 68, 0.08); border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.25);">
+                            <div style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: #dc2626; margin-bottom: 10px;">1 Week</div>
+                            <h4 style="font-size: 14px; color: var(--navy); margin-bottom: 8px;">Chronic Restriction</h4>
+                            <p style="font-size: 12px; color: var(--text-light);">Increased cortisol, impaired glucose tolerance, weakened immunity.</p>
+                        </div>
+                        <div style="text-align: center; padding: 25px; background: rgba(239, 68, 68, 0.12); border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.3);">
+                            <div style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: #dc2626; margin-bottom: 10px;">Long-term</div>
+                            <h4 style="font-size: 14px; color: var(--navy); margin-bottom: 8px;">Accumulated Debt</h4>
+                            <p style="font-size: 12px; color: var(--text-light);">Higher risk of obesity, diabetes, heart disease, and cognitive decline.</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 30px; padding: 20px; background: rgba(201, 169, 98, 0.1); border-radius: 12px; text-align: center;">
+                        <p style="font-size: 14px; color: var(--navy); margin: 0;"><strong>The good news:</strong> Most effects of sleep deprivation are reversible with consistent, quality sleep.</p>
+                    </div>
+                </div>
+            `
+        },
+        {
+            title: "Sleep Hygiene Basics",
+            content: `
+                <div style="padding: 50px 60px;">
+                    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--navy); margin-bottom: 30px; text-align: center;">Foundations of Good Sleep</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div style="display: flex; align-items: flex-start; gap: 15px; padding: 20px; background: white; border-radius: 12px; border: 1px solid rgba(201, 169, 98, 0.2);">
+                            <div style="width: 40px; height: 40px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--navy); font-weight: bold;">1</div>
+                            <div>
+                                <h4 style="font-size: 15px; color: var(--navy); margin-bottom: 5px;">Consistent Schedule</h4>
+                                <p style="font-size: 13px; color: var(--text-light);">Go to bed and wake up at the same time every day, even on weekends.</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 15px; padding: 20px; background: white; border-radius: 12px; border: 1px solid rgba(201, 169, 98, 0.2);">
+                            <div style="width: 40px; height: 40px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--navy); font-weight: bold;">2</div>
+                            <div>
+                                <h4 style="font-size: 15px; color: var(--navy); margin-bottom: 5px;">Dark Environment</h4>
+                                <p style="font-size: 13px; color: var(--text-light);">Use blackout curtains and eliminate light sources. Light suppresses melatonin.</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 15px; padding: 20px; background: white; border-radius: 12px; border: 1px solid rgba(201, 169, 98, 0.2);">
+                            <div style="width: 40px; height: 40px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--navy); font-weight: bold;">3</div>
+                            <div>
+                                <h4 style="font-size: 15px; color: var(--navy); margin-bottom: 5px;">Cool Temperature</h4>
+                                <p style="font-size: 13px; color: var(--text-light);">Keep bedroom at 65-68°F (18-20°C). Cool temperatures promote deep sleep.</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 15px; padding: 20px; background: white; border-radius: 12px; border: 1px solid rgba(201, 169, 98, 0.2);">
+                            <div style="width: 40px; height: 40px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--navy); font-weight: bold;">4</div>
+                            <div>
+                                <h4 style="font-size: 15px; color: var(--navy); margin-bottom: 5px;">Limit Screens</h4>
+                                <p style="font-size: 13px; color: var(--text-light);">Avoid blue light 1-2 hours before bed. Use night mode if necessary.</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 15px; padding: 20px; background: white; border-radius: 12px; border: 1px solid rgba(201, 169, 98, 0.2);">
+                            <div style="width: 40px; height: 40px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--navy); font-weight: bold;">5</div>
+                            <div>
+                                <h4 style="font-size: 15px; color: var(--navy); margin-bottom: 5px;">Watch Caffeine</h4>
+                                <p style="font-size: 13px; color: var(--text-light);">Avoid caffeine at least 6 hours before bed. It has a half-life of 5-6 hours.</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 15px; padding: 20px; background: white; border-radius: 12px; border: 1px solid rgba(201, 169, 98, 0.2);">
+                            <div style="width: 40px; height: 40px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--navy); font-weight: bold;">6</div>
+                            <div>
+                                <h4 style="font-size: 15px; color: var(--navy); margin-bottom: 5px;">Wind-Down Routine</h4>
+                                <p style="font-size: 13px; color: var(--text-light);">Create a relaxing pre-sleep ritual to signal your body it's time to rest.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+        {
+            title: "Your Sleep Journey",
+            content: `
+                <div style="padding: 50px 60px; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--gold) 0%, #d4b76d 100%); border-radius: 50%; margin: 0 auto 30px; display: flex; align-items: center; justify-content: center;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5" width="40" height="40">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--navy); margin-bottom: 20px;">Start Your Journey</h2>
+                    <p style="font-size: 18px; color: var(--text-light); max-width: 550px; margin: 0 auto 35px; line-height: 1.7;">
+                        Understanding sleep is the first step. Now it's time to take action and improve your rest.
+                    </p>
+                    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                        <button onclick="closeSleepPresentation(); showSection('dashboard');" class="btn-primary" style="padding: 14px 28px;">Take Sleep Assessment</button>
+                        <button onclick="closeSleepPresentation(); downloadPDF('general');" class="btn-secondary" style="padding: 14px 28px;">Download Guide</button>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-light); margin-top: 40px;">
+                        Questions? Send a message to Dr. Alen through the portal.
+                    </p>
+                </div>
+            `
+        }
+    ];
+
+    function showSlide(index) {
+        const container = document.getElementById('slideContent');
+        container.innerHTML = slides[index].content;
+        document.getElementById('slideIndicator').textContent = (index + 1) + ' / ' + slides.length;
+        document.getElementById('prevBtn').style.visibility = index === 0 ? 'hidden' : 'visible';
+        document.getElementById('nextBtn').textContent = index === slides.length - 1 ? 'Close' : 'Next';
+    }
+
+    function nextSlide() {
+        if (currentSlide < slides.length - 1) {
+            currentSlide++;
+            showSlide(currentSlide);
+        } else {
+            closeSleepPresentation();
+        }
+    }
+
+    function prevSlide() {
+        if (currentSlide > 0) {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+    }
+
+    // Download PDF function - opens professional sleep guides
+    function downloadPDF(type) {
+        const guides = {
+            general: 'guides/sleep-guide-general.html',
+            athletes: 'guides/sleep-guide-athletes.html',
+            executives: 'guides/sleep-guide-executives.html'
+        };
+
+        // Open the guide in a new tab
+        window.open(guides[type], '_blank');
+    }
+
+    // Terms of Service Modal
+    function showTermsModal() {
+        const modal = document.createElement('div');
+        modal.id = 'termsModal';
+        modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px;';
+        modal.innerHTML = `
+            <div style="background: white; max-width: 650px; max-height: 85vh; overflow-y: auto; padding: 35px; border-radius: 16px; position: relative;">
+                <button onclick="document.getElementById('termsModal').remove()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">&times;</button>
+                <h2 style="font-family: 'Cormorant Garamond', serif; color: var(--navy); margin-bottom: 25px; font-size: 28px;">Terms of Service</h2>
+                <div style="font-size: 14px; line-height: 1.7; color: var(--text-light);">
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 0 0 12px;">Nature of Services</h3>
+                    <p style="margin-bottom: 20px;">Sleep Wellness by Dr. Alen ("the Service") is a consulting and educational service focused on sleep wellness. <strong>The Service is not a medical practice and does not provide medical advice, diagnosis, or treatment.</strong> Dr. Alen Juginovic provides sleep wellness consulting based on his expertise in sleep science.</p>
+
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 0 0 12px;">Not Medical Advice</h3>
+                    <p style="margin-bottom: 20px;">All information, assessments, recommendations, and resources provided through this portal are for informational and educational purposes only. They are not intended to replace professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified healthcare provider with any questions you may have regarding a medical condition or sleep disorder.</p>
+
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 0 0 12px;">Emergency Situations</h3>
+                    <p style="margin-bottom: 20px;">If you think you may have a medical emergency, call your doctor or emergency services immediately. The Service does not provide emergency medical services.</p>
+
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 0 0 12px;">Your Responsibilities</h3>
+                    <p style="margin-bottom: 20px;">You are responsible for your own health decisions. Any actions you take based on information from this Service are at your own discretion and risk. You agree to consult with appropriate healthcare professionals before making any changes to your health regimen.</p>
+
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 0 0 12px;">Data Collection & Privacy</h3>
+                    <p style="margin-bottom: 20px;">We collect sleep-related information to provide personalized guidance. All data is kept confidential and used solely for the purpose of improving your sleep wellness experience. You may provide as much or as little information as you are comfortable sharing. You may request deletion of your data at any time.</p>
+
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 0 0 12px;">Limitation of Liability</h3>
+                    <p style="margin-bottom: 20px;">The Service and its providers shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use of information or recommendations provided through this portal.</p>
+
+                    <h3 style="color: var(--navy); font-size: 16px; margin: 0 0 12px;">Contact</h3>
+                    <p>For questions about these terms, contact Dr. Alen Juginovic at alen_juginovic@hms.harvard.edu</p>
+                </div>
+                <button onclick="document.getElementById('termsModal').remove()" style="margin-top: 25px; padding: 14px 28px; background: var(--gold); color: var(--deep-navy); border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-family: 'Montserrat', sans-serif;">Close</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
     }
 
     function setSatisfaction(value) {

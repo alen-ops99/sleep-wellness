@@ -21,6 +21,13 @@ service cloud.firestore {
       allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
+    // Evening check-ins - users can manage their own, admins can read all
+    match /eveningCheckins/{checkinId} {
+      allow read, write: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
     // Assessments - users can manage their own, admins can read all
     match /assessments/{assessmentId} {
       allow read, write: if request.auth != null && resource.data.userId == request.auth.uid;
