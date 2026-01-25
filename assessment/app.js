@@ -30,9 +30,16 @@ const App = {
         console.log('App.init() starting...');
 
         // Load saved data
-        this.responses = Storage.getResponses();
-        this.clientType = Storage.getClientType();
-        this.currentStep = Storage.getCurrentStep();
+        this.responses = Storage.getResponses() || {};
+        this.clientType = Storage.getClientType() || null;
+        const savedStep = Storage.getCurrentStep();
+
+        // Default to welcome if no saved step or invalid step
+        if (savedStep && this.steps.includes(savedStep)) {
+            this.currentStep = savedStep;
+        } else {
+            this.currentStep = 'welcome';
+        }
 
         console.log('Loaded state:', { responses: this.responses, clientType: this.clientType, currentStep: this.currentStep });
 
@@ -83,10 +90,20 @@ const App = {
      * Render questionnaire questions
      */
     renderQuestionnaires() {
-        Questionnaires.renderQuestions(Questionnaires.epworth, 'epworthQuestions', this.responses);
-        Questionnaires.renderQuestions(Questionnaires.isi, 'isiQuestions', this.responses);
-        this.renderStopBangQuestions();
-        this.renderDisorderQuestions();
+        try {
+            console.log('Rendering questionnaires...');
+            if (typeof Questionnaires !== 'undefined' && Questionnaires.renderQuestions) {
+                Questionnaires.renderQuestions(Questionnaires.epworth, 'epworthQuestions', this.responses);
+                Questionnaires.renderQuestions(Questionnaires.isi, 'isiQuestions', this.responses);
+            } else {
+                console.warn('Questionnaires.renderQuestions not available');
+            }
+            this.renderStopBangQuestions();
+            this.renderDisorderQuestions();
+            console.log('Questionnaires rendered');
+        } catch (error) {
+            console.error('Error rendering questionnaires:', error);
+        }
     },
 
     /**
@@ -260,13 +277,39 @@ const App = {
     startAssessment() {
         console.log('startAssessment() called');
         console.log('Current step before:', this.currentStep);
-        this.currentStep = 'clientType';
-        Storage.saveCurrentStep('clientType');
-        this.showStep('clientType');
-        this.updateProgress();
-        this.renderStepIndicators();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        console.log('Current step after:', this.currentStep);
+
+        try {
+            this.currentStep = 'clientType';
+            Storage.saveCurrentStep('clientType');
+
+            // Force show the clientType step
+            const allSections = document.querySelectorAll('.step-section');
+            console.log('Found sections:', allSections.length);
+
+            allSections.forEach(section => {
+                section.classList.remove('active');
+                section.style.display = 'none';
+            });
+
+            const clientTypeSection = document.querySelector('[data-step="clientType"]');
+            if (clientTypeSection) {
+                clientTypeSection.classList.add('active');
+                clientTypeSection.style.display = 'block';
+                clientTypeSection.style.visibility = 'visible';
+                console.log('ClientType section shown');
+            } else {
+                console.error('ClientType section NOT FOUND');
+                alert('Error: Could not find client type section');
+            }
+
+            this.updateProgress();
+            this.renderStepIndicators();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            console.log('Current step after:', this.currentStep);
+        } catch (error) {
+            console.error('Error in startAssessment:', error);
+            alert('Error starting assessment: ' + error.message);
+        }
     },
 
     /**

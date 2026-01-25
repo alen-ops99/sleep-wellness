@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Science of Better Sleep | Sleep Wellness by Dr. Alen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-navy: #0f1c2e;
+            --navy: #1a2d42;
+            --gold: #C9A962;
+            --gold-dark: #a68a4a;
+            --cream: #FAF8F5;
+            --text-dark: #2c3e50;
+            --text-light: #6c7b8a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: white;
+            color: var(--text-dark);
+            line-height: 1.7;
+            font-size: 11pt;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: 0 auto;
+            background: white;
+            page-break-after: always;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        /* Cover Page */
+        .cover {
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--navy) 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(201, 169, 98, 0.08) 0%, transparent 70%);
+        }
+
+        .cover-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14pt;
+            letter-spacing: 3px;
+            color: var(--gold);
+            margin-bottom: 60px;
+            text-transform: uppercase;
+        }
+
+        .cover-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42pt;
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            max-width: 80%;
+        }
+
+        .cover-subtitle {
+            font-size: 12pt;
+            font-weight: 300;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 80px;
+            letter-spacing: 1px;
+        }
+
+        .cover-author {
+            font-size: 11pt;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .cover-credentials {
+            font-size: 9pt;
+            color: rgba(255,255,255,0.6);
+            max-width: 70%;
+        }
+
+        .gold-line {
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            margin: 40px auto;
+        }
+
+        /* Content Pages */
+        .content-page {
+            position: relative;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.3);
+            margin-bottom: 25px;
+        }
+
+        .page-header-left {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 10pt;
+            color: var(--gold-dark);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .page-header-right {
+            font-size: 9pt;
+            color: var(--text-light);
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28pt;
+            color: var(--navy);
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18pt;
+            color: var(--navy);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14pt;
+            color: var(--gold-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .intro-text {
+            font-size: 12pt;
+            color: var(--text-light);
+            border-left: 3px solid var(--gold);
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(201, 169, 98, 0.1) 0%, rgba(201, 169, 98, 0.05) 100%);
+            border-left: 4px solid var(--gold);
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .highlight-box h3 {
+            margin-top: 0;
+            color: var(--navy);
+        }
+
+        .stat-row {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-box {
+            flex: 1;
+            background: var(--cream);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32pt;
+            color: var(--gold-dark);
+            font-weight: 600;
+        }
+
+        .stat-label {
+            font-size: 9pt;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        ul, ol {
+            margin: 15px 0 20px 25px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .tip-list {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .tip-list li {
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .tip-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+
+        .stages-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .stage-card {
+            background: var(--cream);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .stage-card h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13pt;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .stage-card p {
+            font-size: 10pt;
+            margin-bottom: 0;
+            text-align: left;
+        }
+
+        .cycle-visual {
+            background: var(--deep-navy);
+            color: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .cycle-visual h3 {
+            color: var(--gold);
+            margin-top: 0;
+        }
+
+        .cycle-visual p {
+            color: rgba(255,255,255,0.8);
+            text-align: center;
+        }
+
+        .cycle-stages {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .cycle-stage {
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            font-size: 9pt;
+        }
+
+        .cycle-stage.rem {
+            background: var(--gold);
+            color: var(--deep-navy);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20mm;
+            left: 20mm;
+            right: 20mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+            font-size: 8pt;
+            color: var(--text-light);
+        }
+
+        .page-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 10pt;
+            color: var(--gold-dark);
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .checklist {
+            background: var(--cream);
+            padding: 25px;
+            border-radius: 16px;
+            margin: 25px 0;
+        }
+
+        .checklist h3 {
+            margin-top: 0;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .check-box {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--gold);
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        @media print {
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+
+        @media screen {
+            body {
+                background: #e5e5e5;
+                padding: 20px;
+            }
+            .page {
+                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cover Page -->
+    <div class="page cover">
+        <div class="cover-logo">Sleep Wellness</div>
+        <h1 class="cover-title">The Science of Better Sleep</h1>
+        <p class="cover-subtitle">A Comprehensive Guide to Understanding and Improving Your Sleep</p>
+        <div class="gold-line"></div>
+        <p class="cover-author">Dr. Alen Juginovic, M.D.</p>
+        <p class="cover-credentials">Harvard Medical School Researcher | Sleep Science Expert<br>Author of "Sleep Science Made Simple" (Springer)</p>
+    </div>
+
+    <!-- Page 2: Introduction -->
+    <div class="page content-page">
+        <div class="page-header">
+            <span class="page-header-left">Sleep Wellness Guide</span>
+            <span class="page-header-right">The Science of Better Sleep</span>
+        </div>
+
+        <h1>Why Sleep Matters</h1>
+
+        <p class="intro-text">
+            Sleep is not merely the absence of wakefulness—it's an active, vital process that touches every aspect of your physical and mental well-being. Understanding sleep science is the first step toward transforming your nights and, by extension, your days.
+        </p>
+
+        <div class="stat-row">
+            <div class="stat-box">
+                <div class="stat-number">7-9</div>
+                <div class="stat-label">Optimal Hours<br>for Adults</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">4-6</div>
+                <div class="stat-label">Sleep Cycles<br>Per Night</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">90</div>
+                <div class="stat-label">Minutes Per<br>Complete Cycle</div>
+            </div>
+        </div>
+
+        <h2>The Two-Process Model of Sleep</h2>
+
+        <p>Sleep regulation is governed by two interacting processes that work together to determine when you feel sleepy and when you feel alert:</p>
+
+        <div class="highlight-box">
+            <h3>Process S: Sleep Pressure</h3>
+            <p>This is the homeostatic drive for sleep. From the moment you wake up, a chemical called adenosine begins accumulating in your brain. The longer you're awake, the more adenosine builds up, and the sleepier you feel. Sleep clears this adenosine, resetting the clock.</p>
+        </div>
+
+        <div class="highlight-box">
+            <h3>Process C: Circadian Rhythm</h3>
+            <p>Your internal 24-hour clock, controlled by the suprachiasmatic nucleus in your brain, regulates your alertness throughout the day. This rhythm is influenced primarily by light exposure, which is why morning sunlight and evening darkness are so powerful for sleep quality.</p>
+        </div>
+
+        <p>When these two processes align—high sleep pressure meets the circadian "sleep window"—you fall asleep easily and stay asleep through the night.</p>
+
+        <div class="footer">
+            <span>© Sleep Wellness by Dr. Alen</span>
+            <span class="page-number">2</span>
+        </div>
+    </div>
+
+    <!-- Page 3: Sleep Architecture -->
+    <div class="page content-page">
+        <div class="page-header">
+            <span class="page-header-left">Sleep Wellness Guide</span>
+            <span class="page-header-right">The Science of Better Sleep</span>
+        </div>
+
+        <h1>Understanding Sleep Stages</h1>
+
+        <p>Sleep isn't a uniform state. Throughout the night, your brain cycles through distinct stages, each serving unique restorative functions.</p>
+
+        <div class="stages-grid">
+            <div class="stage-card">
+                <h4>Stage N1 — Light Sleep</h4>
+                <p>The transition from wake to sleep. Muscles relax, heart rate slows, and you may experience hypnic jerks. This stage typically lasts only 5-10 minutes.</p>
+            </div>
+            <div class="stage-card">
+                <h4>Stage N2 — True Sleep</h4>
+                <p>Body temperature drops and brain waves slow with occasional bursts called "sleep spindles." You spend about 50% of your night here.</p>
+            </div>
+            <div class="stage-card">
+                <h4>Stage N3 — Deep Sleep</h4>
+                <p>The most restorative stage. Growth hormone is released, tissues repair, immune function strengthens. Very difficult to wake from this stage.</p>
+            </div>
+            <div class="stage-card">
+                <h4>REM Sleep — Dreams</h4>
+                <p>Brain activity increases dramatically. Vivid dreaming occurs. Memory consolidation and emotional processing take place. Muscles are temporarily paralyzed.</p>
+            </div>
+        </div>
+
+        <div class="cycle-visual">
+            <h3>A Complete Sleep Cycle (~90 minutes)</h3>
+            <div class="cycle-stages">
+                <div class="cycle-stage">N1</div>
+                <div class="cycle-stage">N2</div>
+                <div class="cycle-stage">N3</div>
+                <div class="cycle-stage">N2</div>
+                <div class="cycle-stage rem">REM</div>
+            </div>
+            <p>You complete 4-6 of these cycles each night. Early cycles have more deep sleep; later cycles have more REM sleep.</p>
+        </div>
+
+        <h2>Why Each Stage Matters</h2>
+
+        <ul class="tip-list">
+            <li><strong>Deep Sleep (N3)</strong> is essential for physical restoration, immune function, and feeling refreshed. Shortchanging deep sleep leads to feeling physically tired despite adequate sleep duration.</li>
+            <li><strong>REM Sleep</strong> is critical for learning, memory, creativity, and emotional regulation. Alcohol particularly suppresses REM sleep, which is why you may feel mentally foggy after drinking.</li>
+            <li><strong>Sleep Spindles (N2)</strong> are linked to intelligence and learning ability. Quality sleep enhances these protective bursts that shield your sleep from disruption.</li>
+        </ul>
+
+        <div class="footer">
+            <span>© Sleep Wellness by Dr. Alen</span>
+            <span class="page-number">3</span>
+        </div>
+    </div>
+
+    <!-- Page 4: Sleep Deprivation -->
+    <div class="page content-page">
+        <div class="page-header">
+            <span class="page-header-left">Sleep Wellness Guide</span>
+            <span class="page-header-right">The Science of Better Sleep</span>
+        </div>
+
+        <h1>The Cost of Poor Sleep</h1>
+
+        <p class="intro-text">
+            Chronic sleep deprivation isn't just about feeling tired. Research from Harvard and institutions worldwide reveals that insufficient sleep affects virtually every system in your body.
+        </p>
+
+        <div class="two-column">
+            <div>
+                <h3>Cognitive Impact</h3>
+                <ul>
+                    <li>Impaired attention and concentration</li>
+                    <li>Reduced decision-making ability</li>
+                    <li>Memory consolidation problems</li>
+                    <li>Slower reaction times</li>
+                    <li>Increased risk of accidents</li>
+                </ul>
+
+                <h3>Metabolic Effects</h3>
+                <ul>
+                    <li>Increased appetite and cravings</li>
+                    <li>Insulin resistance</li>
+                    <li>Weight gain promotion</li>
+                    <li>Higher diabetes risk</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Emotional Health</h3>
+                <ul>
+                    <li>Heightened emotional reactivity</li>
+                    <li>Increased anxiety and irritability</li>
+                    <li>Greater risk of depression</li>
+                    <li>Reduced stress tolerance</li>
+                </ul>
+
+                <h3>Physical Health</h3>
+                <ul>
+                    <li>Weakened immune system</li>
+                    <li>Increased inflammation</li>
+                    <li>Elevated blood pressure</li>
+                    <li>Higher cardiovascular risk</li>
+                    <li>Accelerated aging</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>The Sleep Debt Myth</h3>
+            <p>Many people believe they can "catch up" on sleep over the weekend. While recovery sleep helps, research shows that the cognitive deficits from sleep deprivation accumulate and cannot be fully erased by occasional longer sleep. Consistency is key—your brain and body need regular, quality sleep to function optimally.</p>
+        </div>
+
+        <h2>Warning Signs You're Not Getting Enough</h2>
+
+        <ul class="tip-list">
+            <li>You need an alarm clock to wake up (and often hit snooze)</li>
+            <li>You fall asleep within 5 minutes of lying down (a sign of sleep deprivation, not good sleep)</li>
+            <li>You rely on caffeine to function throughout the day</li>
+            <li>You feel drowsy during meetings, while driving, or after meals</li>
+            <li>You sleep significantly more on weekends than weekdays</li>
+        </ul>
+
+        <div class="footer">
+            <span>© Sleep Wellness by Dr. Alen</span>
+            <span class="page-number">4</span>
+        </div>
+    </div>
+
+    <!-- Page 5: Sleep Hygiene -->
+    <div class="page content-page">
+        <div class="page-header">
+            <span class="page-header-left">Sleep Wellness Guide</span>
+            <span class="page-header-right">The Science of Better Sleep</span>
+        </div>
+
+        <h1>The Foundation: Sleep Hygiene</h1>
+
+        <p>Sleep hygiene refers to the behaviors and environmental factors that promote consistent, quality sleep. These evidence-based practices form the foundation of good sleep.</p>
+
+        <h2>Your Sleep Environment</h2>
+
+        <div class="highlight-box">
+            <h3>Temperature</h3>
+            <p>Your body needs to drop its core temperature to initiate sleep. Keep your bedroom cool—between 65-68°F (18-20°C) is optimal for most people. A warm bath before bed can paradoxically help by causing your body to cool down afterward.</p>
+        </div>
+
+        <div class="two-column">
+            <div>
+                <h3>Darkness</h3>
+                <p>Light is the most powerful signal to your circadian clock. Even small amounts of light can suppress melatonin production. Use blackout curtains, remove or cover electronic lights, and avoid screens before bed.</p>
+
+                <h3>Quiet</h3>
+                <p>Noise can fragment sleep even if you don't fully wake. Consider white noise or earplugs if your environment is unpredictable. Consistency in your sound environment is more important than absolute silence.</p>
+            </div>
+            <div>
+                <h3>Comfort</h3>
+                <p>Invest in quality bedding. Your mattress and pillow should support your preferred sleep position. Most mattresses should be replaced every 7-10 years.</p>
+
+                <h3>Association</h3>
+                <p>Your bed should be for sleep and intimacy only. Working, watching TV, or scrolling on your phone in bed weakens the mental association between your bed and sleep.</p>
+            </div>
+        </div>
+
+        <h2>Timing and Routine</h2>
+
+        <ul class="tip-list">
+            <li><strong>Consistent Schedule:</strong> Go to bed and wake up at the same time every day, even on weekends. This strengthens your circadian rhythm.</li>
+            <li><strong>Wind-Down Period:</strong> Create a 30-60 minute pre-sleep routine. Dim lights, avoid screens, and engage in relaxing activities.</li>
+            <li><strong>Morning Light:</strong> Get bright light exposure within the first hour of waking. This sets your circadian clock and improves nighttime sleep.</li>
+        </ul>
+
+        <div class="footer">
+            <span>© Sleep Wellness by Dr. Alen</span>
+            <span class="page-number">5</span>
+        </div>
+    </div>
+
+    <!-- Page 6: Substances and Habits -->
+    <div class="page content-page">
+        <div class="page-header">
+            <span class="page-header-left">Sleep Wellness Guide</span>
+            <span class="page-header-right">The Science of Better Sleep</span>
+        </div>
+
+        <h1>What Helps and What Hurts</h1>
+
+        <h2>Substances That Affect Sleep</h2>
+
+        <div class="highlight-box">
+            <h3>Caffeine</h3>
+            <p>Caffeine blocks adenosine receptors, masking sleep pressure. It has a half-life of 5-7 hours, meaning half is still in your system that long after consumption. Avoid caffeine after early afternoon. Even if you can fall asleep, caffeine reduces deep sleep quality.</p>
+        </div>
+
+        <div class="highlight-box">
+            <h3>Alcohol</h3>
+            <p>While alcohol may help you fall asleep faster, it severely disrupts sleep architecture. It suppresses REM sleep, causes frequent awakenings, and is a diuretic. The sedation it provides is not the same as natural sleep.</p>
+        </div>
+
+        <div class="two-column">
+            <div>
+                <h3>Helpful</h3>
+                <ul>
+                    <li><strong>Magnesium:</strong> Supports muscle relaxation and GABA activity</li>
+                    <li><strong>Tart cherry juice:</strong> Natural source of melatonin</li>
+                    <li><strong>Chamomile tea:</strong> Mild relaxing effects</li>
+                    <li><strong>Regular exercise:</strong> Improves sleep quality (but not too close to bedtime)</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Harmful</h3>
+                <ul>
+                    <li><strong>Nicotine:</strong> A stimulant that disrupts sleep</li>
+                    <li><strong>Heavy meals:</strong> Can cause discomfort and reflux</li>
+                    <li><strong>Excessive fluids:</strong> Lead to nighttime awakenings</li>
+                    <li><strong>Blue light:</strong> Suppresses melatonin production</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>Exercise and Sleep</h2>
+
+        <p>Regular physical activity is one of the most powerful ways to improve sleep quality. Aerobic exercise increases time spent in deep sleep and helps regulate circadian rhythms. However, timing matters:</p>
+
+        <ul class="tip-list">
+            <li>Morning and afternoon exercise generally improve nighttime sleep</li>
+            <li>Vigorous exercise within 3 hours of bedtime can impair sleep for some people</li>
+            <li>Gentle stretching or yoga before bed can promote relaxation</li>
+            <li>Consistency is more important than intensity—regular moderate exercise beats occasional intense workouts</li>
+        </ul>
+
+        <div class="footer">
+            <span>© Sleep Wellness by Dr. Alen</span>
+            <span class="page-number">6</span>
+        </div>
+    </div>
+
+    <!-- Page 7: Action Plan -->
+    <div class="page content-page">
+        <div class="page-header">
+            <span class="page-header-left">Sleep Wellness Guide</span>
+            <span class="page-header-right">The Science of Better Sleep</span>
+        </div>
+
+        <h1>Your Sleep Improvement Plan</h1>
+
+        <p class="intro-text">
+            Transforming your sleep doesn't happen overnight. Start with one or two changes, master them, then add more. Small, consistent improvements compound into significant results.
+        </p>
+
+        <div class="checklist">
+            <h3>Week 1: Foundation</h3>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Set a consistent wake time—the same every day, including weekends</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Get bright light exposure within 30 minutes of waking</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Cut off caffeine after 2 PM</span>
+            </div>
+        </div>
+
+        <div class="checklist">
+            <h3>Week 2: Environment</h3>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Make your bedroom completely dark (blackout curtains, cover LEDs)</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Set bedroom temperature to 65-68°F (18-20°C)</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Remove screens and work materials from the bedroom</span>
+            </div>
+        </div>
+
+        <div class="checklist">
+            <h3>Week 3: Evening Routine</h3>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Create a 30-minute wind-down routine before bed</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Dim lights and avoid screens 1 hour before sleep</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Try a relaxing activity: reading, gentle stretching, or meditation</span>
+            </div>
+        </div>
+
+        <div class="checklist">
+            <h3>Week 4: Refinement</h3>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Review what's working and adjust timing as needed</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Address any remaining sleep disruptors (alcohol, late meals, stress)</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Consider keeping a brief sleep diary to track progress</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>© Sleep Wellness by Dr. Alen</span>
+            <span class="page-number">7</span>
+        </div>
+    </div>
+
+    <!-- Page 8: Closing -->
+    <div class="page content-page">
+        <div class="page-header">
+            <span class="page-header-left">Sleep Wellness Guide</span>
+            <span class="page-header-right">The Science of Better Sleep</span>
+        </div>
+
+        <h1>Your Sleep Journey</h1>
+
+        <p class="intro-text">
+            Quality sleep is not a luxury—it's a fundamental pillar of health, alongside nutrition and exercise. By understanding the science of sleep and implementing these evidence-based strategies, you're investing in every aspect of your well-being.
+        </p>
+
+        <h2>When to Seek Help</h2>
+
+        <p>While sleep hygiene improvements help many people, some sleep problems require professional evaluation. Consider consulting a sleep specialist if you experience:</p>
+
+        <ul>
+            <li>Persistent difficulty falling or staying asleep despite good sleep habits</li>
+            <li>Loud snoring, gasping, or breathing pauses during sleep</li>
+            <li>Excessive daytime sleepiness despite adequate sleep time</li>
+            <li>Unusual behaviors during sleep (sleepwalking, acting out dreams)</li>
+            <li>Uncontrollable leg movements or uncomfortable sensations at night</li>
+            <li>Sleep problems significantly impacting your quality of life</li>
+        </ul>
+
+        <div class="highlight-box">
+            <h3>A Note on Sleep Disorders</h3>
+            <p>Conditions like sleep apnea, insomnia, restless leg syndrome, and narcolepsy are medical conditions that benefit from proper diagnosis and treatment. Sleep hygiene alone cannot resolve these disorders. If you suspect you have a sleep disorder, the Sleep Wellness assessment can help identify areas of concern to discuss with a healthcare provider.</p>
+        </div>
+
+        <div class="cycle-visual" style="margin-top: 40px;">
+            <h3 style="margin-bottom: 20px;">Continue Your Journey</h3>
+            <p style="margin-bottom: 15px;">This guide is just the beginning. The Sleep Wellness Portal offers personalized assessments, sleep tracking tools, and direct consultation with Dr. Alen to help you achieve optimal sleep.</p>
+            <p style="color: var(--gold); font-size: 12pt;">sleepwellness.com</p>
+        </div>
+
+        <p style="text-align: center; margin-top: 40px; color: var(--text-light); font-style: italic;">
+            "Sleep is the golden chain that ties health and our bodies together."<br>
+            <span style="font-size: 10pt;">— Thomas Dekker</span>
+        </p>
+
+        <div class="footer">
+            <span>© Sleep Wellness by Dr. Alen</span>
+            <span class="page-number">8</span>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Sleep Guide | Sleep Wellness by Dr. Alen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-navy: #0f1c2e;
+            --navy: #1a2d42;
+            --gold: #C9A962;
+            --gold-dark: #a68a4a;
+            --cream: #FAF8F5;
+            --text-dark: #2c3e50;
+            --text-light: #6c7b8a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: white;
+            color: var(--text-dark);
+            line-height: 1.7;
+            font-size: 11pt;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: 0 auto;
+            background: white;
+            page-break-after: always;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        /* Cover Page */
+        .cover {
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--navy) 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(201, 169, 98, 0.08) 0%, transparent 70%);
+        }
+
+        .cover-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14pt;
+            letter-spacing: 3px;
+            color: var(--gold);
+            margin-bottom: 60px;
+            text-transform: uppercase;
+        }
+
+        .cover-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42pt;
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            max-width: 80%;
+        }
+
+        .cover-subtitle {
+            font-size: 12pt;
+            font-weight: 300;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 80px;
+            letter-spacing: 1px;
+        }
+
+        .cover-author {
+            font-size: 11pt;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .cover-credentials {
+            font-size: 9pt;
+            color: rgba(255,255,255,0.6);
+            max-width: 70%;
+        }
+
+        .gold-line {
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            margin: 40px auto;
+        }
+
+        /* Content Pages */
+        .content-page {
+            position: relative;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.3);
+            margin-bottom: 25px;
+        }
+
+        .page-header-left {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 10pt;
+            color: var(--gold-dark);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .page-header-right {
+            font-size: 9pt;
+            color: var(--text-light);
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28pt;
+            color: var(--navy);
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18pt;
+            color: var(--navy);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14pt;
+            color: var(--gold-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .intro-text {
+            font-size: 12pt;
+            color: var(--text-light);
+            border-left: 3px solid var(--gold);
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(201, 169, 98, 0.1) 0%, rgba(201, 169, 98, 0.05) 100%);
+            border-left: 4px solid var(--gold);
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .highlight-box h3 {
+            margin-top: 0;
+            color: var(--navy);
+        }
+
+        .stat-row {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-box {
+            flex: 1;
+            background: var(--cream);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32pt;
+            color: var(--gold-dark);
+            font-weight: 600;
+        }
+
+        .stat-label {
+            font-size: 9pt;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        ul, ol {
+            margin: 15px 0 20px 25px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .tip-list {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .tip-list li {
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .tip-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .impact-card {
+            background: var(--cream);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .impact-card h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13pt;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .impact-card p {
+            font-size: 10pt;
+            margin-bottom: 0;
+            text-align: left;
+        }
+
+        .dark-box {
+            background: var(--deep-navy);
+            color: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin: 25px 0;
+        }
+
+        .dark-box h3 {
+            color: var(--gold);
+            margin-top: 0;
+        }
+
+        .dark-box p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20mm;
+            left: 20mm;
+            right: 20mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+            font-size: 8pt;
+            color: var(--text-light);
+        }
+
+        .page-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 10pt;
+            color: var(--gold-dark);
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 25px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gold);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        .timeline-time {
+            font-weight: 600;
+            color: var(--gold-dark);
+            font-size: 10pt;
+        }
+
+        .checklist {
+            background: var(--cream);
+            padding: 25px;
+            border-radius: 16px;
+            margin: 25px 0;
+        }
+
+        .checklist h3 {
+            margin-top: 0;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .check-box {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--gold);
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .quote-box {
+            background: var(--cream);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .quote-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16pt;
+            font-style: italic;
+            color: var(--navy);
+            margin-bottom: 15px;
+        }
+
+        .quote-author {
+            font-size: 10pt;
+            color: var(--gold-dark);
+        }
+
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+
+        .cost-table th, .cost-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .cost-table th {
+            background: var(--cream);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 12pt;
+            color: var(--navy);
+            font-weight: 500;
+        }
+
+        .cost-table td {
+            font-size: 10pt;
+        }
+
+        @media print {
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+
+        @media screen {
+            body {
+                background: #e5e5e5;
+                padding: 20px;
+            }
+            .page {
+                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cover Page -->
+    <div class="page cover">
+        <div class="cover-logo">Sleep Wellness</div>
+        <h1 class="cover-title">The Executive Sleep Guide</h1>
+        <p class="cover-subtitle">Optimize Decision-Making, Manage Jet Lag, and Sustain Peak Performance</p>
+        <div class="gold-line"></div>
+        <p class="cover-author">Dr. Alen Juginovic, M.D.</p>
+        <p class="cover-credentials">Harvard Medical School Researcher | Sleep Science Expert<br>Advisor to Corporate Leaders and High-Performers</p>
+    </div>
+
+    <!-- Page 2: The Executive Sleep Challenge -->
+    <div class="page content-page">
+        <div class="page-header">
+            <span class="page-header-left">Executive Sleep Guide</span>
+            <span class="page-header-right">Peak Performance Through Sleep</span>
+        </div>
+
+        <h1>The Sleep-Success Connection</h1>
+
+        <p class="intro-text">
+            In leadership, every decision carries weight. Every interaction shapes outcomes. Yet many executives unknowingly operate at diminished capacity—sacrificing the very cognitive abilities they need most.
+        </p>
+
+        <div class="quote-box">
+            <p class="quote-text">"The shorter your sleep, the shorter your life. The leading causes of disease and death in developed nations all have recognized causal links to a lack of sleep."</p>
+            <p class="quote-author">— Dr. Matthew Walker, UC Berkeley</p>
+        </div>
+
+        <h2>The Executive Paradox</h2>
+
+        <p>Successful leaders often pride themselves on sleeping less—viewing it as a badge of dedication. Yet research consistently shows that sleep deprivation impairs precisely the skills executives need most:</p>
+
+        <div class="impact-grid">
+            <div class="impact-card">
+                <h4>Strategic Thinking</h4>
+                <p>Complex problem-solving and long-term planning require prefrontal cortex function—the first casualty of sleep loss.</p>
+            </div>
+            <div class="impact-card">
+                <h4>Emotional Intelligence</h4>
+                <p>Reading people, managing relationships, and maintaining composure under pressure all degrade with poor sleep.</p>
+            </div>
+            <div class="impact-card">
+                <h4>Risk Assessment</h4>
+                <p>Sleep-deprived individuals show impaired judgment about risk, often making bolder gambles with less awareness of downsides.</p>
+            </div>
+            <div class="impact-card">
+                <h4>Creative Innovation</h4>
+                <p>Novel insights and creative breakthroughs require REM sleep for memory integration and pattern recognition.</p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>The Hidden Costs</h3>
+            <p>Sleep-deprived executives don't just perform worse—they often don't realize it. Studies show that people quickly adapt to feeling tired while their objective performance continues to decline. You may feel fine on 5-6 hours, but you're operating well below your potential.</p>
+        </div>
+
+        <div class="footer">
+            <span>© Sleep Wellness by Dr. Alen</span>
+            <span class="page-number">2</span>
+        </div>
+    </div>
+
+    <!-- Page 3: The Business Case for Sleep -->
+    <div class="page content-page">
+        <div class="page-header">
+            <span class="page-header-left">Executive Sleep Guide</span>
+            <span class="page-header-right">Peak Performance Through Sleep</span>
+        </div>
+
+        <h1>The Business Case for Sleep</h1>
+
+        <p>Sleep isn't a luxury—it's a business imperative. The data on sleep deprivation's organizational impact is staggering.</p>
+
+        <div class="stat-row">
+            <div class="stat-box">
+                <div class="stat-number">$411B</div>
+                <div class="stat-label">Annual US Economic Loss<br>from Sleep Deprivation</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">1.2M</div>
+                <div class="stat-label">Working Days Lost<br>Per Year in the US</div>
+            </div>
+        </div>
+
+        <h2>Leadership Under Sleep Debt</h2>
+
+        <table class="cost-table">
+            <tr>
+                <th>Sleep Duration</th>
+                <th>Cognitive Impact</th>
+                <th>Leadership Effect</th>
+            </tr>
+            <tr>
+                <td>7-8 hours</td>
+                <td>Optimal function</td>
+                <td>Peak decision-making, full emotional bandwidth</td>
+            </tr>
+            <tr>
+                <td>6 hours</td>
+                <td>Mild impairment</td>
+                <td>Reduced creativity, shorter temper, less patience</td>
+            </tr>
+            <tr>
+                <td>5 hours</td>
+                <td>Moderate impairment</td>
+                <td>Comparable to mild intoxication, poor judgment</td>
+            </tr>
+            <tr>
+                <td>4 hours</td>
+                <td>Severe impairment</td>
+                <td>Significant cognitive deficits, high error rate</td>
+            </tr>
+        </table>
+
+        <div class="highlight-box">
+            <h3>The Ripple Effect</h3>
+            <p>When leaders are sleep-deprived, the impact cascades. Research shows that employees rate their supervisors as less charismatic and inspiring when those supervisors are poorly rested. Sleep-deprived leaders create less engagement, more conflict, and lower team performance.</p>
+        </div>
+
+        <h2>Sleep and Health Risks</h2>
+
+        <p>The long-term costs extend beyond performance. Chronic sleep deprivation in executives is associated with:</p>
+
+        <ul>
+            <li>Elevated cardiovascular disease risk</li>
+            <li>Increased rates of type 2 diabetes</li>
+            <li>Higher susceptibility to illness</li>
+            <li>Accelerated cognitive aging</li>
+            <li>Greater vulnerability to burnout and depression</li>
+        </ul>
+
+        <div class="footer">
+            <span>© Sleep Wellness by Dr. Alen</span>
+            <span class="page-number">3</span>
+        </div>
+    </div>
+
+    <!-- Page 4: Decision-Making and Sleep -->
+    <div class="page content-page">
+        <div class="page-header">
+            <span class="page-header-left">Executive Sleep Guide</span>
+            <span class="page-header-right">Peak Performance Through Sleep</span>
+        </div>
+
+        <h1>Sleep and Decision Quality</h1>
+
+        <p class="intro-text">
+            Executive decisions often involve incomplete information, competing priorities, and significant consequences. These are precisely the conditions where sleep deprivation causes the most damage.
+        </p>
+
+        <h2>How Sleep Loss Affects Judgment</h2>
+
+        <div class="two-column">
+            <div>
+                <h3>Risk Perception</h3>
+                <ul>
+                    <li>Overestimation of potential gains</li>
+                    <li>Underestimation of potential losses</li>
+                    <li>Reduced consideration of alternatives</li>
+                    <li>Premature commitment to decisions</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Cognitive Processing</h3>
+                <ul>
+                    <li>Slower information integration</li>
+                    <li>Reduced working memory</li>
+                    <li>Impaired pattern recognition</li>
+                    <li>Less flexible thinking</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="dark-box">
+            <h3>The 24-Hour Rule</h3>
+            <p>For major decisions, consider implementing a 24-hour delay—especially if you've been sleeping poorly. Research shows that a single night of good sleep can dramatically improve decision quality on complex problems. The cost of waiting is often far less than the cost of a poor decision.</p>
+        </div>
+
+        <h2>Emotional Regulation</h2>
+
+        <p>Sleep deprivation amplifies the brain's emotional reactivity while reducing the prefrontal cortex's ability to regulate it. This creates a dangerous combination for leaders:</p>
+
+        <ul class="tip-list">
+            <li><strong>Increased Irritability:</strong> Small frustrations trigger disproportionate responses, damaging relationships and team morale.</li>
+            <li><strong>Reduced Empathy:</strong> The ability to understand others' perspectives diminishes, making negotiation and conflict resolution harder.</li>
+            <li><strong>Poor Stress Tolerance:</strong> Challenges that would normally be manageable become overwhelming, leading to reactive rather than thoughtful responses.</li>
+            <li><strong>Negativity Bias:</strong> Sleep-deprived individuals perceive neutral situations more negatively and remember negative events more vividly.</li>
+        </ul>
+
+        <div class="footer">
+            <span>© Sleep Wellness by Dr. Alen</span>
+            <span class="page-number">4</span>
+        </div>
+    </div>
+
+    <!-- Page 5: Managing Jet Lag -->
+    <div class="page content-page">
+        <div class="page-header">
+            <span class="page-header-left">Executive Sleep Guide</span>
+            <span class="page-header-right">Peak Performance Through Sleep</span>
+        </div>
+
+        <h1>Mastering Business Travel</h1>
+
+        <p>International travel is often unavoidable in executive roles. Understanding how to manage jet lag can mean the difference between arriving sharp and arriving impaired.</p>
+
+        <h2>The Science of Jet Lag</h2>
+
+        <div class="highlight-box">
+            <h3>Your Internal Clock</h3>
+            <p>Your circadian rhythm—the 24-hour internal clock—is primarily set by light exposure. When you cross time zones, your internal clock remains locked to your origin time zone. It takes approximately one day per time zone crossed to fully adjust. During this period, nearly every system in your body is operating suboptimally.</p>
+        </div>
+
+        <div class="two-column">
+            <div>
+                <h3>Traveling East</h3>
+                <p>More challenging—you're advancing your clock.</p>
+                <ul>
+                    <li>Begin shifting 2-3 days before departure</li>
+                    <li>Expose yourself to bright morning light at destination</li>
+                    <li>Avoid evening light (use blue-blocking glasses)</li>
+                    <li>Consider melatonin 0.5-1mg in early evening</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Traveling West</h3>
+                <p>Easier—you're delaying your clock.</p>
+                <ul>
+                    <li>Stay up later in days before travel</li>
+                    <li>Seek evening light at destination</li>
+                    <li>Avoid morning light initially</li>
+                    <li>Nap strategically if needed</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>The Executive Travel Protocol</h2>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-time">2-3 Days Before</div>
+                <p>Begin shifting schedule toward destination time. Adjust meals, sleep, and light exposure gradually.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">Flight Day</div>
+                <p>Set watch to destination time immediately. Sleep on the plane if it's nighttime there; stay awake if it's daytime.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">Arrival</div>
+                <p>Immediately adopt local schedule. Get outdoor light at strategic times. Avoid napping longer than 20 minutes.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">Key Meetings</div>
+                <p>Schedule critical meetings when your circadian alertness aligns with important decisions—typically mid-morning.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>© Sleep Wellness by Dr. Alen</span>
+            <span class="page-number">5</span>
+        </div>
+    </div>
+
+    <!-- Page 6: High-Stakes Performance -->
+    <div class="page content-page">
+        <div class="page-header">
+            <span class="page-header-left">Executive Sleep Guide</span>
+            <span class="page-header-right">Peak Performance Through Sleep</span>
+        </div>
+
+        <h1>High-Stakes Situations</h1>
+
+        <p class="intro-text">
+            Board presentations, negotiations, investor meetings—these moments demand peak cognitive performance. Strategic sleep management can provide a significant edge.
+        </p>
+
+        <h2>Before Major Events</h2>
+
+        <div class="highlight-box">
+            <h3>Sleep Banking</h3>
+            <p>In the week before a critical event, extend your sleep to 8-9 hours per night. This builds a reserve that can buffer against pre-event nerves or last-minute preparation. Research shows that "banked" sleep provides real cognitive protection against subsequent sleep loss.</p>
+        </div>
+
+        <div class="two-column">
+            <div>
+                <h3>The Night Before</h3>
+                <ul>
+                    <li>Maintain your normal routine</li>
+                    <li>Don't try to sleep extra early</li>
+                    <li>Avoid alcohol as a sleep aid</li>
+                    <li>Prepare everything to reduce morning stress</li>
+                    <li>Practice relaxation techniques if anxious</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Morning Of</h3>
+                <ul>
+                    <li>Wake at normal time (or earlier if needed)</li>
+                    <li>Get bright light exposure</li>
+                    <li>Eat a balanced breakfast</li>
+                    <li>Allow time for mental preparation</li>
+                    <li>Time caffeine strategically</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>Managing Pre-Event Anxiety</h2>
+
+        <p>Many executives experience poor sleep before important events. This is normal and, with proper preparation, has minimal impact:</p>
+
+        <ul class="tip-list">
+            <li><strong>One Night Matters Less Than a Week:</strong> If you've slept well in the preceding days, a single poor night has limited impact on performance.</li>
+            <li><strong>Reframe the Anxiety:</strong> Difficulty sleeping before important events is a sign your body is preparing—it's activation, not dysfunction.</li>
+            <li><strong>Don't Force It:</strong> If you can't sleep, rest quietly rather than tossing and worrying. Quiet rest provides partial recovery benefits.</li>
+            <li><strong>Strategic Caffeine:</strong> A well-timed coffee (20-30 minutes before the event) can mask short-term sleep debt effects.</li>
+        </ul>
+
+        <div class="dark-box">
+            <h3>The Nap Option</h3>
+            <p>A 20-minute power nap between 1-3 PM can provide significant cognitive restoration. If you have an afternoon event and slept poorly, a brief nap can sharpen focus without causing grogginess. Avoid napping longer than 30 minutes to prevent sleep inertia.</p>
+        </div>
+
+        <div class="footer">
+            <span>© Sleep Wellness by Dr. Alen</span>
+            <span class="page-number">6</span>
+        </div>
+    </div>
+
+    <!-- Page 7: Building Better Habits -->
+    <div class="page content-page">
+        <div class="page-header">
+            <span class="page-header-left">Executive Sleep Guide</span>
+            <span class="page-header-right">Peak Performance Through Sleep</span>
+        </div>
+
+        <h1>The Executive Sleep System</h1>
+
+        <p>Sustainable high performance requires treating sleep as a strategic priority, not an afterthought.</p>
+
+        <h2>Your Optimized Schedule</h2>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-time">Morning</div>
+                <p>Wake at consistent time. Get 10-15 minutes of bright light—outdoors if possible. This sets your circadian clock for the day.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">Early Afternoon (if needed)</div>
+                <p>Strategic 20-minute nap opportunity. Especially valuable after international travel or before important evening events.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">By 2 PM</div>
+                <p>Last caffeine of the day. Earlier if you're caffeine-sensitive. Caffeine has a 5-7 hour half-life.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">Evening</div>
+                <p>Finish dinner 2-3 hours before bed. Avoid alcohol within 3 hours of sleep. Begin dimming lights.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">1 Hour Before Bed</div>
+                <p>Digital sunset—no screens or work email. Engage in relaxing activity. Keep room cool (65-68°F).</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-time">Bedtime</div>
+                <p>Consistent time, creating 7-8 hour sleep opportunity. Dark, quiet environment. Reserve bed for sleep only.</p>
+            </div>
+        </div>
+
+        <h2>Common Executive Pitfalls</h2>
+
+        <ul class="tip-list">
+            <li><strong>"I'll sleep when I'm dead":</strong> This mindset accelerates the timeline. Chronic sleep deprivation is associated with shorter lifespan and significantly reduced healthspan.</li>
+            <li><strong>Late-night email:</strong> Creates stress hormones that impair sleep and trains others to expect immediate responses, perpetuating the cycle.</li>
+            <li><strong>Alcohol as sleep aid:</strong> While it may speed sleep onset, alcohol fragments sleep architecture and suppresses REM—worsening next-day performance.</li>
+            <li><strong>Weekend catch-up:</strong> Dramatic schedule shifts create "social jet lag" that disrupts the following week's performance.</li>
+        </ul>
+
+        <div class="footer">
+            <span>© Sleep Wellness by Dr. Alen</span>
+            <span class="page-number">7</span>
+        </div>
+    </div>
+
+    <!-- Page 8: Action Plan -->
+    <div class="page content-page">
+        <div class="page-header">
+            <span class="page-header-left">Executive Sleep Guide</span>
+            <span class="page-header-right">Peak Performance Through Sleep</span>
+        </div>
+
+        <h1>Your Executive Action Plan</h1>
+
+        <p class="intro-text">
+            Transforming your sleep doesn't require dramatic changes—it requires strategic ones. Start with high-impact behaviors and build from there.
+        </p>
+
+        <div class="checklist">
+            <h3>This Week</h3>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Set a fixed wake time and protect it—even on weekends</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Move your last caffeine to before 2 PM</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Create a "digital sunset" 1 hour before bed—no email after this time</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Ensure 7-8 hours of sleep opportunity each night</span>
+            </div>
+        </div>
+
+        <div class="checklist">
+            <h3>This Month</h3>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Optimize your sleep environment (temperature, darkness, quiet)</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Develop a pre-travel jet lag management plan</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Identify your peak performance hours and protect them for critical work</span>
+            </div>
+        </div>
+
+        <div class="checklist">
+            <h3>Ongoing</h3>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Track your sleep and correlate with performance outcomes</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Bank sleep before high-stakes events</span>
+            </div>
+            <div class="check-item">
+                <div class="check-box"></div>
+                <span>Model healthy sleep practices for your team</span>
+            </div>
+        </div>
+
+        <div class="dark-box" style="margin-top: 30px; text-align: center;">
+            <h3 style="margin-bottom: 20px;">Elevate Your Performance</h3>
+            <p style="margin-bottom: 15px;">Ready for personalized sleep optimization? The Sleep Wellness Portal offers comprehensive assessments and direct consultation with Dr. Alen—helping executives and leaders perform at their peak.</p>
+            <p style="color: var(--gold); font-size: 12pt; margin-bottom: 0;">sleepwellness.com</p>
+        </div>
+
+        <div class="footer">
+            <span>© Sleep Wellness by Dr. Alen</span>
+            <span class="page-number">8</span>
+        </div>
+    </div>
+</body>
+</html>

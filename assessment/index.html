@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <!-- Assessment styles -->
+    <!-- Initial content visibility - no !important so JS can override -->
     <style>
         .assessment-content { display: block; visibility: visible; opacity: 1; }
     </style>
@@ -979,7 +979,6 @@
 <script src="results.js"></script>
 <script src="export.js"></script>
 <script src="app.js"></script>
-<script src="chatbot.js"></script>
 
 <script>
     // Authentication check - redirect to auth if not logged in
@@ -1019,28 +1018,6 @@
             }
         }
     };
-
-    // Debug helper - make functions available globally
-    window.debugApp = function() {
-        console.log('App state:', {
-            currentStep: App.currentStep,
-            steps: App.steps,
-            responses: App.responses,
-            clientType: App.clientType
-        });
-    };
-
-    // Helper to manually advance steps if needed
-    window.forceNextStep = function() {
-        App.nextStep();
-    };
-
-    // Clear stuck state on fresh start
-    if (!sessionStorage.getItem('assessmentStarted')) {
-        localStorage.removeItem('sleepAssessment_currentStep');
-        localStorage.removeItem('sleepAssessment_responses');
-        sessionStorage.setItem('assessmentStarted', 'true');
-    }
 </script>
 
 </body>
