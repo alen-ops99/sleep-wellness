@@ -1891,6 +1891,20 @@
             color: var(--text);
         }
 
+        .quiz-category-btn {
+            transition: all 0.3s ease;
+        }
+
+        .quiz-category-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .quiz-category-btn.active {
+            border-color: var(--gold) !important;
+            background: rgba(201, 169, 98, 0.1) !important;
+        }
+
         /* Modules */
         .modules-grid {
             display: grid;
@@ -4534,13 +4548,47 @@
 
                 <!-- Quiz Start Screen -->
                 <div id="quizStart" class="quiz-start-card">
-                    <div class="quiz-start-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="2" width="40" height="40">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                        </svg>
+                    <h4 class="quiz-start-title">Choose Your Quiz</h4>
+                    <p class="quiz-start-desc">Select a category that matches your interests. Each quiz has 10 questions with detailed explanations and actionable tips.</p>
+
+                    <!-- Category Selection -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 25px;">
+                        <button class="quiz-category-btn active" data-category="general" onclick="selectQuizCategory('general')" style="padding: 16px 12px; border: 2px solid var(--gold); background: rgba(201, 169, 98, 0.1); border-radius: 12px; cursor: pointer; transition: all 0.3s; text-align: center;">
+                            <div style="width: 40px; height: 40px; margin: 0 auto 10px; background: #C9A962; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="20" height="20"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                            </div>
+                            <div style="font-weight: 600; font-size: 13px; color: var(--navy);">Sleep Basics</div>
+                            <div style="font-size: 11px; color: var(--text-light);">Fundamentals</div>
+                        </button>
+                        <button class="quiz-category-btn" data-category="athlete" onclick="selectQuizCategory('athlete')" style="padding: 16px 12px; border: 2px solid #e0e0e0; background: white; border-radius: 12px; cursor: pointer; transition: all 0.3s; text-align: center;">
+                            <div style="width: 40px; height: 40px; margin: 0 auto 10px; background: #2A8B8B; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="20" height="20"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                            </div>
+                            <div style="font-weight: 600; font-size: 13px; color: var(--navy);">Athletes</div>
+                            <div style="font-size: 11px; color: var(--text-light);">Performance</div>
+                        </button>
+                        <button class="quiz-category-btn" data-category="executive" onclick="selectQuizCategory('executive')" style="padding: 16px 12px; border: 2px solid #e0e0e0; background: white; border-radius: 12px; cursor: pointer; transition: all 0.3s; text-align: center;">
+                            <div style="width: 40px; height: 40px; margin: 0 auto 10px; background: #4A6085; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="20" height="20"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                            </div>
+                            <div style="font-weight: 600; font-size: 13px; color: var(--navy);">Executives</div>
+                            <div style="font-size: 11px; color: var(--text-light);">Leadership</div>
+                        </button>
+                        <button class="quiz-category-btn" data-category="traveler" onclick="selectQuizCategory('traveler')" style="padding: 16px 12px; border: 2px solid #e0e0e0; background: white; border-radius: 12px; cursor: pointer; transition: all 0.3s; text-align: center;">
+                            <div style="width: 40px; height: 40px; margin: 0 auto 10px; background: #8B4D5C; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            </div>
+                            <div style="font-weight: 600; font-size: 13px; color: var(--navy);">Travelers</div>
+                            <div style="font-size: 11px; color: var(--text-light);">Jet Lag</div>
+                        </button>
                     </div>
-                    <h4 class="quiz-start-title">Ready to test your sleep IQ?</h4>
-                    <p class="quiz-start-desc">Answer 10 questions about sleep science, myths, and healthy habits. Learn something new with every question!</p>
+
+                    <!-- Selected Quiz Info -->
+                    <div style="background: rgba(15, 28, 46, 0.03); border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center;">
+                        <h5 id="quizCategoryName" style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 5px;">Sleep Basics</h5>
+                        <p id="quizCategoryDesc" style="font-size: 13px; color: var(--text-light); margin: 0;">Test your fundamental sleep knowledge</p>
+                    </div>
+
                     <div class="quiz-start-features">
                         <div class="quiz-start-feature">
                             <svg viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
@@ -6700,7 +6748,36 @@
 
     // ==================== SLEEP KNOWLEDGE QUIZ ====================
 
-    const sleepQuizQuestions = [
+    // Quiz Categories
+    const quizCategories = {
+        general: {
+            name: "Sleep Basics",
+            icon: "moon",
+            description: "Test your fundamental sleep knowledge",
+            color: "#C9A962"
+        },
+        athlete: {
+            name: "Athlete Performance",
+            icon: "activity",
+            description: "Sleep strategies for peak athletic performance",
+            color: "#2A8B8B"
+        },
+        executive: {
+            name: "Executive Edge",
+            icon: "briefcase",
+            description: "Optimize sleep for decision-making and leadership",
+            color: "#4A6085"
+        },
+        traveler: {
+            name: "Jet Lag Master",
+            icon: "globe",
+            description: "Conquer time zones and travel fatigue",
+            color: "#8B4D5C"
+        }
+    };
+
+    // General Sleep Questions
+    const generalQuizQuestions = [
         {
             question: "What is the ideal room temperature for sleep?",
             options: ["72-76°F (22-24°C)", "65-68°F (18-20°C)", "78-82°F (26-28°C)", "60-62°F (15-17°C)"],
@@ -6773,11 +6850,242 @@
         }
     ];
 
+    // Athlete-Specific Questions
+    const athleteQuizQuestions = [
+        {
+            question: "How much can reaction time slow after just one night of poor sleep?",
+            options: ["5%", "10-15%", "Up to 300%", "No significant change"],
+            correct: 2,
+            explanation: "Studies show reaction time can slow by up to 300% after sleep deprivation. For athletes, this means slower starts, delayed responses, and increased injury risk. Even moderate sleep loss impacts performance.",
+            tip: "<strong>Action:</strong> Prioritize 8-10 hours before competitions. Track your reaction times with apps to see how sleep affects your personal performance."
+        },
+        {
+            question: "What is the optimal nap duration for athletic performance?",
+            options: ["10-20 minutes", "30-45 minutes", "60-90 minutes", "2+ hours"],
+            correct: 0,
+            explanation: "A 10-20 minute 'power nap' boosts alertness without causing sleep inertia (grogginess). Longer naps can leave you groggy for 30+ minutes. However, if you have 90 minutes, a full sleep cycle can be beneficial.",
+            tip: "<strong>Action:</strong> Schedule 20-minute naps 6-8 hours before competition. Set an alarm and nap in a cool, dark space. Avoid napping within 4 hours of bedtime."
+        },
+        {
+            question: "How does sleep deprivation affect injury risk in athletes?",
+            options: ["No effect on injury risk", "Increases risk by 20-30%", "Increases risk by 60-70%", "Only affects contact sports"],
+            correct: 2,
+            explanation: "Research on adolescent athletes found those sleeping less than 8 hours had 1.7x higher injury rates. Sleep deprivation impairs coordination, reaction time, and tissue recovery - all key factors in injury prevention.",
+            tip: "<strong>Action:</strong> Monitor your sleep during heavy training periods. If you're getting less than 7 hours consistently, you're at significantly higher injury risk. Adjust training load or prioritize sleep."
+        },
+        {
+            question: "When is the worst time for athletes to train if they want quality sleep?",
+            options: ["Early morning (5-7 AM)", "Late morning (10 AM-12 PM)", "Late evening (after 8 PM)", "Afternoon (2-5 PM)"],
+            correct: 2,
+            explanation: "High-intensity exercise within 2-3 hours of bedtime raises core body temperature and stimulates the nervous system, making it harder to fall asleep. Morning and afternoon training typically don't affect sleep quality.",
+            tip: "<strong>Action:</strong> Finish intense workouts at least 3 hours before bed. If evening training is unavoidable, follow with a cool shower and extended wind-down routine."
+        },
+        {
+            question: "How much extra sleep do elite athletes typically need compared to non-athletes?",
+            options: ["Same amount (7-9 hours)", "1-2 extra hours (8-10 hours)", "3-4 extra hours (10-12 hours)", "Less sleep due to better fitness"],
+            correct: 1,
+            explanation: "Elite athletes often need 8-10 hours of sleep for optimal recovery. During heavy training or competition, some need even more. The body repairs muscle tissue and releases growth hormone primarily during deep sleep.",
+            tip: "<strong>Action:</strong> During intense training blocks, aim for 9-10 hours. Consider 'sleep banking' - getting extra sleep in the week before major competitions."
+        },
+        {
+            question: "What happens to human growth hormone (HGH) release during sleep?",
+            options: ["HGH is released evenly throughout sleep", "70-80% is released during deep sleep", "HGH is only released when awake", "HGH release isn't affected by sleep"],
+            correct: 1,
+            explanation: "About 70-80% of daily HGH is released during deep sleep stages. HGH is critical for muscle repair, bone density, and recovery. Poor sleep directly limits your body's repair mechanisms.",
+            tip: "<strong>Action:</strong> Maximize deep sleep by avoiding alcohol (it suppresses deep sleep), keeping consistent bedtimes, and ensuring complete darkness in your room."
+        },
+        {
+            question: "How does sleep affect muscle protein synthesis?",
+            options: ["Sleep has no effect on protein synthesis", "Protein synthesis stops during sleep", "Sleep enhances protein synthesis by 20-30%", "Only REM sleep affects protein synthesis"],
+            correct: 2,
+            explanation: "Quality sleep enhances muscle protein synthesis by 20-30%. During sleep, blood flow to muscles increases, delivering nutrients for repair. Sleep deprivation shifts the body toward muscle breakdown (catabolism).",
+            tip: "<strong>Action:</strong> Have a protein-rich snack (20-30g) 1-2 hours before bed. Casein protein is ideal as it releases slowly overnight. Combine with good sleep for maximum recovery."
+        },
+        {
+            question: "What is 'sleep banking' and does it work for athletes?",
+            options: ["It's a myth - you can't store sleep", "Sleeping extra before competition can improve performance", "It only works for endurance athletes", "It requires sleeping 12+ hours daily"],
+            correct: 1,
+            explanation: "Sleep banking - getting extra sleep before a period of expected sleep loss - has been shown to improve cognitive function and physical performance. Studies show athletes who banked sleep before competitions performed better.",
+            tip: "<strong>Action:</strong> In the week before major competitions, add 1-2 hours to your normal sleep. This builds a reserve that helps maintain performance even if pre-event nerves disrupt sleep."
+        },
+        {
+            question: "How quickly does athletic performance decline with sleep debt?",
+            options: ["Only after several days of poor sleep", "Performance drops after just one night", "Only affects mental, not physical performance", "Athletes are immune to sleep debt effects"],
+            correct: 1,
+            explanation: "Performance metrics decline after just one night of inadequate sleep. Sprint times slow, accuracy drops, and perceived exertion increases. The effects compound with consecutive nights of poor sleep.",
+            tip: "<strong>Action:</strong> Never sacrifice sleep the night before competition. If you have one bad night, a 20-minute nap can help recover some performance, but consistent sleep is best."
+        },
+        {
+            question: "What role does sleep play in motor learning and skill acquisition?",
+            options: ["Skills are only learned during practice", "Sleep consolidates motor memories, improving skills by 20-30%", "Sleep only affects theoretical knowledge", "Motor learning happens equally awake or asleep"],
+            correct: 1,
+            explanation: "During sleep, the brain replays and strengthens motor patterns learned during practice. Studies show performance on newly learned skills improves 20-30% after sleep, without additional practice.",
+            tip: "<strong>Action:</strong> After learning new techniques, prioritize sleep that night. The skill consolidation happens primarily in the first sleep cycle after learning."
+        }
+    ];
+
+    // Executive-Specific Questions
+    const executiveQuizQuestions = [
+        {
+            question: "How does sleep deprivation affect decision-making quality?",
+            options: ["Minimal impact on decisions", "Increases risk-taking and impairs judgment", "Only affects simple decisions", "Makes decisions faster and more efficient"],
+            correct: 1,
+            explanation: "Sleep deprivation impairs the prefrontal cortex, leading to increased risk-taking, poor judgment, and difficulty weighing long-term consequences. Leaders may feel confident in bad decisions while sleep-deprived.",
+            tip: "<strong>Action:</strong> Never make major decisions after poor sleep. If unavoidable, use decision frameworks and seek input from well-rested colleagues to compensate for impaired judgment."
+        },
+        {
+            question: "What is the 'CEO sleep paradox'?",
+            options: ["CEOs need less sleep than others", "Sleep-deprived leaders think they're performing well when they're not", "Executives should sleep more on weekends", "Leadership skills replace the need for sleep"],
+            correct: 1,
+            explanation: "Research shows sleep-deprived individuals lose the ability to accurately assess their own impairment. Executives may believe they're functioning normally while cognitive tests show significant decline.",
+            tip: "<strong>Action:</strong> Don't trust your self-assessment when sleep-deprived. Track objective metrics (reaction time apps, decision outcomes) and listen to feedback from trusted colleagues."
+        },
+        {
+            question: "How does a leader's sleep affect their team's performance?",
+            options: ["No connection between leader sleep and team performance", "Sleep-deprived leaders have less engaged teams", "Teams compensate for tired leaders", "Only affects teams in creative industries"],
+            correct: 1,
+            explanation: "Studies show sleep-deprived leaders are perceived as less charismatic, less inspiring, and more abusive. Their teams report lower engagement, more conflict, and reduced performance.",
+            tip: "<strong>Action:</strong> View your sleep as a leadership responsibility, not a personal choice. Your rest directly impacts your team's morale and productivity."
+        },
+        {
+            question: "What is the most effective power nap strategy for executives?",
+            options: ["Skip naps - they show weakness", "90-minute naps in your office", "10-20 minute 'coffee naps'", "Only nap on weekends"],
+            correct: 2,
+            explanation: "A 'coffee nap' - drinking coffee then immediately napping for 15-20 minutes - is highly effective. The caffeine kicks in as you wake, combining the alertness boost of both. Many top executives use this strategy.",
+            tip: "<strong>Action:</strong> Drink coffee quickly, set a 20-minute timer, and nap immediately. The caffeine takes 20 minutes to absorb, so you wake just as it kicks in."
+        },
+        {
+            question: "How much productivity is lost due to sleep-deprived employees?",
+            options: ["$500 per employee annually", "About $2,000 per employee annually", "Over $2,000 per employee annually (up to $3,400)", "No measurable productivity loss"],
+            correct: 2,
+            explanation: "Harvard research estimates sleep deprivation costs U.S. companies $63 billion annually in lost productivity. Per employee, this translates to $2,000-$3,400 in lost productivity through presenteeism and errors.",
+            tip: "<strong>Action:</strong> Consider sleep as an ROI issue. Policies supporting employee sleep (flexible start times, nap rooms) often pay for themselves in productivity gains."
+        },
+        {
+            question: "What's the relationship between sleep and emotional intelligence (EQ)?",
+            options: ["EQ is fixed and unaffected by sleep", "Sleep deprivation significantly reduces EQ", "Only affects EQ in introverts", "More sleep actually decreases EQ"],
+            correct: 1,
+            explanation: "Sleep deprivation reduces ability to read emotions, manage reactions, and show empathy - all core EQ skills. Leaders become more irritable, less patient, and worse at reading room dynamics.",
+            tip: "<strong>Action:</strong> Before important meetings involving negotiation, conflict resolution, or sensitive conversations, ensure you're well-rested. Your EQ will be sharper."
+        },
+        {
+            question: "How should executives handle early morning meetings across time zones?",
+            options: ["Always accommodate the most senior person's time zone", "Rotate meeting times fairly", "Use strategic light exposure and gradual schedule shifts", "Take sleeping pills to adjust quickly"],
+            correct: 2,
+            explanation: "For recurring cross-time-zone meetings, use light exposure to shift your rhythm. Morning light advances your clock (good for early meetings), evening light delays it. Gradual 30-minute shifts are more sustainable than sudden changes.",
+            tip: "<strong>Action:</strong> For a 6 AM meeting, expose yourself to bright light at 5 AM for a few days prior. Consider a light therapy box for your home office."
+        },
+        {
+            question: "What is 'sleep hygiene ROI' for high-performers?",
+            options: ["Diminishing returns - busy executives shouldn't bother", "Each hour of quality sleep returns 2-3 hours of productive work", "Only matters for physical jobs", "Sleep quality doesn't affect knowledge work"],
+            correct: 1,
+            explanation: "Studies on knowledge workers show that each hour of quality sleep can return 2-3 hours of productive, high-quality work. Sleep-deprived executives work more hours but accomplish less meaningful work.",
+            tip: "<strong>Action:</strong> Track your output quality, not just hours worked. You may find that 6 well-rested hours outperform 10 exhausted hours."
+        },
+        {
+            question: "How does chronic sleep deprivation affect strategic thinking?",
+            options: ["No effect on strategic capabilities", "Reduces ability to see big picture and long-term consequences", "Actually improves focus on details", "Only affects tactical decisions"],
+            correct: 1,
+            explanation: "Sleep deprivation narrows focus to immediate concerns, reducing ability to think strategically, consider multiple scenarios, or weigh long-term implications. Leaders become reactive rather than proactive.",
+            tip: "<strong>Action:</strong> Schedule strategic planning sessions for times when you're well-rested. Avoid making long-term decisions during or after periods of sleep debt."
+        },
+        {
+            question: "What's the best approach to business travel and sleep?",
+            options: ["Sleep on the plane, work at the hotel", "Adapt to local time immediately", "Stay on home time for trips under 48 hours", "Always take sleeping pills"],
+            correct: 2,
+            explanation: "For trips under 48 hours, staying on home time often works better than forcing adaptation. Schedule meetings during your 'home' alert hours when possible. For longer trips, adapt gradually.",
+            tip: "<strong>Action:</strong> For short trips, schedule critical meetings during your home-time peak hours. For longer trips, start shifting your schedule 2-3 days before departure."
+        }
+    ];
+
+    // Traveler-Specific Questions
+    const travelerQuizQuestions = [
+        {
+            question: "How long does it typically take to adjust to a new time zone?",
+            options: ["1 day total", "About 1 day per time zone crossed", "1 week regardless of distance", "Adjustment is immediate"],
+            correct: 1,
+            explanation: "The general rule is one day of adjustment per time zone crossed. Flying from New York to London (5 time zones) typically requires about 5 days for full circadian adjustment.",
+            tip: "<strong>Action:</strong> For important events, arrive early enough to adjust. If flying 6 time zones, arrive at least 3-4 days early for critical meetings or performances."
+        },
+        {
+            question: "Is jet lag worse when flying east or west?",
+            options: ["Flying west is worse", "Flying east is worse", "Both directions are equally difficult", "Depends on the airline"],
+            correct: 1,
+            explanation: "Flying east is typically harder because you must advance your body clock (go to sleep earlier), which is more difficult than delaying it. Our natural circadian rhythm runs slightly longer than 24 hours, making it easier to stay up late.",
+            tip: "<strong>Action:</strong> When flying east, start going to bed 30 minutes earlier for several days before departure. Use morning light at your destination to help advance your clock."
+        },
+        {
+            question: "What is the best time to take melatonin for eastward travel?",
+            options: ["Morning at your destination", "Evening at your destination (30 min before desired bedtime)", "Whenever you feel tired", "Melatonin doesn't help with jet lag"],
+            correct: 1,
+            explanation: "For eastward travel, take 0.5-3mg melatonin about 30 minutes before your target bedtime at the destination. This helps signal to your body that it's time to sleep in the new time zone.",
+            tip: "<strong>Action:</strong> Start taking melatonin at your destination bedtime even before you leave. Continue for 4-5 days after arrival. Lower doses (0.5-1mg) are often as effective as higher doses."
+        },
+        {
+            question: "How does light exposure help with jet lag?",
+            options: ["Light has no effect on jet lag", "Bright light in the morning helps you adjust to earlier time zones", "You should avoid all light when jet-lagged", "Only artificial light helps"],
+            correct: 1,
+            explanation: "Light is the most powerful circadian signal. Morning bright light advances your clock (helpful after flying east), while evening light delays it (helpful after flying west). Strategic light exposure can cut adjustment time in half.",
+            tip: "<strong>Action:</strong> After flying east, seek bright morning light and avoid evening light. After flying west, seek evening light and use sunglasses in the morning if needed."
+        },
+        {
+            question: "Should you sleep on the plane during a long-haul flight?",
+            options: ["Never - stay awake to tire yourself", "Always sleep as much as possible", "Only sleep if it's nighttime at your destination", "Sleep only in first class"],
+            correct: 2,
+            explanation: "Strategic plane sleep aligned with your destination time helps pre-adjust your body clock. If it's nighttime where you're going, try to sleep. If it's daytime there, try to stay awake.",
+            tip: "<strong>Action:</strong> Change your watch to destination time at takeoff. Sleep when it's night there, stay awake when it's day. Use eye masks, earplugs, and avoid alcohol to improve plane sleep quality."
+        },
+        {
+            question: "What is the 'jet lag diet' approach?",
+            options: ["Fasting completely during travel", "Alternating feast and fast days before travel", "Eating only local cuisine", "There's no diet approach to jet lag"],
+            correct: 1,
+            explanation: "The Argonne Anti-Jet-Lag Diet alternates feast/fast days before travel to reset the body's food clock. While evidence is mixed, many travelers report it helps. Meal timing does influence circadian rhythms.",
+            tip: "<strong>Action:</strong> A simpler approach: fast during the flight and eat your first meal at the local breakfast time. This helps reset your food clock to the new time zone."
+        },
+        {
+            question: "How does caffeine affect jet lag recovery?",
+            options: ["Avoid caffeine entirely when jet-lagged", "Use caffeine strategically based on destination time", "Caffeine has no effect on circadian adjustment", "Drink as much caffeine as needed"],
+            correct: 1,
+            explanation: "Strategic caffeine use can help - consuming it in the morning (destination time) helps you stay alert during desired wake hours. However, caffeine in the evening can prevent sleep when you need to adjust.",
+            tip: "<strong>Action:</strong> After arriving, have caffeine only during morning hours (destination time). Cut off caffeine by early afternoon to protect that night's sleep, which is crucial for adjustment."
+        },
+        {
+            question: "What's the best hotel room strategy for beating jet lag?",
+            options: ["Choose the highest floor for quiet", "Request a room with blackout curtains and eastern exposure", "Room location doesn't matter", "Always choose rooms near the elevator"],
+            correct: 1,
+            explanation: "Eastern exposure gives you natural morning light to help advance your clock (useful after eastward travel). Blackout curtains let you control light exposure. Room temperature control also matters for sleep quality.",
+            tip: "<strong>Action:</strong> When booking, request quiet rooms with good light control. Bring a travel blackout solution (eye mask or portable curtains) as backup. Request rooms away from ice machines and elevators."
+        },
+        {
+            question: "How does exercise timing help with jet lag?",
+            options: ["Avoid exercise when jet-lagged", "Exercise at your normal home time", "Exercise in the morning at your destination helps adjustment", "Only evening exercise helps"],
+            correct: 2,
+            explanation: "Morning exercise at your destination helps shift your body clock forward and promotes alertness during local daytime. It also helps tire you appropriately for local bedtime.",
+            tip: "<strong>Action:</strong> Upon arrival, try to get 20-30 minutes of outdoor exercise in the morning. The combination of light, activity, and social engagement accelerates circadian adjustment."
+        },
+        {
+            question: "What is 'social jet lag' and why does it matter?",
+            options: ["Feeling antisocial after travel", "The weekly misalignment between work days and weekend sleep patterns", "Missing social events due to travel", "A type of jet lag affecting only group travelers"],
+            correct: 1,
+            explanation: "Social jet lag refers to the difference between your natural sleep timing and your work schedule. Sleeping late on weekends and early on weekdays creates chronic circadian disruption similar to crossing time zones weekly.",
+            tip: "<strong>Action:</strong> Keep weekend wake times within 1 hour of weekday times. This prevents the 'Monday morning jet lag' that many people experience and improves overall sleep quality."
+        }
+    ];
+
+    // Combined quiz pools
+    const allQuizPools = {
+        general: generalQuizQuestions,
+        athlete: athleteQuizQuestions,
+        executive: executiveQuizQuestions,
+        traveler: travelerQuizQuestions
+    };
+
     let quizState = {
         currentQuestion: 0,
         score: 0,
         answered: false,
-        shuffledQuestions: []
+        shuffledQuestions: [],
+        currentCategory: 'general'
     };
 
     function shuffleArray(array) {
@@ -6789,12 +7097,27 @@
         return shuffled;
     }
 
-    function startQuiz() {
+    function selectQuizCategory(category) {
+        document.querySelectorAll('.quiz-category-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`.quiz-category-btn[data-category="${category}"]`)?.classList.add('active');
+        quizState.currentCategory = category;
+
+        // Update start button text
+        const catInfo = quizCategories[category];
+        document.getElementById('quizCategoryName').textContent = catInfo.name;
+        document.getElementById('quizCategoryDesc').textContent = catInfo.description;
+    }
+
+    function startQuiz(category = null) {
+        const selectedCategory = category || quizState.currentCategory || 'general';
+        const questions = allQuizPools[selectedCategory] || generalQuizQuestions;
+
         quizState = {
             currentQuestion: 0,
             score: 0,
             answered: false,
-            shuffledQuestions: shuffleArray(sleepQuizQuestions).slice(0, 10)
+            shuffledQuestions: shuffleArray(questions).slice(0, 10),
+            currentCategory: selectedCategory
         };
 
         document.getElementById('quizStart').style.display = 'none';
