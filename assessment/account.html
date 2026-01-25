@@ -1446,6 +1446,451 @@
             }
         }
 
+        /* Sleep Knowledge Quiz */
+        .quiz-container {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .quiz-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .quiz-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: var(--navy);
+        }
+
+        .quiz-subtitle {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .quiz-progress {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            background: rgba(15, 28, 46, 0.03);
+            border-radius: var(--radius-md);
+        }
+
+        .quiz-progress-bar {
+            flex: 1;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .quiz-progress-text {
+            font-size: 13px;
+            color: var(--text-light);
+            white-space: nowrap;
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+
+        .quiz-question-number {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gold-dark);
+            margin-bottom: 10px;
+        }
+
+        .quiz-question-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            color: var(--navy);
+            line-height: 1.4;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 20px;
+            background: #fafafa;
+            border: 2px solid transparent;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover:not(.disabled) {
+            background: rgba(201, 169, 98, 0.08);
+            border-color: rgba(201, 169, 98, 0.3);
+        }
+
+        .quiz-option.selected {
+            background: rgba(201, 169, 98, 0.1);
+            border-color: var(--gold);
+        }
+
+        .quiz-option.correct {
+            background: rgba(46, 125, 50, 0.1);
+            border-color: #2E7D32;
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(198, 40, 40, 0.1);
+            border-color: #C62828;
+        }
+
+        .quiz-option.disabled {
+            cursor: default;
+        }
+
+        .quiz-option-letter {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-light);
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .quiz-option.selected .quiz-option-letter {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: white;
+        }
+
+        .quiz-option.correct .quiz-option-letter {
+            background: #2E7D32;
+            border-color: #2E7D32;
+            color: white;
+        }
+
+        .quiz-option.incorrect .quiz-option-letter {
+            background: #C62828;
+            border-color: #C62828;
+            color: white;
+        }
+
+        .quiz-option-text {
+            font-size: 15px;
+            color: var(--text);
+            line-height: 1.4;
+        }
+
+        .quiz-feedback {
+            padding: 20px;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quiz-feedback.correct {
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.1) 0%, rgba(46, 125, 50, 0.05) 100%);
+            border-left: 4px solid #2E7D32;
+        }
+
+        .quiz-feedback.incorrect {
+            background: linear-gradient(135deg, rgba(198, 40, 40, 0.1) 0%, rgba(198, 40, 40, 0.05) 100%);
+            border-left: 4px solid #C62828;
+        }
+
+        .quiz-feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .quiz-feedback-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-feedback.correct .quiz-feedback-icon {
+            background: #2E7D32;
+        }
+
+        .quiz-feedback.incorrect .quiz-feedback-icon {
+            background: #C62828;
+        }
+
+        .quiz-feedback-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .quiz-feedback.correct .quiz-feedback-title {
+            color: #2E7D32;
+        }
+
+        .quiz-feedback.incorrect .quiz-feedback-title {
+            color: #C62828;
+        }
+
+        .quiz-feedback-explanation {
+            font-size: 14px;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .quiz-feedback-tip {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.7);
+            border-radius: var(--radius-sm);
+        }
+
+        .quiz-feedback-tip svg {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .quiz-feedback-tip-text {
+            font-size: 13px;
+            color: var(--navy);
+        }
+
+        .quiz-feedback-tip-text strong {
+            color: var(--gold-dark);
+        }
+
+        .quiz-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        .quiz-btn {
+            padding: 12px 28px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quiz-btn-primary {
+            background: var(--navy);
+            color: white;
+            border: none;
+        }
+
+        .quiz-btn-primary:hover {
+            background: #1a2d47;
+        }
+
+        .quiz-btn-secondary {
+            background: white;
+            color: var(--navy);
+            border: 2px solid var(--navy);
+        }
+
+        .quiz-btn-secondary:hover {
+            background: var(--navy);
+            color: white;
+        }
+
+        .quiz-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Quiz Results */
+        .quiz-results {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .quiz-results-score {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 25px;
+            position: relative;
+        }
+
+        .quiz-results-ring {
+            transform: rotate(-90deg);
+        }
+
+        .quiz-results-ring-bg {
+            fill: none;
+            stroke: #e0e0e0;
+            stroke-width: 10;
+        }
+
+        .quiz-results-ring-progress {
+            fill: none;
+            stroke-width: 10;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .quiz-results-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .quiz-results-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            color: var(--navy);
+            line-height: 1;
+        }
+
+        .quiz-results-label {
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .quiz-results-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .quiz-results-subtitle {
+            font-size: 15px;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .quiz-results-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .quiz-results-stat {
+            text-align: center;
+        }
+
+        .quiz-results-stat-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--navy);
+        }
+
+        .quiz-results-stat-label {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .quiz-start-card {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .quiz-start-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, rgba(201, 169, 98, 0.2) 0%, rgba(201, 169, 98, 0.1) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-start-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .quiz-start-desc {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .quiz-start-features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .quiz-start-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text);
+        }
+
         /* Modules */
         .modules-grid {
             display: grid;
@@ -4070,6 +4515,128 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Sleep Knowledge Quiz -->
+            <div class="quiz-container" id="sleepQuizContainer">
+                <div class="quiz-header">
+                    <div class="quiz-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" width="24" height="24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="quiz-title">Test Your Sleep Knowledge</h3>
+                        <p class="quiz-subtitle">Learn while you play - explanations with every answer</p>
+                    </div>
+                </div>
+
+                <!-- Quiz Start Screen -->
+                <div id="quizStart" class="quiz-start-card">
+                    <div class="quiz-start-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="2" width="40" height="40">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </div>
+                    <h4 class="quiz-start-title">Ready to test your sleep IQ?</h4>
+                    <p class="quiz-start-desc">Answer 10 questions about sleep science, myths, and healthy habits. Learn something new with every question!</p>
+                    <div class="quiz-start-features">
+                        <div class="quiz-start-feature">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+                            10 Questions
+                        </div>
+                        <div class="quiz-start-feature">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+                            Instant Feedback
+                        </div>
+                        <div class="quiz-start-feature">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+                            Actionable Tips
+                        </div>
+                    </div>
+                    <button class="quiz-btn quiz-btn-primary" onclick="startQuiz()">
+                        Start Quiz
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+
+                <!-- Quiz Questions (hidden initially) -->
+                <div id="quizContent" style="display: none;">
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar">
+                            <div class="quiz-progress-fill" id="quizProgressFill" style="width: 10%;"></div>
+                        </div>
+                        <span class="quiz-progress-text" id="quizProgressText">1 of 10</span>
+                    </div>
+
+                    <div class="quiz-question">
+                        <div class="quiz-question-number" id="quizQuestionNumber">Question 1</div>
+                        <p class="quiz-question-text" id="quizQuestionText">Loading question...</p>
+                    </div>
+
+                    <div class="quiz-options" id="quizOptions">
+                        <!-- Options will be populated by JavaScript -->
+                    </div>
+
+                    <div class="quiz-feedback" id="quizFeedback">
+                        <div class="quiz-feedback-header">
+                            <div class="quiz-feedback-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="16" height="16" id="feedbackIcon"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <span class="quiz-feedback-title" id="feedbackTitle">Correct!</span>
+                        </div>
+                        <p class="quiz-feedback-explanation" id="feedbackExplanation"></p>
+                        <div class="quiz-feedback-tip">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                            <p class="quiz-feedback-tip-text" id="feedbackTip"></p>
+                        </div>
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button class="quiz-btn quiz-btn-primary" id="quizNextBtn" onclick="nextQuestion()" disabled>
+                            Next Question
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Results (hidden initially) -->
+                <div id="quizResults" style="display: none;" class="quiz-results">
+                    <div class="quiz-results-score">
+                        <svg class="quiz-results-ring" width="140" height="140" viewBox="0 0 140 140">
+                            <circle class="quiz-results-ring-bg" cx="70" cy="70" r="60"/>
+                            <circle class="quiz-results-ring-progress" id="quizResultsRing" cx="70" cy="70" r="60" stroke-dasharray="377" stroke-dashoffset="377"/>
+                        </svg>
+                        <div class="quiz-results-value">
+                            <div class="quiz-results-number" id="quizResultsNumber">0</div>
+                            <div class="quiz-results-label">out of 10</div>
+                        </div>
+                    </div>
+                    <h3 class="quiz-results-title" id="quizResultsTitle">Great Job!</h3>
+                    <p class="quiz-results-subtitle" id="quizResultsSubtitle">You're on your way to becoming a sleep expert.</p>
+                    <div class="quiz-results-stats">
+                        <div class="quiz-results-stat">
+                            <div class="quiz-results-stat-value" id="quizCorrectCount">0</div>
+                            <div class="quiz-results-stat-label">Correct</div>
+                        </div>
+                        <div class="quiz-results-stat">
+                            <div class="quiz-results-stat-value" id="quizIncorrectCount">0</div>
+                            <div class="quiz-results-stat-label">Incorrect</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 15px;">
+                        <button class="quiz-btn quiz-btn-secondary" onclick="restartQuiz()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                            Try Again
+                        </button>
+                        <button class="quiz-btn quiz-btn-primary" onclick="shareQuizResults()">
+                            Share Results
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Modules Section -->
@@ -6129,6 +6696,277 @@
                 <p class="insight-text">${tip.text}</p>
             </div>
         `).join('');
+    }
+
+    // ==================== SLEEP KNOWLEDGE QUIZ ====================
+
+    const sleepQuizQuestions = [
+        {
+            question: "What is the ideal room temperature for sleep?",
+            options: ["72-76°F (22-24°C)", "65-68°F (18-20°C)", "78-82°F (26-28°C)", "60-62°F (15-17°C)"],
+            correct: 1,
+            explanation: "Research shows that a cooler room temperature of 65-68°F (18-20°C) is optimal for sleep. Your body temperature naturally drops during sleep, and a cool environment helps facilitate this process.",
+            tip: "<strong>Action:</strong> Set your thermostat to 65-68°F before bed. If you tend to get cold, use breathable layers that you can remove during the night."
+        },
+        {
+            question: "How long before bed should you stop consuming caffeine?",
+            options: ["2 hours", "4 hours", "6-8 hours", "12 hours"],
+            correct: 2,
+            explanation: "Caffeine has a half-life of about 5-6 hours, meaning half of it is still in your system after that time. For optimal sleep, avoid caffeine 6-8 hours before bed.",
+            tip: "<strong>Action:</strong> If you go to bed at 10 PM, have your last coffee by 2-4 PM. Switch to herbal tea or decaf in the afternoon."
+        },
+        {
+            question: "Which of these is a sign of good sleep quality?",
+            options: ["Waking up multiple times during the night", "Needing more than 30 minutes to fall asleep", "Feeling refreshed upon waking", "Sleeping 10+ hours regularly"],
+            correct: 2,
+            explanation: "Feeling refreshed and alert upon waking is one of the best indicators of good sleep quality. Frequent awakenings, long sleep latency, or excessive sleep duration can indicate underlying sleep issues.",
+            tip: "<strong>Action:</strong> Track how you feel each morning on a 1-5 scale. If you consistently score below 3, consider reviewing your sleep habits or consulting a specialist."
+        },
+        {
+            question: "What happens to your brain during REM sleep?",
+            options: ["It shuts down completely", "Memory consolidation and emotional processing occur", "It only controls breathing", "Nothing significant"],
+            correct: 1,
+            explanation: "During REM (Rapid Eye Movement) sleep, your brain is highly active - consolidating memories, processing emotions, and even solving problems. This is when most vivid dreaming occurs.",
+            tip: "<strong>Action:</strong> To maximize REM sleep, maintain consistent sleep schedules. REM periods get longer toward morning, so cutting sleep short especially reduces this vital stage."
+        },
+        {
+            question: "True or False: You can 'catch up' on lost sleep over the weekend.",
+            options: ["True - weekend sleep fully recovers lost sleep", "Partially true - it helps but doesn't fully compensate", "False - lost sleep is lost forever", "It depends on your age"],
+            correct: 1,
+            explanation: "While weekend recovery sleep can help reduce some effects of sleep debt, it doesn't fully reverse the cognitive impairments or health effects of chronic sleep deprivation. Consistent sleep is far more beneficial.",
+            tip: "<strong>Action:</strong> Instead of 'sleep bingeing' on weekends, aim for consistent bedtimes. If you must catch up, limit it to 1-2 extra hours to avoid disrupting your schedule."
+        },
+        {
+            question: "Which activity is BEST for the hour before bed?",
+            options: ["Watching an exciting TV show", "Checking work emails", "Reading a physical book with dim lighting", "Intense exercise"],
+            correct: 2,
+            explanation: "Reading a physical book with dim lighting is ideal because it's relaxing, doesn't emit blue light, and creates a positive sleep association. Screens and stimulating activities activate your brain and suppress melatonin.",
+            tip: "<strong>Action:</strong> Create a 'wind-down' routine: dim lights, put away screens, and do calming activities like reading, gentle stretching, or listening to soft music."
+        },
+        {
+            question: "How many complete sleep cycles does an adult typically go through per night?",
+            options: ["2-3 cycles", "4-6 cycles", "7-8 cycles", "It varies too much to say"],
+            correct: 1,
+            explanation: "Adults typically experience 4-6 complete sleep cycles per night, with each cycle lasting about 90 minutes. Each cycle includes light sleep, deep sleep, and REM sleep.",
+            tip: "<strong>Action:</strong> Try to wake up at the end of a cycle rather than in the middle. Use a sleep calculator or smart alarm that detects your sleep stage."
+        },
+        {
+            question: "What is 'sleep efficiency'?",
+            options: ["How quickly you complete tasks after waking", "The percentage of time in bed actually spent sleeping", "How little sleep you need to function", "The quality of your dreams"],
+            correct: 1,
+            explanation: "Sleep efficiency is the percentage of time spent in bed that you're actually asleep. A sleep efficiency above 85% is considered good. If you spend 8 hours in bed but only sleep 6, your efficiency is 75%.",
+            tip: "<strong>Action:</strong> If your sleep efficiency is low, try going to bed later or getting up earlier. Only use your bed for sleep - this strengthens the bed-sleep association."
+        },
+        {
+            question: "Why does alcohol disrupt sleep even though it makes you drowsy?",
+            options: ["It doesn't - alcohol helps you sleep better", "It causes frequent bathroom trips only", "It suppresses REM sleep and causes fragmented sleep later in the night", "It only affects people with alcohol sensitivity"],
+            correct: 2,
+            explanation: "While alcohol initially acts as a sedative, it significantly disrupts sleep architecture. It suppresses REM sleep, causes more awakenings in the second half of the night, and can worsen sleep apnea and snoring.",
+            tip: "<strong>Action:</strong> If you drink, finish your last drink 3-4 hours before bed and limit consumption. Alternating with water helps reduce sleep disruption."
+        },
+        {
+            question: "What is the recommended sleep duration for most adults?",
+            options: ["5-6 hours", "6-7 hours", "7-9 hours", "9-10 hours"],
+            correct: 2,
+            explanation: "The National Sleep Foundation recommends 7-9 hours for adults aged 18-64. Individual needs vary, but consistently sleeping less than 7 hours is associated with increased health risks.",
+            tip: "<strong>Action:</strong> Experiment to find your ideal duration within 7-9 hours. The right amount leaves you feeling refreshed without an alarm and alert throughout the day."
+        }
+    ];
+
+    let quizState = {
+        currentQuestion: 0,
+        score: 0,
+        answered: false,
+        shuffledQuestions: []
+    };
+
+    function shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+
+    function startQuiz() {
+        quizState = {
+            currentQuestion: 0,
+            score: 0,
+            answered: false,
+            shuffledQuestions: shuffleArray(sleepQuizQuestions).slice(0, 10)
+        };
+
+        document.getElementById('quizStart').style.display = 'none';
+        document.getElementById('quizContent').style.display = 'block';
+        document.getElementById('quizResults').style.display = 'none';
+
+        displayQuestion();
+    }
+
+    function displayQuestion() {
+        const question = quizState.shuffledQuestions[quizState.currentQuestion];
+        const questionNum = quizState.currentQuestion + 1;
+        const totalQuestions = quizState.shuffledQuestions.length;
+
+        document.getElementById('quizQuestionNumber').textContent = `Question ${questionNum}`;
+        document.getElementById('quizQuestionText').textContent = question.question;
+        document.getElementById('quizProgressText').textContent = `${questionNum} of ${totalQuestions}`;
+        document.getElementById('quizProgressFill').style.width = `${(questionNum / totalQuestions) * 100}%`;
+
+        const optionsContainer = document.getElementById('quizOptions');
+        const letters = ['A', 'B', 'C', 'D'];
+
+        optionsContainer.innerHTML = question.options.map((option, index) => `
+            <div class="quiz-option" onclick="selectAnswer(${index})" data-index="${index}">
+                <div class="quiz-option-letter">${letters[index]}</div>
+                <div class="quiz-option-text">${option}</div>
+            </div>
+        `).join('');
+
+        document.getElementById('quizFeedback').classList.remove('show', 'correct', 'incorrect');
+        document.getElementById('quizNextBtn').disabled = true;
+        quizState.answered = false;
+
+        // Update button text for last question
+        if (questionNum === totalQuestions) {
+            document.getElementById('quizNextBtn').innerHTML = `
+                See Results
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            `;
+        } else {
+            document.getElementById('quizNextBtn').innerHTML = `
+                Next Question
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            `;
+        }
+    }
+
+    function selectAnswer(selectedIndex) {
+        if (quizState.answered) return;
+        quizState.answered = true;
+
+        const question = quizState.shuffledQuestions[quizState.currentQuestion];
+        const isCorrect = selectedIndex === question.correct;
+
+        if (isCorrect) quizState.score++;
+
+        // Update option styles
+        const options = document.querySelectorAll('.quiz-option');
+        options.forEach((option, index) => {
+            option.classList.add('disabled');
+            if (index === question.correct) {
+                option.classList.add('correct');
+            } else if (index === selectedIndex && !isCorrect) {
+                option.classList.add('incorrect');
+            }
+        });
+
+        // Show feedback
+        const feedbackEl = document.getElementById('quizFeedback');
+        feedbackEl.classList.add('show', isCorrect ? 'correct' : 'incorrect');
+
+        document.getElementById('feedbackTitle').textContent = isCorrect ? 'Correct!' : 'Not quite right';
+        document.getElementById('feedbackExplanation').textContent = question.explanation;
+        document.getElementById('feedbackTip').innerHTML = question.tip;
+
+        // Update feedback icon
+        const iconEl = document.getElementById('feedbackIcon');
+        if (isCorrect) {
+            iconEl.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
+        } else {
+            iconEl.innerHTML = '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>';
+        }
+
+        document.getElementById('quizNextBtn').disabled = false;
+    }
+
+    function nextQuestion() {
+        if (quizState.currentQuestion < quizState.shuffledQuestions.length - 1) {
+            quizState.currentQuestion++;
+            displayQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    function showResults() {
+        document.getElementById('quizContent').style.display = 'none';
+        document.getElementById('quizResults').style.display = 'block';
+
+        const score = quizState.score;
+        const total = quizState.shuffledQuestions.length;
+        const percentage = (score / total) * 100;
+
+        document.getElementById('quizResultsNumber').textContent = score;
+        document.getElementById('quizCorrectCount').textContent = score;
+        document.getElementById('quizIncorrectCount').textContent = total - score;
+
+        // Animate the ring
+        const ring = document.getElementById('quizResultsRing');
+        const circumference = 377;
+        const offset = circumference - (percentage / 100) * circumference;
+
+        // Set color based on score
+        let ringColor;
+        if (percentage >= 80) ringColor = '#2E7D32';
+        else if (percentage >= 60) ringColor = '#F57C00';
+        else ringColor = '#C62828';
+        ring.style.stroke = ringColor;
+
+        setTimeout(() => {
+            ring.style.strokeDashoffset = offset;
+        }, 100);
+
+        // Set title and subtitle based on score
+        let title, subtitle;
+        if (percentage >= 90) {
+            title = 'Sleep Expert!';
+            subtitle = 'Impressive knowledge! You understand the science of sleep.';
+        } else if (percentage >= 70) {
+            title = 'Well Rested!';
+            subtitle = 'Great job! You have a solid understanding of sleep science.';
+        } else if (percentage >= 50) {
+            title = 'Getting There!';
+            subtitle = 'Good effort! Review the explanations to learn more.';
+        } else {
+            title = 'Time to Learn!';
+            subtitle = 'Sleep is fascinating - try again to discover more!';
+        }
+
+        document.getElementById('quizResultsTitle').textContent = title;
+        document.getElementById('quizResultsSubtitle').textContent = subtitle;
+    }
+
+    function restartQuiz() {
+        document.getElementById('quizResults').style.display = 'none';
+        document.getElementById('quizResultsRing').style.strokeDashoffset = 377;
+        startQuiz();
+    }
+
+    function shareQuizResults() {
+        const score = quizState.score;
+        const total = quizState.shuffledQuestions.length;
+        const text = `I scored ${score}/${total} on the Sleep Knowledge Quiz! Test your sleep IQ at Sleep Wellness by Dr. Alen.`;
+
+        if (navigator.share) {
+            navigator.share({
+                title: 'My Sleep Quiz Results',
+                text: text
+            }).catch(() => {
+                copyToClipboard(text);
+            });
+        } else {
+            copyToClipboard(text);
+        }
+    }
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert('Results copied to clipboard!');
+        }).catch(() => {
+            alert('Score: ' + quizState.score + '/' + quizState.shuffledQuestions.length);
+        });
     }
 
     // Init messages
