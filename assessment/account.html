@@ -3526,6 +3526,29 @@
                     </svg>
                     Log Sleep
                 </a>
+                <!-- Hotel Guest Checkout Button (shown only for hotel guests) -->
+                <a href="#" onclick="showCheckoutWizard(); return false;" class="quick-action-btn hotel-checkout-btn" id="checkoutBtn" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11l3 3L22 4"/>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                    </svg>
+                    Complete Your Stay
+                </a>
+            </div>
+
+            <!-- Hotel Stay Banner (shown for hotel guests) -->
+            <div id="hotelStayBanner" style="display: none; background: linear-gradient(135deg, #0f1c2e, #1a2a3a); border-radius: 12px; padding: 20px 25px; margin-bottom: 25px; color: white;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <p style="font-size: 12px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Your Stay at</p>
+                        <h3 id="hotelBannerName" style="font-family: 'Cormorant Garamond', serif; font-size: 24px; margin: 0;">Hotel Name</h3>
+                        <p id="hotelBannerDates" style="font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 5px;">Room 123 | Jan 15 - 18</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 3px;">Days Remaining</p>
+                        <p id="hotelDaysRemaining" style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: #C9A962; margin: 0;">3</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Tasks Banner -->
@@ -5159,6 +5182,220 @@
         </div>
     </div>
 </div>
+
+<!-- Guest Checkout Modal -->
+<div id="checkout-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 10000; justify-content: center; align-items: center; overflow-y: auto;">
+    <div style="background: white; border-radius: 16px; width: 90%; max-width: 600px; margin: 20px auto; max-height: 90vh; overflow-y: auto;">
+        <!-- Wizard Header -->
+        <div style="background: linear-gradient(135deg, #0f1c2e, #1a2a3a); padding: 25px 30px; border-radius: 16px 16px 0 0;">
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: white; margin: 0 0 10px;">Complete Your Stay</h2>
+            <div style="display: flex; gap: 8px;">
+                <div class="checkout-step" data-step="1" style="flex: 1; height: 4px; background: #C9A962; border-radius: 2px;"></div>
+                <div class="checkout-step" data-step="2" style="flex: 1; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px;"></div>
+                <div class="checkout-step" data-step="3" style="flex: 1; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px;"></div>
+                <div class="checkout-step" data-step="4" style="flex: 1; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px;"></div>
+                <div class="checkout-step" data-step="5" style="flex: 1; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px;"></div>
+            </div>
+        </div>
+
+        <!-- Step 1: Post-Stay ISI -->
+        <div class="checkout-wizard-step active" data-step="1" style="padding: 30px;">
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #0f1c2e; margin-bottom: 10px;">Post-Stay Sleep Assessment</h3>
+            <p style="color: #666; font-size: 14px; margin-bottom: 25px;">Let's see how your sleep improved during your stay. Answer based on the <strong>past week</strong>.</p>
+
+            <div id="post-isi-questions">
+                <!-- ISI questions will be loaded here -->
+                <div style="text-align: center; padding: 40px; color: #888;">Loading assessment...</div>
+            </div>
+        </div>
+
+        <!-- Step 2: Post-Stay ESS -->
+        <div class="checkout-wizard-step" data-step="2" style="display: none; padding: 30px;">
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #0f1c2e; margin-bottom: 10px;">Daytime Alertness Check</h3>
+            <p style="color: #666; font-size: 14px; margin-bottom: 25px;">How likely are you to doze off in these situations now?</p>
+
+            <div id="post-ess-questions">
+                <!-- ESS questions will be loaded here -->
+                <div style="text-align: center; padding: 40px; color: #888;">Loading assessment...</div>
+            </div>
+        </div>
+
+        <!-- Step 3: Feedback Survey -->
+        <div class="checkout-wizard-step" data-step="3" style="display: none; padding: 30px;">
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #0f1c2e; margin-bottom: 10px;">Your Feedback</h3>
+            <p style="color: #666; font-size: 14px; margin-bottom: 25px;">Help us improve the sleep wellness experience.</p>
+
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; font-size: 14px; font-weight: 500; color: #0f1c2e; margin-bottom: 12px;">Overall Experience</label>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button type="button" class="rating-star" data-rating="1" onclick="selectRating(1)" style="background: none; border: 2px solid #ddd; border-radius: 8px; padding: 15px; cursor: pointer; transition: all 0.2s;">
+                        <span style="font-size: 28px;">★</span>
+                    </button>
+                    <button type="button" class="rating-star" data-rating="2" onclick="selectRating(2)" style="background: none; border: 2px solid #ddd; border-radius: 8px; padding: 15px; cursor: pointer; transition: all 0.2s;">
+                        <span style="font-size: 28px;">★</span>
+                    </button>
+                    <button type="button" class="rating-star" data-rating="3" onclick="selectRating(3)" style="background: none; border: 2px solid #ddd; border-radius: 8px; padding: 15px; cursor: pointer; transition: all 0.2s;">
+                        <span style="font-size: 28px;">★</span>
+                    </button>
+                    <button type="button" class="rating-star" data-rating="4" onclick="selectRating(4)" style="background: none; border: 2px solid #ddd; border-radius: 8px; padding: 15px; cursor: pointer; transition: all 0.2s;">
+                        <span style="font-size: 28px;">★</span>
+                    </button>
+                    <button type="button" class="rating-star" data-rating="5" onclick="selectRating(5)" style="background: none; border: 2px solid #ddd; border-radius: 8px; padding: 15px; cursor: pointer; transition: all 0.2s;">
+                        <span style="font-size: 28px;">★</span>
+                    </button>
+                </div>
+                <input type="hidden" id="feedback-rating" value="">
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; font-size: 14px; font-weight: 500; color: #0f1c2e; margin-bottom: 10px;">Would you recommend this to other guests?</label>
+                <div style="display: flex; gap: 15px;">
+                    <label style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 15px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                        <input type="radio" name="recommend" value="yes" style="width: 18px; height: 18px;"> Yes, definitely
+                    </label>
+                    <label style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 15px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                        <input type="radio" name="recommend" value="no" style="width: 18px; height: 18px;"> Not really
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; font-size: 14px; font-weight: 500; color: #0f1c2e; margin-bottom: 10px;">What was most helpful? (optional)</label>
+                <select id="feedback-helpful" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                    <option value="">Select one...</option>
+                    <option value="personalized-schedule">Personalized sleep schedule</option>
+                    <option value="room-optimization">Room optimization tips</option>
+                    <option value="relaxation-techniques">Relaxation techniques</option>
+                    <option value="sleep-diary">Sleep tracking/diary</option>
+                    <option value="consultation">Consultation with Dr. Alen</option>
+                    <option value="all">Everything worked together</option>
+                </select>
+            </div>
+
+            <div>
+                <label style="display: block; font-size: 14px; font-weight: 500; color: #0f1c2e; margin-bottom: 10px;">Any additional comments? (optional)</label>
+                <textarea id="feedback-comments" rows="3" placeholder="Share your thoughts..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; resize: none;"></textarea>
+            </div>
+        </div>
+
+        <!-- Step 4: Hotel Experience Ratings -->
+        <div class="checkout-wizard-step" data-step="4" style="display: none; padding: 30px;">
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #0f1c2e; margin-bottom: 10px;">Room & Sleep Environment</h3>
+            <p style="color: #666; font-size: 14px; margin-bottom: 25px;">Rate how each aspect of your room affected your sleep (1-10).</p>
+
+            <div style="display: grid; gap: 15px;">
+                <div class="hotel-rating-item" style="display: flex; align-items: center; gap: 15px; padding: 12px; background: #f8f6f3; border-radius: 8px;">
+                    <span style="font-size: 24px;">🛏️</span>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; font-weight: 500; color: #0f1c2e;">Mattress Comfort</div>
+                    </div>
+                    <div style="display: flex; gap: 4px;" id="rating-mattress">
+                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button type="button" onclick="setHotelRating('mattress', ${n})" style="width: 28px; height: 28px; border: 1px solid #ddd; border-radius: 4px; background: white; cursor: pointer; font-size: 11px;">${n}</button>`).join('')}
+                    </div>
+                </div>
+
+                <div class="hotel-rating-item" style="display: flex; align-items: center; gap: 15px; padding: 12px; background: #f8f6f3; border-radius: 8px;">
+                    <span style="font-size: 24px;">🛋️</span>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; font-weight: 500; color: #0f1c2e;">Pillow Quality</div>
+                    </div>
+                    <div style="display: flex; gap: 4px;" id="rating-pillows">
+                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button type="button" onclick="setHotelRating('pillows', ${n})" style="width: 28px; height: 28px; border: 1px solid #ddd; border-radius: 4px; background: white; cursor: pointer; font-size: 11px;">${n}</button>`).join('')}
+                    </div>
+                </div>
+
+                <div class="hotel-rating-item" style="display: flex; align-items: center; gap: 15px; padding: 12px; background: #f8f6f3; border-radius: 8px;">
+                    <span style="font-size: 24px;">🌡️</span>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; font-weight: 500; color: #0f1c2e;">Room Temperature</div>
+                    </div>
+                    <div style="display: flex; gap: 4px;" id="rating-roomTemp">
+                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button type="button" onclick="setHotelRating('roomTemp', ${n})" style="width: 28px; height: 28px; border: 1px solid #ddd; border-radius: 4px; background: white; cursor: pointer; font-size: 11px;">${n}</button>`).join('')}
+                    </div>
+                </div>
+
+                <div class="hotel-rating-item" style="display: flex; align-items: center; gap: 15px; padding: 12px; background: #f8f6f3; border-radius: 8px;">
+                    <span style="font-size: 24px;">🌙</span>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; font-weight: 500; color: #0f1c2e;">Room Darkness</div>
+                    </div>
+                    <div style="display: flex; gap: 4px;" id="rating-darkness">
+                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button type="button" onclick="setHotelRating('darkness', ${n})" style="width: 28px; height: 28px; border: 1px solid #ddd; border-radius: 4px; background: white; cursor: pointer; font-size: 11px;">${n}</button>`).join('')}
+                    </div>
+                </div>
+
+                <div class="hotel-rating-item" style="display: flex; align-items: center; gap: 15px; padding: 12px; background: #f8f6f3; border-radius: 8px;">
+                    <span style="font-size: 24px;">🔇</span>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; font-weight: 500; color: #0f1c2e;">Quietness / Noise Level</div>
+                    </div>
+                    <div style="display: flex; gap: 4px;" id="rating-quietness">
+                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button type="button" onclick="setHotelRating('quietness', ${n})" style="width: 28px; height: 28px; border: 1px solid #ddd; border-radius: 4px; background: white; cursor: pointer; font-size: 11px;">${n}</button>`).join('')}
+                    </div>
+                </div>
+
+                <div class="hotel-rating-item" style="display: flex; align-items: center; gap: 15px; padding: 12px; background: #f8f6f3; border-radius: 8px;">
+                    <span style="font-size: 24px;">💨</span>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; font-weight: 500; color: #0f1c2e;">Air Quality / Ventilation</div>
+                    </div>
+                    <div style="display: flex; gap: 4px;" id="rating-airQuality">
+                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button type="button" onclick="setHotelRating('airQuality', ${n})" style="width: 28px; height: 28px; border: 1px solid #ddd; border-radius: 4px; background: white; cursor: pointer; font-size: 11px;">${n}</button>`).join('')}
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <label style="display: block; font-size: 14px; font-weight: 500; color: #0f1c2e; margin-bottom: 10px;">What helped your sleep the most? (optional)</label>
+                <textarea id="hotel-top-factor" rows="2" placeholder="e.g., The blackout curtains were amazing..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; resize: none;"></textarea>
+            </div>
+        </div>
+
+        <!-- Step 5: Thank You -->
+        <div class="checkout-wizard-step" data-step="5" style="display: none; padding: 40px; text-align: center;">
+            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #C9A962, #d4b978); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 28px; color: #0f1c2e; margin-bottom: 15px;">Thank You!</h3>
+            <p style="color: #666; font-size: 15px; margin-bottom: 30px; max-width: 400px; margin-left: auto; margin-right: auto;">Your sleep wellness journey at the hotel is complete. Here's a summary of your improvement.</p>
+
+            <div style="background: linear-gradient(135deg, #0f1c2e, #1a2a3a); padding: 30px; border-radius: 12px; margin-bottom: 25px;">
+                <p style="font-size: 12px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Your Sleep Improvement</p>
+                <p id="checkout-improvement" style="font-family: 'Cormorant Garamond', serif; font-size: 56px; color: #C9A962; margin: 0;">+0%</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
+                <div style="background: #f8f6f3; padding: 20px; border-radius: 8px;">
+                    <p style="font-size: 11px; color: #888; margin-bottom: 5px;">ISI Score Change</p>
+                    <p id="checkout-isi-change" style="font-size: 20px; font-weight: 600; color: #0f1c2e;">- → -</p>
+                </div>
+                <div style="background: #f8f6f3; padding: 20px; border-radius: 8px;">
+                    <p style="font-size: 11px; color: #888; margin-bottom: 5px;">ESS Score Change</p>
+                    <p id="checkout-ess-change" style="font-size: 20px; font-weight: 600; color: #0f1c2e;">- → -</p>
+                </div>
+            </div>
+
+            <p style="font-size: 13px; color: #888;">A detailed report will be sent to the hotel. Safe travels!</p>
+        </div>
+
+        <!-- Wizard Footer -->
+        <div style="padding: 20px 30px; border-top: 1px solid #eee; display: flex; justify-content: space-between;">
+            <button id="checkout-back-btn" onclick="checkoutPrevStep()" style="padding: 12px 24px; background: #f5f5f5; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; display: none;">Back</button>
+            <button id="checkout-cancel-btn" onclick="closeCheckoutModal()" style="padding: 12px 24px; background: #f5f5f5; border: none; border-radius: 8px; font-size: 14px; cursor: pointer;">Cancel</button>
+            <button id="checkout-next-btn" onclick="checkoutNextStep()" style="padding: 12px 30px; background: #C9A962; color: #0f1c2e; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; margin-left: auto;">Next</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .checkout-wizard-step { display: none; }
+    .checkout-wizard-step.active { display: block; }
+    .rating-star.selected { border-color: #C9A962 !important; background: rgba(201, 169, 98, 0.1) !important; }
+    .rating-star.selected span { color: #C9A962; }
+    .hotel-checkout-btn { background: linear-gradient(135deg, #2e7d32, #388e3c) !important; color: white !important; border-color: #2e7d32 !important; }
+    .hotel-checkout-btn:hover { background: linear-gradient(135deg, #388e3c, #43a047) !important; }
+    .hotel-checkout-btn svg { color: white !important; }
+</style>
 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -8462,6 +8699,380 @@
         return Math.floor(seconds / 86400) + 'd ago';
     }
 
+    // ============================================
+    // HOTEL GUEST CHECKOUT FUNCTIONALITY
+    // ============================================
+
+    let currentGuestStay = null;
+    let currentHotelPartner = null;
+    let checkoutStep = 1;
+    let postStayISI = null;
+    let postStayESS = null;
+
+    // ISI Questions for checkout
+    const isiQuestions = [
+        { id: 'isi1', text: 'Difficulty falling asleep', options: ['None', 'Mild', 'Moderate', 'Severe', 'Very Severe'] },
+        { id: 'isi2', text: 'Difficulty staying asleep', options: ['None', 'Mild', 'Moderate', 'Severe', 'Very Severe'] },
+        { id: 'isi3', text: 'Problems waking up too early', options: ['None', 'Mild', 'Moderate', 'Severe', 'Very Severe'] },
+        { id: 'isi4', text: 'How satisfied are you with your sleep?', options: ['Very Satisfied', 'Satisfied', 'Neutral', 'Dissatisfied', 'Very Dissatisfied'] },
+        { id: 'isi5', text: 'How noticeable to others is your sleep problem?', options: ['Not at all', 'A little', 'Somewhat', 'Much', 'Very much'] },
+        { id: 'isi6', text: 'How worried are you about your current sleep?', options: ['Not at all', 'A little', 'Somewhat', 'Much', 'Very much'] },
+        { id: 'isi7', text: 'How much does your sleep interfere with daily functioning?', options: ['Not at all', 'A little', 'Somewhat', 'Much', 'Very much'] }
+    ];
+
+    // ESS Questions for checkout
+    const essQuestions = [
+        { id: 'ess1', text: 'Sitting and reading' },
+        { id: 'ess2', text: 'Watching TV' },
+        { id: 'ess3', text: 'Sitting inactive in a public place' },
+        { id: 'ess4', text: 'As a passenger in a car for an hour' },
+        { id: 'ess5', text: 'Lying down to rest in the afternoon' },
+        { id: 'ess6', text: 'Sitting and talking to someone' },
+        { id: 'ess7', text: 'Sitting quietly after lunch (no alcohol)' },
+        { id: 'ess8', text: 'In a car, while stopped in traffic' }
+    ];
+
+    const essOptions = ['No chance (0)', 'Slight chance (1)', 'Moderate chance (2)', 'High chance (3)'];
+
+    // Initialize hotel guest mode
+    async function initHotelGuestMode(profile) {
+        if (!profile.hotelAffiliation?.isHotelGuest) return;
+
+        const stayId = profile.hotelAffiliation.currentStayId;
+        if (!stayId) return;
+
+        try {
+            currentGuestStay = await FirebaseDB.getGuestStay(stayId);
+            if (!currentGuestStay || currentGuestStay.stayStatus !== 'active') return;
+
+            currentHotelPartner = await FirebaseDB.getHotelPartner(currentGuestStay.hotelPartnerId);
+            if (!currentHotelPartner) return;
+
+            // Show checkout button
+            document.getElementById('checkoutBtn').style.display = 'flex';
+
+            // Show hotel stay banner
+            const banner = document.getElementById('hotelStayBanner');
+            banner.style.display = 'block';
+            document.getElementById('hotelBannerName').textContent = currentHotelPartner.name;
+
+            const checkIn = currentGuestStay.checkInDate?.toDate?.();
+            const checkOut = currentGuestStay.checkoutDate?.toDate?.();
+            const roomNum = currentGuestStay.roomNumber || 'N/A';
+
+            if (checkIn && checkOut) {
+                const formatDate = (d) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                document.getElementById('hotelBannerDates').textContent = `Room ${roomNum} | ${formatDate(checkIn)} - ${formatDate(checkOut)}`;
+
+                // Calculate days remaining
+                const now = new Date();
+                const daysRemaining = Math.max(0, Math.ceil((checkOut - now) / (1000 * 60 * 60 * 24)));
+                document.getElementById('hotelDaysRemaining').textContent = daysRemaining;
+            }
+
+        } catch (error) {
+            console.error('Error initializing hotel guest mode:', error);
+        }
+    }
+
+    // Show checkout wizard
+    function showCheckoutWizard() {
+        if (!currentGuestStay) {
+            alert('No active stay found.');
+            return;
+        }
+
+        checkoutStep = 1;
+        updateCheckoutUI();
+        loadISIQuestions();
+
+        document.getElementById('checkout-modal').style.display = 'flex';
+    }
+
+    // Close checkout modal
+    function closeCheckoutModal() {
+        document.getElementById('checkout-modal').style.display = 'none';
+    }
+
+    // Load ISI questions into the checkout wizard
+    function loadISIQuestions() {
+        const container = document.getElementById('post-isi-questions');
+        container.innerHTML = isiQuestions.map(q => `
+            <div style="margin-bottom: 20px;">
+                <p style="font-size: 14px; color: #0f1c2e; margin-bottom: 10px;">${q.text}</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    ${q.options.map((opt, i) => `
+                        <label style="flex: 1; min-width: 80px; text-align: center;">
+                            <input type="radio" name="${q.id}" value="${i}" style="display: none;">
+                            <span class="isi-option" onclick="selectISIOption(this, '${q.id}', ${i})" style="display: block; padding: 10px 8px; background: #f5f5f5; border: 2px solid transparent; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all 0.2s;">${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Load ESS questions
+    function loadESSQuestions() {
+        const container = document.getElementById('post-ess-questions');
+        container.innerHTML = essQuestions.map(q => `
+            <div style="margin-bottom: 20px;">
+                <p style="font-size: 14px; color: #0f1c2e; margin-bottom: 10px;">${q.text}</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    ${essOptions.map((opt, i) => `
+                        <label style="flex: 1; min-width: 100px; text-align: center;">
+                            <input type="radio" name="${q.id}" value="${i}" style="display: none;">
+                            <span class="ess-option" onclick="selectESSOption(this, '${q.id}', ${i})" style="display: block; padding: 10px 8px; background: #f5f5f5; border: 2px solid transparent; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all 0.2s;">${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Select ISI option
+    function selectISIOption(el, questionId, value) {
+        // Deselect siblings
+        el.parentElement.parentElement.querySelectorAll('.isi-option').forEach(opt => {
+            opt.style.borderColor = 'transparent';
+            opt.style.background = '#f5f5f5';
+        });
+        // Select this one
+        el.style.borderColor = '#C9A962';
+        el.style.background = 'rgba(201, 169, 98, 0.1)';
+        // Set radio value
+        document.querySelector(`input[name="${questionId}"][value="${value}"]`).checked = true;
+    }
+
+    // Select ESS option
+    function selectESSOption(el, questionId, value) {
+        el.parentElement.parentElement.querySelectorAll('.ess-option').forEach(opt => {
+            opt.style.borderColor = 'transparent';
+            opt.style.background = '#f5f5f5';
+        });
+        el.style.borderColor = '#C9A962';
+        el.style.background = 'rgba(201, 169, 98, 0.1)';
+        document.querySelector(`input[name="${questionId}"][value="${value}"]`).checked = true;
+    }
+
+    // Select rating star
+    function selectRating(rating) {
+        document.querySelectorAll('.rating-star').forEach((star, i) => {
+            if (i < rating) {
+                star.classList.add('selected');
+            } else {
+                star.classList.remove('selected');
+            }
+        });
+        document.getElementById('feedback-rating').value = rating;
+    }
+
+    // Update checkout UI based on step
+    function updateCheckoutUI() {
+        // Update progress bar
+        document.querySelectorAll('.checkout-step').forEach(step => {
+            const stepNum = parseInt(step.dataset.step);
+            step.style.background = stepNum <= checkoutStep ? '#C9A962' : 'rgba(255,255,255,0.3)';
+        });
+
+        // Show/hide steps
+        document.querySelectorAll('.checkout-wizard-step').forEach(step => {
+            const stepNum = parseInt(step.dataset.step);
+            step.style.display = stepNum === checkoutStep ? 'block' : 'none';
+            if (stepNum === checkoutStep) step.classList.add('active');
+            else step.classList.remove('active');
+        });
+
+        // Update buttons
+        const backBtn = document.getElementById('checkout-back-btn');
+        const nextBtn = document.getElementById('checkout-next-btn');
+        const cancelBtn = document.getElementById('checkout-cancel-btn');
+
+        backBtn.style.display = checkoutStep > 1 && checkoutStep < 5 ? 'inline-block' : 'none';
+        cancelBtn.style.display = checkoutStep < 5 ? 'inline-block' : 'none';
+
+        if (checkoutStep === 5) {
+            nextBtn.textContent = 'Done';
+            nextBtn.onclick = closeCheckoutModal;
+        } else if (checkoutStep === 4) {
+            nextBtn.textContent = 'Submit';
+        } else {
+            nextBtn.textContent = 'Next';
+            nextBtn.onclick = checkoutNextStep;
+        }
+    }
+
+    // Hotel experience ratings storage
+    let hotelRatings = {
+        mattress: null, pillows: null, roomTemp: null,
+        darkness: null, quietness: null, airQuality: null
+    };
+
+    // Set hotel rating
+    function setHotelRating(category, value) {
+        hotelRatings[category] = value;
+        // Update button styles
+        const container = document.getElementById('rating-' + category);
+        if (container) {
+            container.querySelectorAll('button').forEach((btn, idx) => {
+                const btnVal = idx + 1;
+                if (btnVal <= value) {
+                    btn.style.background = '#C9A962';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = '#C9A962';
+                } else {
+                    btn.style.background = 'white';
+                    btn.style.color = '#333';
+                    btn.style.borderColor = '#ddd';
+                }
+            });
+        }
+    }
+
+    // Go to previous step
+    function checkoutPrevStep() {
+        if (checkoutStep > 1) {
+            checkoutStep--;
+            updateCheckoutUI();
+        }
+    }
+
+    // Go to next step
+    async function checkoutNextStep() {
+        if (checkoutStep === 1) {
+            // Validate and collect ISI
+            const isiScore = collectISIScore();
+            if (isiScore === null) {
+                alert('Please answer all questions before continuing.');
+                return;
+            }
+            postStayISI = isiScore;
+            checkoutStep = 2;
+            loadESSQuestions();
+            updateCheckoutUI();
+
+        } else if (checkoutStep === 2) {
+            // Validate and collect ESS
+            const essScore = collectESSScore();
+            if (essScore === null) {
+                alert('Please answer all questions before continuing.');
+                return;
+            }
+            postStayESS = essScore;
+            checkoutStep = 3;
+            updateCheckoutUI();
+
+        } else if (checkoutStep === 3) {
+            // Collect feedback and move to hotel ratings
+            const rating = parseInt(document.getElementById('feedback-rating').value);
+
+            if (!rating) {
+                alert('Please provide a rating.');
+                return;
+            }
+
+            checkoutStep = 4;
+            updateCheckoutUI();
+
+        } else if (checkoutStep === 4) {
+            // Collect hotel ratings and complete checkout
+            const feedbackRating = parseInt(document.getElementById('feedback-rating').value);
+            const recommend = document.querySelector('input[name="recommend"]:checked')?.value;
+
+            // Collect hotel experience data
+            const hotelExperience = {
+                ...hotelRatings,
+                topFactor: document.getElementById('hotel-top-factor')?.value || ''
+            };
+
+            // Save everything
+            await completeCheckout({
+                rating: feedbackRating,
+                wouldRecommend: recommend === 'yes',
+                mostHelpful: document.getElementById('feedback-helpful').value,
+                comments: document.getElementById('feedback-comments').value
+            }, hotelExperience);
+
+            checkoutStep = 5;
+            updateCheckoutUI();
+        }
+    }
+
+    // Collect ISI score
+    function collectISIScore() {
+        let score = 0;
+        for (const q of isiQuestions) {
+            const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+            if (!selected) return null;
+            score += parseInt(selected.value);
+        }
+        return score;
+    }
+
+    // Collect ESS score
+    function collectESSScore() {
+        let score = 0;
+        for (const q of essQuestions) {
+            const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+            if (!selected) return null;
+            score += parseInt(selected.value);
+        }
+        return score;
+    }
+
+    // Complete checkout process
+    async function completeCheckout(feedback, hotelExperience = {}) {
+        try {
+            // Record post-stay assessments
+            await FirebaseDB.recordPostStayAssessment(currentGuestStay.id, 'isi', postStayISI);
+            await FirebaseDB.recordPostStayAssessment(currentGuestStay.id, 'ess', postStayESS);
+
+            // Save assessments to assessments collection as well
+            await FirebaseDB.saveAssessmentWithContext(currentUser.uid, {
+                type: 'ISI',
+                instrumentId: 'isi',
+                scores: { isi: postStayISI }
+            }, 'post-stay', currentGuestStay.id);
+
+            await FirebaseDB.saveAssessmentWithContext(currentUser.uid, {
+                type: 'ESS',
+                instrumentId: 'ess',
+                scores: { ess: postStayESS }
+            }, 'post-stay', currentGuestStay.id);
+
+            // Save hotel experience ratings
+            if (Object.values(hotelExperience).some(v => v !== null)) {
+                await db.collection('guestStays').doc(currentGuestStay.id).update({
+                    hotelExperience: hotelExperience
+                });
+            }
+
+            // Complete checkout with feedback
+            await FirebaseDB.completeGuestCheckout(currentGuestStay.id, feedback);
+
+            // Calculate and display improvement
+            const baselineISI = currentGuestStay.baselineAssessments?.isi;
+            let improvement = 0;
+            if (baselineISI && postStayISI !== null) {
+                improvement = Math.round(((baselineISI - postStayISI) / baselineISI) * 100);
+            }
+
+            document.getElementById('checkout-improvement').textContent = improvement > 0 ? `+${improvement}%` : `${improvement}%`;
+            document.getElementById('checkout-improvement').style.color = improvement > 0 ? '#C9A962' : '#fff';
+
+            document.getElementById('checkout-isi-change').textContent = `${baselineISI ?? '-'} → ${postStayISI}`;
+            document.getElementById('checkout-ess-change').textContent = `${currentGuestStay.baselineAssessments?.ess ?? '-'} → ${postStayESS}`;
+
+            // Hide checkout button and banner
+            document.getElementById('checkoutBtn').style.display = 'none';
+            document.getElementById('hotelStayBanner').style.display = 'none';
+
+        } catch (error) {
+            console.error('Error completing checkout:', error);
+            alert('Error completing checkout. Please try again.');
+        }
+    }
+
     // Auth state listener
     auth.onAuthStateChanged(async (user) => {
         if (!user) {
@@ -8482,8 +9093,14 @@
         Auth.userProfile = profile;
         Auth.updateAuthUI(true);
 
+        // Store current user for later use
+        currentUser = user;
+
         // Initialize dashboard
         initDashboard(user, profile);
+
+        // Initialize hotel guest mode if applicable
+        initHotelGuestMode(profile);
 
         // Load profile form
         if (profile) {

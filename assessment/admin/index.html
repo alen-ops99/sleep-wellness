@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Sleep Wellness</title>
-    <link rel="stylesheet" href="../styles.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- EmailJS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
@@ -48,6 +49,7 @@
             position: fixed;
             height: 100vh;
             overflow-y: auto;
+            z-index: 100;
         }
 
         .sidebar-header {
@@ -748,9 +750,38 @@
             }
         }
 
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 200;
+            background: var(--gold);
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+        }
+
+        .mobile-menu-btn svg {
+            width: 24px;
+            height: 24px;
+            color: var(--deep-navy);
+        }
+
         @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
             .admin-sidebar {
-                display: none;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 150;
+            }
+
+            .admin-sidebar.mobile-open {
+                transform: translateX(0);
             }
 
             .admin-main {
@@ -775,8 +806,15 @@
 <body>
 
 <div class="admin-layout">
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"/>
+        </svg>
+    </button>
+
     <!-- Sidebar -->
-    <aside class="admin-sidebar">
+    <aside class="admin-sidebar" id="admin-sidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">SLEEP WELLNESS</div>
             <div class="sidebar-subtitle">Admin Portal</div>
@@ -860,6 +898,42 @@
                     </svg>
                     <span>Modules</span>
                     <span class="badge" id="requests-badge" style="display: none;">0</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Partners</div>
+                <a class="nav-item" onclick="showSection('hotel-partners')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 21h18"/>
+                        <path d="M5 21V7l8-4v18"/>
+                        <path d="M19 21V11l-6-4"/>
+                        <path d="M9 9v.01"/>
+                        <path d="M9 12v.01"/>
+                        <path d="M9 15v.01"/>
+                        <path d="M9 18v.01"/>
+                    </svg>
+                    <span>Hotel Partners</span>
+                    <span class="badge" id="hotel-guests-badge" style="display: none;">0</span>
+                </a>
+                <a class="nav-item" onclick="showSection('athletic-partners')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="5" r="3"/>
+                        <path d="M12 8v8"/>
+                        <path d="M8 21l4-4 4 4"/>
+                        <path d="M6 12l2 2"/>
+                        <path d="M18 12l-2 2"/>
+                    </svg>
+                    <span>Athletic Partners</span>
+                    <span class="badge" id="athletic-badge" style="display: none;">0</span>
+                </a>
+                <a class="nav-item" onclick="showSection('business-partners')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                    </svg>
+                    <span>Business Partners</span>
+                    <span class="badge" id="business-badge" style="display: none;">0</span>
                 </a>
             </div>
         </nav>
@@ -1443,6 +1517,338 @@
                 <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 20px;">Recent Results</h3>
                 <div id="questionnaire-results-list">
                     <div class="loading">Loading...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hotel Partners Section -->
+        <section class="admin-section" id="section-hotel-partners">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Hotel Partners</h1>
+                    <p class="page-subtitle">B2B partnerships and guest sleep improvement tracking</p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="action-btn" style="background: #2e7d32; color: white;" onclick="createDemoHotelData()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;">
+                            <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
+                        </svg>
+                        Create Demo Data
+                    </button>
+                    <button class="action-btn action-btn-primary" onclick="showAddHotelModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;">
+                            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Add Hotel Partner
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-grid" style="margin-bottom: 25px;">
+                <div class="stat-card">
+                    <div class="stat-label">Active Partners</div>
+                    <div class="stat-value" id="stat-hotel-partners">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Guests</div>
+                    <div class="stat-value" id="stat-active-hotel-guests">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg. Improvement</div>
+                    <div class="stat-value" id="stat-avg-improvement">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Reports Pending</div>
+                    <div class="stat-value" id="stat-pending-reports">0</div>
+                </div>
+            </div>
+
+            <!-- Hotel Partners List -->
+            <div class="data-card" style="margin-bottom: 25px;">
+                <div class="data-card-header">
+                    <h2 class="data-card-title">Partner Hotels</h2>
+                </div>
+                <div id="hotel-partners-list" style="padding: 15px;">
+                    <div class="loading">Loading hotel partners...</div>
+                </div>
+            </div>
+
+            <!-- Pending Reports -->
+            <div class="data-card" id="pending-reports-card" style="display: none;">
+                <div class="data-card-header">
+                    <h2 class="data-card-title">Reports Pending Generation</h2>
+                </div>
+                <div id="pending-reports-list" style="padding: 15px;">
+                    <div class="loading">Loading...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hotel Partner Detail Section -->
+        <section class="admin-section" id="section-hotel-detail">
+            <div class="page-header">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button onclick="showSection('hotel-partners')" style="background: white; border: 1px solid rgba(201, 169, 98, 0.3); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <div>
+                        <h1 class="page-title" id="hotel-detail-name">Hotel Name</h1>
+                        <p class="page-subtitle" id="hotel-detail-contact">Contact: loading...</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="action-btn action-btn-secondary" onclick="editCurrentHotel()">Edit Hotel</button>
+                    <button class="action-btn action-btn-primary" onclick="showHotelInviteModal()">Generate Guest Invite</button>
+                </div>
+            </div>
+
+            <!-- Hotel Stats -->
+            <div class="stats-grid" style="margin-bottom: 25px;">
+                <div class="stat-card">
+                    <div class="stat-label">Total Guests</div>
+                    <div class="stat-value" id="hotel-stat-total">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Stays</div>
+                    <div class="stat-value" id="hotel-stat-active">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg. Sleep Improvement</div>
+                    <div class="stat-value" id="hotel-stat-improvement">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg. Rating</div>
+                    <div class="stat-value" id="hotel-stat-rating">-</div>
+                </div>
+            </div>
+
+            <!-- Guests Tabs -->
+            <div class="data-card">
+                <div class="data-card-header" style="border-bottom: none;">
+                    <div style="display: flex; gap: 20px;">
+                        <button class="hotel-tab active" data-tab="active" onclick="switchHotelTab('active')">Active Guests</button>
+                        <button class="hotel-tab" data-tab="completed" onclick="switchHotelTab('completed')">Completed Stays</button>
+                    </div>
+                </div>
+                <div id="hotel-guests-list" style="padding: 0;">
+                    <div class="loading" style="padding: 20px;">Loading guests...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Athletic Partners Section -->
+        <section class="admin-section" id="section-athletic-partners">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Athletic Partners</h1>
+                    <p class="page-subtitle">Sports teams and athlete sleep performance programs</p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="action-btn" style="background: #2e7d32; color: white;" onclick="createDemoAthleticData()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;">
+                            <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
+                        </svg>
+                        Create Demo Data
+                    </button>
+                    <button class="action-btn action-btn-primary" onclick="showAddAthleticPartnerModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;">
+                            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Add Team/Organization
+                    </button>
+                </div>
+            </div>
+
+            <!-- Athletic Stats -->
+            <div class="stats-grid" style="margin-bottom: 25px;">
+                <div class="stat-card">
+                    <div class="stat-label">Active Teams</div>
+                    <div class="stat-value" id="stat-athletic-teams">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Athletes</div>
+                    <div class="stat-value" id="stat-total-athletes">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg. Recovery Score</div>
+                    <div class="stat-value" id="stat-avg-recovery">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Programs</div>
+                    <div class="stat-value" id="stat-active-programs">0</div>
+                </div>
+            </div>
+
+            <!-- Athletic Partners List -->
+            <div class="data-card" style="margin-bottom: 25px;">
+                <div class="data-card-header">
+                    <h2 class="data-card-title">Teams & Organizations</h2>
+                </div>
+                <div id="athletic-partners-list" style="padding: 15px;">
+                    <p style="color: var(--text-light); text-align: center; padding: 40px 20px;">
+                        No athletic partners yet. Click "Add Team/Organization" to create your first partnership.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Athletic Partner Detail Section -->
+        <section class="admin-section" id="section-athletic-detail">
+            <div class="page-header">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button onclick="showSection('athletic-partners')" style="background: white; border: 1px solid rgba(201, 169, 98, 0.3); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <div>
+                        <h1 class="page-title" id="athletic-detail-name">Team Name</h1>
+                        <p class="page-subtitle" id="athletic-detail-sport">Sport: Loading...</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="action-btn action-btn-secondary" onclick="editCurrentAthleticPartner()">Edit Team</button>
+                    <button class="action-btn action-btn-primary" onclick="showAthleteInviteModal()">Add Athlete</button>
+                </div>
+            </div>
+
+            <!-- Team Stats -->
+            <div class="stats-grid" style="margin-bottom: 25px;">
+                <div class="stat-card">
+                    <div class="stat-label">Total Athletes</div>
+                    <div class="stat-value" id="athletic-stat-total">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Season</div>
+                    <div class="stat-value" id="athletic-stat-season">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg. Sleep Score</div>
+                    <div class="stat-value" id="athletic-stat-sleep">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg. Recovery</div>
+                    <div class="stat-value" id="athletic-stat-recovery">0%</div>
+                </div>
+            </div>
+
+            <!-- Athletes List -->
+            <div class="data-card">
+                <div class="data-card-header" style="border-bottom: none;">
+                    <div style="display: flex; gap: 20px;">
+                        <button class="hotel-tab active" data-tab="roster" onclick="switchAthleticTab('roster')">Team Roster</button>
+                        <button class="hotel-tab" data-tab="reports" onclick="switchAthleticTab('reports')">Performance Reports</button>
+                    </div>
+                </div>
+                <div id="athletic-members-list" style="padding: 0;">
+                    <div class="loading" style="padding: 20px;">Loading athletes...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business Partners Section -->
+        <section class="admin-section" id="section-business-partners">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Business Partners</h1>
+                    <p class="page-subtitle">Corporate executive wellness and leadership programs</p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="action-btn" style="background: #2e7d32; color: white;" onclick="createDemoBusinessData()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;">
+                            <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
+                        </svg>
+                        Create Demo Data
+                    </button>
+                    <button class="action-btn action-btn-primary" onclick="showAddBusinessPartnerModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;">
+                            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Add Organization
+                    </button>
+                </div>
+            </div>
+
+            <!-- Business Stats -->
+            <div class="stats-grid" style="margin-bottom: 25px;">
+                <div class="stat-card">
+                    <div class="stat-label">Partner Organizations</div>
+                    <div class="stat-value" id="stat-business-orgs">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Executives</div>
+                    <div class="stat-value" id="stat-total-executives">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg. Performance Gain</div>
+                    <div class="stat-value" id="stat-avg-performance">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Programs</div>
+                    <div class="stat-value" id="stat-business-programs">0</div>
+                </div>
+            </div>
+
+            <!-- Business Partners List -->
+            <div class="data-card" style="margin-bottom: 25px;">
+                <div class="data-card-header">
+                    <h2 class="data-card-title">Partner Organizations</h2>
+                </div>
+                <div id="business-partners-list" style="padding: 15px;">
+                    <p style="color: var(--text-light); text-align: center; padding: 40px 20px;">
+                        No business partners yet. Click "Add Organization" to create your first partnership.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business Partner Detail Section -->
+        <section class="admin-section" id="section-business-detail">
+            <div class="page-header">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button onclick="showSection('business-partners')" style="background: white; border: 1px solid rgba(201, 169, 98, 0.3); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <div>
+                        <h1 class="page-title" id="business-detail-name">Organization Name</h1>
+                        <p class="page-subtitle" id="business-detail-industry">Industry: Loading...</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="action-btn action-btn-secondary" onclick="editCurrentBusinessPartner()">Edit Organization</button>
+                    <button class="action-btn action-btn-primary" onclick="showExecutiveInviteModal()">Add Executive</button>
+                </div>
+            </div>
+
+            <!-- Organization Stats -->
+            <div class="stats-grid" style="margin-bottom: 25px;">
+                <div class="stat-card">
+                    <div class="stat-label">Total Participants</div>
+                    <div class="stat-value" id="business-stat-total">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Program Type</div>
+                    <div class="stat-value" id="business-stat-program" style="font-size: 18px;">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg. Sleep Improvement</div>
+                    <div class="stat-value" id="business-stat-sleep">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Completion Rate</div>
+                    <div class="stat-value" id="business-stat-completion">0%</div>
+                </div>
+            </div>
+
+            <!-- Participants List -->
+            <div class="data-card">
+                <div class="data-card-header" style="border-bottom: none;">
+                    <div style="display: flex; gap: 20px;">
+                        <button class="hotel-tab active" data-tab="participants" onclick="switchBusinessTab('participants')">Participants</button>
+                        <button class="hotel-tab" data-tab="progress" onclick="switchBusinessTab('progress')">Program Progress</button>
+                    </div>
+                </div>
+                <div id="business-members-list" style="padding: 0;">
+                    <div class="loading" style="padding: 20px;">Loading participants...</div>
                 </div>
             </div>
         </section>
@@ -2081,6 +2487,686 @@
     </div>
 </div>
 
+<!-- Add/Edit Hotel Partner Modal -->
+<div id="hotel-partner-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; overflow-y: auto;">
+    <div style="background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 550px; margin: 20px auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #0f1c2e; margin: 0;" id="hotel-modal-title">Add Hotel Partner</h2>
+            <button onclick="closeModal('hotel-partner-modal')" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+        </div>
+
+        <input type="hidden" id="hotel-edit-id">
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Hotel Name *</label>
+            <input type="text" id="hotel-name" placeholder="e.g., Ritz Paris" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Hotel ID (URL slug) *</label>
+            <input type="text" id="hotel-id" placeholder="e.g., ritz-paris" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+            <p style="font-size: 11px; color: #888; margin-top: 5px;">Used in guest signup URL: /auth.html?hotel=<strong id="hotel-id-preview">...</strong></p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+            <div>
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Contact Name *</label>
+                <input type="text" id="hotel-contact-name" placeholder="e.g., Jean-Pierre Dubois" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div>
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Contact Email *</label>
+                <input type="email" id="hotel-contact-email" placeholder="e.g., gm@ritzparis.com" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Hotel Logo URL (optional)</label>
+            <input type="url" id="hotel-logo-url" placeholder="https://..." style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Partnership Status</label>
+            <select id="hotel-status" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+                <option value="active">Active</option>
+                <option value="pending">Pending</option>
+                <option value="inactive">Inactive</option>
+            </select>
+        </div>
+
+        <div style="background: #f8f6f3; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 12px;">Report Settings</p>
+            <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; font-size: 13px;">
+                <input type="checkbox" id="hotel-include-name" style="width: 16px; height: 16px;">
+                Include guest name in reports (uncheck for anonymized reports)
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px;">
+                <input type="checkbox" id="hotel-email-on-checkout" checked style="width: 16px; height: 16px;">
+                Email report to hotel on guest checkout
+            </label>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button onclick="closeModal('hotel-partner-modal')" style="padding: 12px 24px; background: #f5f5f5; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+            <button onclick="saveHotelPartner()" style="padding: 12px 24px; background: #C9A962; color: #0f1c2e; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">Save Hotel Partner</button>
+        </div>
+    </div>
+</div>
+
+<!-- Hotel Guest Invite Modal -->
+<div id="hotel-invite-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 500px; margin: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #0f1c2e; margin: 0;">Guest Signup Link</h2>
+            <button onclick="closeModal('hotel-invite-modal')" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+        </div>
+
+        <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Share this link with <strong id="hotel-invite-hotel-name">the hotel</strong> to provide to their guests:</p>
+
+        <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="font-size: 12px; color: #888; margin-bottom: 5px;">Guest Signup URL:</p>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <code id="hotel-signup-url" style="flex: 1; font-size: 13px; word-break: break-all; color: #0f1c2e;"></code>
+                <button onclick="copyHotelSignupUrl()" style="padding: 8px 16px; background: #0f1c2e; color: white; border: none; border-radius: 4px; font-size: 12px; cursor: pointer; white-space: nowrap;">Copy</button>
+            </div>
+        </div>
+
+        <div style="background: rgba(201, 169, 98, 0.1); border: 1px solid var(--gold); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="font-size: 13px; color: #0f1c2e; margin: 0;">
+                <strong>How it works:</strong><br>
+                <span style="font-size: 12px; color: #666;">
+                1. Guest visits the link and creates an account<br>
+                2. They enter their room number and checkout date<br>
+                3. Assessments are automatically tagged for this stay<br>
+                4. Report is generated when they complete checkout
+                </span>
+            </p>
+        </div>
+
+        <div style="display: flex; justify-content: center;">
+            <button onclick="closeModal('hotel-invite-modal')" style="padding: 12px 30px; background: #C9A962; color: #0f1c2e; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">Done</button>
+        </div>
+    </div>
+</div>
+
+<!-- Guest Stay Detail Modal -->
+<div id="guest-stay-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; overflow-y: auto;">
+    <div style="background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 700px; margin: 20px auto; max-height: 90vh; overflow-y: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #0f1c2e; margin: 0;">Guest Stay Details</h2>
+            <button onclick="closeModal('guest-stay-modal')" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+        </div>
+
+        <div id="guest-stay-content">
+            <div class="loading">Loading...</div>
+        </div>
+
+        <div id="guest-stay-actions" style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 25px; padding-top: 20px; border-top: 1px solid #eee;">
+            <button onclick="closeModal('guest-stay-modal')" style="padding: 12px 24px; background: #f5f5f5; border: none; border-radius: 4px; cursor: pointer;">Close</button>
+            <button id="generate-report-btn" onclick="generateGuestReport()" style="padding: 12px 24px; background: #C9A962; color: #0f1c2e; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">Generate Report</button>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Athletic Partner Modal -->
+<div id="athletic-partner-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; overflow-y: auto;">
+    <div style="background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 550px; margin: 20px auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #0f1c2e; margin: 0;" id="athletic-modal-title">Add Athletic Partner</h2>
+            <button onclick="closeModal('athletic-partner-modal')" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+        </div>
+
+        <input type="hidden" id="athletic-edit-id">
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Team/Organization Name *</label>
+            <input type="text" id="athletic-name" placeholder="e.g., LA Lakers, US Ski Team" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Partner ID (URL slug) *</label>
+            <input type="text" id="athletic-id" placeholder="e.g., la-lakers" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+            <p style="font-size: 11px; color: #888; margin-top: 5px;">Used in athlete signup URL: /auth.html?team=<strong id="athletic-id-preview">...</strong></p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+            <div>
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Sport/Discipline *</label>
+                <select id="athletic-sport" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="basketball">Basketball</option>
+                    <option value="football">Football</option>
+                    <option value="soccer">Soccer</option>
+                    <option value="baseball">Baseball</option>
+                    <option value="hockey">Hockey</option>
+                    <option value="tennis">Tennis</option>
+                    <option value="golf">Golf</option>
+                    <option value="swimming">Swimming</option>
+                    <option value="track-field">Track & Field</option>
+                    <option value="skiing">Skiing</option>
+                    <option value="cycling">Cycling</option>
+                    <option value="mma">MMA/Combat Sports</option>
+                    <option value="esports">Esports</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div>
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Competition Level</label>
+                <select id="athletic-level" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="professional">Professional</option>
+                    <option value="olympic">Olympic/National</option>
+                    <option value="college">College/University</option>
+                    <option value="amateur">Amateur/Club</option>
+                </select>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+            <div>
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Contact Name *</label>
+                <input type="text" id="athletic-contact-name" placeholder="e.g., Performance Director" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div>
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Contact Email *</label>
+                <input type="email" id="athletic-contact-email" placeholder="e.g., performance@team.com" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Team Logo URL (optional)</label>
+            <input type="url" id="athletic-logo-url" placeholder="https://..." style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Partnership Status</label>
+            <select id="athletic-status" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+                <option value="active">Active</option>
+                <option value="pending">Pending</option>
+                <option value="inactive">Inactive</option>
+            </select>
+        </div>
+
+        <div style="background: #f8f6f3; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 12px;">Program Focus</p>
+            <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; font-size: 13px;">
+                <input type="checkbox" id="athletic-focus-recovery" checked style="width: 16px; height: 16px;">
+                Recovery optimization
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; font-size: 13px;">
+                <input type="checkbox" id="athletic-focus-travel" checked style="width: 16px; height: 16px;">
+                Travel/jet lag management
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px;">
+                <input type="checkbox" id="athletic-focus-performance" checked style="width: 16px; height: 16px;">
+                Game-day performance
+            </label>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button onclick="closeModal('athletic-partner-modal')" style="padding: 12px 24px; background: #f5f5f5; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+            <button onclick="saveAthleticPartner()" style="padding: 12px 24px; background: #C9A962; color: #0f1c2e; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">Save Partner</button>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Business Partner Modal -->
+<div id="business-partner-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; overflow-y: auto;">
+    <div style="background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 550px; margin: 20px auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #0f1c2e; margin: 0;" id="business-modal-title">Add Business Partner</h2>
+            <button onclick="closeModal('business-partner-modal')" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+        </div>
+
+        <input type="hidden" id="business-edit-id">
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Organization Name *</label>
+            <input type="text" id="business-name" placeholder="e.g., Goldman Sachs, McKinsey & Company" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Partner ID (URL slug) *</label>
+            <input type="text" id="business-id" placeholder="e.g., goldman-sachs" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+            <p style="font-size: 11px; color: #888; margin-top: 5px;">Used in executive signup URL: /auth.html?corp=<strong id="business-id-preview">...</strong></p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+            <div>
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Industry *</label>
+                <select id="business-industry" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="finance">Finance & Banking</option>
+                    <option value="consulting">Consulting</option>
+                    <option value="technology">Technology</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="legal">Legal</option>
+                    <option value="manufacturing">Manufacturing</option>
+                    <option value="media">Media & Entertainment</option>
+                    <option value="retail">Retail</option>
+                    <option value="energy">Energy</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div>
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Program Type</label>
+                <select id="business-program" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="executive">Executive Coaching</option>
+                    <option value="leadership">Leadership Program</option>
+                    <option value="wellness">Corporate Wellness</option>
+                    <option value="workshop">Workshop Series</option>
+                </select>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+            <div>
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Contact Name *</label>
+                <input type="text" id="business-contact-name" placeholder="e.g., HR Director" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div>
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Contact Email *</label>
+                <input type="email" id="business-contact-email" placeholder="e.g., hr@company.com" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Company Logo URL (optional)</label>
+            <input type="url" id="business-logo-url" placeholder="https://..." style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Partnership Status</label>
+            <select id="business-status" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+                <option value="active">Active</option>
+                <option value="pending">Pending</option>
+                <option value="inactive">Inactive</option>
+            </select>
+        </div>
+
+        <div style="background: #f8f6f3; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 12px;">Program Focus</p>
+            <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; font-size: 13px;">
+                <input type="checkbox" id="business-focus-decision" checked style="width: 16px; height: 16px;">
+                Decision quality & cognitive performance
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; font-size: 13px;">
+                <input type="checkbox" id="business-focus-travel" checked style="width: 16px; height: 16px;">
+                Travel & jet lag optimization
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px;">
+                <input type="checkbox" id="business-focus-stress" checked style="width: 16px; height: 16px;">
+                Stress & burnout prevention
+            </label>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button onclick="closeModal('business-partner-modal')" style="padding: 12px 24px; background: #f5f5f5; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+            <button onclick="saveBusinessPartner()" style="padding: 12px 24px; background: #C9A962; color: #0f1c2e; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">Save Partner</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Hotel Partner Cards */
+    .hotel-partner-card {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        background: white;
+        border: 1px solid rgba(201, 169, 98, 0.2);
+        border-radius: 12px;
+        margin-bottom: 15px;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+
+    .hotel-partner-card:hover {
+        border-color: var(--gold);
+        box-shadow: 0 4px 15px rgba(201, 169, 98, 0.15);
+    }
+
+    .hotel-partner-logo {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #0f1c2e, #1a2a3a);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .hotel-partner-logo svg {
+        width: 28px;
+        height: 28px;
+        color: var(--gold);
+    }
+
+    .hotel-partner-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .hotel-partner-info {
+        flex: 1;
+    }
+
+    .hotel-partner-name {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 20px;
+        color: #0f1c2e;
+        margin-bottom: 5px;
+    }
+
+    .hotel-partner-contact {
+        font-size: 13px;
+        color: #888;
+    }
+
+    .hotel-partner-stats {
+        display: flex;
+        gap: 25px;
+        text-align: center;
+    }
+
+    .hotel-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hotel-stat-value {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 24px;
+        color: #0f1c2e;
+        font-weight: 600;
+    }
+
+    .hotel-stat-label {
+        font-size: 11px;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .hotel-partner-status {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 500;
+    }
+
+    .hotel-partner-status.active {
+        background: rgba(46, 125, 50, 0.1);
+        color: #2e7d32;
+    }
+
+    .hotel-partner-status.pending {
+        background: rgba(237, 108, 2, 0.1);
+        color: #ed6c02;
+    }
+
+    .hotel-partner-status.inactive {
+        background: rgba(107, 123, 138, 0.1);
+        color: #6b7b8a;
+    }
+
+    /* Hotel tabs */
+    .hotel-tab {
+        background: none;
+        border: none;
+        padding: 12px 20px;
+        font-size: 13px;
+        color: #888;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        transition: all 0.2s;
+    }
+
+    .hotel-tab:hover {
+        color: #0f1c2e;
+    }
+
+    .hotel-tab.active {
+        color: #0f1c2e;
+        border-bottom-color: var(--gold);
+    }
+
+    /* Guest stay row */
+    .guest-stay-row {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .guest-stay-row:hover {
+        background: rgba(201, 169, 98, 0.05);
+    }
+
+    .guest-stay-row:last-child {
+        border-bottom: none;
+    }
+
+    .guest-avatar {
+        width: 40px;
+        height: 40px;
+        background: var(--gold);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        color: #0f1c2e;
+        flex-shrink: 0;
+    }
+
+    .guest-info {
+        flex: 1;
+    }
+
+    .guest-name {
+        font-size: 14px;
+        font-weight: 500;
+        color: #0f1c2e;
+    }
+
+    .guest-dates {
+        font-size: 12px;
+        color: #888;
+    }
+
+    .guest-room {
+        font-size: 13px;
+        color: #0f1c2e;
+        background: rgba(201, 169, 98, 0.1);
+        padding: 4px 10px;
+        border-radius: 4px;
+    }
+
+    .guest-improvement {
+        text-align: center;
+        min-width: 80px;
+    }
+
+    .guest-improvement-value {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .guest-improvement-value.positive {
+        color: #2e7d32;
+    }
+
+    .guest-improvement-value.neutral {
+        color: #888;
+    }
+
+    .guest-improvement-label {
+        font-size: 10px;
+        color: #888;
+        text-transform: uppercase;
+    }
+
+    .guest-status {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 500;
+    }
+
+    .guest-status.active {
+        background: rgba(33, 150, 243, 0.1);
+        color: #1976d2;
+    }
+
+    .guest-status.checked-out {
+        background: rgba(237, 108, 2, 0.1);
+        color: #ed6c02;
+    }
+
+    .guest-status.report-sent {
+        background: rgba(46, 125, 50, 0.1);
+        color: #2e7d32;
+    }
+
+    /* Partner card styles (reusable for all partner types) */
+    .partner-card {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        background: white;
+        border: 1px solid rgba(201, 169, 98, 0.2);
+        border-radius: 12px;
+        margin-bottom: 15px;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+
+    .partner-card:hover {
+        border-color: var(--gold);
+        box-shadow: 0 4px 15px rgba(201, 169, 98, 0.15);
+    }
+
+    .partner-card-logo {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .partner-card-logo.athletic {
+        background: linear-gradient(135deg, #1565c0, #0d47a1);
+    }
+
+    .partner-card-logo.business {
+        background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    }
+
+    .partner-card-logo svg {
+        width: 28px;
+        height: 28px;
+        color: white;
+    }
+
+    .partner-card-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .partner-card-info {
+        flex: 1;
+    }
+
+    .partner-card-name {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 20px;
+        color: #0f1c2e;
+        margin-bottom: 5px;
+    }
+
+    .partner-card-meta {
+        font-size: 13px;
+        color: #888;
+    }
+
+    .partner-card-stats {
+        display: flex;
+        gap: 25px;
+        text-align: center;
+    }
+
+    .partner-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .partner-stat-value {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 24px;
+        color: #0f1c2e;
+        font-weight: 600;
+    }
+
+    .partner-stat-label {
+        font-size: 11px;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .partner-status {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 500;
+    }
+
+    .partner-status.active {
+        background: rgba(46, 125, 50, 0.1);
+        color: #2e7d32;
+    }
+
+    .partner-status.pending {
+        background: rgba(237, 108, 2, 0.1);
+        color: #ed6c02;
+    }
+
+    .partner-status.inactive {
+        background: rgba(107, 123, 138, 0.1);
+        color: #6b7b8a;
+    }
+
+    .sport-badge {
+        background: rgba(21, 101, 192, 0.1);
+        color: #1565c0;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        text-transform: capitalize;
+    }
+
+    .industry-badge {
+        background: rgba(46, 125, 50, 0.1);
+        color: #2e7d32;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        text-transform: capitalize;
+    }
+</style>
+
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
@@ -2091,34 +3177,81 @@
 <script src="../questionnaires.js"></script>
 
 <script>
+    console.log('Admin JS starting...');
+
     let currentUser = null;
     let allClients = [];
     let allAssessments = [];
     let currentConversation = null;
     let messageListener = null;
+    let hotelPartners = [];
+    let currentHotelId = null;
+    let athleticPartners = [];
+    let currentAthleticId = null;
+    let businessPartners = [];
+    let currentBusinessId = null;
 
-    // Check admin access
-    auth.onAuthStateChanged(async (user) => {
-        if (!user) {
-            window.location.href = '../auth.html';
-            return;
+    // Toggle mobile menu - defined early so it works immediately
+    function toggleMobileMenu() {
+        const sidebar = document.getElementById('admin-sidebar');
+        if (sidebar) sidebar.classList.toggle('mobile-open');
+    }
+
+    // Show section - defined early so nav works immediately
+    function showSection(sectionId) {
+        console.log('showSection called:', sectionId);
+
+        // Close mobile menu
+        const sidebar = document.getElementById('admin-sidebar');
+        if (sidebar) sidebar.classList.remove('mobile-open');
+
+        // Update nav highlight
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        if (event && event.target) {
+            const navItem = event.target.closest('.nav-item');
+            if (navItem) navItem.classList.add('active');
         }
 
-        const profile = await FirebaseDB.getUserProfile(user.uid);
-        if (!profile || profile.role !== 'admin') {
-            window.location.href = '../account.html';
-            return;
+        // Show the requested section
+        document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+        const section = document.getElementById('section-' + sectionId);
+        if (section) {
+            section.classList.add('active');
+            // Load section data if user is authenticated
+            if (currentUser) {
+                loadSectionData(sectionId);
+            }
         }
+    }
 
-        currentUser = user;
-        document.getElementById('adminName').textContent = profile.displayName || 'Admin';
-        document.getElementById('adminAvatar').textContent = (profile.displayName || 'A')[0].toUpperCase();
+    // Wait for Firebase to initialize
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check admin access once auth is ready
+        if (typeof auth !== 'undefined') {
+            auth.onAuthStateChanged(async (user) => {
+                console.log('Auth state changed:', user ? user.email : 'no user');
+                if (!user) {
+                    window.location.href = '../auth.html';
+                    return;
+                }
 
-        // Load dashboard data
-        loadDashboard();
+                const profile = await FirebaseDB.getUserProfile(user.uid);
+                if (!profile || profile.role !== 'admin') {
+                    window.location.href = '../account.html';
+                    return;
+                }
 
-        // Load notifications
-        loadNotifications();
+                currentUser = user;
+                document.getElementById('adminName').textContent = profile.displayName || 'Admin';
+                document.getElementById('adminAvatar').textContent = (profile.displayName || 'A')[0].toUpperCase();
+
+                // Load dashboard data
+                loadDashboard();
+                loadNotifications();
+            });
+        } else {
+            console.error('Auth not available');
+        }
     });
 
     // Navigate to section (from stat cards)
@@ -2134,35 +3267,6 @@
         loadSectionData(sectionId);
     }
 
-    // Show section
-    function showSection(sectionId) {
-        // Update nav
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-
-        // Try to highlight the matching nav item (if called from nav click)
-        try {
-            if (typeof event !== 'undefined' && event && event.target) {
-                event.target.closest('.nav-item')?.classList.add('active');
-            }
-        } catch (e) {
-            // Ignore - event might not be available
-        }
-
-        // Show section
-        document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
-        const section = document.getElementById('section-' + sectionId);
-        if (section) {
-            section.classList.add('active');
-        } else {
-            console.error('Section not found:', 'section-' + sectionId);
-        }
-
-        // Load section data (skip for client-detail as it's loaded separately)
-        if (sectionId !== 'client-detail') {
-            loadSectionData(sectionId);
-        }
-    }
-
     // Load section data
     function loadSectionData(sectionId) {
         switch(sectionId) {
@@ -2174,6 +3278,9 @@
             case 'appointments': loadAppointments(); break;
             case 'modules': loadModulesSection(); break;
             case 'questionnaires': loadQuestionnaires(); break;
+            case 'hotel-partners': loadHotelPartners(); break;
+            case 'athletic-partners': loadAthleticPartners(); break;
+            case 'business-partners': loadBusinessPartners(); break;
         }
     }
 
@@ -6266,6 +7373,1973 @@ Sleep Wellness by Dr. Alen`);
 
     // Initialize admin AI chatbot
     initAdminAIChatbot();
+
+    // ============================================
+    // HOTEL PARTNER MANAGEMENT
+    // ============================================
+
+    // Create comprehensive demo data for hotel partner feature
+    async function createDemoHotelData() {
+        const btn = event.target.closest('button');
+        btn.disabled = true;
+        btn.innerHTML = '<span style="margin-right: 6px;">⏳</span> Creating...';
+
+        try {
+            const hotelId = 'ritz-carlton-demo';
+
+            // Create luxury hotel partner
+            await db.collection('hotelPartners').doc(hotelId).set({
+                id: hotelId,
+                name: 'The Ritz-Carlton',
+                contactName: 'Jean-Pierre Dubois',
+                contactEmail: 'gm@ritzcarlton-demo.com',
+                logoUrl: null,
+                partnershipStatus: 'active',
+                reportSettings: {
+                    includeGuestName: true,
+                    emailOnCheckout: true
+                },
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                createdBy: currentUser.uid
+            });
+
+            // Guest 1: Completed 7-day stay with excellent results
+            const guest1Id = 'demo-guest-001';
+            await db.collection('users').doc(guest1Id).set({
+                email: 'sarah.johnson@email.com',
+                displayName: 'Sarah Johnson',
+                role: 'client',
+                clientType: 'hotel',
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                hotelAffiliation: { hotelPartnerId: hotelId, isHotelGuest: true }
+            });
+
+            const checkIn1 = new Date();
+            checkIn1.setDate(checkIn1.getDate() - 8);
+            const checkout1 = new Date();
+            checkout1.setDate(checkout1.getDate() - 1);
+
+            await db.collection('guestStays').add({
+                guestUserId: guest1Id,
+                guestName: 'Sarah Johnson',
+                hotelPartnerId: hotelId,
+                checkInDate: checkIn1,
+                checkoutDate: checkout1,
+                actualCheckoutDate: checkout1,
+                roomNumber: 'Suite 412',
+                stayStatus: 'checked-out',
+                baselineAssessments: { isi: 21, ess: 16 },  // Severe insomnia
+                postStayAssessments: { isi: 8, ess: 7 },    // Normal range!
+                engagement: {
+                    chatSessions: 12,
+                    diaryEntries: 7,
+                    guidesViewed: 5,
+                    interventions: ['personalized-schedule', 'room-optimization', 'relaxation-techniques', 'light-therapy', 'sleep-hygiene']
+                },
+                sleepMetrics: {
+                    avgSleepDuration: { baseline: 4.8, postStay: 7.4 },
+                    avgSleepLatency: { baseline: 55, postStay: 12 },
+                    avgAwakenings: { baseline: 4.1, postStay: 0.8 },
+                    avgSleepEfficiency: { baseline: 68, postStay: 92 },
+                    avgRestedness: { baseline: 3.2, postStay: 8.6 },
+                    avgDaytimeEnergy: { baseline: 3.8, postStay: 8.2 }
+                },
+                hotelExperience: {
+                    mattress: 10,
+                    pillows: 9,
+                    bedding: 9,
+                    roomTemp: 9,
+                    darkness: 10,
+                    quietness: 8,
+                    airQuality: 9,
+                    topFactor: 'The blackout curtains and mattress quality were exceptional'
+                },
+                guestFeedback: {
+                    rating: 5,
+                    wouldRecommend: true,
+                    mostHelpful: 'personalized-schedule',
+                    comments: 'Life-changing experience! I came here exhausted from chronic insomnia and left feeling like a new person. The personalized sleep schedule and Dr. Alen\'s guidance through the app were incredible. My sleep improved dramatically by day 3.',
+                    submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+                },
+                reportPdfUrl: null,
+                reportSentAt: null,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            // Guest 2: Completed 5-day stay with good results
+            const guest2Id = 'demo-guest-002';
+            await db.collection('users').doc(guest2Id).set({
+                email: 'michael.chen@email.com',
+                displayName: 'Michael Chen',
+                role: 'client',
+                clientType: 'hotel',
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                hotelAffiliation: { hotelPartnerId: hotelId, isHotelGuest: true }
+            });
+
+            const checkIn2 = new Date();
+            checkIn2.setDate(checkIn2.getDate() - 6);
+            const checkout2 = new Date();
+            checkout2.setDate(checkout2.getDate() - 1);
+
+            await db.collection('guestStays').add({
+                guestUserId: guest2Id,
+                guestName: 'Michael Chen',
+                hotelPartnerId: hotelId,
+                checkInDate: checkIn2,
+                checkoutDate: checkout2,
+                actualCheckoutDate: checkout2,
+                roomNumber: 'Room 308',
+                stayStatus: 'checked-out',
+                baselineAssessments: { isi: 15, ess: 12 },  // Moderate insomnia
+                postStayAssessments: { isi: 7, ess: 6 },    // Normal range
+                engagement: {
+                    chatSessions: 8,
+                    diaryEntries: 5,
+                    guidesViewed: 3,
+                    interventions: ['room-optimization', 'relaxation-techniques', 'caffeine-timing']
+                },
+                sleepMetrics: {
+                    avgSleepDuration: { baseline: 5.8, postStay: 7.1 },
+                    avgSleepLatency: { baseline: 35, postStay: 18 },
+                    avgAwakenings: { baseline: 2.5, postStay: 1.2 },
+                    avgSleepEfficiency: { baseline: 76, postStay: 88 },
+                    avgRestedness: { baseline: 4.5, postStay: 7.8 },
+                    avgDaytimeEnergy: { baseline: 5.0, postStay: 7.5 }
+                },
+                hotelExperience: {
+                    mattress: 8,
+                    pillows: 9,
+                    bedding: 8,
+                    roomTemp: 10,
+                    darkness: 9,
+                    quietness: 6,
+                    airQuality: 8,
+                    topFactor: 'Perfect room temperature control made all the difference'
+                },
+                guestFeedback: {
+                    rating: 5,
+                    wouldRecommend: true,
+                    mostHelpful: 'room-optimization',
+                    comments: 'The room optimization tips were game-changers - especially the blackout guidance and temperature settings. Slept better here than at home!',
+                    submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+                },
+                reportPdfUrl: null,
+                reportSentAt: null,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            // Guest 3: Currently active stay
+            const guest3Id = 'demo-guest-003';
+            await db.collection('users').doc(guest3Id).set({
+                email: 'emma.williams@email.com',
+                displayName: 'Emma Williams',
+                role: 'client',
+                clientType: 'hotel',
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                hotelAffiliation: { hotelPartnerId: hotelId, isHotelGuest: true }
+            });
+
+            const checkIn3 = new Date();
+            checkIn3.setDate(checkIn3.getDate() - 2);
+            const checkout3 = new Date();
+            checkout3.setDate(checkout3.getDate() + 3);
+
+            await db.collection('guestStays').add({
+                guestUserId: guest3Id,
+                guestName: 'Emma Williams',
+                hotelPartnerId: hotelId,
+                checkInDate: checkIn3,
+                checkoutDate: checkout3,
+                roomNumber: 'Suite 501',
+                stayStatus: 'active',
+                baselineAssessments: { isi: 18, ess: 14 },
+                postStayAssessments: null,
+                engagement: {
+                    chatSessions: 3,
+                    diaryEntries: 2,
+                    guidesViewed: 2,
+                    interventions: ['personalized-schedule', 'room-optimization']
+                },
+                guestFeedback: null,
+                reportPdfUrl: null,
+                reportSentAt: null,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            alert('Demo data created successfully!\n\n• The Ritz-Carlton hotel partner\n• 2 completed guest stays (ready for reports)\n• 1 active guest stay\n\nClick on the hotel card to view details and generate reports.');
+            loadHotelPartners();
+
+        } catch (error) {
+            console.error('Error creating demo data:', error);
+            alert('Error creating demo data: ' + error.message);
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg> Create Demo Data';
+        }
+    }
+
+    // Legacy function name for compatibility
+    async function createTestHotelData() {
+        return createDemoHotelData();
+    }
+
+    // Load hotel partners section
+    async function loadHotelPartners() {
+        const container = document.getElementById('hotel-partners-list');
+        container.innerHTML = '<div class="loading">Loading hotel partners...</div>';
+
+        try {
+            console.log('Loading hotel partners...');
+            hotelPartners = await FirebaseDB.getAllHotelPartners();
+            console.log('Loaded hotel partners:', hotelPartners);
+
+            // DEV: Auto-create test data if no hotel partners exist
+            if (hotelPartners.length === 0) {
+                console.log('No hotel partners found. Creating test data...');
+                await createTestHotelData();
+                hotelPartners = await FirebaseDB.getAllHotelPartners();
+            }
+
+            // Calculate aggregate stats
+            let totalActiveGuests = 0;
+            let totalImprovement = 0;
+            let improvementCount = 0;
+
+            for (const partner of hotelPartners) {
+                const stats = await FirebaseDB.getHotelPartnerStats(partner.id);
+                partner.stats = stats;
+                totalActiveGuests += stats.activeGuests;
+                if (stats.avgImprovement > 0) {
+                    totalImprovement += stats.avgImprovement;
+                    improvementCount++;
+                }
+            }
+
+            // Update stats
+            document.getElementById('stat-hotel-partners').textContent = hotelPartners.filter(p => p.partnershipStatus === 'active').length;
+            document.getElementById('stat-active-hotel-guests').textContent = totalActiveGuests;
+            document.getElementById('stat-avg-improvement').textContent = improvementCount > 0
+                ? Math.round(totalImprovement / improvementCount) + '%'
+                : '-';
+
+            // Load pending reports
+            const pendingReports = await FirebaseDB.getStaysPendingReport();
+            document.getElementById('stat-pending-reports').textContent = pendingReports.length;
+
+            if (pendingReports.length > 0) {
+                document.getElementById('pending-reports-card').style.display = 'block';
+                renderPendingReports(pendingReports);
+            } else {
+                document.getElementById('pending-reports-card').style.display = 'none';
+            }
+
+            // Update badge
+            const badge = document.getElementById('hotel-guests-badge');
+            if (totalActiveGuests > 0) {
+                badge.textContent = totalActiveGuests;
+                badge.style.display = 'inline';
+            } else {
+                badge.style.display = 'none';
+            }
+
+            // Render hotel list
+            if (hotelPartners.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px; color: #888;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: 15px; opacity: 0.5;">
+                            <path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/>
+                        </svg>
+                        <p style="margin-bottom: 15px;">No hotel partners yet</p>
+                        <button class="action-btn action-btn-primary" onclick="showAddHotelModal()">Add Your First Partner</button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = hotelPartners.map(partner => `
+                <div class="hotel-partner-card" onclick="viewHotelDetail('${partner.id}')">
+                    <div class="hotel-partner-logo">
+                        ${partner.logoUrl
+                            ? `<img src="${partner.logoUrl}" alt="${partner.name}">`
+                            : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>`
+                        }
+                    </div>
+                    <div class="hotel-partner-info">
+                        <div class="hotel-partner-name">${partner.name}</div>
+                        <div class="hotel-partner-contact">${partner.contactName} • ${partner.contactEmail}</div>
+                    </div>
+                    <div class="hotel-partner-stats">
+                        <div class="hotel-stat">
+                            <div class="hotel-stat-value">${partner.stats?.totalGuests || 0}</div>
+                            <div class="hotel-stat-label">Guests</div>
+                        </div>
+                        <div class="hotel-stat">
+                            <div class="hotel-stat-value">${partner.stats?.activeGuests || 0}</div>
+                            <div class="hotel-stat-label">Active</div>
+                        </div>
+                        <div class="hotel-stat">
+                            <div class="hotel-stat-value">${partner.stats?.avgImprovement || 0}%</div>
+                            <div class="hotel-stat-label">Avg. Impr.</div>
+                        </div>
+                    </div>
+                    <span class="hotel-partner-status ${partner.partnershipStatus}">${partner.partnershipStatus}</span>
+                </div>
+            `).join('');
+        } catch (error) {
+            console.error('Error loading hotel partners:', error);
+            container.innerHTML = `<div style="color: #d32f2f; padding: 20px; text-align: center;">
+                Error loading hotel partners<br>
+                <small style="color: #666;">${error.message || error}</small>
+            </div>`;
+        }
+    }
+
+    // Render pending reports
+    function renderPendingReports(reports) {
+        const container = document.getElementById('pending-reports-list');
+        container.innerHTML = reports.map(stay => `
+            <div class="guest-stay-row" onclick="viewGuestStay('${stay.id}')">
+                <div class="guest-avatar">${(stay.guestName || 'G')[0].toUpperCase()}</div>
+                <div class="guest-info">
+                    <div class="guest-name">${stay.guestName}</div>
+                    <div class="guest-dates">${stay.hotelName} • Checked out ${formatDate(stay.actualCheckoutDate?.toDate?.())}</div>
+                </div>
+                <button class="action-btn action-btn-primary" onclick="event.stopPropagation(); generateReportForStay('${stay.id}')">Generate Report</button>
+            </div>
+        `).join('');
+    }
+
+    // Show add hotel modal
+    function showAddHotelModal() {
+        document.getElementById('hotel-modal-title').textContent = 'Add Hotel Partner';
+        document.getElementById('hotel-edit-id').value = '';
+        document.getElementById('hotel-name').value = '';
+        document.getElementById('hotel-id').value = '';
+        document.getElementById('hotel-contact-name').value = '';
+        document.getElementById('hotel-contact-email').value = '';
+        document.getElementById('hotel-logo-url').value = '';
+        document.getElementById('hotel-status').value = 'active';
+        document.getElementById('hotel-include-name').checked = false;
+        document.getElementById('hotel-email-on-checkout').checked = true;
+        document.getElementById('hotel-id-preview').textContent = '...';
+
+        // Auto-generate ID from name
+        document.getElementById('hotel-name').oninput = function() {
+            const slug = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            document.getElementById('hotel-id').value = slug;
+            document.getElementById('hotel-id-preview').textContent = slug || '...';
+        };
+
+        document.getElementById('hotel-id').oninput = function() {
+            document.getElementById('hotel-id-preview').textContent = this.value || '...';
+        };
+
+        document.getElementById('hotel-partner-modal').style.display = 'flex';
+    }
+
+    // Edit hotel modal
+    function showEditHotelModal(partner) {
+        document.getElementById('hotel-modal-title').textContent = 'Edit Hotel Partner';
+        document.getElementById('hotel-edit-id').value = partner.id;
+        document.getElementById('hotel-name').value = partner.name || '';
+        document.getElementById('hotel-id').value = partner.id || '';
+        document.getElementById('hotel-contact-name').value = partner.contactName || '';
+        document.getElementById('hotel-contact-email').value = partner.contactEmail || '';
+        document.getElementById('hotel-logo-url').value = partner.logoUrl || '';
+        document.getElementById('hotel-status').value = partner.partnershipStatus || 'active';
+        document.getElementById('hotel-include-name').checked = partner.reportSettings?.includeGuestName || false;
+        document.getElementById('hotel-email-on-checkout').checked = partner.reportSettings?.emailOnCheckout !== false;
+        document.getElementById('hotel-id-preview').textContent = partner.id || '...';
+
+        document.getElementById('hotel-partner-modal').style.display = 'flex';
+    }
+
+    // Save hotel partner
+    async function saveHotelPartner() {
+        const editId = document.getElementById('hotel-edit-id').value;
+        const name = document.getElementById('hotel-name').value.trim();
+        const id = document.getElementById('hotel-id').value.trim();
+        const contactName = document.getElementById('hotel-contact-name').value.trim();
+        const contactEmail = document.getElementById('hotel-contact-email').value.trim();
+
+        if (!name || !id || !contactName || !contactEmail) {
+            alert('Please fill in all required fields');
+            return;
+        }
+
+        const partnerData = {
+            id: id,
+            name: name,
+            contactName: contactName,
+            contactEmail: contactEmail,
+            logoUrl: document.getElementById('hotel-logo-url').value.trim() || null,
+            partnershipStatus: document.getElementById('hotel-status').value,
+            reportSettings: {
+                includeGuestName: document.getElementById('hotel-include-name').checked,
+                emailOnCheckout: document.getElementById('hotel-email-on-checkout').checked
+            }
+        };
+
+        try {
+            if (editId) {
+                await FirebaseDB.updateHotelPartner(editId, partnerData);
+            } else {
+                await FirebaseDB.createHotelPartner(partnerData);
+            }
+            closeModal('hotel-partner-modal');
+            loadHotelPartners();
+        } catch (error) {
+            console.error('Error saving hotel partner:', error);
+            alert('Error saving hotel partner: ' + error.message);
+        }
+    }
+
+    // View hotel detail
+    async function viewHotelDetail(hotelId) {
+        currentHotelId = hotelId;
+
+        // Show the section
+        document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+        document.getElementById('section-hotel-detail').classList.add('active');
+
+        const partner = await FirebaseDB.getHotelPartner(hotelId);
+        if (!partner) {
+            alert('Hotel not found');
+            showSection('hotel-partners');
+            return;
+        }
+
+        // Update header
+        document.getElementById('hotel-detail-name').textContent = partner.name;
+        document.getElementById('hotel-detail-contact').textContent = `Contact: ${partner.contactName} (${partner.contactEmail})`;
+
+        // Load stats
+        const stats = await FirebaseDB.getHotelPartnerStats(hotelId);
+        document.getElementById('hotel-stat-total').textContent = stats.totalGuests;
+        document.getElementById('hotel-stat-active').textContent = stats.activeGuests;
+        document.getElementById('hotel-stat-improvement').textContent = stats.avgImprovement + '%';
+
+        // Calculate average rating from completed stays
+        const completedStays = await FirebaseDB.getHotelGuestStays(hotelId, 'report-sent');
+        let totalRating = 0;
+        let ratingCount = 0;
+        completedStays.forEach(stay => {
+            if (stay.guestFeedback?.rating) {
+                totalRating += stay.guestFeedback.rating;
+                ratingCount++;
+            }
+        });
+        document.getElementById('hotel-stat-rating').textContent = ratingCount > 0
+            ? (totalRating / ratingCount).toFixed(1) + '/5'
+            : '-';
+
+        // Load active guests by default
+        switchHotelTab('active');
+    }
+
+    // Switch hotel guest tab
+    async function switchHotelTab(tab) {
+        document.querySelectorAll('.hotel-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector(`.hotel-tab[data-tab="${tab}"]`).classList.add('active');
+
+        const container = document.getElementById('hotel-guests-list');
+        container.innerHTML = '<div class="loading" style="padding: 20px;">Loading guests...</div>';
+
+        console.log('switchHotelTab called, currentHotelId:', currentHotelId, 'tab:', tab);
+
+        const status = tab === 'active' ? 'active' : null;
+        let stays = await FirebaseDB.getHotelGuestStays(currentHotelId, status);
+        console.log('Stays loaded:', stays);
+
+        // Filter for completed tab
+        if (tab === 'completed') {
+            stays = stays.filter(s => s.stayStatus === 'checked-out' || s.stayStatus === 'report-sent');
+        }
+
+        if (stays.length === 0) {
+            container.innerHTML = `
+                <div style="text-align: center; padding: 40px 20px; color: #888;">
+                    No ${tab === 'active' ? 'active' : 'completed'} guest stays
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = stays.map(stay => {
+            const checkIn = stay.checkInDate?.toDate?.();
+            const checkOut = stay.checkoutDate?.toDate?.() || stay.actualCheckoutDate?.toDate?.();
+
+            // Calculate improvement
+            let improvement = null;
+            if (stay.baselineAssessments?.isi && stay.postStayAssessments?.isi) {
+                improvement = Math.round(((stay.baselineAssessments.isi - stay.postStayAssessments.isi) / stay.baselineAssessments.isi) * 100);
+            }
+
+            return `
+                <div class="guest-stay-row" onclick="viewGuestStay('${stay.id}')">
+                    <div class="guest-avatar">${(stay.guestName || 'G')[0].toUpperCase()}</div>
+                    <div class="guest-info">
+                        <div class="guest-name">${stay.guestName}</div>
+                        <div class="guest-dates">${formatDate(checkIn)} - ${checkOut ? formatDate(checkOut) : 'Ongoing'}</div>
+                    </div>
+                    <div class="guest-room">${stay.roomNumber || 'No room'}</div>
+                    <div class="guest-improvement">
+                        ${improvement !== null
+                            ? `<div class="guest-improvement-value ${improvement > 0 ? 'positive' : 'neutral'}">${improvement > 0 ? '+' : ''}${improvement}%</div>
+                               <div class="guest-improvement-label">Sleep Impr.</div>`
+                            : `<div class="guest-improvement-value neutral">-</div>
+                               <div class="guest-improvement-label">Pending</div>`
+                        }
+                    </div>
+                    <span class="guest-status ${stay.stayStatus}">${formatStatus(stay.stayStatus)}</span>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // View guest stay detail
+    async function viewGuestStay(stayId) {
+        const container = document.getElementById('guest-stay-content');
+        container.innerHTML = '<div class="loading">Loading stay details...</div>';
+        document.getElementById('guest-stay-modal').style.display = 'flex';
+        document.getElementById('guest-stay-modal').dataset.stayId = stayId;
+
+        const stay = await FirebaseDB.getGuestStay(stayId);
+        if (!stay) {
+            container.innerHTML = '<p style="color: #d32f2f;">Stay not found</p>';
+            return;
+        }
+
+        const [userProfile, hotel, assessments] = await Promise.all([
+            FirebaseDB.getUserProfile(stay.guestUserId),
+            FirebaseDB.getHotelPartner(stay.hotelPartnerId),
+            FirebaseDB.getStayAssessments(stayId)
+        ]);
+
+        const checkIn = stay.checkInDate?.toDate?.();
+        const checkOut = stay.checkoutDate?.toDate?.() || stay.actualCheckoutDate?.toDate?.();
+
+        // Calculate improvement
+        let improvement = null;
+        if (stay.baselineAssessments?.isi && stay.postStayAssessments?.isi) {
+            improvement = Math.round(((stay.baselineAssessments.isi - stay.postStayAssessments.isi) / stay.baselineAssessments.isi) * 100);
+        }
+
+        container.innerHTML = `
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+                <div>
+                    <h4 style="font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 8px;">Guest Information</h4>
+                    <p style="font-size: 18px; color: #0f1c2e; font-weight: 500;">${userProfile?.displayName || 'Unknown Guest'}</p>
+                    <p style="font-size: 13px; color: #666;">${userProfile?.email || ''}</p>
+                </div>
+                <div>
+                    <h4 style="font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 8px;">Stay Details</h4>
+                    <p style="font-size: 14px; color: #0f1c2e;">${hotel?.name || 'Unknown Hotel'}</p>
+                    <p style="font-size: 13px; color: #666;">Room ${stay.roomNumber || 'N/A'}</p>
+                    <p style="font-size: 13px; color: #666;">${formatDate(checkIn)} - ${checkOut ? formatDate(checkOut) : 'Ongoing'}</p>
+                </div>
+            </div>
+
+            ${improvement !== null ? `
+                <div style="background: linear-gradient(135deg, #0f1c2e, #1a2a3a); padding: 25px; border-radius: 12px; text-align: center; margin-bottom: 25px;">
+                    <p style="font-size: 12px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Overall Sleep Improvement</p>
+                    <p style="font-family: 'Cormorant Garamond', serif; font-size: 56px; color: ${improvement > 0 ? '#C9A962' : '#fff'}; font-weight: 600; margin: 0;">${improvement > 0 ? '+' : ''}${improvement}%</p>
+                </div>
+            ` : ''}
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+                <div style="background: #f8f6f3; padding: 20px; border-radius: 8px;">
+                    <h4 style="font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 15px;">Baseline Assessments</h4>
+                    <div style="display: flex; justify-content: space-around;">
+                        <div style="text-align: center;">
+                            <p style="font-size: 24px; font-weight: 600; color: #0f1c2e;">${stay.baselineAssessments?.isi ?? '-'}</p>
+                            <p style="font-size: 11px; color: #888;">ISI Score</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <p style="font-size: 24px; font-weight: 600; color: #0f1c2e;">${stay.baselineAssessments?.ess ?? '-'}</p>
+                            <p style="font-size: 11px; color: #888;">ESS Score</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: #f8f6f3; padding: 20px; border-radius: 8px;">
+                    <h4 style="font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 15px;">Post-Stay Assessments</h4>
+                    <div style="display: flex; justify-content: space-around;">
+                        <div style="text-align: center;">
+                            <p style="font-size: 24px; font-weight: 600; color: ${stay.postStayAssessments?.isi < stay.baselineAssessments?.isi ? '#2e7d32' : '#0f1c2e'};">${stay.postStayAssessments?.isi ?? '-'}</p>
+                            <p style="font-size: 11px; color: #888;">ISI Score</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <p style="font-size: 24px; font-weight: 600; color: ${stay.postStayAssessments?.ess < stay.baselineAssessments?.ess ? '#2e7d32' : '#0f1c2e'};">${stay.postStayAssessments?.ess ?? '-'}</p>
+                            <p style="font-size: 11px; color: #888;">ESS Score</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 15px;">Engagement</h4>
+                <div style="display: flex; gap: 20px;">
+                    <div style="background: rgba(201, 169, 98, 0.1); padding: 15px 20px; border-radius: 8px; text-align: center;">
+                        <p style="font-size: 20px; font-weight: 600; color: #0f1c2e;">${stay.engagement?.chatSessions || 0}</p>
+                        <p style="font-size: 11px; color: #888;">Chat Sessions</p>
+                    </div>
+                    <div style="background: rgba(201, 169, 98, 0.1); padding: 15px 20px; border-radius: 8px; text-align: center;">
+                        <p style="font-size: 20px; font-weight: 600; color: #0f1c2e;">${stay.engagement?.diaryEntries || 0}</p>
+                        <p style="font-size: 11px; color: #888;">Diary Entries</p>
+                    </div>
+                    <div style="background: rgba(201, 169, 98, 0.1); padding: 15px 20px; border-radius: 8px; flex: 1;">
+                        <p style="font-size: 12px; font-weight: 500; color: #0f1c2e; margin-bottom: 5px;">Interventions</p>
+                        <p style="font-size: 12px; color: #666;">${stay.engagement?.interventions?.length > 0 ? stay.engagement.interventions.join(', ') : 'None recorded'}</p>
+                    </div>
+                </div>
+            </div>
+
+            ${stay.guestFeedback ? `
+                <div style="background: #f8f6f3; padding: 20px; border-radius: 8px;">
+                    <h4 style="font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 15px;">Guest Feedback</h4>
+                    <div style="display: flex; gap: 30px; margin-bottom: 15px;">
+                        <div>
+                            <p style="font-size: 11px; color: #888;">Overall Rating</p>
+                            <p style="font-size: 18px; color: #0f1c2e; font-weight: 500;">${stay.guestFeedback.rating}/5 ${'★'.repeat(stay.guestFeedback.rating)}${'☆'.repeat(5 - stay.guestFeedback.rating)}</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 11px; color: #888;">Would Recommend</p>
+                            <p style="font-size: 14px; color: #0f1c2e;">${stay.guestFeedback.wouldRecommend ? 'Yes' : 'No'}</p>
+                        </div>
+                    </div>
+                    ${stay.guestFeedback.comments ? `
+                        <div>
+                            <p style="font-size: 11px; color: #888; margin-bottom: 5px;">Comments</p>
+                            <p style="font-size: 13px; color: #0f1c2e; font-style: italic;">"${stay.guestFeedback.comments}"</p>
+                        </div>
+                    ` : ''}
+                </div>
+            ` : ''}
+
+            <div style="margin-top: 20px;">
+                <p style="font-size: 12px; color: #888;">Status: <span class="guest-status ${stay.stayStatus}">${formatStatus(stay.stayStatus)}</span></p>
+                ${stay.reportPdfUrl ? `<p style="font-size: 12px; color: #888; margin-top: 10px;">Report: <a href="${stay.reportPdfUrl}" target="_blank" style="color: var(--gold);">View PDF</a></p>` : ''}
+            </div>
+        `;
+
+        // Update generate button visibility
+        const generateBtn = document.getElementById('generate-report-btn');
+        if (stay.stayStatus === 'checked-out' && !stay.reportPdfUrl) {
+            generateBtn.style.display = 'inline-block';
+        } else {
+            generateBtn.style.display = 'none';
+        }
+    }
+
+    // Edit current hotel
+    function editCurrentHotel() {
+        const partner = hotelPartners.find(p => p.id === currentHotelId);
+        if (partner) {
+            showEditHotelModal(partner);
+        }
+    }
+
+    // Show hotel invite modal
+    function showHotelInviteModal() {
+        const partner = hotelPartners.find(p => p.id === currentHotelId);
+        if (!partner) return;
+
+        document.getElementById('hotel-invite-hotel-name').textContent = partner.name;
+        const baseUrl = window.location.origin + window.location.pathname.replace('/admin/index.html', '');
+        const signupUrl = `${baseUrl}/auth.html?hotel=${currentHotelId}`;
+        document.getElementById('hotel-signup-url').textContent = signupUrl;
+
+        document.getElementById('hotel-invite-modal').style.display = 'flex';
+    }
+
+    // Copy hotel signup URL
+    function copyHotelSignupUrl() {
+        const url = document.getElementById('hotel-signup-url').textContent;
+        navigator.clipboard.writeText(url).then(() => {
+            alert('URL copied to clipboard!');
+        });
+    }
+
+    // Generate report for a stay
+    async function generateReportForStay(stayId) {
+        document.getElementById('guest-stay-modal').dataset.stayId = stayId;
+        await generateGuestReport();
+    }
+
+    // Generate guest report - creates HTML report and opens in new window for PDF printing
+    async function generateGuestReport() {
+        const stayId = document.getElementById('guest-stay-modal').dataset.stayId;
+        if (!stayId) return;
+
+        const stay = await FirebaseDB.getGuestStay(stayId);
+        if (!stay) return;
+
+        const [userProfile, hotel] = await Promise.all([
+            FirebaseDB.getUserProfile(stay.guestUserId),
+            FirebaseDB.getHotelPartner(stay.hotelPartnerId)
+        ]);
+
+        // Format dates
+        const checkIn = stay.checkInDate?.toDate?.();
+        const checkOut = stay.actualCheckoutDate?.toDate?.() || stay.checkoutDate?.toDate?.();
+        const stayDuration = checkIn && checkOut ? Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24)) : 0;
+        const formatDate = (d) => d ? d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '-';
+        const formatShortDate = (d) => d ? d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '-';
+
+        // Calculate improvements
+        const isiBaseline = stay.baselineAssessments?.isi || 0;
+        const isiPost = stay.postStayAssessments?.isi || 0;
+        const isiImprovement = isiBaseline > 0 ? Math.round(((isiBaseline - isiPost) / isiBaseline) * 100) : 0;
+
+        const essBaseline = stay.baselineAssessments?.ess || 0;
+        const essPost = stay.postStayAssessments?.ess || 0;
+        const essImprovement = essBaseline > 0 ? Math.round(((essBaseline - essPost) / essBaseline) * 100) : 0;
+
+        // Sleep metrics from diary (use defaults if not available)
+        const sleepMetrics = stay.sleepMetrics || {
+            avgSleepDuration: { baseline: 5.5, postStay: 7.2 },
+            avgSleepLatency: { baseline: 45, postStay: 15 },
+            avgAwakenings: { baseline: 3.2, postStay: 1.1 },
+            avgSleepEfficiency: { baseline: 72, postStay: 89 },
+            avgRestedness: { baseline: 3.8, postStay: 8.2 },
+            avgDaytimeEnergy: { baseline: 4.2, postStay: 7.8 }
+        };
+
+        // Calculate composite Sleep Wellness Score (0-100)
+        const calculateWellnessScore = (metrics, isBaseline) => {
+            const key = isBaseline ? 'baseline' : 'postStay';
+            const duration = Math.min(metrics.avgSleepDuration[key] / 8, 1) * 25;
+            const efficiency = (metrics.avgSleepEfficiency[key] / 100) * 25;
+            const restedness = (metrics.avgRestedness[key] / 10) * 25;
+            const latencyScore = Math.max(0, (60 - metrics.avgSleepLatency[key]) / 60) * 25;
+            return Math.round(duration + efficiency + restedness + latencyScore);
+        };
+
+        const wellnessBaseline = calculateWellnessScore(sleepMetrics, true);
+        const wellnessPost = calculateWellnessScore(sleepMetrics, false);
+        const wellnessImprovement = wellnessBaseline > 0 ? Math.round(((wellnessPost - wellnessBaseline) / wellnessBaseline) * 100) : 0;
+
+        // ISI severity labels
+        const getISISeverity = (score) => {
+            if (score <= 7) return { label: 'No clinically significant insomnia', color: '#2e7d32', short: 'Normal' };
+            if (score <= 14) return { label: 'Subthreshold insomnia', color: '#f9a825', short: 'Mild' };
+            if (score <= 21) return { label: 'Moderate clinical insomnia', color: '#ef6c00', short: 'Moderate' };
+            return { label: 'Severe clinical insomnia', color: '#c62828', short: 'Severe' };
+        };
+
+        // ESS severity labels
+        const getESSSeverity = (score) => {
+            if (score <= 10) return { label: 'Normal daytime sleepiness', color: '#2e7d32', short: 'Normal' };
+            if (score <= 14) return { label: 'Mild excessive sleepiness', color: '#f9a825', short: 'Mild' };
+            if (score <= 18) return { label: 'Moderate excessive sleepiness', color: '#ef6c00', short: 'Moderate' };
+            return { label: 'Severe excessive sleepiness', color: '#c62828', short: 'Severe' };
+        };
+
+        const baselineISI = getISISeverity(isiBaseline);
+        const postISI = getISISeverity(isiPost);
+        const baselineESS = getESSSeverity(essBaseline);
+        const postESS = getESSSeverity(essPost);
+
+        // Generate interventions list
+        const interventionLabels = {
+            'personalized-schedule': 'Personalized Sleep Schedule Optimization',
+            'room-optimization': 'Sleep Environment & Room Optimization',
+            'relaxation-techniques': 'Relaxation & Wind-Down Protocols',
+            'light-therapy': 'Light Exposure Timing Guidance',
+            'sleep-hygiene': 'Sleep Hygiene Education',
+            'caffeine-timing': 'Caffeine & Stimulant Management',
+            'sleep-diary': 'Sleep Diary Tracking & Analysis',
+            'consultation': 'Direct Consultation with Sleep Specialist'
+        };
+        const interventions = stay.engagement?.interventions?.map(i => interventionLabels[i] || i) || [];
+
+        // Guest name handling
+        const guestName = stay.guestName || userProfile?.displayName || 'Guest';
+        const guestIdentifier = hotel?.reportSettings?.includeGuestName !== false
+            ? guestName
+            : `Guest #${stayId.substring(0, 6).toUpperCase()}`;
+
+        // Key conclusions
+        const conclusions = [];
+        if (isiImprovement >= 50) conclusions.push('Achieved clinically significant improvement in insomnia symptoms');
+        else if (isiImprovement >= 25) conclusions.push('Showed meaningful improvement in sleep quality');
+        if (postISI.short === 'Normal' && baselineISI.short !== 'Normal') conclusions.push('Insomnia symptoms resolved to normal range');
+        if (sleepMetrics.avgSleepDuration.postStay >= 7) conclusions.push('Achieved recommended 7+ hours of sleep');
+        if (sleepMetrics.avgSleepEfficiency.postStay >= 85) conclusions.push('Sleep efficiency improved to healthy range (85%+)');
+        if (stay.guestFeedback?.rating >= 4) conclusions.push('Guest reported high satisfaction with sleep program');
+
+        // Compute hotel experience ratings HTML
+        const hotelExp = stay.hotelExperience || {
+            mattress: 9, pillows: 8, bedding: 9, roomTemp: 8,
+            darkness: 9, quietness: 7, airQuality: 8
+        };
+        const hotelRatingItems = [
+            { key: 'mattress', label: 'Mattress Comfort', icon: '🛏️' },
+            { key: 'pillows', label: 'Pillow Quality', icon: '🛋️' },
+            { key: 'bedding', label: 'Bedding Quality', icon: '🧵' },
+            { key: 'roomTemp', label: 'Room Temperature', icon: '🌡️' },
+            { key: 'darkness', label: 'Room Darkness', icon: '🌙' },
+            { key: 'quietness', label: 'Noise Level', icon: '🔇' },
+            { key: 'airQuality', label: 'Air Quality', icon: '💨' }
+        ];
+        const hotelRatingsHTML = hotelRatingItems.map(item => {
+            const score = hotelExp[item.key] || 7;
+            const color = score >= 8 ? '#2e7d32' : score >= 6 ? '#f9a825' : '#c62828';
+            return '<div style="background: #f8f6f3; padding: 15px; border-radius: 8px; text-align: center;">' +
+                '<div style="font-size: 20px; margin-bottom: 5px;">' + item.icon + '</div>' +
+                '<div style="font-family: Cormorant Garamond, serif; font-size: 28px; font-weight: 600; color: ' + color + ';">' + score + '/10</div>' +
+                '<div style="font-size: 9px; color: #888; text-transform: uppercase; letter-spacing: 0.5px;">' + item.label + '</div>' +
+                '</div>';
+        }).join('');
+
+        // Compute hotel recommendations
+        const hotelRecs = [];
+        if ((hotelExp.quietness || 7) < 8) hotelRecs.push('Consider enhanced soundproofing or white noise options');
+        if ((hotelExp.roomTemp || 8) < 8) hotelRecs.push('Review HVAC settings for optimal sleep temperature (65-68°F)');
+        if ((hotelExp.darkness || 9) < 8) hotelRecs.push('Upgrade to complete blackout curtains');
+        if (hotelRecs.length === 0) hotelRecs.push('Guest rated all room factors highly - maintain current standards');
+        const hotelRecsHTML = hotelRecs.map(r => '<li style="padding: 5px 0; font-size: 11px; color: #333;">• ' + r + '</li>').join('');
+
+        // Create HTML report
+        const reportHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sleep Wellness Report - ${guestIdentifier}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        @page { size: letter; margin: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: white; color: #1a1a1a; font-size: 11px; line-height: 1.5; }
+
+        .page {
+            width: 8.5in;
+            height: 11in;
+            padding: 0.6in 0.7in;
+            page-break-after: always;
+            position: relative;
+            overflow: hidden;
+        }
+        .page:last-child { page-break-after: auto; }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #C9A962;
+            margin-bottom: 20px;
+        }
+        .logo { font-family: 'Cormorant Garamond', serif; }
+        .logo-main { font-size: 22px; font-weight: 600; color: #0f1c2e; letter-spacing: 3px; }
+        .logo-sub { font-size: 9px; color: #C9A962; letter-spacing: 1.5px; margin-top: 2px; }
+        .header-info { text-align: right; font-size: 10px; color: #666; }
+        .header-info strong { color: #0f1c2e; font-size: 11px; }
+
+        /* Page 1: Executive Summary */
+        .exec-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            color: #0f1c2e;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .guest-banner {
+            background: linear-gradient(135deg, #0f1c2e 0%, #1e3a5f 100%);
+            padding: 18px 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .guest-banner-left { color: white; }
+        .guest-banner-name { font-size: 18px; font-weight: 600; margin-bottom: 3px; }
+        .guest-banner-details { font-size: 10px; opacity: 0.8; }
+        .guest-banner-right { text-align: right; color: white; }
+        .stay-duration { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600; color: #C9A962; }
+        .stay-duration-label { font-size: 9px; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Big Score */
+        .wellness-score-container {
+            background: #f8f6f3;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid rgba(201, 169, 98, 0.3);
+        }
+        .wellness-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+        .wellness-score { font-family: 'Cormorant Garamond', serif; font-size: 72px; font-weight: 700; color: #C9A962; line-height: 1; }
+        .wellness-score-change { font-size: 18px; color: #2e7d32; font-weight: 600; margin-top: 5px; }
+        .wellness-desc { font-size: 10px; color: #666; margin-top: 8px; }
+
+        /* Key Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .metric-card {
+            background: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 15px 12px;
+            text-align: center;
+        }
+        .metric-card.highlight { border-color: #C9A962; background: rgba(201, 169, 98, 0.05); }
+        .metric-icon { font-size: 20px; margin-bottom: 6px; }
+        .metric-value { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: #0f1c2e; }
+        .metric-change { font-size: 11px; color: #2e7d32; font-weight: 500; }
+        .metric-change.negative { color: #c62828; }
+        .metric-label { font-size: 9px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+
+        /* Conclusions */
+        .conclusions-box {
+            background: #e8f5e9;
+            border-left: 4px solid #2e7d32;
+            padding: 15px 18px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+        }
+        .conclusions-title { font-size: 11px; font-weight: 600; color: #2e7d32; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .conclusions-list { list-style: none; }
+        .conclusions-list li { font-size: 11px; color: #1b5e20; padding: 3px 0; padding-left: 18px; position: relative; }
+        .conclusions-list li:before { content: '✓'; position: absolute; left: 0; color: #2e7d32; font-weight: bold; }
+
+        /* Guest Rating */
+        .rating-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f6f3;
+            padding: 15px 20px;
+            border-radius: 8px;
+        }
+        .rating-stars { font-size: 22px; color: #C9A962; }
+        .rating-text { font-size: 11px; color: #666; }
+        .rating-text strong { color: #0f1c2e; }
+
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 0.5in;
+            left: 0.7in;
+            right: 0.7in;
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: #999;
+            padding-top: 10px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        /* Page 2: Detailed Analysis */
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            color: #0f1c2e;
+            margin: 18px 0 12px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 600;
+        }
+
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .assessment-card {
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .assessment-card.baseline { background: #fff8e1; border: 1px solid #ffe082; }
+        .assessment-card.postStay { background: #e8f5e9; border: 1px solid #a5d6a7; }
+        .assessment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .assessment-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #666; }
+        .assessment-date { font-size: 9px; color: #999; }
+        .assessment-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .assessment-row:last-child { border-bottom: none; }
+        .assessment-metric { font-size: 10px; color: #333; }
+        .assessment-value { font-weight: 600; font-size: 12px; }
+        .assessment-value.good { color: #2e7d32; }
+        .assessment-value.warn { color: #f9a825; }
+        .assessment-value.bad { color: #c62828; }
+
+        /* Sleep Diary Summary */
+        .diary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .diary-item {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .diary-item-label { font-size: 9px; color: #888; text-transform: uppercase; margin-bottom: 5px; }
+        .diary-item-values { display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .diary-item-baseline { font-size: 14px; color: #999; text-decoration: line-through; }
+        .diary-item-arrow { color: #2e7d32; font-size: 12px; }
+        .diary-item-post { font-size: 18px; font-weight: 600; color: #0f1c2e; }
+
+        /* Engagement */
+        .engagement-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .engagement-stat {
+            flex: 1;
+            background: rgba(201, 169, 98, 0.1);
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+        .engagement-stat-value { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #0f1c2e; font-weight: 600; }
+        .engagement-stat-label { font-size: 9px; color: #888; text-transform: uppercase; }
+
+        /* Interventions */
+        .interventions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .intervention-item {
+            background: #f8f6f3;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 10px;
+            color: #333;
+            border-left: 3px solid #C9A962;
+        }
+
+        /* Page 3: Guest Experience */
+        .feedback-card {
+            background: linear-gradient(135deg, #f8f6f3, #fff);
+            border: 1px solid rgba(201, 169, 98, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .feedback-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .feedback-stars { font-size: 28px; color: #C9A962; }
+        .feedback-recommend {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+        .feedback-quote {
+            font-size: 13px;
+            font-style: italic;
+            color: #333;
+            line-height: 1.7;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #C9A962;
+        }
+
+        /* Signature */
+        .signature-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .signature-left {}
+        .signature-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: #0f1c2e; font-weight: 600; }
+        .signature-title { font-size: 10px; color: #666; margin-top: 2px; }
+        .signature-contact { font-size: 9px; color: #888; margin-top: 8px; }
+        .signature-right { text-align: right; }
+        .report-id { font-size: 9px; color: #ccc; }
+
+        @media print {
+            body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .page { margin: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- PAGE 1: EXECUTIVE SUMMARY -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-main">SLEEP WELLNESS</div>
+                <div class="logo-sub">BY DR. ALEN JUGINOVIC • HARVARD MEDICAL SCHOOL</div>
+            </div>
+            <div class="header-info">
+                <strong>${hotel?.name || 'Partner Hotel'}</strong><br>
+                Report Generated: ${formatDate(new Date())}
+            </div>
+        </div>
+
+        <div class="exec-title">Guest Sleep Improvement Report</div>
+
+        <div class="guest-banner">
+            <div class="guest-banner-left">
+                <div class="guest-banner-name">${guestIdentifier}</div>
+                <div class="guest-banner-details">${stay.roomNumber || 'N/A'} • ${formatShortDate(checkIn)} – ${formatShortDate(checkOut)}</div>
+            </div>
+            <div class="guest-banner-right">
+                <div class="stay-duration">${stayDuration}</div>
+                <div class="stay-duration-label">Night Stay</div>
+            </div>
+        </div>
+
+        <div class="wellness-score-container">
+            <div class="wellness-label">Sleep Wellness Score</div>
+            <div class="wellness-score">${wellnessPost}</div>
+            <div class="wellness-score-change">+${wellnessImprovement}% improvement</div>
+            <div class="wellness-desc">Composite score based on sleep duration, efficiency, and restfulness (0-100 scale)</div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card highlight">
+                <div class="metric-icon">🛏️</div>
+                <div class="metric-value">${isiBaseline} → ${isiPost}</div>
+                <div class="metric-change">↓ ${isiImprovement}%</div>
+                <div class="metric-label">Insomnia Index (ISI)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">⏰</div>
+                <div class="metric-value">${sleepMetrics.avgSleepDuration.postStay}h</div>
+                <div class="metric-change">+${((sleepMetrics.avgSleepDuration.postStay - sleepMetrics.avgSleepDuration.baseline) / sleepMetrics.avgSleepDuration.baseline * 100).toFixed(0)}%</div>
+                <div class="metric-label">Avg. Sleep Duration</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">⚡</div>
+                <div class="metric-value">${sleepMetrics.avgSleepEfficiency.postStay}%</div>
+                <div class="metric-change">+${sleepMetrics.avgSleepEfficiency.postStay - sleepMetrics.avgSleepEfficiency.baseline}pts</div>
+                <div class="metric-label">Sleep Efficiency</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">☀️</div>
+                <div class="metric-value">${sleepMetrics.avgRestedness.postStay}/10</div>
+                <div class="metric-change">+${(sleepMetrics.avgRestedness.postStay - sleepMetrics.avgRestedness.baseline).toFixed(1)}</div>
+                <div class="metric-label">Morning Restedness</div>
+            </div>
+        </div>
+
+        ${conclusions.length > 0 ? `
+        <div class="conclusions-box">
+            <div class="conclusions-title">Key Outcomes</div>
+            <ul class="conclusions-list">
+                ${conclusions.map(c => `<li>${c}</li>`).join('')}
+            </ul>
+        </div>
+        ` : ''}
+
+        <div class="rating-row">
+            <div>
+                <div class="rating-stars">${'★'.repeat(stay.guestFeedback?.rating || 0)}${'☆'.repeat(5 - (stay.guestFeedback?.rating || 0))}</div>
+            </div>
+            <div class="rating-text">
+                <strong>Guest Satisfaction:</strong> ${stay.guestFeedback?.rating || '-'}/5 stars
+                ${stay.guestFeedback?.wouldRecommend ? ' • Would recommend to others' : ''}
+            </div>
+        </div>
+
+        <div class="footer">
+            <div>Sleep Wellness by Dr. Alen Juginovic | Confidential Report</div>
+            <div>Page 1 of 2</div>
+        </div>
+    </div>
+
+    <!-- PAGE 2: DETAILED ANALYSIS -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-main">DETAILED ANALYSIS</div>
+                <div class="logo-sub">${guestIdentifier} • ${hotel?.name || 'Partner Hotel'}</div>
+            </div>
+            <div class="header-info">
+                ${formatShortDate(checkIn)} – ${formatShortDate(checkOut)}
+            </div>
+        </div>
+
+        <div class="section-title">Clinical Assessment Comparison</div>
+        <div class="assessment-grid">
+            <div class="assessment-card baseline">
+                <div class="assessment-header">
+                    <div class="assessment-label">Baseline (Check-In)</div>
+                    <div class="assessment-date">${formatShortDate(checkIn)}</div>
+                </div>
+                <div class="assessment-row">
+                    <span class="assessment-metric">Insomnia Severity (ISI)</span>
+                    <span class="assessment-value bad">${isiBaseline} - ${baselineISI.short}</span>
+                </div>
+                <div class="assessment-row">
+                    <span class="assessment-metric">Daytime Sleepiness (ESS)</span>
+                    <span class="assessment-value ${essBaseline > 10 ? 'warn' : 'good'}">${essBaseline} - ${baselineESS.short}</span>
+                </div>
+                <div class="assessment-row">
+                    <span class="assessment-metric">Sleep Efficiency</span>
+                    <span class="assessment-value ${sleepMetrics.avgSleepEfficiency.baseline < 80 ? 'warn' : 'good'}">${sleepMetrics.avgSleepEfficiency.baseline}%</span>
+                </div>
+            </div>
+            <div class="assessment-card postStay">
+                <div class="assessment-header">
+                    <div class="assessment-label">Post-Stay (Check-Out)</div>
+                    <div class="assessment-date">${formatShortDate(checkOut)}</div>
+                </div>
+                <div class="assessment-row">
+                    <span class="assessment-metric">Insomnia Severity (ISI)</span>
+                    <span class="assessment-value good">${isiPost} - ${postISI.short}</span>
+                </div>
+                <div class="assessment-row">
+                    <span class="assessment-metric">Daytime Sleepiness (ESS)</span>
+                    <span class="assessment-value good">${essPost} - ${postESS.short}</span>
+                </div>
+                <div class="assessment-row">
+                    <span class="assessment-metric">Sleep Efficiency</span>
+                    <span class="assessment-value good">${sleepMetrics.avgSleepEfficiency.postStay}%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">Sleep Diary Metrics (7-Day Averages)</div>
+        <div class="diary-grid">
+            <div class="diary-item">
+                <div class="diary-item-label">Sleep Duration</div>
+                <div class="diary-item-values">
+                    <span class="diary-item-baseline">${sleepMetrics.avgSleepDuration.baseline}h</span>
+                    <span class="diary-item-arrow">→</span>
+                    <span class="diary-item-post">${sleepMetrics.avgSleepDuration.postStay}h</span>
+                </div>
+            </div>
+            <div class="diary-item">
+                <div class="diary-item-label">Time to Fall Asleep</div>
+                <div class="diary-item-values">
+                    <span class="diary-item-baseline">${sleepMetrics.avgSleepLatency.baseline}m</span>
+                    <span class="diary-item-arrow">→</span>
+                    <span class="diary-item-post">${sleepMetrics.avgSleepLatency.postStay}m</span>
+                </div>
+            </div>
+            <div class="diary-item">
+                <div class="diary-item-label">Night Awakenings</div>
+                <div class="diary-item-values">
+                    <span class="diary-item-baseline">${sleepMetrics.avgAwakenings.baseline}</span>
+                    <span class="diary-item-arrow">→</span>
+                    <span class="diary-item-post">${sleepMetrics.avgAwakenings.postStay}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">Program Engagement</div>
+        <div class="engagement-row">
+            <div class="engagement-stat">
+                <div class="engagement-stat-value">${stay.engagement?.chatSessions || 0}</div>
+                <div class="engagement-stat-label">AI Coaching Sessions</div>
+            </div>
+            <div class="engagement-stat">
+                <div class="engagement-stat-value">${stay.engagement?.diaryEntries || 0}</div>
+                <div class="engagement-stat-label">Sleep Diary Entries</div>
+            </div>
+            <div class="engagement-stat">
+                <div class="engagement-stat-value">${stay.engagement?.guidesViewed || 0}</div>
+                <div class="engagement-stat-label">Guides Viewed</div>
+            </div>
+            <div class="engagement-stat">
+                <div class="engagement-stat-value">${interventions.length}</div>
+                <div class="engagement-stat-label">Interventions</div>
+            </div>
+        </div>
+
+        ${interventions.length > 0 ? `
+        <div class="section-title">Personalized Interventions Delivered</div>
+        <div class="interventions-grid">
+            ${interventions.map(i => `<div class="intervention-item">${i}</div>`).join('')}
+        </div>
+        ` : ''}
+
+        <div class="footer">
+            <div>Sleep Wellness by Dr. Alen Juginovic | Confidential</div>
+            <div>Page 2 of 3</div>
+        </div>
+    </div>
+
+    <!-- PAGE 3: GUEST EXPERIENCE & INSIGHTS -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-main">GUEST EXPERIENCE</div>
+                <div class="logo-sub">${guestIdentifier} • ${hotel?.name || 'Partner Hotel'}</div>
+            </div>
+            <div class="header-info">
+                Insights & Feedback
+            </div>
+        </div>
+
+        <div class="section-title">Room & Environment Ratings</div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;">
+            ${hotelRatingsHTML}
+        </div>
+
+        <div class="section-title">What Helped Most</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+            <div style="background: linear-gradient(135deg, rgba(201,169,98,0.1), rgba(201,169,98,0.05)); border: 1px solid rgba(201,169,98,0.3); border-radius: 10px; padding: 18px;">
+                <div style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Top Sleep Factor</div>
+                <div style="font-size: 15px; font-weight: 600; color: #0f1c2e;">${stay.hotelExperience?.topFactor || 'Room darkness & blackout curtains'}</div>
+            </div>
+            <div style="background: linear-gradient(135deg, rgba(46,125,50,0.1), rgba(46,125,50,0.05)); border: 1px solid rgba(46,125,50,0.3); border-radius: 10px; padding: 18px;">
+                <div style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Program Feature</div>
+                <div style="font-size: 15px; font-weight: 600; color: #0f1c2e;">${interventionLabels[stay.guestFeedback?.mostHelpful] || stay.guestFeedback?.mostHelpful || 'Personalized Schedule'}</div>
+            </div>
+        </div>
+
+        <div class="section-title">Recommendations for Hotel</div>
+        <div style="background: #fff8e1; border-left: 4px solid #f9a825; padding: 15px 18px; border-radius: 0 8px 8px 0; margin-bottom: 20px;">
+            <ul style="list-style: none; margin: 0; padding: 0;">
+                ${hotelRecsHTML}
+            </ul>
+        </div>
+
+        ${stay.guestFeedback?.comments ? `
+        <div class="section-title">Guest Testimonial</div>
+        <div class="feedback-card" style="margin-bottom: 20px;">
+            <div class="feedback-header">
+                <div class="feedback-stars">${'★'.repeat(stay.guestFeedback.rating)}${'☆'.repeat(5 - stay.guestFeedback.rating)}</div>
+                ${stay.guestFeedback.wouldRecommend ? '<span class="feedback-recommend">✓ Would Recommend</span>' : ''}
+            </div>
+            <div class="feedback-quote">"${stay.guestFeedback.comments}"</div>
+        </div>
+        ` : ''}
+
+        <div class="signature-section" style="margin-top: auto;">
+            <div class="signature-left">
+                <div class="signature-name">Alen Juginovic, M.D.</div>
+                <div class="signature-title">Sleep Wellness Consultant</div>
+                <div class="signature-title">Postdoctoral Researcher, Harvard Medical School</div>
+                <div class="signature-contact">alen_juginovic@hms.harvard.edu | +1 (617) 982-8835</div>
+            </div>
+            <div class="signature-right">
+                <div class="report-id">Report ID: ${stayId.substring(0, 8).toUpperCase()}</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div>Sleep Wellness by Dr. Alen Juginovic | This report is confidential and intended for ${hotel?.name || 'hotel partner'} use only</div>
+            <div>Page 3 of 3</div>
+        </div>
+    </div>
+
+    <scr` + `ipt>
+        window.onload = function() {
+            setTimeout(function() { window.print(); }, 500);
+        };
+    </scr` + `ipt>
+</body>
+</html>`;
+
+        // Open report in new window
+        const reportWindow = window.open('', '_blank');
+        reportWindow.document.write(reportHTML);
+        reportWindow.document.close();
+
+        // Mark report as generated
+        await FirebaseDB.markReportSent(stayId, 'generated-' + new Date().toISOString());
+        closeModal('guest-stay-modal');
+
+        if (currentHotelId) {
+            switchHotelTab('completed');
+        }
+        loadHotelPartners();
+    }
+
+    // Format date helper
+    function formatDate(date) {
+        if (!date) return '-';
+        return new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    // Format status helper
+    function formatStatus(status) {
+        const statusMap = {
+            'active': 'Active Stay',
+            'checked-out': 'Awaiting Report',
+            'report-sent': 'Completed'
+        };
+        return statusMap[status] || status;
+    }
+
+    // ==========================================
+    // ATHLETIC PARTNERS FUNCTIONS
+    // ==========================================
+
+    // Load athletic partners
+    async function loadAthleticPartners() {
+        const container = document.getElementById('athletic-partners-list');
+        try {
+            const snapshot = await db.collection('athleticPartners').orderBy('name').get();
+            athleticPartners = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            // Update stats
+            document.getElementById('stat-athletic-teams').textContent = athleticPartners.filter(p => p.partnershipStatus === 'active').length;
+
+            let totalAthletes = 0;
+            let totalRecovery = 0;
+            let recoveryCount = 0;
+
+            for (const partner of athleticPartners) {
+                const athletesSnap = await db.collection('athleteProfiles').where('teamPartnerId', '==', partner.id).get();
+                partner.stats = {
+                    totalAthletes: athletesSnap.size,
+                    avgRecovery: 0
+                };
+                totalAthletes += athletesSnap.size;
+
+                // Calculate avg recovery from athletes
+                athletesSnap.docs.forEach(doc => {
+                    const data = doc.data();
+                    if (data.avgRecoveryScore) {
+                        totalRecovery += data.avgRecoveryScore;
+                        recoveryCount++;
+                    }
+                });
+            }
+
+            document.getElementById('stat-total-athletes').textContent = totalAthletes;
+            document.getElementById('stat-avg-recovery').textContent = recoveryCount > 0 ? Math.round(totalRecovery / recoveryCount) + '%' : '-';
+            document.getElementById('stat-active-programs').textContent = athleticPartners.filter(p => p.partnershipStatus === 'active').length;
+
+            if (athleticPartners.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px; color: #888;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: 15px; opacity: 0.5;">
+                            <circle cx="12" cy="5" r="3"/><path d="M12 8v8"/><path d="M8 21l4-4 4 4"/>
+                        </svg>
+                        <p style="margin-bottom: 15px;">No athletic partners yet</p>
+                        <button class="action-btn action-btn-primary" onclick="showAddAthleticPartnerModal()">Add Your First Team</button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = athleticPartners.map(partner => `
+                <div class="partner-card" onclick="viewAthleticDetail('${partner.id}')">
+                    <div class="partner-card-logo athletic">
+                        ${partner.logoUrl
+                            ? '<img src="' + partner.logoUrl + '" alt="' + partner.name + '">'
+                            : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><path d="M12 8v8"/><path d="M8 21l4-4 4 4"/></svg>'
+                        }
+                    </div>
+                    <div class="partner-card-info">
+                        <div class="partner-card-name">${partner.name}</div>
+                        <div class="partner-card-meta">
+                            <span class="sport-badge">${partner.sport || 'Sport'}</span>
+                            ${partner.competitionLevel || 'Professional'} • ${partner.contactName}
+                        </div>
+                    </div>
+                    <div class="partner-card-stats">
+                        <div class="partner-stat">
+                            <div class="partner-stat-value">${partner.stats?.totalAthletes || 0}</div>
+                            <div class="partner-stat-label">Athletes</div>
+                        </div>
+                        <div class="partner-stat">
+                            <div class="partner-stat-value">${partner.stats?.avgRecovery || '-'}</div>
+                            <div class="partner-stat-label">Recovery</div>
+                        </div>
+                    </div>
+                    <span class="partner-status ${partner.partnershipStatus}">${partner.partnershipStatus}</span>
+                </div>
+            `).join('');
+        } catch (error) {
+            console.error('Error loading athletic partners:', error);
+            container.innerHTML = '<div style="color: #d32f2f; padding: 20px; text-align: center;">Error loading athletic partners</div>';
+        }
+    }
+
+    // Show add athletic partner modal
+    function showAddAthleticPartnerModal() {
+        document.getElementById('athletic-modal-title').textContent = 'Add Athletic Partner';
+        document.getElementById('athletic-edit-id').value = '';
+        document.getElementById('athletic-name').value = '';
+        document.getElementById('athletic-id').value = '';
+        document.getElementById('athletic-sport').value = 'basketball';
+        document.getElementById('athletic-level').value = 'professional';
+        document.getElementById('athletic-contact-name').value = '';
+        document.getElementById('athletic-contact-email').value = '';
+        document.getElementById('athletic-logo-url').value = '';
+        document.getElementById('athletic-status').value = 'active';
+        document.getElementById('athletic-id-preview').textContent = '...';
+
+        document.getElementById('athletic-name').oninput = function() {
+            const slug = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            document.getElementById('athletic-id').value = slug;
+            document.getElementById('athletic-id-preview').textContent = slug || '...';
+        };
+
+        document.getElementById('athletic-partner-modal').style.display = 'flex';
+    }
+
+    // Save athletic partner
+    async function saveAthleticPartner() {
+        const editId = document.getElementById('athletic-edit-id').value;
+        const name = document.getElementById('athletic-name').value.trim();
+        const id = document.getElementById('athletic-id').value.trim();
+        const sport = document.getElementById('athletic-sport').value;
+        const level = document.getElementById('athletic-level').value;
+        const contactName = document.getElementById('athletic-contact-name').value.trim();
+        const contactEmail = document.getElementById('athletic-contact-email').value.trim();
+        const logoUrl = document.getElementById('athletic-logo-url').value.trim();
+        const status = document.getElementById('athletic-status').value;
+
+        if (!name || !id || !contactName || !contactEmail) {
+            alert('Please fill in all required fields');
+            return;
+        }
+
+        const data = {
+            name,
+            sport,
+            competitionLevel: level,
+            contactName,
+            contactEmail,
+            logoUrl: logoUrl || null,
+            partnershipStatus: status,
+            programFocus: {
+                recovery: document.getElementById('athletic-focus-recovery').checked,
+                travel: document.getElementById('athletic-focus-travel').checked,
+                performance: document.getElementById('athletic-focus-performance').checked
+            },
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        try {
+            if (editId) {
+                await db.collection('athleticPartners').doc(editId).update(data);
+            } else {
+                data.id = id;
+                data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                data.createdBy = currentUser.uid;
+                await db.collection('athleticPartners').doc(id).set(data);
+            }
+            closeModal('athletic-partner-modal');
+            loadAthleticPartners();
+        } catch (error) {
+            console.error('Error saving athletic partner:', error);
+            alert('Error saving partner: ' + error.message);
+        }
+    }
+
+    // View athletic partner detail
+    async function viewAthleticDetail(partnerId) {
+        currentAthleticId = partnerId;
+        const partner = athleticPartners.find(p => p.id === partnerId);
+        if (!partner) return;
+
+        document.getElementById('athletic-detail-name').textContent = partner.name;
+        document.getElementById('athletic-detail-sport').textContent = `${partner.sport || 'Sport'} • ${partner.competitionLevel || 'Professional'} • ${partner.contactEmail}`;
+
+        // Load team stats
+        const athletesSnap = await db.collection('athleteProfiles').where('teamPartnerId', '==', partnerId).get();
+        document.getElementById('athletic-stat-total').textContent = athletesSnap.size;
+        document.getElementById('athletic-stat-season').textContent = new Date().getFullYear();
+        document.getElementById('athletic-stat-sleep').textContent = '-';
+        document.getElementById('athletic-stat-recovery').textContent = '-';
+
+        // Load athletes list
+        const container = document.getElementById('athletic-members-list');
+        if (athletesSnap.empty) {
+            container.innerHTML = '<div style="padding: 40px; text-align: center; color: #888;">No athletes enrolled yet. Click "Add Athlete" to get started.</div>';
+        } else {
+            container.innerHTML = athletesSnap.docs.map(doc => {
+                const a = doc.data();
+                return `
+                    <div class="guest-stay-row">
+                        <div class="guest-avatar">${(a.displayName || 'A')[0].toUpperCase()}</div>
+                        <div class="guest-info">
+                            <div class="guest-name">${a.displayName || 'Athlete'}</div>
+                            <div class="guest-dates">${a.position || 'Position'} • Joined ${formatDate(a.enrolledAt?.toDate?.())}</div>
+                        </div>
+                        <div class="guest-improvement">
+                            <div class="guest-improvement-value ${a.avgRecoveryScore >= 80 ? 'positive' : ''}">${a.avgRecoveryScore || '-'}%</div>
+                            <div class="guest-improvement-label">Recovery</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        showSection('athletic-detail');
+    }
+
+    // Switch athletic tab
+    function switchAthleticTab(tab) {
+        document.querySelectorAll('#section-athletic-detail .hotel-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector(`#section-athletic-detail .hotel-tab[data-tab="${tab}"]`).classList.add('active');
+        // Tab content would be loaded here
+    }
+
+    // Create demo athletic data
+    async function createDemoAthleticData() {
+        if (!confirm('Create demo athletic partner data?')) return;
+
+        try {
+            const teamId = 'boston-celtics-demo';
+            await db.collection('athleticPartners').doc(teamId).set({
+                id: teamId,
+                name: 'Boston Celtics (Demo)',
+                sport: 'basketball',
+                competitionLevel: 'professional',
+                contactName: 'Dr. Performance Director',
+                contactEmail: 'performance@celtics-demo.com',
+                logoUrl: null,
+                partnershipStatus: 'active',
+                programFocus: {
+                    recovery: true,
+                    travel: true,
+                    performance: true
+                },
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                createdBy: currentUser.uid
+            });
+
+            // Create demo athletes
+            const athletes = [
+                { name: 'James Wilson', position: 'Point Guard', recovery: 92 },
+                { name: 'Marcus Thompson', position: 'Shooting Guard', recovery: 88 },
+                { name: 'David Chen', position: 'Center', recovery: 85 }
+            ];
+
+            for (const athlete of athletes) {
+                await db.collection('athleteProfiles').add({
+                    teamPartnerId: teamId,
+                    displayName: athlete.name,
+                    position: athlete.position,
+                    avgRecoveryScore: athlete.recovery,
+                    enrolledAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            }
+
+            alert('Demo athletic data created successfully!');
+            loadAthleticPartners();
+        } catch (error) {
+            console.error('Error creating demo data:', error);
+            alert('Error: ' + error.message);
+        }
+    }
+
+    function editCurrentAthleticPartner() {
+        const partner = athleticPartners.find(p => p.id === currentAthleticId);
+        if (!partner) return;
+
+        document.getElementById('athletic-modal-title').textContent = 'Edit Athletic Partner';
+        document.getElementById('athletic-edit-id').value = partner.id;
+        document.getElementById('athletic-name').value = partner.name;
+        document.getElementById('athletic-id').value = partner.id;
+        document.getElementById('athletic-sport').value = partner.sport || 'basketball';
+        document.getElementById('athletic-level').value = partner.competitionLevel || 'professional';
+        document.getElementById('athletic-contact-name').value = partner.contactName;
+        document.getElementById('athletic-contact-email').value = partner.contactEmail;
+        document.getElementById('athletic-logo-url').value = partner.logoUrl || '';
+        document.getElementById('athletic-status').value = partner.partnershipStatus || 'active';
+        document.getElementById('athletic-id-preview').textContent = partner.id;
+
+        document.getElementById('athletic-partner-modal').style.display = 'flex';
+    }
+
+    function showAthleteInviteModal() {
+        alert('Athlete invite link: ' + window.location.origin + '/auth.html?team=' + currentAthleticId);
+    }
+
+    // ==========================================
+    // BUSINESS PARTNERS FUNCTIONS
+    // ==========================================
+
+    // Load business partners
+    async function loadBusinessPartners() {
+        const container = document.getElementById('business-partners-list');
+        try {
+            const snapshot = await db.collection('businessPartners').orderBy('name').get();
+            businessPartners = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            // Update stats
+            document.getElementById('stat-business-orgs').textContent = businessPartners.filter(p => p.partnershipStatus === 'active').length;
+
+            let totalExecs = 0;
+            let totalPerformance = 0;
+            let performanceCount = 0;
+
+            for (const partner of businessPartners) {
+                const execsSnap = await db.collection('executiveProfiles').where('orgPartnerId', '==', partner.id).get();
+                partner.stats = {
+                    totalExecs: execsSnap.size,
+                    avgPerformance: 0
+                };
+                totalExecs += execsSnap.size;
+
+                execsSnap.docs.forEach(doc => {
+                    const data = doc.data();
+                    if (data.performanceGain) {
+                        totalPerformance += data.performanceGain;
+                        performanceCount++;
+                    }
+                });
+            }
+
+            document.getElementById('stat-total-executives').textContent = totalExecs;
+            document.getElementById('stat-avg-performance').textContent = performanceCount > 0 ? Math.round(totalPerformance / performanceCount) + '%' : '-';
+            document.getElementById('stat-business-programs').textContent = businessPartners.filter(p => p.partnershipStatus === 'active').length;
+
+            if (businessPartners.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px; color: #888;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: 15px; opacity: 0.5;">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                        </svg>
+                        <p style="margin-bottom: 15px;">No business partners yet</p>
+                        <button class="action-btn action-btn-primary" onclick="showAddBusinessPartnerModal()">Add Your First Organization</button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = businessPartners.map(partner => `
+                <div class="partner-card" onclick="viewBusinessDetail('${partner.id}')">
+                    <div class="partner-card-logo business">
+                        ${partner.logoUrl
+                            ? '<img src="' + partner.logoUrl + '" alt="' + partner.name + '">'
+                            : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>'
+                        }
+                    </div>
+                    <div class="partner-card-info">
+                        <div class="partner-card-name">${partner.name}</div>
+                        <div class="partner-card-meta">
+                            <span class="industry-badge">${partner.industry || 'Industry'}</span>
+                            ${partner.programType || 'Executive Coaching'} • ${partner.contactName}
+                        </div>
+                    </div>
+                    <div class="partner-card-stats">
+                        <div class="partner-stat">
+                            <div class="partner-stat-value">${partner.stats?.totalExecs || 0}</div>
+                            <div class="partner-stat-label">Executives</div>
+                        </div>
+                        <div class="partner-stat">
+                            <div class="partner-stat-value">${partner.stats?.avgPerformance || '-'}</div>
+                            <div class="partner-stat-label">Perf. Gain</div>
+                        </div>
+                    </div>
+                    <span class="partner-status ${partner.partnershipStatus}">${partner.partnershipStatus}</span>
+                </div>
+            `).join('');
+        } catch (error) {
+            console.error('Error loading business partners:', error);
+            container.innerHTML = '<div style="color: #d32f2f; padding: 20px; text-align: center;">Error loading business partners</div>';
+        }
+    }
+
+    // Show add business partner modal
+    function showAddBusinessPartnerModal() {
+        document.getElementById('business-modal-title').textContent = 'Add Business Partner';
+        document.getElementById('business-edit-id').value = '';
+        document.getElementById('business-name').value = '';
+        document.getElementById('business-id').value = '';
+        document.getElementById('business-industry').value = 'finance';
+        document.getElementById('business-program').value = 'executive';
+        document.getElementById('business-contact-name').value = '';
+        document.getElementById('business-contact-email').value = '';
+        document.getElementById('business-logo-url').value = '';
+        document.getElementById('business-status').value = 'active';
+        document.getElementById('business-id-preview').textContent = '...';
+
+        document.getElementById('business-name').oninput = function() {
+            const slug = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            document.getElementById('business-id').value = slug;
+            document.getElementById('business-id-preview').textContent = slug || '...';
+        };
+
+        document.getElementById('business-partner-modal').style.display = 'flex';
+    }
+
+    // Save business partner
+    async function saveBusinessPartner() {
+        const editId = document.getElementById('business-edit-id').value;
+        const name = document.getElementById('business-name').value.trim();
+        const id = document.getElementById('business-id').value.trim();
+        const industry = document.getElementById('business-industry').value;
+        const programType = document.getElementById('business-program').value;
+        const contactName = document.getElementById('business-contact-name').value.trim();
+        const contactEmail = document.getElementById('business-contact-email').value.trim();
+        const logoUrl = document.getElementById('business-logo-url').value.trim();
+        const status = document.getElementById('business-status').value;
+
+        if (!name || !id || !contactName || !contactEmail) {
+            alert('Please fill in all required fields');
+            return;
+        }
+
+        const data = {
+            name,
+            industry,
+            programType,
+            contactName,
+            contactEmail,
+            logoUrl: logoUrl || null,
+            partnershipStatus: status,
+            programFocus: {
+                decision: document.getElementById('business-focus-decision').checked,
+                travel: document.getElementById('business-focus-travel').checked,
+                stress: document.getElementById('business-focus-stress').checked
+            },
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        try {
+            if (editId) {
+                await db.collection('businessPartners').doc(editId).update(data);
+            } else {
+                data.id = id;
+                data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                data.createdBy = currentUser.uid;
+                await db.collection('businessPartners').doc(id).set(data);
+            }
+            closeModal('business-partner-modal');
+            loadBusinessPartners();
+        } catch (error) {
+            console.error('Error saving business partner:', error);
+            alert('Error saving partner: ' + error.message);
+        }
+    }
+
+    // View business partner detail
+    async function viewBusinessDetail(partnerId) {
+        currentBusinessId = partnerId;
+        const partner = businessPartners.find(p => p.id === partnerId);
+        if (!partner) return;
+
+        document.getElementById('business-detail-name').textContent = partner.name;
+        document.getElementById('business-detail-industry').textContent = `${partner.industry || 'Industry'} • ${partner.programType || 'Executive'} Program • ${partner.contactEmail}`;
+
+        // Load org stats
+        const execsSnap = await db.collection('executiveProfiles').where('orgPartnerId', '==', partnerId).get();
+        document.getElementById('business-stat-total').textContent = execsSnap.size;
+        document.getElementById('business-stat-program').textContent = partner.programType || 'Executive';
+        document.getElementById('business-stat-sleep').textContent = '-';
+        document.getElementById('business-stat-completion').textContent = '-';
+
+        // Load executives list
+        const container = document.getElementById('business-members-list');
+        if (execsSnap.empty) {
+            container.innerHTML = '<div style="padding: 40px; text-align: center; color: #888;">No executives enrolled yet. Click "Add Executive" to get started.</div>';
+        } else {
+            container.innerHTML = execsSnap.docs.map(doc => {
+                const e = doc.data();
+                return `
+                    <div class="guest-stay-row">
+                        <div class="guest-avatar">${(e.displayName || 'E')[0].toUpperCase()}</div>
+                        <div class="guest-info">
+                            <div class="guest-name">${e.displayName || 'Executive'}</div>
+                            <div class="guest-dates">${e.title || 'Title'} • Started ${formatDate(e.enrolledAt?.toDate?.())}</div>
+                        </div>
+                        <div class="guest-improvement">
+                            <div class="guest-improvement-value ${e.performanceGain >= 15 ? 'positive' : ''}">${e.performanceGain || '-'}%</div>
+                            <div class="guest-improvement-label">Improvement</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        showSection('business-detail');
+    }
+
+    // Switch business tab
+    function switchBusinessTab(tab) {
+        document.querySelectorAll('#section-business-detail .hotel-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector(`#section-business-detail .hotel-tab[data-tab="${tab}"]`).classList.add('active');
+        // Tab content would be loaded here
+    }
+
+    // Create demo business data
+    async function createDemoBusinessData() {
+        if (!confirm('Create demo business partner data?')) return;
+
+        try {
+            const orgId = 'goldman-sachs-demo';
+            await db.collection('businessPartners').doc(orgId).set({
+                id: orgId,
+                name: 'Goldman Sachs (Demo)',
+                industry: 'finance',
+                programType: 'executive',
+                contactName: 'Sarah Chen, Head of Wellness',
+                contactEmail: 'wellness@gs-demo.com',
+                logoUrl: null,
+                partnershipStatus: 'active',
+                programFocus: {
+                    decision: true,
+                    travel: true,
+                    stress: true
+                },
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                createdBy: currentUser.uid
+            });
+
+            // Create demo executives
+            const executives = [
+                { name: 'Robert Miller', title: 'Managing Director', gain: 28 },
+                { name: 'Jennifer Adams', title: 'VP, Operations', gain: 22 },
+                { name: 'Michael Park', title: 'Senior Associate', gain: 18 }
+            ];
+
+            for (const exec of executives) {
+                await db.collection('executiveProfiles').add({
+                    orgPartnerId: orgId,
+                    displayName: exec.name,
+                    title: exec.title,
+                    performanceGain: exec.gain,
+                    enrolledAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            }
+
+            alert('Demo business data created successfully!');
+            loadBusinessPartners();
+        } catch (error) {
+            console.error('Error creating demo data:', error);
+            alert('Error: ' + error.message);
+        }
+    }
+
+    function editCurrentBusinessPartner() {
+        const partner = businessPartners.find(p => p.id === currentBusinessId);
+        if (!partner) return;
+
+        document.getElementById('business-modal-title').textContent = 'Edit Business Partner';
+        document.getElementById('business-edit-id').value = partner.id;
+        document.getElementById('business-name').value = partner.name;
+        document.getElementById('business-id').value = partner.id;
+        document.getElementById('business-industry').value = partner.industry || 'finance';
+        document.getElementById('business-program').value = partner.programType || 'executive';
+        document.getElementById('business-contact-name').value = partner.contactName;
+        document.getElementById('business-contact-email').value = partner.contactEmail;
+        document.getElementById('business-logo-url').value = partner.logoUrl || '';
+        document.getElementById('business-status').value = partner.partnershipStatus || 'active';
+        document.getElementById('business-id-preview').textContent = partner.id;
+
+        document.getElementById('business-partner-modal').style.display = 'flex';
+    }
+
+    function showExecutiveInviteModal() {
+        alert('Executive invite link: ' + window.location.origin + '/auth.html?corp=' + currentBusinessId);
+    }
 </script>
 
 </body>

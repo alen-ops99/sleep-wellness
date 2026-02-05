@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Test Data</title>
+    <style>
+        body { font-family: sans-serif; padding: 40px; max-width: 600px; margin: 0 auto; }
+        .status { padding: 15px; margin: 10px 0; border-radius: 8px; }
+        .success { background: #e8f5e9; color: #2e7d32; }
+        .error { background: #ffebee; color: #c62828; }
+        .pending { background: #fff3e0; color: #ef6c00; }
+        button { padding: 15px 30px; font-size: 16px; background: #C9A962; border: none; color: #0f1c2e; cursor: pointer; border-radius: 8px; }
+        button:hover { background: #d4b978; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <h1>Create Test Data for Hotel Reports</h1>
+    <p>This will create:</p>
+    <ul>
+        <li>A test hotel partner: "The Grand Test Hotel"</li>
+        <li>A test guest user</li>
+        <li>A completed guest stay with assessments and feedback</li>
+    </ul>
+
+    <button onclick="createTestData()" id="createBtn">Create Test Data</button>
+
+    <div id="status"></div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <script>
+        const statusDiv = document.getElementById('status');
+
+        function log(message, type = 'pending') {
+            statusDiv.innerHTML += `<div class="status ${type}">${message}</div>`;
+        }
+
+        async function createTestData() {
+            const btn = document.getElementById('createBtn');
+            btn.disabled = true;
+            statusDiv.innerHTML = '';
+
+            try {
+                // Check if logged in as admin
+                const user = auth.currentUser;
+                if (!user) {
+                    log('Please log in first. Redirecting to login...', 'error');
+                    setTimeout(() => {
+                        window.location.href = 'auth.html?redirect=create-test-data.html';
+                    }, 2000);
+                    return;
+                }
+
+                const profile = await FirebaseDB.getUserProfile(user.uid);
+                if (!profile || profile.role !== 'admin') {
+                    log('You must be logged in as admin to create test data.', 'error');
+                    btn.disabled = false;
+                    return;
+                }
+
+                log('Creating test hotel partner...');
+
+                // Create test hotel
+                const hotelId = 'grand-test-hotel';
+                await db.collection('hotelPartners').doc(hotelId).set({
+                    id: hotelId,
+                    name: 'The Grand Test Hotel',
+                    contactName: 'Jean-Pierre Dubois',
+                    contactEmail: 'gm@grandtesthotel.com',
+                    logoUrl: null,
+                    partnershipStatus: 'active',
+                    reportSettings: {
+                        includeGuestName: true,
+                        emailOnCheckout: true
+                    },
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    createdBy: user.uid
+                });
+                log('Test hotel created!', 'success');
+
+                log('Creating test guest user...');
+
+                // Create test guest user (using a document, not actual auth user)
+                const testGuestId = 'test-hotel-guest-001';
+                await db.collection('users').doc(testGuestId).set({
+                    email: 'testguest@grandtesthotel.com',
+                    displayName: 'Sarah Johnson',
+                    role: 'client',
+                    clientType: 'hotel',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    hotelAffiliation: {
+                        hotelPartnerId: hotelId,
+                        isHotelGuest: true
+                    }
+                });
+                log('Test guest user created!', 'success');
+
+                log('Creating completed guest stay with assessments...');
+
+                // Create guest stay with full data
+                const checkInDate = new Date();
+                checkInDate.setDate(checkInDate.getDate() - 4); // 4 days ago
+
+                const checkoutDate = new Date();
+                checkoutDate.setDate(checkoutDate.getDate() - 1); // Yesterday
+
+                const stayRef = await db.collection('guestStays').add({
+                    guestUserId: testGuestId,
+                    hotelPartnerId: hotelId,
+                    checkInDate: checkInDate,
+                    checkoutDate: checkoutDate,
+                    actualCheckoutDate: checkoutDate,
+                    roomNumber: 'Suite 412',
+                    stayStatus: 'checked-out', // Ready for report generation
+                    baselineAssessments: {
+                        isi: 18,  // Moderate clinical insomnia
+                        ess: 14   // Excessive daytime sleepiness
+                    },
+                    postStayAssessments: {
+                        isi: 9,   // Subthreshold insomnia (big improvement!)
+                        ess: 8    // Normal sleepiness
+                    },
+                    engagement: {
+                        chatSessions: 5,
+                        diaryEntries: 4,
+                        interventions: ['personalized-schedule', 'room-optimization', 'relaxation-techniques']
+                    },
+                    guestFeedback: {
+                        rating: 5,
+                        wouldRecommend: true,
+                        mostHelpful: 'personalized-schedule',
+                        comments: 'Amazing experience! I slept better than I have in years. The personalized sleep schedule and room optimization tips made a huge difference.',
+                        submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    },
+                    reportPdfUrl: null,
+                    reportSentAt: null,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                // Update guest user with stay ID
+                await db.collection('users').doc(testGuestId).update({
+                    'hotelAffiliation.currentStayId': stayRef.id
+                });
+
+                log('Guest stay created with 50% sleep improvement!', 'success');
+
+                log('<br><strong>Test data created successfully!</strong><br><br>' +
+                    'Now go to the <a href="admin/index.html">Admin Dashboard</a>:<br>' +
+                    '1. Click "Hotel Partners" in the sidebar<br>' +
+                    '2. Click on "The Grand Test Hotel"<br>' +
+                    '3. Go to "Completed Stays" tab<br>' +
+                    '4. Click on the guest stay to see details<br>' +
+                    '5. Click "Generate Report" to create the PDF', 'success');
+
+            } catch (error) {
+                console.error('Error creating test data:', error);
+                log('Error: ' + error.message, 'error');
+                btn.disabled = false;
+            }
+        }
+
+        // Check auth state on load
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                log('Please log in as admin first.', 'pending');
+                log('<a href="auth.html">Click here to log in</a>', 'pending');
+            } else {
+                log('Logged in as: ' + user.email, 'success');
+                log('Click the button above to create test data.', 'pending');
+            }
+        });
+    </script>
+</body>
+</html>

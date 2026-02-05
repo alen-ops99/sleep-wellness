@@ -106,5 +106,56 @@ service cloud.firestore {
       allow read: if request.auth != null;
       allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
+
+    // ==========================================
+    // HOTEL PARTNERS
+    // ==========================================
+
+    // Hotel partners - admins can manage, authenticated users can read
+    match /hotelPartners/{hotelId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Guest stays - users can read/update their own, admins can manage all
+    match /guestStays/{stayId} {
+      allow read, update: if request.auth != null && resource.data.guestUserId == request.auth.uid;
+      allow create: if request.auth != null;
+      allow read, write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // ==========================================
+    // ATHLETIC PARTNERS
+    // ==========================================
+
+    // Athletic partners - admins can manage, authenticated users can read
+    match /athleticPartners/{teamId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Athlete profiles - users can read/update their own, admins can manage all
+    match /athleteProfiles/{profileId} {
+      allow read, update: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null;
+      allow read, write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // ==========================================
+    // BUSINESS PARTNERS
+    // ==========================================
+
+    // Business partners - admins can manage, authenticated users can read
+    match /businessPartners/{orgId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Executive profiles - users can read/update their own, admins can manage all
+    match /executiveProfiles/{profileId} {
+      allow read, update: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null;
+      allow read, write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
   }
 }

@@ -101,6 +101,23 @@ service cloud.firestore {
       allow create, update, delete: if request.auth != null &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
+
+    // Hotel Partners - anyone can read (for guest signup), admin can manage
+    match /hotelPartners/{partnerId} {
+      allow read: if true;
+      allow create, update, delete: if request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Guest Stays - guests can read their own, admin can manage all
+    match /guestStays/{stayId} {
+      allow create: if request.auth != null;
+      allow read, update: if request.auth != null &&
+        (resource.data.guestUserId == request.auth.uid ||
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+      allow delete: if request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
   }
 }
  */
@@ -112,7 +129,8 @@ const ADMIN_UID = 'iHDuOEJXsQe7dL5C4QwA3fLX9zi2';
 const ADMIN_EMAILS = [
     'juginovic.alen@gmail.com',
     'alen_juginovic@hms.harvard.edu',
-    'laura.rodman@medx.hr'
+    'laura.rodman@medx.hr',
+    'alen.juginovi27@gmail.com'
 ];
 
 /**
@@ -1019,6 +1037,349 @@ const FirebaseDB = {
             adminNotes: notes,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         });
+    },
+
+    // ==================== HOTEL PARTNER FUNCTIONS ====================
+
+    /**
+     * Create a new hotel partner (admin)
+     */
+    async createHotelPartner(partnerData) {
+        const partner = {
+            ...partnerData,
+            partnershipStatus: partnerData.partnershipStatus || 'active',
+            reportSettings: {
+                includeGuestName: partnerData.reportSettings?.includeGuestName ?? false,
+                emailOnCheckout: partnerData.reportSettings?.emailOnCheckout ?? true
+            },
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            createdBy: ADMIN_UID
+        };
+
+        // Use the id as document ID if provided, otherwise generate
+        const docId = partnerData.id || partnerData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        await db.collection('hotelPartners').doc(docId).set(partner);
+        return docId;
+    },
+
+    /**
+     * Get hotel partner by ID
+     */
+    async getHotelPartner(partnerId) {
+        const doc = await db.collection('hotelPartners').doc(partnerId).get();
+        return doc.exists ? { id: doc.id, ...doc.data() } : null;
+    },
+
+    /**
+     * Get all hotel partners (admin)
+     */
+    async getAllHotelPartners() {
+        const snapshot = await db.collection('hotelPartners').get();
+        const partners = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        // Sort by name
+        partners.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+        return partners;
+    },
+
+    /**
+     * Update hotel partner (admin)
+     */
+    async updateHotelPartner(partnerId, updates) {
+        await db.collection('hotelPartners').doc(partnerId).update({
+            ...updates,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    },
+
+    /**
+     * Delete hotel partner (admin)
+     */
+    async deleteHotelPartner(partnerId) {
+        await db.collection('hotelPartners').doc(partnerId).delete();
+    },
+
+    /**
+     * Get hotel partner stats (guest count, avg improvement)
+     */
+    async getHotelPartnerStats(partnerId) {
+        const staysSnapshot = await db.collection('guestStays')
+            .where('hotelPartnerId', '==', partnerId)
+            .get();
+
+        const stays = staysSnapshot.docs.map(doc => doc.data());
+        const completedStays = stays.filter(s => s.stayStatus === 'checked-out' || s.stayStatus === 'report-sent');
+
+        let totalImprovement = 0;
+        let improvementCount = 0;
+
+        completedStays.forEach(stay => {
+            if (stay.baselineAssessments?.isi && stay.postStayAssessments?.isi) {
+                const baseline = stay.baselineAssessments.isi;
+                const postStay = stay.postStayAssessments.isi;
+                const improvement = ((baseline - postStay) / baseline) * 100;
+                if (improvement > 0) {
+                    totalImprovement += improvement;
+                    improvementCount++;
+                }
+            }
+        });
+
+        return {
+            totalGuests: stays.length,
+            activeGuests: stays.filter(s => s.stayStatus === 'active').length,
+            completedStays: completedStays.length,
+            avgImprovement: improvementCount > 0 ? Math.round(totalImprovement / improvementCount) : 0
+        };
+    },
+
+    // ==================== GUEST STAY FUNCTIONS ====================
+
+    /**
+     * Create a new guest stay
+     */
+    async createGuestStay(stayData) {
+        const stay = {
+            guestUserId: stayData.guestUserId,
+            hotelPartnerId: stayData.hotelPartnerId,
+            checkInDate: stayData.checkInDate ? new Date(stayData.checkInDate) : firebase.firestore.FieldValue.serverTimestamp(),
+            checkoutDate: stayData.checkoutDate ? new Date(stayData.checkoutDate) : null,
+            roomNumber: stayData.roomNumber || '',
+            stayStatus: 'active',
+            baselineAssessments: {},
+            postStayAssessments: {},
+            engagement: {
+                chatSessions: 0,
+                diaryEntries: 0,
+                interventions: []
+            },
+            guestFeedback: null,
+            reportPdfUrl: null,
+            reportSentAt: null,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        const docRef = await db.collection('guestStays').add(stay);
+        return docRef.id;
+    },
+
+    /**
+     * Get guest stay by ID
+     */
+    async getGuestStay(stayId) {
+        const doc = await db.collection('guestStays').doc(stayId).get();
+        return doc.exists ? { id: doc.id, ...doc.data() } : null;
+    },
+
+    /**
+     * Get active stay for a user
+     */
+    async getActiveGuestStay(userId) {
+        const snapshot = await db.collection('guestStays')
+            .where('guestUserId', '==', userId)
+            .where('stayStatus', '==', 'active')
+            .limit(1)
+            .get();
+
+        if (snapshot.empty) return null;
+        const doc = snapshot.docs[0];
+        return { id: doc.id, ...doc.data() };
+    },
+
+    /**
+     * Get all stays for a hotel partner
+     */
+    async getHotelGuestStays(hotelPartnerId, status = null) {
+        let query = db.collection('guestStays')
+            .where('hotelPartnerId', '==', hotelPartnerId);
+
+        if (status) {
+            query = query.where('stayStatus', '==', status);
+        }
+
+        const snapshot = await query.get();
+        const stays = [];
+
+        for (const doc of snapshot.docs) {
+            const data = doc.data();
+            const userProfile = await this.getUserProfile(data.guestUserId);
+            stays.push({
+                id: doc.id,
+                ...data,
+                guestName: userProfile?.displayName || 'Guest',
+                guestEmail: userProfile?.email || ''
+            });
+        }
+
+        // Sort by checkInDate descending
+        stays.sort((a, b) => {
+            const aTime = a.checkInDate?.toDate?.() || new Date(0);
+            const bTime = b.checkInDate?.toDate?.() || new Date(0);
+            return bTime - aTime;
+        });
+
+        return stays;
+    },
+
+    /**
+     * Update guest stay
+     */
+    async updateGuestStay(stayId, updates) {
+        await db.collection('guestStays').doc(stayId).update({
+            ...updates,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    },
+
+    /**
+     * Record baseline assessment for a stay
+     */
+    async recordBaselineAssessment(stayId, assessmentType, score) {
+        const updatePath = `baselineAssessments.${assessmentType}`;
+        await db.collection('guestStays').doc(stayId).update({
+            [updatePath]: score,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    },
+
+    /**
+     * Record post-stay assessment for a stay
+     */
+    async recordPostStayAssessment(stayId, assessmentType, score) {
+        const updatePath = `postStayAssessments.${assessmentType}`;
+        await db.collection('guestStays').doc(stayId).update({
+            [updatePath]: score,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    },
+
+    /**
+     * Increment engagement metric
+     */
+    async incrementEngagement(stayId, metric) {
+        const updatePath = `engagement.${metric}`;
+        await db.collection('guestStays').doc(stayId).update({
+            [updatePath]: firebase.firestore.FieldValue.increment(1),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    },
+
+    /**
+     * Add intervention to stay
+     */
+    async addIntervention(stayId, intervention) {
+        await db.collection('guestStays').doc(stayId).update({
+            'engagement.interventions': firebase.firestore.FieldValue.arrayUnion(intervention),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    },
+
+    /**
+     * Complete guest checkout with feedback
+     */
+    async completeGuestCheckout(stayId, feedbackData) {
+        await db.collection('guestStays').doc(stayId).update({
+            stayStatus: 'checked-out',
+            guestFeedback: {
+                rating: feedbackData.rating,
+                wouldRecommend: feedbackData.wouldRecommend,
+                mostHelpful: feedbackData.mostHelpful,
+                improvements: feedbackData.improvements,
+                comments: feedbackData.comments,
+                submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+            },
+            actualCheckoutDate: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    },
+
+    /**
+     * Mark report as sent
+     */
+    async markReportSent(stayId, pdfUrl) {
+        await db.collection('guestStays').doc(stayId).update({
+            stayStatus: 'report-sent',
+            reportPdfUrl: pdfUrl,
+            reportSentAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    },
+
+    /**
+     * Update user's hotel affiliation
+     */
+    async updateUserHotelAffiliation(userId, affiliationData) {
+        await db.collection('users').doc(userId).update({
+            hotelAffiliation: {
+                hotelPartnerId: affiliationData.hotelPartnerId,
+                currentStayId: affiliationData.currentStayId,
+                isHotelGuest: true
+            },
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    },
+
+    /**
+     * Save assessment with context (baseline or post-stay)
+     */
+    async saveAssessmentWithContext(userId, results, context = null, guestStayId = null) {
+        const assessment = {
+            userId,
+            ...results,
+            assessmentContext: context, // 'baseline' or 'post-stay'
+            guestStayId: guestStayId,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            status: 'submitted'
+        };
+
+        const docRef = await db.collection('assessments').add(assessment);
+        return docRef.id;
+    },
+
+    /**
+     * Get assessment history for a guest stay
+     */
+    async getStayAssessments(guestStayId) {
+        const snapshot = await db.collection('assessments')
+            .where('guestStayId', '==', guestStayId)
+            .get();
+
+        const assessments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        // Sort by createdAt
+        assessments.sort((a, b) => {
+            const aTime = a.createdAt?.toDate?.() || new Date(0);
+            const bTime = b.createdAt?.toDate?.() || new Date(0);
+            return aTime - bTime;
+        });
+
+        return assessments;
+    },
+
+    /**
+     * Get all guest stays with pending reports (admin)
+     */
+    async getStaysPendingReport() {
+        const snapshot = await db.collection('guestStays')
+            .where('stayStatus', '==', 'checked-out')
+            .get();
+
+        const stays = [];
+        for (const doc of snapshot.docs) {
+            const data = doc.data();
+            const [userProfile, hotelPartner] = await Promise.all([
+                this.getUserProfile(data.guestUserId),
+                this.getHotelPartner(data.hotelPartnerId)
+            ]);
+            stays.push({
+                id: doc.id,
+                ...data,
+                guestName: userProfile?.displayName || 'Guest',
+                guestEmail: userProfile?.email || '',
+                hotelName: hotelPartner?.name || 'Unknown Hotel'
+            });
+        }
+
+        return stays;
     }
 };
 

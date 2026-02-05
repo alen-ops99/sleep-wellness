@@ -287,12 +287,84 @@
             display: block;
         }
 
+        /* Hotel Guest Mode Styles */
+        .hotel-welcome-banner {
+            background: linear-gradient(135deg, #0f1c2e, #1a2a3a);
+            color: white;
+            padding: 25px;
+            margin: -50px -40px 30px;
+            text-align: center;
+        }
+
+        .hotel-welcome-banner h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .hotel-welcome-banner p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .hotel-welcome-banner .hotel-logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 12px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hotel-welcome-banner .hotel-logo img {
+            max-width: 70%;
+            max-height: 70%;
+            object-fit: contain;
+        }
+
+        .hotel-welcome-banner .hotel-logo svg {
+            width: 40px;
+            height: 40px;
+            color: #C9A962;
+        }
+
+        .hotel-stay-fields {
+            background: rgba(201, 169, 98, 0.1);
+            border: 1px solid rgba(201, 169, 98, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .hotel-stay-fields h4 {
+            font-size: 13px;
+            color: var(--navy);
+            margin-bottom: 15px;
+        }
+
+        .hotel-stay-fields .fields-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
         @media (max-width: 520px) {
             .auth-card {
                 padding: 40px 25px;
             }
 
             .client-type-select {
+                grid-template-columns: 1fr;
+            }
+
+            .hotel-welcome-banner {
+                margin: -40px -25px 30px;
+            }
+
+            .hotel-stay-fields .fields-row {
                 grid-template-columns: 1fr;
             }
         }
@@ -364,17 +436,44 @@
 
         <!-- Register Form -->
         <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
-            <div class="invite-notice" style="background: rgba(201, 169, 98, 0.1); border: 1px solid var(--gold); padding: 15px; margin-bottom: 25px; text-align: center;">
+            <!-- Hotel Welcome Banner (shown when ?hotel= param present) -->
+            <div id="hotel-welcome-banner" class="hotel-welcome-banner" style="display: none;">
+                <div class="hotel-logo" id="hotel-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
+                </div>
+                <h2>Welcome, <span id="hotel-name-display">Guest</span></h2>
+                <p>Your personalized sleep wellness experience awaits</p>
+            </div>
+
+            <!-- Standard Invite Notice (hidden for hotel guests) -->
+            <div id="invite-notice" class="invite-notice" style="background: rgba(201, 169, 98, 0.1); border: 1px solid var(--gold); padding: 15px; margin-bottom: 25px; text-align: center;">
                 <p style="font-size: 13px; color: var(--navy); margin: 0;">
                     <strong>Invitation Required</strong><br>
                     <span style="font-size: 12px; color: var(--text-light);">Registration is by invitation only. Please enter the invite code provided by Dr. Alen.</span>
                 </p>
             </div>
 
-            <div class="form-group">
+            <!-- Invite Code (hidden for hotel guests) -->
+            <div class="form-group" id="invite-code-group">
                 <label for="inviteCode">Invite Code *</label>
                 <input type="text" id="inviteCode" required placeholder="Enter your invite code" style="text-transform: uppercase;">
             </div>
+
+            <!-- Hotel Stay Fields (shown for hotel guests) -->
+            <div id="hotel-stay-fields" class="hotel-stay-fields" style="display: none;">
+                <h4>Your Stay Details</h4>
+                <div class="fields-row">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="roomNumber">Room Number *</label>
+                        <input type="text" id="roomNumber" placeholder="e.g., Suite 412">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="checkoutDate">Checkout Date *</label>
+                        <input type="date" id="checkoutDate">
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="hotelPartnerId" value="">
 
             <div class="form-group">
                 <label for="registerName">Full Name</label>
@@ -479,6 +578,96 @@
 <script src="auth.js"></script>
 
 <script>
+    // Hotel partner mode
+    let hotelPartner = null;
+    let isHotelMode = false;
+
+    // Initialize hotel mode if URL has ?hotel= parameter
+    async function initHotelMode() {
+        console.log('initHotelMode called');
+        const urlParams = new URLSearchParams(window.location.search);
+        const hotelId = urlParams.get('hotel');
+        console.log('Hotel ID from URL:', hotelId);
+
+        if (hotelId) {
+            try {
+                // DEV: Use hardcoded test hotel for development testing
+                if (hotelId === 'test-hotel') {
+                    console.log('Using hardcoded test hotel for development...');
+                    hotelPartner = {
+                        id: 'test-hotel',
+                        name: 'The Grand Test Hotel',
+                        contactName: 'Jane Smith',
+                        contactEmail: 'manager@grandtesthotel.com',
+                        logoUrl: null,
+                        partnershipStatus: 'active',
+                        reportSettings: {
+                            includeGuestName: true,
+                            emailOnCheckout: true
+                        }
+                    };
+                } else {
+                    hotelPartner = await FirebaseDB.getHotelPartner(hotelId);
+                }
+
+                console.log('Hotel partner:', hotelPartner);
+
+                if (hotelPartner) {
+                    isHotelMode = true;
+                    console.log('Setting up hotel mode...');
+                    setupHotelMode(hotelPartner);
+                }
+            } catch (error) {
+                console.error('Error loading hotel partner:', error);
+            }
+        }
+    }
+
+    // Setup hotel mode UI
+    function setupHotelMode(partner) {
+        console.log('setupHotelMode called with partner:', partner);
+
+        // Show hotel welcome banner
+        const banner = document.getElementById('hotel-welcome-banner');
+        console.log('Banner element:', banner);
+        banner.style.display = 'block';
+        document.getElementById('hotel-name-display').textContent = partner.name + ' Guest';
+
+        // Set hotel logo if available
+        if (partner.logoUrl) {
+            document.getElementById('hotel-logo').innerHTML = `<img src="${partner.logoUrl}" alt="${partner.name}">`;
+        }
+
+        // Hide invite code field and notice
+        document.getElementById('invite-notice').style.display = 'none';
+        document.getElementById('invite-code-group').style.display = 'none';
+        document.getElementById('inviteCode').removeAttribute('required');
+
+        // Show hotel stay fields
+        document.getElementById('hotel-stay-fields').style.display = 'block';
+        document.getElementById('roomNumber').setAttribute('required', 'required');
+        document.getElementById('checkoutDate').setAttribute('required', 'required');
+        document.getElementById('hotelPartnerId').value = partner.id;
+
+        // Set minimum checkout date to tomorrow
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('checkoutDate').min = tomorrow.toISOString().split('T')[0];
+
+        // Pre-select "Traveler" client type
+        const travelerOption = document.querySelector('input[name="clientType"][value="hotel"]');
+        if (travelerOption) {
+            travelerOption.checked = true;
+            travelerOption.closest('.client-type-option').classList.add('selected');
+        }
+
+        // Update page title
+        document.title = `Guest Registration | ${partner.name} Sleep Program`;
+
+        // Auto-switch to register tab
+        showAuthTab('register');
+    }
+
     // Show auth tab
     function showAuthTab(tab) {
         // Update tabs
@@ -490,8 +679,12 @@
         document.getElementById(tab + 'Form').classList.add('active');
 
         // Update title
-        document.getElementById('authTitle').textContent =
-            tab === 'login' ? 'Welcome Back' : 'Create Your Account';
+        if (isHotelMode && tab === 'register') {
+            document.getElementById('authTitle').textContent = 'Create Your Account';
+        } else {
+            document.getElementById('authTitle').textContent =
+                tab === 'login' ? 'Welcome Back' : 'Create Your Account';
+        }
 
         // Make sure reset form is hidden and tabs are visible
         document.getElementById('resetForm').classList.remove('active');
@@ -557,7 +750,6 @@
     async function handleRegister(e) {
         e.preventDefault();
 
-        const inviteCode = document.getElementById('inviteCode').value.toUpperCase().trim();
         const name = document.getElementById('registerName').value;
         const email = document.getElementById('registerEmail').value;
         const password = document.getElementById('registerPassword').value;
@@ -575,8 +767,79 @@
         }
 
         btn.disabled = true;
-        btn.textContent = 'Verifying invite code...';
         error.classList.remove('visible');
+
+        // Hotel guest mode - different validation
+        if (isHotelMode) {
+            const roomNumber = document.getElementById('roomNumber').value.trim();
+            const checkoutDate = document.getElementById('checkoutDate').value;
+            const hotelPartnerId = document.getElementById('hotelPartnerId').value;
+
+            if (!roomNumber || !checkoutDate) {
+                error.textContent = 'Please enter your room number and checkout date.';
+                error.classList.add('visible');
+                btn.disabled = false;
+                return;
+            }
+
+            btn.textContent = 'Creating your account...';
+
+            const result = await Auth.register(email, password, name, 'hotel');
+
+            if (result.success) {
+                try {
+                    // Create guest stay record
+                    const stayId = await FirebaseDB.createGuestStay({
+                        guestUserId: result.user.uid,
+                        hotelPartnerId: hotelPartnerId,
+                        checkInDate: new Date(),
+                        checkoutDate: checkoutDate,
+                        roomNumber: roomNumber
+                    });
+
+                    // Update user with hotel affiliation
+                    await FirebaseDB.updateUserHotelAffiliation(result.user.uid, {
+                        hotelPartnerId: hotelPartnerId,
+                        currentStayId: stayId,
+                        isHotelGuest: true
+                    });
+
+                    // Save consent
+                    await db.collection('users').doc(result.user.uid).update({
+                        dataConsentGiven: true,
+                        dataConsentDate: firebase.firestore.FieldValue.serverTimestamp(),
+                        marketingConsent: marketingConsent
+                    });
+
+                    // Create welcome notification for hotel guest
+                    await db.collection('notifications').add({
+                        userId: result.user.uid,
+                        type: 'welcome',
+                        title: `Welcome to ${hotelPartner.name}!`,
+                        message: 'Start by completing your baseline sleep assessment to get personalized recommendations.',
+                        data: { hotelPartnerId, stayId },
+                        read: false,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                } catch (err) {
+                    console.error('Error setting up hotel guest:', err);
+                }
+
+                window.location.href = 'account.html';
+            } else {
+                error.textContent = result.error;
+                error.classList.add('visible');
+                btn.disabled = false;
+                btn.textContent = 'Create Account';
+            }
+            return;
+        }
+
+        // Standard registration with invite code
+        const inviteCode = document.getElementById('inviteCode').value.toUpperCase().trim();
+
+        btn.textContent = 'Verifying invite code...';
 
         // Verify invite code first
         const inviteResult = await FirebaseDB.verifyInviteCode(inviteCode);
@@ -764,6 +1027,9 @@
             } else {
                 window.location.href = 'account.html';
             }
+        } else {
+            // Only initialize hotel mode if not logged in
+            initHotelMode();
         }
     });
 
