@@ -15,6 +15,354 @@
             --radius-pill: 100px;
         }
 
+        /* ========== TOAST NOTIFICATIONS ========== */
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            max-width: 450px;
+            pointer-events: auto;
+            animation: toastSlideIn 0.3s ease;
+            border-left: 4px solid var(--gold);
+        }
+
+        .toast.toast-success { border-left-color: #2e7d32; }
+        .toast.toast-error { border-left-color: #c62828; }
+        .toast.toast-warning { border-left-color: #ed6c02; }
+        .toast.toast-info { border-left-color: #1976d2; }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .toast-success .toast-icon { background: rgba(46, 125, 50, 0.1); color: #2e7d32; }
+        .toast-error .toast-icon { background: rgba(198, 40, 40, 0.1); color: #c62828; }
+        .toast-warning .toast-icon { background: rgba(237, 108, 2, 0.1); color: #ed6c02; }
+        .toast-info .toast-icon { background: rgba(25, 118, 210, 0.1); color: #1976d2; }
+
+        .toast-content { flex: 1; }
+        .toast-title { font-weight: 600; font-size: 14px; color: #0f1c2e; margin-bottom: 2px; }
+        .toast-message { font-size: 13px; color: #666; }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            padding: 4px;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .toast-close:hover { color: #333; }
+
+        .toast.toast-exit {
+            animation: toastSlideOut 0.3s ease forwards;
+        }
+
+        @keyframes toastSlideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes toastSlideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* ========== CONFIRMATION MODAL ========== */
+        .confirm-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+        }
+
+        .confirm-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .confirm-modal {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.2s;
+        }
+
+        .confirm-modal-overlay.active .confirm-modal {
+            transform: scale(1);
+        }
+
+        .confirm-modal-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .confirm-modal-icon.warning { background: rgba(237, 108, 2, 0.1); color: #ed6c02; }
+        .confirm-modal-icon.danger { background: rgba(198, 40, 40, 0.1); color: #c62828; }
+        .confirm-modal-icon.info { background: rgba(25, 118, 210, 0.1); color: #1976d2; }
+
+        .confirm-modal-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: #0f1c2e;
+            margin-bottom: 10px;
+        }
+
+        .confirm-modal-message {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .confirm-modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .confirm-modal-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .confirm-modal-btn.cancel {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .confirm-modal-btn.cancel:hover {
+            background: #e0e0e0;
+        }
+
+        .confirm-modal-btn.confirm {
+            background: var(--gold);
+            color: #0f1c2e;
+        }
+
+        .confirm-modal-btn.confirm:hover {
+            background: #d4b978;
+        }
+
+        .confirm-modal-btn.danger {
+            background: #c62828;
+            color: white;
+        }
+
+        .confirm-modal-btn.danger:hover {
+            background: #b71c1c;
+        }
+
+        /* ========== EMPTY STATES ========== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 30px;
+            color: #888;
+        }
+
+        .empty-state-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(201, 169, 98, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .empty-state-icon svg {
+            width: 36px;
+            height: 36px;
+            color: var(--gold);
+        }
+
+        .empty-state-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            color: #0f1c2e;
+            margin-bottom: 10px;
+        }
+
+        .empty-state-message {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 20px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .empty-state-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--gold);
+            color: #0f1c2e;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .empty-state-btn:hover {
+            background: #d4b978;
+        }
+
+        /* ========== SCORE EXPLANATION TOOLTIPS ========== */
+        .score-help {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            background: rgba(201, 169, 98, 0.2);
+            border-radius: 50%;
+            font-size: 11px;
+            color: var(--gold);
+            cursor: help;
+            margin-left: 6px;
+            position: relative;
+        }
+
+        .score-help:hover .score-tooltip {
+            display: block;
+        }
+
+        .score-tooltip {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0f1c2e;
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            width: 250px;
+            text-align: left;
+            margin-bottom: 8px;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .score-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #0f1c2e;
+        }
+
+        .score-tooltip-title {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--gold);
+        }
+
+        .score-tooltip-scale {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 11px;
+        }
+
+        .score-tooltip-scale div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3px;
+        }
+
+        /* ========== SESSION TIMEOUT WARNING ========== */
+        .session-warning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 10002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .session-warning.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .session-warning-box {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .session-warning-timer {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            color: #c62828;
+            margin: 20px 0;
+        }
+
         .dashboard-layout {
             display: flex;
             min-height: 100vh;
@@ -3283,6 +3631,43 @@
 </head>
 <body>
 
+<!-- Toast Notification Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Confirmation Modal -->
+<div class="confirm-modal-overlay" id="confirmModal">
+    <div class="confirm-modal">
+        <div class="confirm-modal-icon warning" id="confirmIcon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+        </div>
+        <h3 class="confirm-modal-title" id="confirmTitle">Are you sure?</h3>
+        <p class="confirm-modal-message" id="confirmMessage">This action cannot be undone.</p>
+        <div class="confirm-modal-buttons">
+            <button class="confirm-modal-btn cancel" onclick="closeConfirmModal()">Cancel</button>
+            <button class="confirm-modal-btn confirm" id="confirmBtn" onclick="executeConfirm()">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<!-- Session Timeout Warning -->
+<div class="session-warning" id="sessionWarning">
+    <div class="session-warning-box">
+        <div class="confirm-modal-icon warning">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+        </div>
+        <h3 class="confirm-modal-title">Session Expiring</h3>
+        <p class="confirm-modal-message">You will be logged out due to inactivity in:</p>
+        <div class="session-warning-timer" id="sessionTimer">60</div>
+        <p class="confirm-modal-message">Move your mouse or click anywhere to stay logged in.</p>
+        <button class="confirm-modal-btn confirm" onclick="resetSessionTimer()">Stay Logged In</button>
+    </div>
+</div>
+
 <!-- Welcome Modal (for new users) -->
 <div class="welcome-modal" id="welcomeModal">
     <div class="particles" id="welcomeParticles"></div>
@@ -5430,6 +5815,230 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
 <script>
+    // ==================== TOAST NOTIFICATION SYSTEM ====================
+
+    function showToast(message, type = 'info', title = null, duration = 4000) {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+
+        const icons = {
+            success: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+            error: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+            warning: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+            info: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+        };
+
+        const defaultTitles = {
+            success: 'Success',
+            error: 'Error',
+            warning: 'Warning',
+            info: 'Info'
+        };
+
+        toast.innerHTML = `
+            <div class="toast-icon">${icons[type]}</div>
+            <div class="toast-content">
+                <div class="toast-title">${title || defaultTitles[type]}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+        `;
+
+        container.appendChild(toast);
+
+        // Auto-remove after duration
+        setTimeout(() => {
+            toast.classList.add('toast-exit');
+            setTimeout(() => toast.remove(), 300);
+        }, duration);
+    }
+
+    // ==================== CONFIRMATION MODAL SYSTEM ====================
+
+    let confirmCallback = null;
+
+    function showConfirm(title, message, onConfirm, type = 'warning', confirmText = 'Confirm') {
+        const modal = document.getElementById('confirmModal');
+        const iconEl = document.getElementById('confirmIcon');
+        const titleEl = document.getElementById('confirmTitle');
+        const messageEl = document.getElementById('confirmMessage');
+        const btnEl = document.getElementById('confirmBtn');
+
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        btnEl.textContent = confirmText;
+
+        // Set icon and button style based on type
+        iconEl.className = `confirm-modal-icon ${type}`;
+        btnEl.className = `confirm-modal-btn ${type === 'danger' ? 'danger' : 'confirm'}`;
+
+        const icons = {
+            warning: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+            danger: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+            info: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+        };
+        iconEl.innerHTML = icons[type] || icons.warning;
+
+        confirmCallback = onConfirm;
+        modal.classList.add('active');
+    }
+
+    function closeConfirmModal() {
+        document.getElementById('confirmModal').classList.remove('active');
+        confirmCallback = null;
+    }
+
+    function executeConfirm() {
+        if (confirmCallback) {
+            confirmCallback();
+        }
+        closeConfirmModal();
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeConfirmModal();
+        }
+    });
+
+    // ==================== SESSION TIMEOUT SYSTEM ====================
+
+    const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+    const WARNING_TIME = 60 * 1000; // Show warning 60 seconds before timeout
+    let sessionTimer = null;
+    let warningTimer = null;
+    let countdownInterval = null;
+
+    function resetSessionTimer() {
+        // Clear existing timers
+        if (sessionTimer) clearTimeout(sessionTimer);
+        if (warningTimer) clearTimeout(warningTimer);
+        if (countdownInterval) clearInterval(countdownInterval);
+
+        // Hide warning if showing
+        document.getElementById('sessionWarning').classList.remove('active');
+
+        // Set new timers
+        warningTimer = setTimeout(showSessionWarning, SESSION_TIMEOUT - WARNING_TIME);
+        sessionTimer = setTimeout(logoutDueToInactivity, SESSION_TIMEOUT);
+    }
+
+    function showSessionWarning() {
+        const warningEl = document.getElementById('sessionWarning');
+        const timerEl = document.getElementById('sessionTimer');
+        let seconds = 60;
+
+        warningEl.classList.add('active');
+        timerEl.textContent = seconds;
+
+        countdownInterval = setInterval(() => {
+            seconds--;
+            timerEl.textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(countdownInterval);
+            }
+        }, 1000);
+    }
+
+    function logoutDueToInactivity() {
+        showToast('You have been logged out due to inactivity.', 'warning', 'Session Expired');
+        setTimeout(() => {
+            if (typeof auth !== 'undefined') {
+                auth.signOut().then(() => {
+                    window.location.href = 'auth.html';
+                });
+            }
+        }, 2000);
+    }
+
+    // Reset timer on user activity
+    ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'].forEach(event => {
+        document.addEventListener(event, () => {
+            if (currentUser) resetSessionTimer();
+        }, { passive: true });
+    });
+
+    // ==================== SCORE EXPLANATION HELPERS ====================
+
+    const scoreExplanations = {
+        isi: {
+            name: 'Insomnia Severity Index (ISI)',
+            description: 'Measures the severity and impact of insomnia symptoms over the past 2 weeks.',
+            scale: [
+                { range: '0-7', label: 'No clinically significant insomnia', color: '#2e7d32' },
+                { range: '8-14', label: 'Subthreshold insomnia', color: '#8bc34a' },
+                { range: '15-21', label: 'Clinical insomnia (moderate)', color: '#ff9800' },
+                { range: '22-28', label: 'Clinical insomnia (severe)', color: '#c62828' }
+            ]
+        },
+        ess: {
+            name: 'Epworth Sleepiness Scale (ESS)',
+            description: 'Measures daytime sleepiness and likelihood of dozing in common situations.',
+            scale: [
+                { range: '0-5', label: 'Lower normal daytime sleepiness', color: '#2e7d32' },
+                { range: '6-10', label: 'Higher normal daytime sleepiness', color: '#8bc34a' },
+                { range: '11-12', label: 'Mild excessive daytime sleepiness', color: '#ff9800' },
+                { range: '13-15', label: 'Moderate excessive sleepiness', color: '#f57c00' },
+                { range: '16-24', label: 'Severe excessive sleepiness', color: '#c62828' }
+            ]
+        },
+        psqi: {
+            name: 'Pittsburgh Sleep Quality Index (PSQI)',
+            description: 'Measures sleep quality and disturbances over the past month.',
+            scale: [
+                { range: '0-5', label: 'Good sleep quality', color: '#2e7d32' },
+                { range: '6-10', label: 'Poor sleep quality', color: '#ff9800' },
+                { range: '11-21', label: 'Very poor sleep quality', color: '#c62828' }
+            ]
+        },
+        'stop-bang': {
+            name: 'STOP-BANG Questionnaire',
+            description: 'Screens for obstructive sleep apnea risk.',
+            scale: [
+                { range: '0-2', label: 'Low risk of sleep apnea', color: '#2e7d32' },
+                { range: '3-4', label: 'Intermediate risk', color: '#ff9800' },
+                { range: '5-8', label: 'High risk - evaluation recommended', color: '#c62828' }
+            ]
+        }
+    };
+
+    function getScoreExplanation(type, score) {
+        const info = scoreExplanations[type.toLowerCase()];
+        if (!info) return null;
+
+        let interpretation = null;
+        for (const level of info.scale) {
+            const [min, max] = level.range.split('-').map(Number);
+            if (score >= min && score <= max) {
+                interpretation = level;
+                break;
+            }
+        }
+
+        return { ...info, interpretation };
+    }
+
+    function createScoreHelpIcon(type) {
+        const info = scoreExplanations[type.toLowerCase()];
+        if (!info) return '';
+
+        const scaleHTML = info.scale.map(s =>
+            '<div><span style="color:' + s.color + '">' + s.range + '</span><span>' + s.label + '</span></div>'
+        ).join('');
+
+        return '<span class="score-help">?' +
+            '<div class="score-tooltip">' +
+                '<div class="score-tooltip-title">' + info.name + '</div>' +
+                '<div>' + info.description + '</div>' +
+                '<div class="score-tooltip-scale">' + scaleHTML + '</div>' +
+            '</div>' +
+        '</span>';
+    }
+
+    // ==================== MAIN APPLICATION VARIABLES ====================
+
     let currentUser = null;
     let userProfile = null;
     let conversationId = null;
@@ -6130,7 +6739,7 @@
 
         // Validate required fields
         if (!lightsOut || !finalWake) {
-            alert('Please select when you tried to sleep and your final wake time.');
+            showToast('Please select when you tried to sleep and your final wake time.', 'warning', 'Missing Information');
             return;
         }
 
@@ -6923,10 +7532,10 @@
             await db.collection('eveningCheckins').add(checkin);
             showCheckinSummary(checkin);
             generateEveningTips(checkin);
-            alert('Evening check-in saved! Check below for personalized tips.');
+            showToast('Check below for your personalized sleep tips!', 'success', 'Check-in Saved');
         } catch (error) {
             console.error('Error saving checkin:', error);
-            alert('Error saving check-in. Please try again.');
+            showToast('Unable to save check-in. Please check your connection and try again.', 'error', 'Save Failed');
         }
     }
 
@@ -7543,9 +8152,9 @@
 
     function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(() => {
-            alert('Results copied to clipboard!');
+            showToast('Results copied to clipboard!', 'success');
         }).catch(() => {
-            alert('Score: ' + quizState.score + '/' + quizState.shuffledQuestions.length);
+            showToast('Your score: ' + quizState.score + '/' + quizState.shuffledQuestions.length, 'info', 'Quiz Complete');
         });
     }
 
@@ -7624,7 +8233,7 @@
             userName: userProfile.displayName || currentUser.email
         });
 
-        alert('Appointment request submitted! You will be notified once confirmed.');
+        showToast('You will receive a notification once Dr. Alen confirms your appointment.', 'success', 'Request Submitted');
         document.getElementById('appointmentForm').reset();
         loadAppointments();
     }
@@ -7808,11 +8417,11 @@
         try {
             await FirebaseDB.requestModuleAccess(currentUser.uid, moduleId, moduleName, reason);
             closeRequestModal();
-            alert('Request sent! Dr. Alen will review your request.');
+            showToast('Dr. Alen will review your request and respond soon.', 'success', 'Request Sent');
             loadModules(); // Refresh to show pending status
         } catch (error) {
             console.error('Error submitting request:', error);
-            alert('Error sending request. Please try again.');
+            showToast('Unable to send request. Please check your connection and try again.', 'error', 'Request Failed');
         } finally {
             btn.disabled = false;
             btn.textContent = 'Send Request';
@@ -8428,11 +9037,11 @@
             closeDischargeModal();
 
             // Show thank you message
-            alert('Thank you for your feedback! We appreciate you taking the time to help us improve.');
+            showToast('We appreciate you taking the time to help us improve!', 'success', 'Feedback Received');
 
         } catch (error) {
             console.error('Error submitting survey:', error);
-            alert('There was an error submitting your feedback. Please try again.');
+            showToast('Unable to submit feedback. Please try again later.', 'error', 'Submission Failed');
         } finally {
             btn.disabled = false;
             btn.textContent = 'Submit Feedback';
@@ -8706,7 +9315,7 @@
             clientType
         });
 
-        alert('Profile updated!');
+        showToast('Your profile has been updated successfully.', 'success', 'Profile Updated');
     }
 
     // Utility: format time ago
@@ -8798,7 +9407,7 @@
     // Show checkout wizard
     function showCheckoutWizard() {
         if (!currentGuestStay) {
-            alert('No active stay found.');
+            showToast('No active hotel stay found. Please contact the front desk.', 'warning', 'Stay Not Found');
             return;
         }
 
@@ -8963,7 +9572,7 @@
             // Validate and collect ISI
             const isiScore = collectISIScore();
             if (isiScore === null) {
-                alert('Please answer all questions before continuing.');
+                showToast('Please answer all questions before continuing.', 'warning', 'Incomplete');
                 return;
             }
             postStayISI = isiScore;
@@ -8975,7 +9584,7 @@
             // Validate and collect ESS
             const essScore = collectESSScore();
             if (essScore === null) {
-                alert('Please answer all questions before continuing.');
+                showToast('Please answer all questions before continuing.', 'warning', 'Incomplete');
                 return;
             }
             postStayESS = essScore;
@@ -8987,7 +9596,7 @@
             const rating = parseInt(document.getElementById('feedback-rating').value);
 
             if (!rating) {
-                alert('Please provide a rating.');
+                showToast('Please provide a rating before continuing.', 'warning', 'Rating Required');
                 return;
             }
 
@@ -9089,7 +9698,7 @@
 
         } catch (error) {
             console.error('Error completing checkout:', error);
-            alert('Error completing checkout. Please try again.');
+            showToast('Unable to complete checkout. Please try again or contact support.', 'error', 'Checkout Failed');
         }
     }
 
@@ -9278,6 +9887,9 @@
 
         // Load notifications
         loadUserNotifications(user.uid);
+
+        // Start session timeout timer
+        resetSessionTimer();
 
         // Load profile form
         if (profile) {
