@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Connectivity Test | Sleep Wellness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #0f1c2e; margin-bottom: 10px; }
+        .subtitle { color: #666; margin-bottom: 30px; }
+
+        .test-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .test-grid { grid-template-columns: 1fr; } }
+
+        .test-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .test-card h2 {
+            font-size: 16px;
+            color: #0f1c2e;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #C9A962;
+        }
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .test-item:last-child { border-bottom: none; }
+        .test-name { font-size: 13px; color: #333; flex: 1; }
+        .test-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .status-pending { background: #fff3e0; color: #ef6c00; }
+        .status-testing { background: #e3f2fd; color: #1976d2; }
+        .status-pass { background: #e8f5e9; color: #2e7d32; }
+        .status-fail { background: #ffebee; color: #c62828; }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .btn-primary { background: #C9A962; color: #0f1c2e; }
+        .btn-secondary { background: #0f1c2e; color: white; }
+        .btn-danger { background: #c62828; color: white; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .log-container {
+            background: #1a1a1a;
+            color: #00ff00;
+            font-family: monospace;
+            padding: 15px;
+            border-radius: 8px;
+            height: 300px;
+            overflow-y: auto;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        .log-entry { margin-bottom: 5px; }
+        .log-info { color: #00bcd4; }
+        .log-success { color: #4caf50; }
+        .log-error { color: #f44336; }
+        .log-warning { color: #ff9800; }
+
+        .auth-status {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .auth-logged-in { background: #e8f5e9; border: 1px solid #4caf50; }
+        .auth-logged-out { background: #ffebee; border: 1px solid #f44336; }
+
+        .test-user-info {
+            background: #fff8e1;
+            border: 1px solid #C9A962;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .test-user-info p { font-size: 13px; margin-bottom: 5px; }
+        .test-user-info strong { color: #0f1c2e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sleep Wellness Portal - Connectivity Test</h1>
+        <p class="subtitle">Testing admin-to-user and user-to-admin data flows</p>
+
+        <div id="auth-status" class="auth-status auth-logged-out">
+            <strong>Authentication:</strong> <span id="auth-text">Checking...</span>
+        </div>
+
+        <div id="test-user-info" class="test-user-info" style="display: none;">
+            <p><strong>Test User Created:</strong></p>
+            <p>Email: <span id="test-user-email">-</span></p>
+            <p>UID: <span id="test-user-uid">-</span></p>
+            <p>Role: <span id="test-user-role">-</span></p>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <button class="btn btn-primary" onclick="runAllTests()" id="run-all-btn" disabled>Run All Tests</button>
+            <button class="btn btn-secondary" onclick="createTestUser()" id="create-user-btn">Create Test User</button>
+            <button class="btn btn-danger" onclick="cleanupTestData()" id="cleanup-btn">Cleanup Test Data</button>
+        </div>
+
+        <div class="test-grid">
+            <!-- Admin to User Tests -->
+            <div class="test-card">
+                <h2>Admin → User Tests</h2>
+                <div class="test-item">
+                    <span class="test-name">Questionnaire Assignment</span>
+                    <span class="test-status status-pending" id="test-questionnaire">Pending</span>
+                </div>
+                <div class="test-item">
+                    <span class="test-name">Module Unlock</span>
+                    <span class="test-status status-pending" id="test-module">Pending</span>
+                </div>
+                <div class="test-item">
+                    <span class="test-name">Task Assignment</span>
+                    <span class="test-status status-pending" id="test-task">Pending</span>
+                </div>
+                <div class="test-item">
+                    <span class="test-name">Notification Creation</span>
+                    <span class="test-status status-pending" id="test-notification">Pending</span>
+                </div>
+                <div class="test-item">
+                    <span class="test-name">Message Send (Admin→User)</span>
+                    <span class="test-status status-pending" id="test-message-admin">Pending</span>
+                </div>
+            </div>
+
+            <!-- User to Admin Tests -->
+            <div class="test-card">
+                <h2>User → Admin Tests</h2>
+                <div class="test-item">
+                    <span class="test-name">Assessment Submission</span>
+                    <span class="test-status status-pending" id="test-assessment">Pending</span>
+                </div>
+                <div class="test-item">
+                    <span class="test-name">Diary Entry</span>
+                    <span class="test-status status-pending" id="test-diary">Pending</span>
+                </div>
+                <div class="test-item">
+                    <span class="test-name">Module Request</span>
+                    <span class="test-status status-pending" id="test-module-request">Pending</span>
+                </div>
+                <div class="test-item">
+                    <span class="test-name">Task Completion</span>
+                    <span class="test-status status-pending" id="test-task-complete">Pending</span>
+                </div>
+                <div class="test-item">
+                    <span class="test-name">Message Send (User→Admin)</span>
+                    <span class="test-status status-pending" id="test-message-user">Pending</span>
+                </div>
+            </div>
+
+            <!-- Hotel Guest Tests -->
+            <div class="test-card">
+                <h2>Hotel Guest Flow</h2>
+                <div class="test-item">
+                    <span class="test-name">Guest Stay Creation</span>
+                    <span class="test-status status-pending" id="test-guest-stay">Pending</span>
+                </div>
+                <div class="test-item">
+                    <span class="test-name">Baseline Assessment</span>
+                    <span class="test-status status-pending" id="test-baseline">Pending</span>
+                </div>
+                <div class="test-item">
+                    <span class="test-name">Guest Checkout</span>
+                    <span class="test-status status-pending" id="test-checkout">Pending</span>
+                </div>
+                <div class="test-item">
+                    <span class="test-name">Admin Sees Guest Data</span>
+                    <span class="test-status status-pending" id="test-admin-guest">Pending</span>
+                </div>
+            </div>
+
+            <!-- Data Retrieval Tests -->
+            <div class="test-card">
+                <h2>Data Retrieval Tests</h2>
+                <div class="test-item">
+                    <span class="test-name">User Sees Assigned Questionnaires</span>
+                    <span class="test-status status-pending" id="test-user-questionnaires">Pending</span>
+                </div>
+                <div class="test-item">
+                    <span class="test-name">User Sees Unlocked Modules</span>
+                    <span class="test-status status-pending" id="test-user-modules">Pending</span>
+                </div>
+                <div class="test-item">
+                    <span class="test-name">User Sees Tasks</span>
+                    <span class="test-status status-pending" id="test-user-tasks">Pending</span>
+                </div>
+                <div class="test-item">
+                    <span class="test-name">Admin Sees User Data</span>
+                    <span class="test-status status-pending" id="test-admin-data">Pending</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="log-container" id="log-container">
+            <div class="log-entry log-info">[System] Connectivity test initialized...</div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <script>
+        // Test data storage
+        let testUserId = null;
+        let testUserEmail = 'test-user-' + Date.now() + '@sleepwellness-test.com';
+        let testConversationId = null;
+        let testAssignmentId = null;
+        let testTaskId = null;
+        let testGuestStayId = null;
+        let currentUser = null;
+        let isAdmin = false;
+
+        const ADMIN_UID = 'iHDuOEJXsQe7dL5C4QwA3fLX9zi2';
+
+        // Logging
+        function log(message, type = 'info') {
+            const container = document.getElementById('log-container');
+            const time = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${time}] ${message}`;
+            container.appendChild(entry);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Update test status
+        function setStatus(testId, status, text) {
+            const el = document.getElementById(testId);
+            el.className = `test-status status-${status}`;
+            el.textContent = text || status.charAt(0).toUpperCase() + status.slice(1);
+        }
+
+        // Auth state
+        auth.onAuthStateChanged(async (user) => {
+            const statusEl = document.getElementById('auth-status');
+            const textEl = document.getElementById('auth-text');
+
+            if (user) {
+                currentUser = user;
+                const profile = await FirebaseDB.getUserProfile(user.uid);
+                isAdmin = profile && profile.role === 'admin';
+
+                statusEl.className = 'auth-status auth-logged-in';
+                textEl.textContent = `Logged in as ${user.email} (${isAdmin ? 'Admin' : 'User'})`;
+
+                document.getElementById('run-all-btn').disabled = false;
+                log(`Authenticated as ${user.email}`, 'success');
+
+                if (isAdmin) {
+                    log('Admin privileges detected - can run full test suite', 'info');
+                }
+            } else {
+                statusEl.className = 'auth-status auth-logged-out';
+                textEl.textContent = 'Not logged in - please log in as admin first';
+                document.getElementById('run-all-btn').disabled = true;
+                log('Not authenticated - please log in', 'warning');
+            }
+        });
+
+        // Create test user (simulated - creates user document)
+        async function createTestUser() {
+            if (!currentUser || !isAdmin) {
+                log('Must be logged in as admin to create test user', 'error');
+                return;
+            }
+
+            try {
+                log('Creating test user document...', 'info');
+
+                testUserId = 'test-user-' + Date.now();
+
+                await db.collection('users').doc(testUserId).set({
+                    email: testUserEmail,
+                    displayName: 'Test User (Connectivity)',
+                    role: 'client',
+                    clientType: 'individual',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    phone: '555-TEST-USER',
+                    testUser: true
+                });
+
+                document.getElementById('test-user-info').style.display = 'block';
+                document.getElementById('test-user-email').textContent = testUserEmail;
+                document.getElementById('test-user-uid').textContent = testUserId;
+                document.getElementById('test-user-role').textContent = 'client';
+
+                log(`Test user created: ${testUserId}`, 'success');
+
+            } catch (error) {
+                log(`Error creating test user: ${error.message}`, 'error');
+            }
+        }
+
+        // Run all tests
+        async function runAllTests() {
+            if (!testUserId) {
+                log('Please create a test user first', 'warning');
+                await createTestUser();
+            }
+
+            log('=== Starting Full Test Suite ===', 'info');
+
+            // Admin → User Tests
+            await testQuestionnaireAssignment();
+            await testModuleUnlock();
+            await testTaskAssignment();
+            await testNotificationCreation();
+            await testMessageAdminToUser();
+
+            // User → Admin Tests (simulated as admin)
+            await testAssessmentSubmission();
+            await testDiaryEntry();
+            await testModuleRequest();
+            await testTaskCompletion();
+            await testMessageUserToAdmin();
+
+            // Hotel Guest Flow
+            await testGuestStayCreation();
+            await testBaselineAssessment();
+            await testGuestCheckout();
+            await testAdminSeesGuestData();
+
+            // Data Retrieval
+            await testUserSeesQuestionnaires();
+            await testUserSeesModules();
+            await testUserSeesTasks();
+            await testAdminSeesUserData();
+
+            log('=== Test Suite Complete ===', 'success');
+        }
+
+        // =====================
+        // ADMIN → USER TESTS
+        // =====================
+
+        async function testQuestionnaireAssignment() {
+            setStatus('test-questionnaire', 'testing', 'Testing...');
+            try {
+                log('Testing questionnaire assignment...', 'info');
+
+                const assignmentData = {
+                    userId: testUserId,
+                    instrumentId: 'isi',
+                    instrumentName: 'Insomnia Severity Index',
+                    dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+                    notes: 'Test assignment',
+                    status: 'pending',
+                    assignedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    assignedBy: currentUser.uid
+                };
+
+                const docRef = await db.collection('questionnaireAssignments').add(assignmentData);
+                testAssignmentId = docRef.id;
+
+                // Verify it was created
+                const doc = await docRef.get();
+                if (doc.exists && doc.data().userId === testUserId) {
+                    setStatus('test-questionnaire', 'pass', 'Pass');
+                    log(`Questionnaire assigned: ${testAssignmentId}`, 'success');
+                } else {
+                    throw new Error('Assignment not found after creation');
+                }
+            } catch (error) {
+                setStatus('test-questionnaire', 'fail', 'Fail');
+                log(`Questionnaire assignment failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testModuleUnlock() {
+            setStatus('test-module', 'testing', 'Testing...');
+            try {
+                log('Testing module unlock...', 'info');
+
+                const unlockData = {
+                    userId: testUserId,
+                    modules: ['breathing-478', 'pmr'],
+                    grantedBy: currentUser.uid,
+                    notes: 'Test unlock',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                const docRef = await db.collection('unlocks').add(unlockData);
+
+                const doc = await docRef.get();
+                if (doc.exists && doc.data().modules.includes('breathing-478')) {
+                    setStatus('test-module', 'pass', 'Pass');
+                    log(`Modules unlocked: ${docRef.id}`, 'success');
+                } else {
+                    throw new Error('Unlock not found after creation');
+                }
+            } catch (error) {
+                setStatus('test-module', 'fail', 'Fail');
+                log(`Module unlock failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testTaskAssignment() {
+            setStatus('test-task', 'testing', 'Testing...');
+            try {
+                log('Testing task assignment...', 'info');
+
+                const taskData = {
+                    clientId: testUserId,
+                    title: 'Complete Sleep Diary',
+                    description: 'Test task for connectivity verification',
+                    taskType: 'sleep_log',
+                    priority: 'medium',
+                    dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                    status: 'pending',
+                    createdBy: currentUser.uid,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                const docRef = await db.collection('clientTasks').add(taskData);
+                testTaskId = docRef.id;
+
+                const doc = await docRef.get();
+                if (doc.exists && doc.data().clientId === testUserId) {
+                    setStatus('test-task', 'pass', 'Pass');
+                    log(`Task assigned: ${testTaskId}`, 'success');
+                } else {
+                    throw new Error('Task not found after creation');
+                }
+            } catch (error) {
+                setStatus('test-task', 'fail', 'Fail');
+                log(`Task assignment failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testNotificationCreation() {
+            setStatus('test-notification', 'testing', 'Testing...');
+            try {
+                log('Testing notification creation...', 'info');
+
+                const notifData = {
+                    userId: testUserId,
+                    type: 'task_assigned',
+                    title: 'New Task Assigned',
+                    message: 'You have a new task to complete',
+                    data: { taskId: testTaskId },
+                    read: false,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                const docRef = await db.collection('notifications').add(notifData);
+
+                const doc = await docRef.get();
+                if (doc.exists && doc.data().userId === testUserId) {
+                    setStatus('test-notification', 'pass', 'Pass');
+                    log(`Notification created: ${docRef.id}`, 'success');
+                } else {
+                    throw new Error('Notification not found after creation');
+                }
+            } catch (error) {
+                setStatus('test-notification', 'fail', 'Fail');
+                log(`Notification creation failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testMessageAdminToUser() {
+            setStatus('test-message-admin', 'testing', 'Testing...');
+            try {
+                log('Testing admin→user messaging...', 'info');
+
+                // Create conversation
+                const convData = {
+                    participants: [currentUser.uid, testUserId],
+                    lastMessageAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                const convRef = await db.collection('conversations').add(convData);
+                testConversationId = convRef.id;
+
+                // Send message
+                const msgData = {
+                    text: 'Test message from admin',
+                    senderId: currentUser.uid,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                await db.collection('conversations').doc(testConversationId)
+                    .collection('messages').add(msgData);
+
+                // Verify
+                const messages = await db.collection('conversations').doc(testConversationId)
+                    .collection('messages').get();
+
+                if (!messages.empty) {
+                    setStatus('test-message-admin', 'pass', 'Pass');
+                    log(`Message sent in conversation: ${testConversationId}`, 'success');
+                } else {
+                    throw new Error('Message not found');
+                }
+            } catch (error) {
+                setStatus('test-message-admin', 'fail', 'Fail');
+                log(`Admin→User message failed: ${error.message}`, 'error');
+            }
+        }
+
+        // =====================
+        // USER → ADMIN TESTS
+        // =====================
+
+        async function testAssessmentSubmission() {
+            setStatus('test-assessment', 'testing', 'Testing...');
+            try {
+                log('Testing assessment submission...', 'info');
+
+                const assessmentData = {
+                    userId: testUserId,
+                    type: 'isi',
+                    score: 14,
+                    maxScore: 28,
+                    severity: 'moderate',
+                    answers: [2, 2, 2, 2, 2, 2, 2],
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                const docRef = await db.collection('assessments').add(assessmentData);
+
+                const doc = await docRef.get();
+                if (doc.exists && doc.data().userId === testUserId) {
+                    setStatus('test-assessment', 'pass', 'Pass');
+                    log(`Assessment submitted: ${docRef.id}`, 'success');
+                } else {
+                    throw new Error('Assessment not found');
+                }
+            } catch (error) {
+                setStatus('test-assessment', 'fail', 'Fail');
+                log(`Assessment submission failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testDiaryEntry() {
+            setStatus('test-diary', 'testing', 'Testing...');
+            try {
+                log('Testing diary entry...', 'info');
+
+                const diaryData = {
+                    userId: testUserId,
+                    date: new Date().toISOString().split('T')[0],
+                    bedtime: '22:30',
+                    lightsOut: '23:00',
+                    latency: 20,
+                    awakenings: 2,
+                    waso: 30,
+                    finalWake: '06:30',
+                    outOfBed: '07:00',
+                    totalSleep: 6.5,
+                    efficiency: 81,
+                    quality: 7,
+                    mood: 6,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                const docRef = await db.collection('diaryEntries').add(diaryData);
+
+                const doc = await docRef.get();
+                if (doc.exists && doc.data().userId === testUserId) {
+                    setStatus('test-diary', 'pass', 'Pass');
+                    log(`Diary entry created: ${docRef.id}`, 'success');
+                } else {
+                    throw new Error('Diary entry not found');
+                }
+            } catch (error) {
+                setStatus('test-diary', 'fail', 'Fail');
+                log(`Diary entry failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testModuleRequest() {
+            setStatus('test-module-request', 'testing', 'Testing...');
+            try {
+                log('Testing module request...', 'info');
+
+                const requestData = {
+                    userId: testUserId,
+                    moduleId: 'cbti-restriction',
+                    moduleName: 'Sleep Restriction Therapy',
+                    reason: 'Test request for connectivity verification',
+                    status: 'pending',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                const docRef = await db.collection('moduleRequests').add(requestData);
+
+                const doc = await docRef.get();
+                if (doc.exists && doc.data().userId === testUserId) {
+                    setStatus('test-module-request', 'pass', 'Pass');
+                    log(`Module request created: ${docRef.id}`, 'success');
+                } else {
+                    throw new Error('Module request not found');
+                }
+            } catch (error) {
+                setStatus('test-module-request', 'fail', 'Fail');
+                log(`Module request failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testTaskCompletion() {
+            setStatus('test-task-complete', 'testing', 'Testing...');
+            try {
+                log('Testing task completion...', 'info');
+
+                if (!testTaskId) {
+                    throw new Error('No task to complete - run task assignment first');
+                }
+
+                await db.collection('clientTasks').doc(testTaskId).update({
+                    status: 'completed',
+                    completedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                const doc = await db.collection('clientTasks').doc(testTaskId).get();
+                if (doc.exists && doc.data().status === 'completed') {
+                    setStatus('test-task-complete', 'pass', 'Pass');
+                    log(`Task completed: ${testTaskId}`, 'success');
+                } else {
+                    throw new Error('Task not marked complete');
+                }
+            } catch (error) {
+                setStatus('test-task-complete', 'fail', 'Fail');
+                log(`Task completion failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testMessageUserToAdmin() {
+            setStatus('test-message-user', 'testing', 'Testing...');
+            try {
+                log('Testing user→admin messaging...', 'info');
+
+                if (!testConversationId) {
+                    throw new Error('No conversation - run admin message test first');
+                }
+
+                const msgData = {
+                    text: 'Test reply from user',
+                    senderId: testUserId,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                await db.collection('conversations').doc(testConversationId)
+                    .collection('messages').add(msgData);
+
+                // Verify
+                const messages = await db.collection('conversations').doc(testConversationId)
+                    .collection('messages').orderBy('createdAt', 'desc').limit(1).get();
+
+                if (!messages.empty && messages.docs[0].data().senderId === testUserId) {
+                    setStatus('test-message-user', 'pass', 'Pass');
+                    log('User message sent successfully', 'success');
+                } else {
+                    throw new Error('User message not found');
+                }
+            } catch (error) {
+                setStatus('test-message-user', 'fail', 'Fail');
+                log(`User→Admin message failed: ${error.message}`, 'error');
+            }
+        }
+
+        // =====================
+        // HOTEL GUEST FLOW
+        // =====================
+
+        async function testGuestStayCreation() {
+            setStatus('test-guest-stay', 'testing', 'Testing...');
+            try {
+                log('Testing guest stay creation...', 'info');
+
+                const stayData = {
+                    guestUserId: testUserId,
+                    hotelPartnerId: 'test-hotel',
+                    checkInDate: new Date(),
+                    checkoutDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                    roomNumber: 'Test 101',
+                    stayStatus: 'active',
+                    baselineAssessments: {},
+                    postStayAssessments: {},
+                    engagement: { chatSessions: 0, diaryEntries: 0, interventions: [] },
+                    guestFeedback: null,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                const docRef = await db.collection('guestStays').add(stayData);
+                testGuestStayId = docRef.id;
+
+                const doc = await docRef.get();
+                if (doc.exists && doc.data().guestUserId === testUserId) {
+                    setStatus('test-guest-stay', 'pass', 'Pass');
+                    log(`Guest stay created: ${testGuestStayId}`, 'success');
+                } else {
+                    throw new Error('Guest stay not found');
+                }
+            } catch (error) {
+                setStatus('test-guest-stay', 'fail', 'Fail');
+                log(`Guest stay creation failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testBaselineAssessment() {
+            setStatus('test-baseline', 'testing', 'Testing...');
+            try {
+                log('Testing baseline assessment...', 'info');
+
+                if (!testGuestStayId) {
+                    throw new Error('No guest stay - run guest stay creation first');
+                }
+
+                await db.collection('guestStays').doc(testGuestStayId).update({
+                    'baselineAssessments.isi': 18,
+                    'baselineAssessments.ess': 12
+                });
+
+                const doc = await db.collection('guestStays').doc(testGuestStayId).get();
+                if (doc.exists && doc.data().baselineAssessments.isi === 18) {
+                    setStatus('test-baseline', 'pass', 'Pass');
+                    log('Baseline assessments recorded', 'success');
+                } else {
+                    throw new Error('Baseline not updated');
+                }
+            } catch (error) {
+                setStatus('test-baseline', 'fail', 'Fail');
+                log(`Baseline assessment failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testGuestCheckout() {
+            setStatus('test-checkout', 'testing', 'Testing...');
+            try {
+                log('Testing guest checkout...', 'info');
+
+                if (!testGuestStayId) {
+                    throw new Error('No guest stay');
+                }
+
+                await db.collection('guestStays').doc(testGuestStayId).update({
+                    stayStatus: 'checked-out',
+                    actualCheckoutDate: firebase.firestore.FieldValue.serverTimestamp(),
+                    'postStayAssessments.isi': 10,
+                    'postStayAssessments.ess': 8,
+                    guestFeedback: {
+                        rating: 5,
+                        wouldRecommend: true,
+                        mostHelpful: 'personalized-schedule',
+                        comments: 'Great test experience!'
+                    }
+                });
+
+                const doc = await db.collection('guestStays').doc(testGuestStayId).get();
+                if (doc.exists && doc.data().stayStatus === 'checked-out') {
+                    setStatus('test-checkout', 'pass', 'Pass');
+                    log('Guest checkout completed', 'success');
+                } else {
+                    throw new Error('Checkout not processed');
+                }
+            } catch (error) {
+                setStatus('test-checkout', 'fail', 'Fail');
+                log(`Guest checkout failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testAdminSeesGuestData() {
+            setStatus('test-admin-guest', 'testing', 'Testing...');
+            try {
+                log('Testing admin can see guest data...', 'info');
+
+                // Query as admin would
+                const stays = await db.collection('guestStays')
+                    .where('guestUserId', '==', testUserId)
+                    .get();
+
+                if (!stays.empty) {
+                    const stay = stays.docs[0].data();
+                    if (stay.guestFeedback && stay.postStayAssessments) {
+                        setStatus('test-admin-guest', 'pass', 'Pass');
+                        log('Admin can see all guest data', 'success');
+                    } else {
+                        throw new Error('Guest data incomplete');
+                    }
+                } else {
+                    throw new Error('No guest stays found');
+                }
+            } catch (error) {
+                setStatus('test-admin-guest', 'fail', 'Fail');
+                log(`Admin guest data access failed: ${error.message}`, 'error');
+            }
+        }
+
+        // =====================
+        // DATA RETRIEVAL TESTS
+        // =====================
+
+        async function testUserSeesQuestionnaires() {
+            setStatus('test-user-questionnaires', 'testing', 'Testing...');
+            try {
+                log('Testing user can see assigned questionnaires...', 'info');
+
+                const assignments = await db.collection('questionnaireAssignments')
+                    .where('userId', '==', testUserId)
+                    .get();
+
+                if (!assignments.empty) {
+                    setStatus('test-user-questionnaires', 'pass', 'Pass');
+                    log(`User has ${assignments.size} assigned questionnaire(s)`, 'success');
+                } else {
+                    throw new Error('No questionnaires found for user');
+                }
+            } catch (error) {
+                setStatus('test-user-questionnaires', 'fail', 'Fail');
+                log(`User questionnaire retrieval failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testUserSeesModules() {
+            setStatus('test-user-modules', 'testing', 'Testing...');
+            try {
+                log('Testing user can see unlocked modules...', 'info');
+
+                const unlocks = await db.collection('unlocks')
+                    .where('userId', '==', testUserId)
+                    .get();
+
+                if (!unlocks.empty) {
+                    const modules = unlocks.docs[0].data().modules;
+                    setStatus('test-user-modules', 'pass', 'Pass');
+                    log(`User has ${modules.length} unlocked module(s): ${modules.join(', ')}`, 'success');
+                } else {
+                    throw new Error('No unlocks found for user');
+                }
+            } catch (error) {
+                setStatus('test-user-modules', 'fail', 'Fail');
+                log(`User module retrieval failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testUserSeesTasks() {
+            setStatus('test-user-tasks', 'testing', 'Testing...');
+            try {
+                log('Testing user can see assigned tasks...', 'info');
+
+                const tasks = await db.collection('clientTasks')
+                    .where('clientId', '==', testUserId)
+                    .get();
+
+                if (!tasks.empty) {
+                    setStatus('test-user-tasks', 'pass', 'Pass');
+                    log(`User has ${tasks.size} task(s)`, 'success');
+                } else {
+                    throw new Error('No tasks found for user');
+                }
+            } catch (error) {
+                setStatus('test-user-tasks', 'fail', 'Fail');
+                log(`User task retrieval failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testAdminSeesUserData() {
+            setStatus('test-admin-data', 'testing', 'Testing...');
+            try {
+                log('Testing admin can see all user data...', 'info');
+
+                // Test various queries admin would make
+                const assessments = await db.collection('assessments')
+                    .where('userId', '==', testUserId).get();
+                const diaries = await db.collection('diaryEntries')
+                    .where('userId', '==', testUserId).get();
+                const requests = await db.collection('moduleRequests')
+                    .where('userId', '==', testUserId).get();
+
+                const total = assessments.size + diaries.size + requests.size;
+
+                if (total > 0) {
+                    setStatus('test-admin-data', 'pass', 'Pass');
+                    log(`Admin can see: ${assessments.size} assessments, ${diaries.size} diary entries, ${requests.size} requests`, 'success');
+                } else {
+                    throw new Error('No user data accessible');
+                }
+            } catch (error) {
+                setStatus('test-admin-data', 'fail', 'Fail');
+                log(`Admin data access failed: ${error.message}`, 'error');
+            }
+        }
+
+        // =====================
+        // CLEANUP
+        // =====================
+
+        async function cleanupTestData() {
+            log('Cleaning up test data...', 'info');
+
+            try {
+                // Delete test user document
+                if (testUserId) {
+                    await db.collection('users').doc(testUserId).delete();
+                    log('Deleted test user', 'info');
+                }
+
+                // Delete questionnaire assignments
+                const assignments = await db.collection('questionnaireAssignments')
+                    .where('userId', '==', testUserId).get();
+                for (const doc of assignments.docs) {
+                    await doc.ref.delete();
+                }
+                log(`Deleted ${assignments.size} questionnaire assignments`, 'info');
+
+                // Delete unlocks
+                const unlocks = await db.collection('unlocks')
+                    .where('userId', '==', testUserId).get();
+                for (const doc of unlocks.docs) {
+                    await doc.ref.delete();
+                }
+                log(`Deleted ${unlocks.size} unlocks`, 'info');
+
+                // Delete tasks
+                const tasks = await db.collection('clientTasks')
+                    .where('clientId', '==', testUserId).get();
+                for (const doc of tasks.docs) {
+                    await doc.ref.delete();
+                }
+                log(`Deleted ${tasks.size} tasks`, 'info');
+
+                // Delete notifications
+                const notifs = await db.collection('notifications')
+                    .where('userId', '==', testUserId).get();
+                for (const doc of notifs.docs) {
+                    await doc.ref.delete();
+                }
+                log(`Deleted ${notifs.size} notifications`, 'info');
+
+                // Delete assessments
+                const assessments = await db.collection('assessments')
+                    .where('userId', '==', testUserId).get();
+                for (const doc of assessments.docs) {
+                    await doc.ref.delete();
+                }
+                log(`Deleted ${assessments.size} assessments`, 'info');
+
+                // Delete diary entries
+                const diaries = await db.collection('diaryEntries')
+                    .where('userId', '==', testUserId).get();
+                for (const doc of diaries.docs) {
+                    await doc.ref.delete();
+                }
+                log(`Deleted ${diaries.size} diary entries`, 'info');
+
+                // Delete module requests
+                const requests = await db.collection('moduleRequests')
+                    .where('userId', '==', testUserId).get();
+                for (const doc of requests.docs) {
+                    await doc.ref.delete();
+                }
+                log(`Deleted ${requests.size} module requests`, 'info');
+
+                // Delete conversations and messages
+                if (testConversationId) {
+                    const messages = await db.collection('conversations').doc(testConversationId)
+                        .collection('messages').get();
+                    for (const doc of messages.docs) {
+                        await doc.ref.delete();
+                    }
+                    await db.collection('conversations').doc(testConversationId).delete();
+                    log('Deleted conversation and messages', 'info');
+                }
+
+                // Delete guest stays
+                const stays = await db.collection('guestStays')
+                    .where('guestUserId', '==', testUserId).get();
+                for (const doc of stays.docs) {
+                    await doc.ref.delete();
+                }
+                log(`Deleted ${stays.size} guest stays`, 'info');
+
+                // Reset state
+                testUserId = null;
+                testConversationId = null;
+                testAssignmentId = null;
+                testTaskId = null;
+                testGuestStayId = null;
+
+                document.getElementById('test-user-info').style.display = 'none';
+
+                // Reset all statuses
+                document.querySelectorAll('.test-status').forEach(el => {
+                    el.className = 'test-status status-pending';
+                    el.textContent = 'Pending';
+                });
+
+                log('Cleanup complete!', 'success');
+
+            } catch (error) {
+                log(`Cleanup error: ${error.message}`, 'error');
+            }
+        }
+
+        log('Test page loaded. Please log in as admin to run tests.', 'info');
+    </script>
+</body>
+</html>

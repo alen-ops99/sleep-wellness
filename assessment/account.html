@@ -3491,8 +3491,28 @@
         <!-- Dashboard Section -->
         <section class="dashboard-section active" id="section-dashboard">
             <div class="section-header">
-                <h1>Welcome back, <span data-user-name>User</span></h1>
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <h1>Welcome back, <span data-user-name>User</span></h1>
+                    <div class="notification-bell" onclick="toggleNotifications()" title="Notifications">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                        </svg>
+                        <span class="notification-badge" id="notification-count" style="display: none;">0</span>
+                    </div>
+                </div>
                 <a href="take-assessment.html" class="btn-primary">Take Assessment</a>
+            </div>
+
+            <!-- Notification Dropdown -->
+            <div id="notification-dropdown" style="display: none; position: absolute; right: 30px; top: 80px; width: 350px; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1000; max-height: 400px; overflow-y: auto;">
+                <div style="padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="font-size: 16px; color: #0f1c2e; margin: 0;">Notifications</h3>
+                    <button onclick="markAllNotificationsRead()" style="background: none; border: none; color: #C9A962; font-size: 12px; cursor: pointer;">Mark all read</button>
+                </div>
+                <div id="notification-list" style="padding: 10px;">
+                    <p style="text-align: center; color: #888; padding: 20px; font-size: 13px;">No notifications</p>
+                </div>
             </div>
 
             <!-- Quick Actions -->
@@ -9073,6 +9093,160 @@
         }
     }
 
+    // ==========================================
+    // NOTIFICATIONS FUNCTIONS
+    // ==========================================
+
+    let userNotifications = [];
+
+    async function loadUserNotifications(userId) {
+        try {
+            const snapshot = await db.collection('notifications')
+                .where('userId', '==', userId)
+                .orderBy('createdAt', 'desc')
+                .limit(20)
+                .get();
+
+            userNotifications = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            // Update badge
+            const unreadCount = userNotifications.filter(n => !n.read).length;
+            const badge = document.getElementById('notification-count');
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount > 9 ? '9+' : unreadCount;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+
+            // Update list
+            renderNotifications();
+        } catch (error) {
+            console.error('Error loading notifications:', error);
+        }
+    }
+
+    function renderNotifications() {
+        const container = document.getElementById('notification-list');
+
+        if (userNotifications.length === 0) {
+            container.innerHTML = '<p style="text-align: center; color: #888; padding: 20px; font-size: 13px;">No notifications</p>';
+            return;
+        }
+
+        container.innerHTML = userNotifications.map(notif => {
+            const timeAgo = getTimeAgo(notif.createdAt?.toDate?.() || new Date());
+            const icon = getNotificationIcon(notif.type);
+            const bgColor = notif.read ? 'transparent' : 'rgba(201, 169, 98, 0.08)';
+
+            return '<div onclick="handleNotificationClick(\'' + notif.id + '\', \'' + notif.type + '\')" style="padding: 12px 15px; border-bottom: 1px solid #f0f0f0; cursor: pointer; background: ' + bgColor + '; transition: background 0.2s;">' +
+                '<div style="display: flex; gap: 12px; align-items: flex-start;">' +
+                    '<div style="width: 36px; height: 36px; background: rgba(201, 169, 98, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">' +
+                        icon +
+                    '</div>' +
+                    '<div style="flex: 1; min-width: 0;">' +
+                        '<p style="font-size: 13px; color: #0f1c2e; margin: 0 0 4px 0; font-weight: ' + (notif.read ? '400' : '500') + ';">' + notif.title + '</p>' +
+                        '<p style="font-size: 12px; color: #666; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + notif.message + '</p>' +
+                        '<p style="font-size: 11px; color: #999; margin: 4px 0 0 0;">' + timeAgo + '</p>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+        }).join('');
+    }
+
+    function getNotificationIcon(type) {
+        const icons = {
+            'questionnaire_assigned': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A962" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
+            'module_unlocked': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A962" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+            'task_assigned': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A962" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+            'message': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A962" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+            'appointment': '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A962" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
+        };
+        return icons[type] || '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A962" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
+    }
+
+    function getTimeAgo(date) {
+        if (!date) return '';
+        const seconds = Math.floor((new Date() - date) / 1000);
+        if (seconds < 60) return 'Just now';
+        const minutes = Math.floor(seconds / 60);
+        if (minutes < 60) return minutes + ' min ago';
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return hours + 'h ago';
+        const days = Math.floor(hours / 24);
+        if (days < 7) return days + 'd ago';
+        return date.toLocaleDateString();
+    }
+
+    function toggleNotifications() {
+        const dropdown = document.getElementById('notification-dropdown');
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    }
+
+    async function handleNotificationClick(notifId, type) {
+        // Mark as read
+        try {
+            await db.collection('notifications').doc(notifId).update({ read: true });
+
+            // Update local state
+            const notif = userNotifications.find(n => n.id === notifId);
+            if (notif) notif.read = true;
+
+            // Update badge
+            const unreadCount = userNotifications.filter(n => !n.read).length;
+            const badge = document.getElementById('notification-count');
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount > 9 ? '9+' : unreadCount;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+
+            renderNotifications();
+
+            // Navigate based on type
+            if (type === 'questionnaire_assigned') {
+                window.location.href = 'take-assessment.html';
+            } else if (type === 'module_unlocked') {
+                showSection('modules');
+            } else if (type === 'task_assigned') {
+                showSection('dashboard');
+            } else if (type === 'message') {
+                showSection('messages');
+            } else if (type === 'appointment') {
+                showSection('appointments');
+            }
+
+            toggleNotifications();
+        } catch (error) {
+            console.error('Error marking notification read:', error);
+        }
+    }
+
+    async function markAllNotificationsRead() {
+        try {
+            const unread = userNotifications.filter(n => !n.read);
+            for (const notif of unread) {
+                await db.collection('notifications').doc(notif.id).update({ read: true });
+                notif.read = true;
+            }
+
+            document.getElementById('notification-count').style.display = 'none';
+            renderNotifications();
+        } catch (error) {
+            console.error('Error marking all read:', error);
+        }
+    }
+
+    // Close notifications when clicking outside
+    document.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('notification-dropdown');
+        const bell = document.querySelector('.notification-bell');
+        if (dropdown && bell && !dropdown.contains(e.target) && !bell.contains(e.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+
     // Auth state listener
     auth.onAuthStateChanged(async (user) => {
         if (!user) {
@@ -9101,6 +9275,9 @@
 
         // Initialize hotel guest mode if applicable
         initHotelGuestMode(profile);
+
+        // Load notifications
+        loadUserNotifications(user.uid);
 
         // Load profile form
         if (profile) {
