@@ -5852,8 +5852,6 @@ Sleep Wellness by Dr. Alen`);
             for (const cb of selectedCheckboxes) {
                 await FirebaseDB.assignQuestionnaire(
                     cb.value,
-                    cb.dataset.name,
-                    cb.dataset.email,
                     questionnaireId,
                     instrument.name,
                     dueDate ? new Date(dueDate) : null,
@@ -6932,6 +6930,7 @@ Sleep Wellness by Dr. Alen`);
             // Save appointment to Firestore
             const appointmentRef = await db.collection('appointments').add({
                 clientId: clientId,
+                userId: clientId,
                 clientName: client.displayName || client.email,
                 clientEmail: client.email || '',
                 dateTime: firebase.firestore.Timestamp.fromDate(dateTime),

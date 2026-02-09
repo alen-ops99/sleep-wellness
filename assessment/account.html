@@ -3523,6 +3523,67 @@
             justify-content: center;
         }
 
+        .notification-dropdown {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            width: 320px;
+            max-height: 400px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .notification-dropdown.open {
+            display: block;
+        }
+
+        .notification-dropdown-header {
+            padding: 14px 16px;
+            font-weight: 600;
+            font-size: 14px;
+            border-bottom: 1px solid #eee;
+            color: #1a365d;
+        }
+
+        .notification-list {
+            max-height: 340px;
+            overflow-y: auto;
+        }
+
+        .notification-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .notification-item:hover {
+            background: #f8f9fa;
+        }
+
+        .notification-item-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: #1a365d;
+            margin-bottom: 4px;
+        }
+
+        .notification-item-message {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .notification-item-time {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+        }
+
         /* Progress Ring */
         .progress-ring {
             transform: rotate(-90deg);
@@ -3772,8 +3833,18 @@
         <span class="nav-brand-sub">by Dr. Alen</span>
     </a>
     <div class="nav-links">
+        <div class="notification-bell" id="notificationBell" data-auth="logged-in" onclick="toggleNotificationDropdown()" title="Notifications">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="notification-badge" id="notificationBadge" style="display:none;">0</span>
+        </div>
         <a href="account.html" class="active" data-auth="logged-in">My Account</a>
         <a href="auth.html" data-auth="logged-out">Sign In</a>
+    </div>
+    <div class="notification-dropdown" id="notificationDropdown">
+        <div class="notification-dropdown-header">Notifications</div>
+        <div class="notification-list" id="notificationList">
+            <p style="padding:16px;color:#999;text-align:center;">No new notifications</p>
+        </div>
     </div>
 </nav>
 
@@ -6423,6 +6494,74 @@
         }
     }
 
+    // ==================== NOTIFICATION FUNCTIONS ====================
+
+    async function loadClientNotifications() {
+        try {
+            const notifications = await FirebaseDB.getUnreadNotifications(currentUser.uid);
+            const badge = document.getElementById('notificationBadge');
+            const list = document.getElementById('notificationList');
+
+            if (notifications.length > 0) {
+                badge.textContent = notifications.length > 9 ? '9+' : notifications.length;
+                badge.style.display = 'flex';
+
+                list.innerHTML = notifications.map(n => {
+                    const time = n.createdAt ? new Date(n.createdAt.seconds * 1000).toLocaleDateString('en-US', {
+                        month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
+                    }) : '';
+                    return `
+                        <div class="notification-item" onclick="markNotificationRead('${n.id}', this)">
+                            <div class="notification-item-title">${n.title || 'Notification'}</div>
+                            <div class="notification-item-message">${n.message || ''}</div>
+                            <div class="notification-item-time">${time}</div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                badge.style.display = 'none';
+                list.innerHTML = '<p style="padding:16px;color:#999;text-align:center;">No new notifications</p>';
+            }
+        } catch (error) {
+            console.error('Error loading notifications:', error);
+        }
+    }
+
+    function toggleNotificationDropdown() {
+        const dropdown = document.getElementById('notificationDropdown');
+        dropdown.classList.toggle('open');
+    }
+
+    async function markNotificationRead(notificationId, element) {
+        try {
+            await FirebaseDB.markNotificationRead(notificationId);
+            if (element) element.remove();
+
+            // Update badge count
+            const badge = document.getElementById('notificationBadge');
+            const list = document.getElementById('notificationList');
+            const remaining = list.querySelectorAll('.notification-item').length;
+
+            if (remaining === 0) {
+                badge.style.display = 'none';
+                list.innerHTML = '<p style="padding:16px;color:#999;text-align:center;">No new notifications</p>';
+            } else {
+                badge.textContent = remaining > 9 ? '9+' : remaining;
+            }
+        } catch (error) {
+            console.error('Error marking notification read:', error);
+        }
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        const dropdown = document.getElementById('notificationDropdown');
+        const bell = document.getElementById('notificationBell');
+        if (dropdown && bell && !bell.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.remove('open');
+        }
+    });
+
     // Show section
     function showSection(section) {
         // Update nav
@@ -6488,6 +6627,9 @@
 
         // Check for pending discharge survey
         checkForDischargeSurvey();
+
+        // Load client notifications
+        loadClientNotifications();
 
         // Set min date for appointments
         const tomorrow = new Date();
@@ -8513,12 +8655,7 @@
     }
 
     async function getUserQuestionnaireResults() {
-        const snapshot = await db.collection('questionnaireResults')
-            .where('userId', '==', currentUser.uid)
-            .orderBy('completedAt', 'desc')
-            .get();
-
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        return await FirebaseDB.getUserQuestionnaireResults(currentUser.uid);
     }
 
     function startQuestionnaire(assignmentId, questionnaireId) {
