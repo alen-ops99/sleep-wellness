@@ -3356,6 +3356,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script src="../firebase-config.js"></script>
+<script src="demo-mode-admin.js"></script>
 <script src="../auth.js"></script>
 <script src="../content.js"></script>
 <script src="../questionnaires.js"></script>
@@ -3491,6 +3492,18 @@
         // Check admin access once auth is ready
         if (typeof auth !== 'undefined') {
             auth.onAuthStateChanged(async (user) => {
+                // Demo mode: use mock admin, skip Firebase
+                if (typeof isDemoMode === 'function' && isDemoMode()) {
+                    const demoUser = window.DEMO_ADMIN_USER;
+                    const demoProfile = window.DEMO_ADMIN_PROFILE;
+                    currentUser = demoUser;
+                    document.getElementById('adminName').textContent = demoProfile.displayName || 'Admin';
+                    document.getElementById('adminAvatar').textContent = (demoProfile.displayName || 'A')[0].toUpperCase();
+                    loadDashboard();
+                    loadNotifications();
+                    return;
+                }
+
                 console.log('Auth state changed:', user ? user.email : 'no user');
                 if (!user) {
                     window.location.href = '../auth.html';

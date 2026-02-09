@@ -5807,6 +5807,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
+<script src="demo-mode.js"></script>
 <script src="auth.js"></script>
 <script src="content.js"></script>
 <script src="questionnaires.js"></script>
@@ -9858,6 +9859,20 @@
 
     // Auth state listener
     auth.onAuthStateChanged(async (user) => {
+        // Demo mode: use mock user/profile, skip Firebase
+        if (typeof isDemoMode === 'function' && isDemoMode()) {
+            const demoUser = window.DEMO_USER;
+            const demoProfile = window.DEMO_PROFILE;
+            Auth.currentUser = demoUser;
+            Auth.userProfile = demoProfile;
+            Auth.updateAuthUI(true);
+            initDashboard(demoUser, demoProfile);
+            document.getElementById('profileName').value = demoProfile.displayName || '';
+            document.getElementById('profilePhone').value = demoProfile.phone || '';
+            document.getElementById('profileClientType').value = demoProfile.clientType || 'athlete';
+            return;
+        }
+
         if (!user) {
             window.location.href = 'auth.html?redirect=' + encodeURIComponent(window.location.pathname);
             return;

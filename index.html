@@ -1879,21 +1879,24 @@
         });
     });
 
-    // Contact Widget
-    const contactWidget = document.getElementById('contactWidget');
-    const contactToggle = document.getElementById('contactToggle');
-    const contactPanel = document.getElementById('contactPanel');
+    // Contact Widget — deferred until elements exist
+    document.addEventListener('DOMContentLoaded', () => {
+        const contactWidget = document.getElementById('contactWidget');
+        const contactToggle = document.getElementById('contactToggle');
+        const contactPanel = document.getElementById('contactPanel');
 
-    contactToggle.addEventListener('click', () => {
-        contactPanel.classList.toggle('active');
-        contactToggle.classList.toggle('active');
-    });
+        if (contactToggle && contactPanel) {
+            contactToggle.addEventListener('click', () => {
+                contactPanel.classList.toggle('active');
+                contactToggle.classList.toggle('active');
+            });
 
-    // Close panel when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!contactWidget.contains(e.target) && contactPanel.classList.contains('active')) {
-            contactPanel.classList.remove('active');
-            contactToggle.classList.remove('active');
+            document.addEventListener('click', (e) => {
+                if (!contactWidget.contains(e.target) && contactPanel.classList.contains('active')) {
+                    contactPanel.classList.remove('active');
+                    contactToggle.classList.remove('active');
+                }
+            });
         }
     });
 </script>
