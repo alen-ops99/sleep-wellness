@@ -3505,6 +3505,14 @@
         .notification-bell {
             position: relative;
             cursor: pointer;
+            color: rgba(255,255,255,0.7);
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+
+        .notification-bell:hover {
+            color: var(--gold);
         }
 
         .notification-badge {
@@ -3893,6 +3901,16 @@
                 </svg>
                 <span>Sleep Diary</span>
             </a></li>
+            <li><a href="#tasks" onclick="showSection('tasks')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+                <span>Tasks</span>
+                <span class="badge" id="tasksBadge" style="display: none;">0</span>
+            </a></li>
             <li><a href="#messages" onclick="showSection('messages')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -4097,6 +4115,15 @@
                     <div class="value" id="unlockedCount">0</div>
                     <p>Therapeutic modules</p>
                 </div>
+            </div>
+
+            <!-- Progress Comparison Widget -->
+            <div id="progress-comparison" style="display: none; margin-bottom: 30px;">
+                <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--navy); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                    Your Progress
+                </h2>
+                <div id="progress-comparison-cards" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;"></div>
             </div>
 
             <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--navy); margin-bottom: 20px;">Recent Activity</h2>
@@ -4766,6 +4793,30 @@
                             <p class="insight-text">Complete your evening check-in to receive personalized tips for better sleep tonight.</p>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tasks Section -->
+        <section class="dashboard-section" id="section-tasks">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <h1>Your Tasks</h1>
+                </div>
+            </div>
+
+            <div id="tasksSection">
+                <h3 style="font-family: 'Cormorant Garamond', serif; color: var(--navy); margin: 0 0 15px 0; font-size: 18px;">Pending Tasks</h3>
+                <div class="tasks-list" id="tasksSectionPending">
+                    <p style="color: var(--text-light); text-align: center; padding: 30px;">Loading tasks...</p>
+                </div>
+
+                <div id="tasksCompletedSection" style="margin-top: 30px; display: none;">
+                    <h3 style="font-family: 'Cormorant Garamond', serif; color: var(--navy); margin: 0 0 15px 0; font-size: 18px;">Completed Tasks</h3>
+                    <div class="tasks-list" id="tasksSectionCompleted"></div>
                 </div>
             </div>
         </section>
@@ -6327,15 +6378,22 @@
     }
 
     // Finish tour
-    function finishTour() {
+    async function finishTour() {
         document.getElementById('tourOverlay').classList.remove('active');
 
         // Mark onboarding complete
         if (currentUser) {
-            db.collection('users').doc(currentUser.uid).update({
+            await db.collection('users').doc(currentUser.uid).update({
                 onboardingComplete: true,
                 onboardingCompletedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
+
+            // Auto-assign baseline questionnaires based on client type
+            const clientType = userProfile?.clientType || 'hotel';
+            const assigned = await FirebaseDB.autoAssignOnboardingQuestionnaires(currentUser.uid, clientType);
+            if (assigned.length > 0) {
+                updateQuestionnaireBadge();
+            }
         }
 
         // Show assessment reminder
@@ -6460,6 +6518,108 @@
         }
     }
 
+    // Load full tasks section (sidebar view — all tasks including completed)
+    async function loadTasksSection() {
+        if (!currentUser) return;
+
+        try {
+            // Get all tasks for this user (pending + completed)
+            const snapshot = await db.collection('clientTasks')
+                .where('clientId', '==', currentUser.uid)
+                .get();
+
+            const allTasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const pending = allTasks.filter(t => t.status === 'pending').sort((a, b) => {
+                const aDate = a.dueDate?.toDate?.() || new Date(9999, 11, 31);
+                const bDate = b.dueDate?.toDate?.() || new Date(9999, 11, 31);
+                return aDate - bDate;
+            });
+            const completed = allTasks.filter(t => t.status === 'completed').sort((a, b) => {
+                const aDate = a.completedAt?.toDate?.() || new Date(0);
+                const bDate = b.completedAt?.toDate?.() || new Date(0);
+                return bDate - aDate;
+            });
+
+            const pendingContainer = document.getElementById('tasksSectionPending');
+            const completedContainer = document.getElementById('tasksSectionCompleted');
+            const completedSection = document.getElementById('tasksCompletedSection');
+
+            // Render pending tasks
+            if (pending.length === 0) {
+                pendingContainer.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 30px;">No pending tasks — you\'re all caught up!</p>';
+            } else {
+                pendingContainer.innerHTML = pending.map(task => {
+                    const dueDate = task.dueDate?.toDate?.();
+                    const isOverdue = dueDate && dueDate < new Date();
+                    const isHighPriority = task.priority === 'high' || task.taskType === 'assessment';
+                    const deadlineText = dueDate ? (isOverdue ? 'Overdue' : 'Due ' + dueDate.toLocaleDateString()) : '';
+
+                    return `
+                        <div class="task-item ${isHighPriority ? 'high-priority' : ''}" onclick="handleTaskClick('${task.id}', '${task.taskType}')">
+                            <div class="task-checkbox"></div>
+                            <div class="task-info">
+                                <div class="task-title">${task.title}</div>
+                                <div class="task-due ${isOverdue ? 'overdue' : ''}">${deadlineText}</div>
+                            </div>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Render completed tasks
+            if (completed.length > 0) {
+                completedSection.style.display = 'block';
+                completedContainer.innerHTML = completed.map(task => {
+                    const completedDate = task.completedAt?.toDate?.();
+                    const dateText = completedDate ? 'Completed ' + completedDate.toLocaleDateString() : 'Completed';
+
+                    return `
+                        <div class="task-item" style="opacity: 0.7;">
+                            <div class="task-checkbox" style="background: var(--gold); border-color: var(--gold);">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <div class="task-info">
+                                <div class="task-title" style="text-decoration: line-through; color: var(--text-light);">${task.title}</div>
+                                <div class="task-due">${dateText}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                completedSection.style.display = 'none';
+            }
+
+            // Update badge
+            updateTasksBadge(pending.length);
+        } catch (error) {
+            console.error('Error loading tasks section:', error);
+        }
+    }
+
+    // Update tasks sidebar badge
+    function updateTasksBadge(count) {
+        const badge = document.getElementById('tasksBadge');
+        if (count === undefined) {
+            // Called without count — need to fetch
+            if (!currentUser) return;
+            db.collection('clientTasks')
+                .where('clientId', '==', currentUser.uid)
+                .where('status', '==', 'pending')
+                .get()
+                .then(snapshot => {
+                    const c = snapshot.size;
+                    badge.textContent = c;
+                    badge.style.display = c > 0 ? '' : 'none';
+                });
+            return;
+        }
+        badge.textContent = count;
+        badge.style.display = count > 0 ? '' : 'none';
+    }
+
     // Handle task click
     function handleTaskClick(taskId, taskType) {
         // Navigate based on task type
@@ -6579,6 +6739,7 @@
         if (section === 'appointments') loadAppointments();
         if (section === 'modules') loadModules();
         if (section === 'questionnaires') loadUserQuestionnaires();
+        if (section === 'tasks') loadTasksSection();
     }
 
     // Initialize dashboard
@@ -6613,8 +6774,14 @@
         // Load dashboard data
         loadDashboardStats();
 
+        // Load progress comparison (entry vs exit)
+        loadProgressComparison();
+
         // Load user tasks
         loadUserTasks();
+
+        // Update tasks sidebar badge
+        updateTasksBadge();
 
         // Load questionnaire badge count
         updateQuestionnaireBadge();
@@ -6711,6 +6878,169 @@
                 <span class="activity-time">${formatTimeAgo(a.time)}</span>
             </div>
         `).join('');
+    }
+
+    // Load progress comparison (entry vs exit)
+    async function loadProgressComparison() {
+        if (!currentUser) return;
+
+        const container = document.getElementById('progress-comparison');
+        const cardsEl = document.getElementById('progress-comparison-cards');
+
+        try {
+            const [questionnaires, diaryEntries] = await Promise.all([
+                FirebaseDB.getUserQuestionnaireResults(currentUser.uid),
+                FirebaseDB.getDiaryEntries(currentUser.uid, 60)
+            ]);
+
+            const comparisons = [];
+
+            // Compare questionnaire scores (instruments with 2+ completions)
+            const byInstrument = {};
+            questionnaires.forEach(q => {
+                if (!byInstrument[q.instrumentId]) byInstrument[q.instrumentId] = [];
+                byInstrument[q.instrumentId].push(q);
+            });
+
+            for (const [instrumentId, results] of Object.entries(byInstrument)) {
+                if (results.length < 2) continue;
+
+                // Sort by completedAt ascending
+                results.sort((a, b) => {
+                    const aTime = a.completedAt?.toDate?.() || new Date(0);
+                    const bTime = b.completedAt?.toDate?.() || new Date(0);
+                    return aTime - bTime;
+                });
+
+                const first = results[0];
+                const last = results[results.length - 1];
+                const firstScore = first.result?.score ?? first.score;
+                const lastScore = last.result?.score ?? last.score;
+
+                if (firstScore != null && lastScore != null) {
+                    const change = lastScore - firstScore;
+                    // For most sleep instruments, lower = better
+                    const improved = change < 0;
+                    comparisons.push({
+                        label: first.instrumentName || instrumentId.toUpperCase(),
+                        firstValue: firstScore,
+                        lastValue: lastScore,
+                        change,
+                        improved,
+                        unit: 'pts',
+                        firstDate: first.completedAt?.toDate?.()?.toLocaleDateString() || '',
+                        lastDate: last.completedAt?.toDate?.()?.toLocaleDateString() || ''
+                    });
+                }
+            }
+
+            // Compare diary entries (first 3 nights vs last 3 nights)
+            if (diaryEntries.length >= 6) {
+                // Sort ascending by date
+                const sorted = [...diaryEntries].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+                const firstThree = sorted.slice(0, 3);
+                const lastThree = sorted.slice(-3);
+
+                // Average SE
+                const avgSE = (entries) => {
+                    let total = 0, count = 0;
+                    entries.forEach(e => {
+                        if (e.sleepEfficiency != null) {
+                            total += e.sleepEfficiency;
+                            count++;
+                        }
+                    });
+                    return count > 0 ? Math.round(total / count) : null;
+                };
+
+                const firstSE = avgSE(firstThree);
+                const lastSE = avgSE(lastThree);
+                if (firstSE != null && lastSE != null) {
+                    const change = lastSE - firstSE;
+                    comparisons.push({
+                        label: 'Sleep Efficiency',
+                        firstValue: firstSE,
+                        lastValue: lastSE,
+                        change,
+                        improved: change > 0,
+                        unit: '%',
+                        firstDate: 'First 3 nights',
+                        lastDate: 'Last 3 nights'
+                    });
+                }
+
+                // Average TST
+                const avgTST = (entries) => {
+                    let total = 0, count = 0;
+                    entries.forEach(e => {
+                        if (e.bedTime && e.wakeTime) {
+                            const bedParts = e.bedTime.split(':');
+                            const wakeParts = e.wakeTime.split(':');
+                            let bedMin = parseInt(bedParts[0]) * 60 + parseInt(bedParts[1]);
+                            let wakeMin = parseInt(wakeParts[0]) * 60 + parseInt(wakeParts[1]);
+                            let tib = wakeMin - bedMin;
+                            if (tib < 0) tib += 1440;
+                            const sol = e.sleepOnsetLatency || 0;
+                            const waso = e.waso || 0;
+                            total += Math.max(0, tib - sol - waso);
+                            count++;
+                        }
+                    });
+                    return count > 0 ? Math.round(total / count) : null;
+                };
+
+                const firstTST = avgTST(firstThree);
+                const lastTST = avgTST(lastThree);
+                if (firstTST != null && lastTST != null) {
+                    const change = lastTST - firstTST;
+                    const fmtMin = (m) => `${Math.floor(m/60)}h ${m%60}m`;
+                    comparisons.push({
+                        label: 'Total Sleep Time',
+                        firstValue: fmtMin(firstTST),
+                        lastValue: fmtMin(lastTST),
+                        change,
+                        improved: change > 0,
+                        unit: 'min',
+                        firstDate: 'First 3 nights',
+                        lastDate: 'Last 3 nights',
+                        rawChange: true
+                    });
+                }
+            }
+
+            if (comparisons.length === 0) {
+                container.style.display = 'none';
+                return;
+            }
+
+            container.style.display = 'block';
+            cardsEl.innerHTML = comparisons.map(c => {
+                const arrow = c.improved ? '&#9650;' : (c.change === 0 ? '&#9654;' : '&#9660;');
+                const arrowColor = c.improved ? '#2e7d32' : (c.change === 0 ? '#888' : '#c62828');
+                const changeText = c.rawChange
+                    ? `${c.change > 0 ? '+' : ''}${c.change} ${c.unit}`
+                    : `${c.change > 0 ? '+' : ''}${c.change} ${c.unit}`;
+
+                return `
+                    <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid rgba(201,169,98,0.2); box-shadow: 0 2px 10px rgba(0,0,0,0.04);">
+                        <div style="font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">${c.label}</div>
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                            <div style="font-size: 22px; font-weight: 600; color: var(--navy);">${c.firstValue}${typeof c.firstValue === 'number' && c.unit !== 'min' ? '' : ''}</div>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${arrowColor}" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                            <div style="font-size: 22px; font-weight: 600; color: var(--navy);">${c.lastValue}${typeof c.lastValue === 'number' && c.unit !== 'min' ? '' : ''}</div>
+                        </div>
+                        <div style="font-size: 13px; font-weight: 600; color: ${arrowColor};">
+                            <span>${arrow}</span> ${changeText}
+                        </div>
+                        <div style="font-size: 11px; color: var(--text-light); margin-top: 6px;">${c.firstDate} → ${c.lastDate}</div>
+                    </div>
+                `;
+            }).join('');
+
+        } catch (error) {
+            console.error('Error loading progress comparison:', error);
+            container.style.display = 'none';
+        }
     }
 
     // Load assessments

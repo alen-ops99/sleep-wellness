@@ -317,6 +317,141 @@ const Questionnaires = {
                     { min: 41, max: 54, severity: 'high', label: 'Significant Concerns', color: '#c62828', description: 'Significant indicators across multiple domains. Evaluation strongly recommended.' }
                 ]
             }
+        },
+
+        'psqi': {
+            id: 'psqi',
+            name: 'Pittsburgh Sleep Quality Index',
+            shortName: 'PSQI',
+            description: 'Validated 9-item questionnaire measuring overall sleep quality over the past month',
+            timeToComplete: '3-5 minutes',
+            category: 'Sleep Quality',
+            citation: 'Buysse, D.J., Reynolds, C.F., Monk, T.H., Berman, S.R., & Kupfer, D.J. (1989)',
+            instructions: 'The following questions relate to your usual sleep habits during the past month only. Please answer all questions.',
+            questions: [
+                {
+                    id: 1,
+                    text: 'During the past month, how would you rate your overall sleep quality?',
+                    component: 'subjective_quality',
+                    options: [
+                        { value: 0, label: 'Very Good' },
+                        { value: 1, label: 'Fairly Good' },
+                        { value: 2, label: 'Fairly Bad' },
+                        { value: 3, label: 'Very Bad' }
+                    ]
+                },
+                {
+                    id: 2,
+                    text: 'During the past month, how long (in minutes) has it usually taken you to fall asleep each night?',
+                    component: 'sleep_latency',
+                    options: [
+                        { value: 0, label: '≤15 minutes' },
+                        { value: 1, label: '16-30 minutes' },
+                        { value: 2, label: '31-60 minutes' },
+                        { value: 3, label: '>60 minutes' }
+                    ]
+                },
+                {
+                    id: 3,
+                    text: 'During the past month, how many hours of actual sleep did you get at night? (This may be different than the number of hours you spent in bed.)',
+                    component: 'sleep_duration',
+                    options: [
+                        { value: 0, label: '>7 hours' },
+                        { value: 1, label: '6-7 hours' },
+                        { value: 2, label: '5-6 hours' },
+                        { value: 3, label: '<5 hours' }
+                    ]
+                },
+                {
+                    id: 4,
+                    text: 'During the past month, how would you rate your habitual sleep efficiency? (Percentage of time in bed actually spent sleeping)',
+                    component: 'sleep_efficiency',
+                    options: [
+                        { value: 0, label: '>85%' },
+                        { value: 1, label: '75-84%' },
+                        { value: 2, label: '65-74%' },
+                        { value: 3, label: '<65%' }
+                    ]
+                },
+                {
+                    id: 5,
+                    text: 'During the past month, how often have you had trouble sleeping because of waking up in the middle of the night or early morning, pain, breathing issues, coughing/snoring, feeling too hot/cold, bad dreams, or other reasons?',
+                    component: 'sleep_disturbances',
+                    options: [
+                        { value: 0, label: 'Not during the past month' },
+                        { value: 1, label: 'Less than once a week' },
+                        { value: 2, label: 'Once or twice a week' },
+                        { value: 3, label: 'Three or more times a week' }
+                    ]
+                },
+                {
+                    id: 6,
+                    text: 'During the past month, how often have you taken medicine (prescribed or over the counter) to help you sleep?',
+                    component: 'sleep_medication',
+                    options: [
+                        { value: 0, label: 'Not during the past month' },
+                        { value: 1, label: 'Less than once a week' },
+                        { value: 2, label: 'Once or twice a week' },
+                        { value: 3, label: 'Three or more times a week' }
+                    ]
+                },
+                {
+                    id: 7,
+                    text: 'During the past month, how often have you had trouble staying awake while driving, eating meals, or engaging in social activity?',
+                    component: 'daytime_dysfunction_a',
+                    options: [
+                        { value: 0, label: 'Not during the past month' },
+                        { value: 1, label: 'Less than once a week' },
+                        { value: 2, label: 'Once or twice a week' },
+                        { value: 3, label: 'Three or more times a week' }
+                    ]
+                },
+                {
+                    id: 8,
+                    text: 'During the past month, how much of a problem has it been for you to keep up enough enthusiasm to get things done?',
+                    component: 'daytime_dysfunction_b',
+                    options: [
+                        { value: 0, label: 'No problem at all' },
+                        { value: 1, label: 'Only a very slight problem' },
+                        { value: 2, label: 'Somewhat of a problem' },
+                        { value: 3, label: 'A very big problem' }
+                    ]
+                },
+                {
+                    id: 9,
+                    text: 'Do you have a bed partner or roommate?',
+                    component: 'bed_partner',
+                    options: [
+                        { value: 0, label: 'No bed partner or roommate' },
+                        { value: 1, label: 'Partner/roommate in other room' },
+                        { value: 2, label: 'Partner in same room, different bed' },
+                        { value: 3, label: 'Partner in same bed' }
+                    ],
+                    excludeFromScore: true
+                }
+            ],
+            scoring: {
+                min: 0,
+                max: 21,
+                calculate: (answers) => {
+                    // Sum all component scores (Q1-Q8), exclude bed partner question (Q9)
+                    let total = 0;
+                    answers.forEach(a => {
+                        const q = a.questionId || a.id;
+                        if (q !== 9) total += a.value;
+                    });
+                    // Daytime dysfunction is average of Q7+Q8, capped at 3
+                    // In this simplified Likert format, each Q maps to one component (0-3)
+                    // so the max per component is 3, and 7 scored components = max 21
+                    return Math.min(total, 21);
+                },
+                ranges: [
+                    { min: 0, max: 5, severity: 'good', label: 'Good Sleep Quality', color: '#2e7d32', description: 'Your sleep quality is within normal limits. No intervention needed.' },
+                    { min: 6, max: 10, severity: 'poor', label: 'Poor Sleep Quality', color: '#f9a825', description: 'You have poor sleep quality. Sleep hygiene improvements are recommended.' },
+                    { min: 11, max: 15, severity: 'very-poor', label: 'Very Poor Sleep Quality', color: '#ef6c00', description: 'You have very poor sleep quality. A structured sleep improvement program is recommended.' },
+                    { min: 16, max: 21, severity: 'severe', label: 'Severe Sleep Quality Issues', color: '#c62828', description: 'You have severely impaired sleep quality. Comprehensive evaluation and treatment are strongly recommended.' }
+                ]
+            }
         }
     },
 

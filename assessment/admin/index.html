@@ -1407,6 +1407,21 @@
                 </div>
             </div>
 
+            <!-- Diary Entries (Night by Night) -->
+            <div class="data-card" style="margin-top: 20px; padding: 22px 25px;">
+                <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin: 0 0 15px 0; display: flex; align-items: center; gap: 10px; cursor: pointer;" onclick="toggleDiaryDetail()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    Diary Entries (Night by Night)
+                    <svg id="diary-detail-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2" style="margin-left: auto; transition: transform 0.3s;"><polyline points="6 9 12 15 18 9"/></svg>
+                </h2>
+                <div id="diary-detail-container" style="display: none;">
+                    <div id="no-diary-detail-notice" style="display: none; text-align: center; padding: 20px; color: var(--text-light);">
+                        <p style="margin: 0;">No diary entries recorded yet</p>
+                    </div>
+                    <div id="diary-detail-table" style="overflow-x: auto;"></div>
+                </div>
+            </div>
+
             <!-- Baseline Questionnaire Scores -->
             <div class="data-card" style="margin-top: 20px; padding: 22px 25px;">
                 <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin: 0 0 20px 0; display: flex; align-items: center; gap: 10px;">
@@ -1419,6 +1434,15 @@
                 <div id="baseline-questionnaires" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
                     <!-- ISI, ESS, STOP-BANG cards will be inserted here -->
                 </div>
+            </div>
+
+            <!-- Entry vs Exit Comparison -->
+            <div class="data-card" id="entry-exit-card" style="margin-top: 20px; padding: 22px 25px; display: none;">
+                <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin: 0 0 20px 0; display: flex; align-items: center; gap: 10px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                    Entry vs Exit Comparison
+                </h2>
+                <div id="entry-exit-comparisons" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;"></div>
             </div>
 
             <!-- Sleep Health Summary -->
@@ -6116,7 +6140,9 @@ Sleep Wellness by Dr. Alen`);
                 loadClientMessages(clientId),
                 loadClientModules(clientId),
                 loadClientBaselineQuestionnaires(clientId),
-                loadSleepHabitsSummary(clientId)
+                loadSleepHabitsSummary(clientId),
+                loadDiaryEntriesDetail(clientId),
+                loadEntryExitComparison(clientId)
             ]);
         } catch (error) {
             console.error('Error loading client data:', error);
@@ -6308,6 +6334,214 @@ Sleep Wellness by Dr. Alen`);
             console.error('Error loading sleep habits:', error);
             summaryEl.style.display = 'none';
             noticeEl.style.display = 'block';
+        }
+    }
+
+    // Toggle diary detail visibility
+    function toggleDiaryDetail() {
+        const container = document.getElementById('diary-detail-container');
+        const chevron = document.getElementById('diary-detail-chevron');
+        const isHidden = container.style.display === 'none';
+        container.style.display = isHidden ? 'block' : 'none';
+        chevron.style.transform = isHidden ? 'rotate(180deg)' : '';
+    }
+
+    // Load night-by-night diary entries for admin client view
+    async function loadDiaryEntriesDetail(clientId) {
+        const tableEl = document.getElementById('diary-detail-table');
+        const noticeEl = document.getElementById('no-diary-detail-notice');
+
+        try {
+            const snapshot = await db.collection('diaryEntries')
+                .where('userId', '==', clientId)
+                .orderBy('date', 'desc')
+                .limit(30)
+                .get();
+
+            if (snapshot.empty) {
+                tableEl.innerHTML = '';
+                noticeEl.style.display = 'block';
+                return;
+            }
+
+            noticeEl.style.display = 'none';
+            const entries = snapshot.docs.map(doc => doc.data());
+
+            // Build table
+            let html = `<table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="border-bottom: 2px solid rgba(201,169,98,0.3); text-align: left;">
+                        <th style="padding: 10px 8px; color: var(--text-light); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Date</th>
+                        <th style="padding: 10px 8px; color: var(--text-light); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Bedtime</th>
+                        <th style="padding: 10px 8px; color: var(--text-light); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Wake</th>
+                        <th style="padding: 10px 8px; color: var(--text-light); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">TST</th>
+                        <th style="padding: 10px 8px; color: var(--text-light); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">SE%</th>
+                        <th style="padding: 10px 8px; color: var(--text-light); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Quality</th>
+                        <th style="padding: 10px 8px; color: var(--text-light); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Notes</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+            entries.forEach(entry => {
+                const date = entry.date || '--';
+                const bedTime = entry.bedTime || '--';
+                const wakeTime = entry.wakeTime || '--';
+
+                // Calculate TST and SE
+                let tst = '--', se = '--', seColor = 'var(--navy)';
+                if (entry.bedTime && entry.wakeTime) {
+                    const bedParts = entry.bedTime.split(':');
+                    const wakeParts = entry.wakeTime.split(':');
+                    let bedMin = parseInt(bedParts[0]) * 60 + parseInt(bedParts[1]);
+                    let wakeMin = parseInt(wakeParts[0]) * 60 + parseInt(wakeParts[1]);
+                    let timeInBed = wakeMin - bedMin;
+                    if (timeInBed < 0) timeInBed += 1440;
+
+                    const sol = entry.sleepOnsetLatency || 0;
+                    const waso = entry.waso || 0;
+                    const totalSleep = timeInBed - sol - waso;
+                    const tstHours = Math.floor(Math.max(0, totalSleep) / 60);
+                    const tstMins = Math.max(0, totalSleep) % 60;
+                    tst = `${tstHours}h ${tstMins}m`;
+
+                    const seVal = timeInBed > 0 ? Math.round((Math.max(0, totalSleep) / timeInBed) * 100) : 0;
+                    se = seVal + '%';
+                    seColor = seVal >= 85 ? '#2e7d32' : seVal >= 75 ? '#f9a825' : '#c62828';
+                }
+
+                const quality = entry.sleepQuality ? `${entry.sleepQuality}/10` : '--';
+                const notes = entry.notes || entry.comments || '';
+                const truncatedNotes = notes.length > 40 ? notes.substring(0, 40) + '...' : notes;
+
+                html += `
+                    <tr style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+                        <td style="padding: 10px 8px; color: var(--navy); font-weight: 500;">${date}</td>
+                        <td style="padding: 10px 8px;">${bedTime}</td>
+                        <td style="padding: 10px 8px;">${wakeTime}</td>
+                        <td style="padding: 10px 8px;">${tst}</td>
+                        <td style="padding: 10px 8px; font-weight: 600; color: ${seColor};">${se}</td>
+                        <td style="padding: 10px 8px;">${quality}</td>
+                        <td style="padding: 10px 8px; color: var(--text-light); font-size: 12px;" title="${notes}">${truncatedNotes}</td>
+                    </tr>`;
+            });
+
+            html += '</tbody></table>';
+            tableEl.innerHTML = html;
+        } catch (error) {
+            console.error('Error loading diary entries detail:', error);
+            tableEl.innerHTML = '';
+            noticeEl.style.display = 'block';
+        }
+    }
+
+    // Load entry vs exit comparison for admin client view
+    async function loadEntryExitComparison(clientId) {
+        const card = document.getElementById('entry-exit-card');
+        const container = document.getElementById('entry-exit-comparisons');
+
+        try {
+            const [questionnaires, diarySnapshot] = await Promise.all([
+                (async () => {
+                    const snap = await db.collection('questionnaireAssignments')
+                        .where('userId', '==', clientId)
+                        .where('status', '==', 'completed')
+                        .get();
+                    return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                })(),
+                (async () => {
+                    const snap = await db.collection('diaryEntries')
+                        .where('userId', '==', clientId)
+                        .get();
+                    return snap.docs.map(doc => doc.data());
+                })()
+            ]);
+
+            const comparisons = [];
+
+            // Compare questionnaire scores (instruments with 2+ completions)
+            const byInstrument = {};
+            questionnaires.forEach(q => {
+                if (!byInstrument[q.instrumentId]) byInstrument[q.instrumentId] = [];
+                byInstrument[q.instrumentId].push(q);
+            });
+
+            for (const [instrumentId, results] of Object.entries(byInstrument)) {
+                if (results.length < 2) continue;
+                results.sort((a, b) => {
+                    const aTime = a.completedAt?.toDate?.() || new Date(0);
+                    const bTime = b.completedAt?.toDate?.() || new Date(0);
+                    return aTime - bTime;
+                });
+                const first = results[0];
+                const last = results[results.length - 1];
+                const firstScore = first.result?.score ?? first.score;
+                const lastScore = last.result?.score ?? last.score;
+
+                if (firstScore != null && lastScore != null) {
+                    const change = lastScore - firstScore;
+                    comparisons.push({
+                        label: first.instrumentName || instrumentId.toUpperCase(),
+                        firstValue: firstScore,
+                        lastValue: lastScore,
+                        change,
+                        improved: change < 0,
+                        unit: 'pts'
+                    });
+                }
+            }
+
+            // Compare diary (first 3 vs last 3 nights)
+            if (diarySnapshot.length >= 6) {
+                const sorted = [...diarySnapshot].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+                const firstThree = sorted.slice(0, 3);
+                const lastThree = sorted.slice(-3);
+
+                const avgSE = (entries) => {
+                    let total = 0, count = 0;
+                    entries.forEach(e => { if (e.sleepEfficiency != null) { total += e.sleepEfficiency; count++; } });
+                    return count > 0 ? Math.round(total / count) : null;
+                };
+
+                const firstSE = avgSE(firstThree);
+                const lastSE = avgSE(lastThree);
+                if (firstSE != null && lastSE != null) {
+                    comparisons.push({
+                        label: 'Sleep Efficiency',
+                        firstValue: firstSE + '%',
+                        lastValue: lastSE + '%',
+                        change: lastSE - firstSE,
+                        improved: lastSE > firstSE,
+                        unit: '%'
+                    });
+                }
+            }
+
+            if (comparisons.length === 0) {
+                card.style.display = 'none';
+                return;
+            }
+
+            card.style.display = 'block';
+            container.innerHTML = comparisons.map(c => {
+                const arrow = c.improved ? '&#9650;' : (c.change === 0 ? '&#9654;' : '&#9660;');
+                const color = c.improved ? '#2e7d32' : (c.change === 0 ? '#888' : '#c62828');
+
+                return `
+                    <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, rgba(15,28,46,0.05) 0%, rgba(15,28,46,0.02) 100%); border-radius: 10px;">
+                        <div style="font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">${c.label}</div>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <span style="font-size: 20px; font-weight: 600; color: var(--navy);">${c.firstValue}</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                            <span style="font-size: 20px; font-weight: 600; color: var(--navy);">${c.lastValue}</span>
+                        </div>
+                        <div style="font-size: 12px; font-weight: 600; color: ${color}; margin-top: 6px;">${arrow} ${c.change > 0 ? '+' : ''}${c.change} ${c.unit}</div>
+                    </div>
+                `;
+            }).join('');
+
+        } catch (error) {
+            console.error('Error loading entry/exit comparison:', error);
+            card.style.display = 'none';
         }
     }
 

@@ -728,6 +728,73 @@ const FirebaseDB = {
     },
 
     /**
+     * Auto-assign onboarding questionnaires based on client type
+     * Called after tour completion. Prevents duplicates by checking existing assignments.
+     */
+    async autoAssignOnboardingQuestionnaires(userId, clientType) {
+        try {
+            // Check if user already has any assignments (prevent duplicates)
+            const existing = await db.collection('questionnaireAssignments')
+                .where('userId', '==', userId)
+                .get();
+
+            if (!existing.empty) {
+                console.log('User already has questionnaire assignments, skipping auto-assign');
+                return [];
+            }
+
+            // Determine instruments by client type
+            const instrumentMap = {
+                hotel: [
+                    { id: 'isi', name: 'Insomnia Severity Index' },
+                    { id: 'ess', name: 'Epworth Sleepiness Scale' }
+                ],
+                athlete: [
+                    { id: 'isi', name: 'Insomnia Severity Index' },
+                    { id: 'ess', name: 'Epworth Sleepiness Scale' }
+                ],
+                executive: [
+                    { id: 'isi', name: 'Insomnia Severity Index' },
+                    { id: 'ess', name: 'Epworth Sleepiness Scale' },
+                    { id: 'phq9', name: 'Patient Health Questionnaire' }
+                ]
+            };
+
+            const instruments = instrumentMap[clientType] || instrumentMap.hotel;
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(23, 59, 59, 0);
+
+            const batch = db.batch();
+            const assignmentIds = [];
+
+            for (const instrument of instruments) {
+                const ref = db.collection('questionnaireAssignments').doc();
+                batch.set(ref, {
+                    userId,
+                    instrumentId: instrument.id,
+                    instrumentName: instrument.name,
+                    status: 'pending',
+                    dueDate: tomorrow,
+                    notes: 'Automatically assigned during onboarding',
+                    assignedBy: 'system',
+                    assignedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    completedAt: null,
+                    result: null
+                });
+                assignmentIds.push(ref.id);
+            }
+
+            await batch.commit();
+            console.log(`Auto-assigned ${instruments.length} questionnaires for ${clientType} client`);
+            return assignmentIds;
+        } catch (error) {
+            console.error('Error auto-assigning questionnaires:', error);
+            return [];
+        }
+    },
+
+    /**
      * Get user's assigned questionnaires (client)
      */
     async getUserQuestionnaires(userId) {
