@@ -663,6 +663,62 @@
             margin-top: 10px;
         }
 
+        .dashboard-score-ring {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin: 5px 0;
+        }
+
+        .dashboard-score-ring svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .dashboard-score-ring span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .daily-tip-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            background: linear-gradient(135deg, var(--navy) 0%, #1a2744 100%);
+            border-left: 4px solid var(--gold);
+            border-radius: var(--radius-lg);
+            padding: 22px 25px;
+            margin-bottom: 30px;
+        }
+
+        .daily-tip-card .tip-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .daily-tip-card .tip-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .daily-tip-card .tip-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 17px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.92);
+        }
+
         /* Recent Activity */
         .activity-list {
             background: white;
@@ -4115,6 +4171,35 @@
                     <div class="value" id="unlockedCount">0</div>
                     <p>Therapeutic modules</p>
                 </div>
+
+                <div class="dashboard-card clickable" onclick="showSection('diary'); switchDiaryTab('analytics')">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3>Sleep Score</h3>
+                    <div class="value">
+                        <div class="dashboard-score-ring">
+                            <svg viewBox="0 0 60 60">
+                                <circle cx="30" cy="30" r="24" fill="none" stroke="rgba(201,169,98,0.15)" stroke-width="4"/>
+                                <circle id="dashboardScoreRing" cx="30" cy="30" r="24" fill="none" stroke="var(--gold)" stroke-width="4" stroke-linecap="round" stroke-dasharray="150.80" stroke-dashoffset="150.80" transform="rotate(-90 30 30)" style="transition: stroke-dashoffset 1s ease, stroke 0.5s ease;"/>
+                            </svg>
+                            <span id="dashboardSleepScore">—</span>
+                        </div>
+                    </div>
+                    <p>Based on last 7 days</p>
+                </div>
+            </div>
+
+            <!-- Daily Sleep Tip -->
+            <div class="daily-tip-card">
+                <div class="tip-icon">💡</div>
+                <div class="tip-content">
+                    <div class="tip-label">DAILY SLEEP TIP</div>
+                    <div class="tip-text" id="dailyTip">Consistency is key — going to bed and waking up at the same time every day is the single most powerful thing you can do for your sleep.</div>
+                </div>
             </div>
 
             <!-- Progress Comparison Widget -->
@@ -5436,6 +5521,16 @@
                             <label>Notes for Dr. Alen (optional)</label>
                             <textarea id="profileNotes" rows="3" placeholder="Any additional information about your sleep concerns..." style="width: 100%; padding: 12px; border: 1px solid rgba(201, 169, 98, 0.3); border-radius: var(--radius-sm); font-family: 'Montserrat', sans-serif; font-size: 14px;"></textarea>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Download My Data -->
+                <div style="margin-top: 30px; padding-top: 24px; border-top: 1px solid rgba(201,169,98,0.2);">
+                    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); margin-bottom: 8px;">Download My Data</h3>
+                    <p style="font-size: 13px; color: var(--text-light); margin-bottom: 18px; line-height: 1.5;">Export your sleep data as CSV files for your records or to share with your physician.</p>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <button onclick="exportDiaryCSV()" class="btn-secondary" style="padding: 10px 20px; font-size: 11px;">Export Sleep Diary</button>
+                        <button onclick="exportAssessmentsCSV()" class="btn-secondary" style="padding: 10px 20px; font-size: 11px;">Export Assessments</button>
                     </div>
                 </div>
             </div>
@@ -6762,10 +6857,8 @@
         });
 
         // Check if this is a new user (never completed onboarding)
-        console.log('Onboarding check:', { onboardingComplete: profile.onboardingComplete, clientType: profile.clientType });
         if (profile.onboardingComplete !== true) {
             const firstName = (profile.displayName || '').split(' ')[0] || 'Friend';
-            console.log('Showing welcome modal for:', firstName);
             setTimeout(() => {
                 showWelcomeModal(firstName, profile.clientType || 'hotel');
             }, 500);
@@ -6850,8 +6943,172 @@
             });
             renderActivities(activities);
 
+            // Dashboard sleep score
+            updateDashboardSleepScore(diary);
+
+            // Daily tip
+            loadDailyTip();
+
         } catch (error) {
             console.error('Error loading dashboard:', error);
+        }
+    }
+
+    // Compute sleep score (pure calculation, reusable)
+    function computeSleepScore(entries) {
+        if (entries.length < 3) return null;
+        const recent = entries.slice(0, 7);
+
+        // Duration score (7-9h optimal)
+        const avgDuration = recent.reduce((s, e) => s + (e.totalSleepTime || 0), 0) / recent.length;
+        const dh = avgDuration / 60;
+        let durationScore;
+        if (dh >= 7 && dh <= 9) durationScore = 100;
+        else if (dh >= 6 && dh < 7) durationScore = 70 + (dh - 6) * 30;
+        else if (dh > 9 && dh <= 10) durationScore = 100 - (dh - 9) * 20;
+        else if (dh < 6) durationScore = Math.max(0, dh / 6 * 70);
+        else durationScore = Math.max(0, 80 - (dh - 10) * 20);
+
+        // Efficiency score
+        const avgEff = recent.reduce((s, e) => s + (e.sleepEfficiency || 0), 0) / recent.length;
+        const efficiencyScore = Math.min(100, avgEff * 1.18);
+
+        // Quality score (1-5 → 0-100)
+        const avgQ = recent.reduce((s, e) => s + (e.quality || 3), 0) / recent.length;
+        const qualityScore = ((avgQ - 1) / 4) * 100;
+
+        // Consistency score (bedtime variance)
+        const bedtimes = recent.filter(e => e.bedtime).map(e => {
+            const [h, m] = e.bedtime.split(':').map(Number);
+            return h < 12 ? h + 24 + m / 60 : h + m / 60;
+        });
+        let consistencyScore = 100;
+        if (bedtimes.length >= 3) {
+            const mean = bedtimes.reduce((a, b) => a + b, 0) / bedtimes.length;
+            const variance = bedtimes.reduce((s, bt) => s + Math.pow(bt - mean, 2), 0) / bedtimes.length;
+            consistencyScore = Math.max(0, 100 - Math.sqrt(variance) * 20);
+        }
+
+        return Math.round(durationScore * 0.30 + efficiencyScore * 0.30 + qualityScore * 0.25 + consistencyScore * 0.15);
+    }
+
+    // Update dashboard sleep score card
+    function updateDashboardSleepScore(diary) {
+        const scoreEl = document.getElementById('dashboardSleepScore');
+        const ringEl = document.getElementById('dashboardScoreRing');
+        if (!scoreEl || !ringEl) return;
+
+        const score = computeSleepScore(diary);
+        if (score === null) {
+            scoreEl.textContent = '—';
+            return;
+        }
+
+        scoreEl.textContent = score;
+        const circumference = 150.80; // 2 * π * 24
+        const offset = circumference - (score / 100) * circumference;
+        ringEl.style.strokeDashoffset = offset;
+
+        // Color coding
+        let color;
+        if (score >= 80) color = '#4CAF50';
+        else if (score >= 60) color = '#FFA726';
+        else color = '#EF5350';
+        ringEl.style.stroke = color;
+    }
+
+    // Daily sleep tip rotation
+    function loadDailyTip() {
+        const tips = [
+            "Consistency is key — going to bed and waking up at the same time every day is the single most powerful thing you can do for your sleep.",
+            "Your bedroom temperature matters more than you think. The ideal range is 65–68°F (18–20°C) for deep sleep.",
+            "Morning sunlight exposure within 30 minutes of waking helps set your circadian clock and improves sleep onset at night.",
+            "Caffeine has a half-life of 5–7 hours. That afternoon coffee at 3 PM means half the caffeine is still in your system at 10 PM.",
+            "Alcohol may help you fall asleep faster, but it fragments your sleep architecture and suppresses REM sleep in the second half of the night.",
+            "The 'blue light' effect is real but overblown — it's the mental stimulation from screens that matters most. Try a phone-free wind-down routine.",
+            "Regular exercise improves sleep quality significantly, but intense workouts within 2 hours of bedtime can delay sleep onset.",
+            "Your body's core temperature drops by about 2°F during sleep. A warm bath 1–2 hours before bed accelerates this natural cooling process.",
+            "Naps can be restorative, but keep them under 30 minutes and before 3 PM to avoid disrupting nighttime sleep.",
+            "Sleep is not a luxury — it's when your brain clears metabolic waste through the glymphatic system, protecting against neurodegeneration.",
+            "If you can't fall asleep within 20 minutes, get up and do something calming in dim light. Lying in bed awake trains your brain to associate bed with wakefulness.",
+            "Magnesium glycinate before bed may improve sleep quality. It's one of the few supplements with solid evidence behind it.",
+            "Weekend sleep-ins feel good but create 'social jet lag' — try to stay within 1 hour of your weekday schedule.",
+            "Your gut microbiome influences your sleep through serotonin production. A diet rich in fiber and fermented foods supports both gut and sleep health.",
+            "Weighted blankets (8–12% of body weight) can reduce anxiety and improve sleep onset through deep pressure stimulation.",
+            "Sleep debt is cumulative but recovery isn't linear. One good night won't erase a week of poor sleep — consistency matters more than catch-up.",
+            "The 4-7-8 breathing technique (inhale 4s, hold 7s, exhale 8s) activates the parasympathetic nervous system and can reduce time to fall asleep.",
+            "Dim your home lights 2 hours before bed. Overhead lighting suppresses melatonin production more than table or floor lamps.",
+            "Journaling for 5 minutes before bed — especially a to-do list for tomorrow — reduces cognitive arousal and helps you fall asleep faster.",
+            "Sleep quality matters more than quantity. Seven hours of consolidated sleep is better than nine hours of fragmented sleep.",
+            "Your chronotype (morning lark vs. night owl) is largely genetic. Work with your biology rather than against it when possible.",
+            "Tart cherry juice is one of the few natural food sources of melatonin and has been shown to modestly improve sleep duration.",
+            "Reading a physical book before bed is one of the most effective wind-down activities — it reduces stress by 68% in just 6 minutes.",
+            "Keep your bedroom exclusively for sleep and intimacy. Working in bed weakens the mental association between your bedroom and rest.",
+            "Sleep restriction therapy — temporarily limiting time in bed — is counterintuitive but is the most effective behavioral intervention for insomnia.",
+            "White noise or pink noise can improve sleep in noisy environments by masking disruptive sounds and providing a consistent audio backdrop.",
+            "The post-lunch dip in alertness (1–3 PM) is driven by your circadian rhythm, not your lunch. It happens even if you skip eating.",
+            "Cognitive Behavioral Therapy for Insomnia (CBT-I) is more effective than sleeping pills for chronic insomnia — and the effects last longer.",
+            "Your sleep need is individual and genetically influenced. Most adults need 7–9 hours, but a rare few genuinely function well on 6.",
+            "Gratitude practices before bed activate brain regions associated with sleep quality. Think of three good things from your day as you drift off."
+        ];
+
+        const tipEl = document.getElementById('dailyTip');
+        if (!tipEl) return;
+        const dayIndex = Math.floor(Date.now() / 86400000) % tips.length;
+        tipEl.textContent = tips[dayIndex];
+    }
+
+    // CSV download helper
+    function downloadCSV(filename, csvContent) {
+        const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    // Export sleep diary as CSV
+    async function exportDiaryCSV() {
+        try {
+            const entries = await FirebaseDB.getDiaryEntries(currentUser.uid, 365);
+            if (entries.length === 0) {
+                alert('No sleep diary entries to export.');
+                return;
+            }
+            const header = 'Date,Bedtime,Wake Time,Total Sleep (min),Sleep Efficiency (%),Quality (1-5),Notes';
+            const rows = entries.map(e => {
+                const notes = (e.notes || '').replace(/"/g, '""');
+                return `${e.date || ''},${e.bedtime || ''},${e.wakeTime || ''},${e.totalSleepTime || ''},${(e.sleepEfficiency || '').toString()},${e.quality || ''},"${notes}"`;
+            });
+            downloadCSV(`sleep-diary-${new Date().toISOString().split('T')[0]}.csv`, [header, ...rows].join('\n'));
+        } catch (err) {
+            console.error('Export diary error:', err);
+            alert('Failed to export diary data. Please try again.');
+        }
+    }
+
+    // Export assessments as CSV
+    async function exportAssessmentsCSV() {
+        try {
+            const assessments = await FirebaseDB.getUserAssessments(currentUser.uid);
+            if (assessments.length === 0) {
+                alert('No assessments to export.');
+                return;
+            }
+            const header = 'Date,Type,Overall Score,Risk Level';
+            const rows = assessments.map(a => {
+                const date = a.createdAt?.toDate ? a.createdAt.toDate().toISOString().split('T')[0] : '';
+                const type = (a.assessmentType || a.type || 'General').replace(/"/g, '""');
+                return `${date},"${type}",${a.overallScore || ''},${a.riskLevel || ''}`;
+            });
+            downloadCSV(`sleep-assessments-${new Date().toISOString().split('T')[0]}.csv`, [header, ...rows].join('\n'));
+        } catch (err) {
+            console.error('Export assessments error:', err);
+            alert('Failed to export assessment data. Please try again.');
         }
     }
 
