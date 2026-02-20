@@ -4297,8 +4297,8 @@
                     <div class="diary-section">
                         <label class="diary-label">1. What date are you reporting on?</label>
                         <div class="diary-date-pills">
-                            <button type="button" class="date-pill" onclick="setDiaryDate(-1)">Last Night</button>
-                            <button type="button" class="date-pill active" onclick="setDiaryDate(0)">Tonight</button>
+                            <button type="button" class="date-pill" onclick="setDiaryDate(-1, event)">Last Night</button>
+                            <button type="button" class="date-pill active" onclick="setDiaryDate(0, event)">Tonight</button>
                         </div>
                         <input type="date" id="diaryDate" required style="margin-top: 10px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px;">
                     </div>
@@ -6318,7 +6318,7 @@
             position: 'right'
         },
         {
-            target: '.sidebar-nav li:nth-child(5) a',
+            target: '.sidebar-nav li:nth-child(6) a',
             title: 'Messages',
             text: 'Have questions? Send me a message anytime. I typically respond within 24-48 hours.',
             position: 'right'
@@ -6390,10 +6390,12 @@
 
         // Save consent to Firestore
         if (currentUser) {
-            db.collection('users').doc(currentUser.uid).update({
-                onboardingConsentGiven: true,
-                onboardingConsentDate: firebase.firestore.FieldValue.serverTimestamp()
-            });
+            try {
+                db.collection('users').doc(currentUser.uid).update({
+                    onboardingConsentGiven: true,
+                    onboardingConsentDate: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            } catch (e) { /* non-critical */ }
         }
 
         // Start tour
@@ -6478,16 +6480,20 @@
 
         // Mark onboarding complete
         if (currentUser) {
-            await db.collection('users').doc(currentUser.uid).update({
-                onboardingComplete: true,
-                onboardingCompletedAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
+            try {
+                await db.collection('users').doc(currentUser.uid).update({
+                    onboardingComplete: true,
+                    onboardingCompletedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
 
-            // Auto-assign baseline questionnaires based on client type
-            const clientType = userProfile?.clientType || 'hotel';
-            const assigned = await FirebaseDB.autoAssignOnboardingQuestionnaires(currentUser.uid, clientType);
-            if (assigned.length > 0) {
-                updateQuestionnaireBadge();
+                // Auto-assign baseline questionnaires based on client type
+                const clientType = userProfile?.clientType || 'hotel';
+                const assigned = await FirebaseDB.autoAssignOnboardingQuestionnaires(currentUser.uid, clientType);
+                if (assigned.length > 0) {
+                    updateQuestionnaireBadge();
+                }
+            } catch (e) {
+                console.error('Onboarding save error:', e);
             }
         }
 
@@ -7335,24 +7341,82 @@
                         <p>${date} - ${a.clientType || 'General'}</p>
                     </div>
                     <div class="assessment-actions">
-                        <button class="btn-secondary" onclick="viewAssessment('${a.id}')">View Details</button>
+                        <button class="btn-secondary" onclick="viewAssessment('${a.id}', this)">View Details</button>
                     </div>
                 </div>
             `;
         }).join('');
     }
 
+    // View assessment details (client portal)
+    async function viewAssessment(assessmentId, btn) {
+        const item = btn.closest('.assessment-item');
+        const existing = item.nextElementSibling;
+        if (existing && existing.classList.contains('assessment-detail-panel')) {
+            existing.remove();
+            btn.textContent = 'View Details';
+            return;
+        }
+
+        btn.textContent = 'Loading...';
+        try {
+            const assessments = await FirebaseDB.getUserAssessments(currentUser.uid);
+            const a = assessments.find(x => x.id === assessmentId);
+            if (!a) { btn.textContent = 'View Details'; return; }
+
+            const scores = a.scores || {};
+            const recs = a.recommendations || [];
+
+            let scoreRows = '';
+            const scoreLabels = {
+                epworth: 'Daytime Sleepiness (ESS)',
+                isi: 'Insomnia Severity (ISI)',
+                stopbang: 'Sleep Apnea Risk',
+                environment: 'Sleep Environment',
+                sleepSchedule: 'Sleep Schedule',
+                circadian: 'Circadian Rhythm'
+            };
+            for (const [key, label] of Object.entries(scoreLabels)) {
+                if (scores[key] !== undefined) {
+                    const val = typeof scores[key] === 'object' ? (scores[key].score ?? scores[key].total ?? JSON.stringify(scores[key])) : scores[key];
+                    scoreRows += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(201,169,98,0.1);"><span>${label}</span><strong>${val}</strong></div>`;
+                }
+            }
+
+            let recList = '';
+            if (recs.length > 0) {
+                recList = '<div style="margin-top:12px;"><strong style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--gold-dark);">Recommendations</strong>' +
+                    recs.slice(0, 5).map(r => `<div style="padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.05);font-size:13px;">${r.text || r}</div>`).join('') + '</div>';
+            }
+
+            const panel = document.createElement('div');
+            panel.className = 'assessment-detail-panel';
+            panel.style.cssText = 'padding:20px;background:var(--cream);border-radius:var(--radius-md);margin:10px 0;border-left:3px solid var(--gold);';
+            panel.innerHTML = `
+                <h4 style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--navy);margin-bottom:12px;">Assessment Breakdown</h4>
+                <div style="font-size:13px;">${scoreRows}</div>
+                ${a.needsConsultation ? '<div style="margin-top:10px;padding:8px 12px;background:rgba(198,40,40,0.08);border-radius:var(--radius-sm);font-size:12px;color:var(--danger);">Professional consultation recommended based on your results.</div>' : ''}
+                ${recList}
+            `;
+            item.after(panel);
+            btn.textContent = 'Hide Details';
+        } catch (err) {
+            console.error('Error viewing assessment:', err);
+            btn.textContent = 'View Details';
+        }
+    }
+
     // ==================== DIARY HELPER FUNCTIONS ====================
 
     // Set diary date (0 = today, -1 = yesterday)
-    function setDiaryDate(offset) {
+    function setDiaryDate(offset, e) {
         const date = new Date();
         date.setDate(date.getDate() + offset);
         document.getElementById('diaryDate').value = date.toISOString().split('T')[0];
 
         // Update pills
         document.querySelectorAll('.date-pill').forEach(pill => pill.classList.remove('active'));
-        event.target.classList.add('active');
+        if (e && e.target) e.target.classList.add('active');
     }
 
     // Setup diary pill click handlers
@@ -10030,17 +10094,46 @@
     async function updateProfile(e) {
         e.preventDefault();
 
-        const name = document.getElementById('profileName').value;
-        const phone = document.getElementById('profilePhone').value;
-        const clientType = document.getElementById('profileClientType').value;
+        const data = {
+            displayName: document.getElementById('profileName').value,
+            phone: document.getElementById('profilePhone').value,
+            clientType: document.getElementById('profileClientType').value,
+            age: document.getElementById('profileAge').value || null,
+            sex: document.getElementById('profileSex').value || null,
+            height: document.getElementById('profileHeight').value || null,
+            weight: document.getElementById('profileWeight').value || null,
+            timezone: document.getElementById('profileTimezone').value || null,
+            sleepGoal: document.getElementById('profileSleepGoal').value || null,
+            notes: document.getElementById('profileNotes').value || null
+        };
 
-        await db.collection('users').doc(currentUser.uid).update({
-            displayName: name,
-            phone,
-            clientType
-        });
+        try {
+            await db.collection('users').doc(currentUser.uid).update(data);
+            updateProfileSidebarStats(data);
+            alert('Profile updated!');
+        } catch (err) {
+            console.error('Profile update error:', err);
+            alert('Failed to update profile. Please try again.');
+        }
+    }
 
-        showToast('Your profile has been updated successfully.', 'success', 'Profile Updated');
+    // Update BMI and sleep score in profile sidebar
+    function updateProfileSidebarStats(profile) {
+        const h = parseFloat(profile?.height);
+        const w = parseFloat(profile?.weight);
+        const bmiEl = document.getElementById('profileBMI');
+        const bmiLabel = document.getElementById('profileBMILabel');
+        if (bmiEl && h > 0 && w > 0) {
+            const heightM = h / 100;
+            const bmi = (w / (heightM * heightM)).toFixed(1);
+            bmiEl.textContent = bmi;
+            if (bmiLabel) {
+                if (bmi < 18.5) bmiLabel.textContent = 'Underweight';
+                else if (bmi < 25) bmiLabel.textContent = 'Normal';
+                else if (bmi < 30) bmiLabel.textContent = 'Overweight';
+                else bmiLabel.textContent = 'Obese';
+            }
+        }
     }
 
     // Utility: format time ago
@@ -10594,6 +10687,14 @@
             document.getElementById('profileName').value = demoProfile.displayName || '';
             document.getElementById('profilePhone').value = demoProfile.phone || '';
             document.getElementById('profileClientType').value = demoProfile.clientType || 'athlete';
+            document.getElementById('profileAge').value = demoProfile.age || '';
+            document.getElementById('profileSex').value = demoProfile.sex || '';
+            document.getElementById('profileHeight').value = demoProfile.height || '';
+            document.getElementById('profileWeight').value = demoProfile.weight || '';
+            document.getElementById('profileTimezone').value = demoProfile.timezone || '';
+            document.getElementById('profileSleepGoal').value = demoProfile.sleepGoal || '';
+            document.getElementById('profileNotes').value = demoProfile.notes || '';
+            updateProfileSidebarStats(demoProfile);
             return;
         }
 
@@ -10635,6 +10736,25 @@
             document.getElementById('profileName').value = profile.displayName || '';
             document.getElementById('profilePhone').value = profile.phone || '';
             document.getElementById('profileClientType').value = profile.clientType || 'athlete';
+            document.getElementById('profileAge').value = profile.age || '';
+            document.getElementById('profileSex').value = profile.sex || '';
+            document.getElementById('profileHeight').value = profile.height || '';
+            document.getElementById('profileWeight').value = profile.weight || '';
+            document.getElementById('profileTimezone').value = profile.timezone || '';
+            document.getElementById('profileSleepGoal').value = profile.sleepGoal || '';
+            document.getElementById('profileNotes').value = profile.notes || '';
+
+            // Update sidebar stats
+            updateProfileSidebarStats(profile);
+
+            // Populate profile sleep score from latest assessment
+            try {
+                const assessments = await FirebaseDB.getUserAssessments(user.uid);
+                if (assessments.length > 0) {
+                    const scoreEl = document.getElementById('profileSleepScore');
+                    if (scoreEl) scoreEl.textContent = assessments[0].overallScore || '--';
+                }
+            } catch (e) { /* non-critical */ }
         }
     });
 </script>

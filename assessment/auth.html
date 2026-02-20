@@ -879,7 +879,7 @@
                     marketingConsent: marketingConsent
                 });
             } catch (err) {
-                console.log('Consent update will be saved on next login');
+                // Consent update will be saved on next login
             }
 
             // Auto-assign the sleep assessment to new user
@@ -910,7 +910,7 @@
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
             } catch (err) {
-                console.log('Auto-assignment will be handled on first login:', err);
+                // Auto-assignment will be handled on first login
             }
 
             window.location.href = 'account.html';

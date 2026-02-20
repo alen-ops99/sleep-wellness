@@ -5031,8 +5031,15 @@ Sleep Wellness by Dr. Alen`);
 
         if (!text || !currentConversation) return;
 
+        const savedText = text;
         input.value = '';
-        await FirebaseDB.sendMessage(currentConversation.id, currentUser.uid, text);
+        try {
+            await FirebaseDB.sendMessage(currentConversation.id, currentUser.uid, savedText);
+        } catch (err) {
+            console.error('Failed to send message:', err);
+            input.value = savedText;
+            alert('Message failed to send. Please try again.');
+        }
     }
 
     function handleMessageKeypress(e) {
@@ -5895,7 +5902,7 @@ Sleep Wellness by Dr. Alen`);
     // View questionnaire result details
     async function viewQuestionnaireResult(resultId) {
         try {
-            const doc = await db.collection('questionnaireResults').doc(resultId).get();
+            const doc = await db.collection('questionnaireAssignments').doc(resultId).get();
             if (!doc.exists) {
                 alert('Result not found');
                 return;
