@@ -496,6 +496,14 @@ Remember: You're here to educate and support, not to diagnose or treat.`,
         this.addMessage('user', text);
         input.value = '';
 
+        // Check for sleep logging intent
+        const sleepLogResult = this.detectSleepLogIntent(text);
+        if (sleepLogResult) {
+            this.hideTypingIndicator();
+            this.showSleepLogConfirmation(sleepLogResult);
+            return;
+        }
+
         // Show loading
         this.isLoading = true;
         this.showTypingIndicator();
@@ -704,6 +712,96 @@ Remember: You're here to educate and support, not to diagnose or treat.`,
             </div>
         `;
         document.getElementById('chatbot-suggestions').style.display = 'flex';
+    },
+
+    // Detect sleep logging intent from natural language
+    detectSleepLogIntent(text) {
+        const lower = text.toLowerCase();
+        const logPatterns = [
+            /(?:i\s+)?(?:slept|went to (?:bed|sleep)|fell asleep)\s+(?:at\s+)?(\d{1,2}(?::\d{2})?\s*(?:am|pm)?)/i,
+            /(?:woke\s+up|got\s+up|woke)\s+(?:at\s+)?(\d{1,2}(?::\d{2})?\s*(?:am|pm)?)/i,
+            /(?:log|record|track)\s+(?:my\s+)?sleep/i,
+            /(?:slept|sleep)\s+(?:for\s+)?(\d+(?:\.\d+)?)\s*(?:hours|hrs|h)/i,
+        ];
+
+        if (!logPatterns.some(p => p.test(lower))) return null;
+
+        // Try to extract times
+        let bedtime = null;
+        let waketime = null;
+        let duration = null;
+
+        const bedMatch = lower.match(/(?:(?:went to (?:bed|sleep)|fell asleep|slept)\s+(?:at\s+)?)(\d{1,2}(?::\d{2})?\s*(?:am|pm)?)/i);
+        const wakeMatch = lower.match(/(?:(?:woke\s*(?:up)?|got\s+up)\s+(?:at\s+)?)(\d{1,2}(?::\d{2})?\s*(?:am|pm)?)/i);
+        const durationMatch = lower.match(/(?:slept|sleep)\s+(?:for\s+)?(\d+(?:\.\d+)?)\s*(?:hours|hrs|h)/i);
+
+        if (bedMatch) bedtime = bedMatch[1].trim();
+        if (wakeMatch) waketime = wakeMatch[1].trim();
+        if (durationMatch) duration = parseFloat(durationMatch[1]);
+
+        if (!bedtime && !waketime && !duration) return null;
+
+        return { bedtime, waketime, duration };
+    },
+
+    // Show sleep log confirmation card in chat
+    showSleepLogConfirmation(data) {
+        const messagesContainer = document.getElementById('chatbot-messages');
+
+        let summary = 'I detected sleep information:';
+        if (data.bedtime) summary += `\n• Bedtime: ${data.bedtime}`;
+        if (data.waketime) summary += `\n• Wake time: ${data.waketime}`;
+        if (data.duration) summary += `\n• Duration: ${data.duration} hours`;
+
+        const confirmDiv = document.createElement('div');
+        confirmDiv.className = 'chat-message assistant';
+        confirmDiv.innerHTML = `
+            <div class="message-bubble">
+                <p style="margin-bottom: 12px;">${summary.replace(/\n/g, '<br>')}</p>
+                <div style="background: rgba(201, 169, 98, 0.1); border: 1px solid rgba(201, 169, 98, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 10px;">
+                    <p style="font-size: 13px; color: #0f1c2e; margin-bottom: 10px;"><strong>Save this to your sleep diary?</strong></p>
+                    <div style="display: flex; gap: 8px;">
+                        <button onclick="SleepChatbot.confirmSleepLog(${JSON.stringify(data).replace(/"/g, '&quot;')})" style="background: #0f1c2e; color: #FAF8F5; border: none; padding: 6px 16px; border-radius: 6px; font-size: 12px; cursor: pointer;">Yes, save it</button>
+                        <button onclick="SleepChatbot.addMessage('assistant', 'No problem! Let me know if you need anything else.')" style="background: transparent; color: #0f1c2e; border: 1px solid #ddd; padding: 6px 16px; border-radius: 6px; font-size: 12px; cursor: pointer;">No thanks</button>
+                    </div>
+                </div>
+            </div>
+            <span class="message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+        `;
+        messagesContainer.appendChild(confirmDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        this.isLoading = false;
+    },
+
+    // Confirm and save sleep log entry
+    async confirmSleepLog(data) {
+        try {
+            // Build diary entry from parsed data
+            const today = new Date();
+            const entry = {
+                date: today.toISOString().split('T')[0],
+                bedtime: data.bedtime || '',
+                waketime: data.waketime || '',
+                duration: data.duration || null,
+                quality: null,
+                notes: 'Logged via chatbot'
+            };
+
+            if (typeof FirebaseDB !== 'undefined' && FirebaseDB.saveDiaryEntry) {
+                const userId = window.Auth?.currentUser?.uid || window.currentUser?.uid;
+                if (userId) {
+                    await FirebaseDB.saveDiaryEntry(userId, entry);
+                    this.addMessage('assistant', 'Your sleep data has been saved to your diary! You can view it in the Sleep Diary section. Keep tracking consistently for the best insights.');
+                } else {
+                    this.addMessage('assistant', 'I could not save the entry — no user session found. Please try logging your sleep from the Sleep Diary section instead.');
+                }
+            } else {
+                this.addMessage('assistant', 'Sleep logging is not available in demo mode, but in the full version your entry would be saved to your Sleep Diary.');
+            }
+        } catch (error) {
+            console.error('Error saving sleep log:', error);
+            this.addMessage('assistant', 'Sorry, there was an error saving your sleep data. Please try using the Sleep Diary section directly.');
+        }
     }
 };
 

@@ -405,6 +405,34 @@
             border: 1px solid rgba(201, 169, 98, 0.2);
             padding: 40px 30px;
             text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .science-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            border-color: var(--gold);
+        }
+
+        .science-card .research-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .science-card .explore-text {
+            font-size: 12px;
+            color: var(--gold-dark);
+            margin-top: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-weight: 500;
+        }
+
+        .science-card:hover .explore-text {
+            opacity: 1;
         }
 
         .science-icon {
@@ -964,6 +992,37 @@
     </div>
 </section>
 
+<!-- Results -->
+<section class="results" style="padding-top: 60px;">
+    <div class="section-header">
+        <p class="section-label">Outcomes</p>
+        <h2 class="section-title">What Athletes Experience</h2>
+    </div>
+
+    <div class="results-grid">
+        <div class="result-card">
+            <div class="result-value">-70%</div>
+            <h4>Injury Risk</h4>
+            <p>Dramatically reduced injury rates mean more training days and competition availability</p>
+        </div>
+        <div class="result-card">
+            <div class="result-value">+23%</div>
+            <h4>Reaction Time</h4>
+            <p>Faster reactions and better split-second decision-making under pressure</p>
+        </div>
+        <div class="result-card">
+            <div class="result-value">2x</div>
+            <h4>Recovery Speed</h4>
+            <p>Faster adaptation to training loads and quicker bounce-back between sessions</p>
+        </div>
+        <div class="result-card">
+            <div class="result-value">+Years</div>
+            <h4>Career Longevity</h4>
+            <p>Sustainable practices that extend prime performance years</p>
+        </div>
+    </div>
+</section>
+
 <!-- Science -->
 <section class="science">
     <div class="section-header">
@@ -977,34 +1036,52 @@
 
     <div class="science-grid">
         <div class="science-card">
-            <div class="science-icon">HGH</div>
-            <h4>Growth Hormone</h4>
-            <p>70% of daily HGH is secreted during deep sleep. This is essential for muscle protein synthesis, tissue repair, and adaptation to training loads.</p>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" class="research-link">
+                <div class="science-icon">HGH</div>
+                <h4>Growth Hormone</h4>
+                <p>70% of daily HGH is secreted during deep sleep. This is essential for muscle protein synthesis, tissue repair, and adaptation to training loads.</p>
+                <span class="explore-text">Explore the research →</span>
+            </a>
         </div>
         <div class="science-card">
-            <div class="science-icon">REM</div>
-            <h4>Motor Consolidation</h4>
-            <p>During REM sleep, your brain replays and strengthens the motor patterns you practiced. This is how techniques become automatic.</p>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/12819785/" target="_blank" class="research-link">
+                <div class="science-icon">REM</div>
+                <h4>Motor Consolidation</h4>
+                <p>During REM sleep, your brain replays and strengthens the motor patterns you practiced. This is how techniques become automatic.</p>
+                <span class="explore-text">Explore the research →</span>
+            </a>
         </div>
         <div class="science-card">
-            <div class="science-icon">HRV</div>
-            <h4>Autonomic Recovery</h4>
-            <p>Heart rate variability reflects nervous system recovery. Sleep quality directly predicts next-day readiness and performance capacity.</p>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/28323455/" target="_blank" class="research-link">
+                <div class="science-icon">HRV</div>
+                <h4>Autonomic Recovery</h4>
+                <p>Heart rate variability reflects nervous system recovery. Sleep quality directly predicts next-day readiness and performance capacity.</p>
+                <span class="explore-text">Explore the research →</span>
+            </a>
         </div>
         <div class="science-card">
-            <div class="science-icon">90m</div>
-            <h4>Sleep Cycles</h4>
-            <p>Understanding your 90-minute ultradian rhythms enables strategic scheduling of training, competition, and recovery.</p>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/2178013/" target="_blank" class="research-link">
+                <div class="science-icon">90m</div>
+                <h4>Sleep Cycles</h4>
+                <p>Understanding your 90-minute ultradian rhythms enables strategic scheduling of training, competition, and recovery.</p>
+                <span class="explore-text">Explore the research →</span>
+            </a>
         </div>
         <div class="science-card">
-            <div class="science-icon">Jet Lag</div>
-            <h4>Travel Optimization</h4>
-            <p>Strategic light exposure and timing protocols can compress multi-day jet lag adaptation into hours.</p>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/27594802/" target="_blank" class="research-link">
+                <div class="science-icon">Jet Lag</div>
+                <h4>Travel Optimization</h4>
+                <p>Strategic light exposure and timing protocols can compress multi-day jet lag adaptation into hours.</p>
+                <span class="explore-text">Explore the research →</span>
+            </a>
         </div>
         <div class="science-card">
-            <div class="science-icon">Naps</div>
-            <h4>Strategic Napping</h4>
-            <p>Properly timed naps can enhance afternoon performance, support recovery, and extend effective training capacity.</p>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/17340444/" target="_blank" class="research-link">
+                <div class="science-icon">Naps</div>
+                <h4>Strategic Napping</h4>
+                <p>Properly timed naps can enhance afternoon performance, support recovery, and extend effective training capacity.</p>
+                <span class="explore-text">Explore the research →</span>
+            </a>
         </div>
     </div>
 </section>
@@ -1046,37 +1123,6 @@
                 <li>Injury prevention protocols</li>
                 <li>Ongoing organizational consulting</li>
             </ul>
-        </div>
-    </div>
-</section>
-
-<!-- Results -->
-<section class="results">
-    <div class="section-header">
-        <p class="section-label">Outcomes</p>
-        <h2 class="section-title">What Athletes Experience</h2>
-    </div>
-
-    <div class="results-grid">
-        <div class="result-card">
-            <div class="result-value">-70%</div>
-            <h4>Injury Risk</h4>
-            <p>Dramatically reduced injury rates mean more training days and competition availability</p>
-        </div>
-        <div class="result-card">
-            <div class="result-value">+23%</div>
-            <h4>Reaction Time</h4>
-            <p>Faster reactions and better split-second decision-making under pressure</p>
-        </div>
-        <div class="result-card">
-            <div class="result-value">2x</div>
-            <h4>Recovery Speed</h4>
-            <p>Faster adaptation to training loads and quicker bounce-back between sessions</p>
-        </div>
-        <div class="result-card">
-            <div class="result-value">+Years</div>
-            <h4>Career Longevity</h4>
-            <p>Sustainable practices that extend prime performance years</p>
         </div>
     </div>
 </section>

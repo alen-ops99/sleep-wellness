@@ -1280,9 +1280,9 @@
         <!-- Client Detail Section -->
         <section class="admin-section" id="section-client-detail">
             <div class="page-header" style="margin-bottom: 0;">
-                <button onclick="showSection('clients')" style="display: flex; align-items: center; gap: 8px; background: none; border: none; color: var(--gold); cursor: pointer; font-size: 14px; padding: 0;">
+                <button onclick="goBack()" style="display: flex; align-items: center; gap: 8px; background: none; border: none; color: var(--gold); cursor: pointer; font-size: 14px; padding: 0;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-                    Back to Clients
+                    Back
                 </button>
             </div>
 
@@ -1636,6 +1636,15 @@
                 </button>
             </div>
 
+            <!-- Google Calendar Status -->
+            <div id="calendarStatus" style="background: rgba(201, 169, 98, 0.08); border: 1px solid rgba(201, 169, 98, 0.2); border-radius: 8px; padding: 12px 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span id="calendarStatusText" style="font-size: 13px; color: var(--navy);">Google Calendar: Not connected</span>
+                </div>
+                <button id="calendarConnectBtn" onclick="connectGoogleCalendar()" style="background: var(--gold); color: var(--navy); border: none; padding: 8px 16px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Connect Calendar</button>
+            </div>
+
             <!-- Quick Availability Card -->
             <div class="data-card" style="margin-bottom: 25px; padding: 22px 25px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -1797,7 +1806,7 @@
         <section class="admin-section" id="section-hotel-detail">
             <div class="page-header">
                 <div style="display: flex; align-items: center; gap: 15px;">
-                    <button onclick="showSection('hotel-partners')" style="background: white; border: 1px solid rgba(201, 169, 98, 0.3); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                    <button onclick="goBack()" style="background: white; border: 1px solid rgba(201, 169, 98, 0.3); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
                     </button>
                     <div>
@@ -1905,7 +1914,7 @@
         <section class="admin-section" id="section-athletic-detail">
             <div class="page-header">
                 <div style="display: flex; align-items: center; gap: 15px;">
-                    <button onclick="showSection('athletic-partners')" style="background: white; border: 1px solid rgba(201, 169, 98, 0.3); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                    <button onclick="goBack()" style="background: white; border: 1px solid rgba(201, 169, 98, 0.3); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
                     </button>
                     <div>
@@ -2013,7 +2022,7 @@
         <section class="admin-section" id="section-business-detail">
             <div class="page-header">
                 <div style="display: flex; align-items: center; gap: 15px;">
-                    <button onclick="showSection('business-partners')" style="background: white; border: 1px solid rgba(201, 169, 98, 0.3); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                    <button onclick="goBack()" style="background: white; border: 1px solid rgba(201, 169, 98, 0.3); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
                     </button>
                     <div>
@@ -2125,6 +2134,17 @@
             </div>
 
             <div style="margin-bottom: 20px;">
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Category</label>
+                <select id="invite-category" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px; background: white;">
+                    <option value="general">General</option>
+                    <option value="hotel">Hotel Guest</option>
+                    <option value="athlete">Athlete</option>
+                    <option value="executive">Executive</option>
+                    <option value="vip">VIP</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 20px;">
                 <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Notes</label>
                 <textarea id="invite-notes" rows="3" placeholder="Any notes about this invite..." style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit;"></textarea>
             </div>
@@ -2226,7 +2246,7 @@
 
         <div class="form-group" style="margin-top: 20px;">
             <label>Select Clients</label>
-            <div id="questionnaire-clients-list" style="max-height: 200px; overflow-y: auto; border: 1px solid rgba(201, 169, 98, 0.2); border-radius: 6px; padding: 10px;">
+            <div id="questionnaire-clients-list" style="max-height: 200px; overflow-y: auto; border: 1px solid rgba(201, 169, 98, 0.2); border-radius: 6px; padding: 10px; display: flex; flex-direction: column; align-items: stretch; gap: 4px;">
                 <div class="loading">Loading clients...</div>
             </div>
         </div>
@@ -3477,6 +3497,8 @@
     let currentAthleticId = null;
     let businessPartners = [];
     let currentBusinessId = null;
+    let sectionHistory = ['dashboard'];
+    let currentSection = 'dashboard';
 
     // Toggle mobile menu - defined early so it works immediately
     function toggleMobileMenu() {
@@ -3488,13 +3510,19 @@
     function showSection(sectionId) {
         console.log('showSection called:', sectionId);
 
+        // Push current section to history before switching
+        if (currentSection && currentSection !== sectionId) {
+            sectionHistory.push(currentSection);
+        }
+        currentSection = sectionId;
+
         // Close mobile menu
         const sidebar = document.getElementById('admin-sidebar');
         if (sidebar) sidebar.classList.remove('mobile-open');
 
         // Update nav highlight
         document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        if (event && event.target) {
+        if (typeof event !== 'undefined' && event && event.target) {
             const navItem = event.target.closest('.nav-item');
             if (navItem) navItem.classList.add('active');
         }
@@ -3504,12 +3532,50 @@
         const section = document.getElementById('section-' + sectionId);
         if (section) {
             section.classList.add('active');
-            // Load section data if user is authenticated
             if (currentUser) {
                 loadSectionData(sectionId);
             }
         }
+
+        // Update browser history
+        history.pushState({ section: sectionId }, '', '#' + sectionId);
     }
+
+    function goBack() {
+        if (sectionHistory.length > 0) {
+            const previousSection = sectionHistory.pop();
+            currentSection = previousSection;
+
+            // Close mobile menu
+            const sidebar = document.getElementById('admin-sidebar');
+            if (sidebar) sidebar.classList.remove('mobile-open');
+
+            // Show the section
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+            const section = document.getElementById('section-' + previousSection);
+            if (section) {
+                section.classList.add('active');
+                if (currentUser) {
+                    loadSectionData(previousSection);
+                }
+            }
+        } else {
+            showSection('dashboard');
+        }
+    }
+
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', (event) => {
+        if (event.state && event.state.section) {
+            const sectionId = event.state.section;
+            currentSection = sectionId;
+            sectionHistory = [];
+
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+            const section = document.getElementById('section-' + sectionId);
+            if (section) section.classList.add('active');
+        }
+    });
 
     // Wait for Firebase to initialize
     document.addEventListener('DOMContentLoaded', function() {
@@ -3547,6 +3613,12 @@
                 // Load dashboard data
                 loadDashboard();
                 loadNotifications();
+            });
+
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted && !auth.currentUser) {
+                    window.location.replace('../auth.html');
+                }
             });
         } else {
             console.error('Auth not available');
@@ -4627,14 +4699,18 @@
                         <span style="background: #2e7d32; color: white; font-size: 11px; padding: 3px 10px; border-radius: 10px; font-weight: 600;">${available.length}</span>
                     </div>
                     <table class="data-table">
-                        <thead><tr><th>Code</th><th>Created</th><th>Notes</th><th>Actions</th></tr></thead>
+                        <thead><tr><th>Code</th><th>Category</th><th>Created</th><th>Notes</th><th>Actions</th></tr></thead>
                         <tbody>`;
 
             for (const invite of available) {
                 const created = invite.createdAt?.toDate()?.toLocaleDateString() || 'N/A';
+                const categoryColors = { general: '#6b7b8a', hotel: '#8B4D5C', athlete: '#2A8B8B', executive: '#4A6085', vip: '#C9A962' };
+                const catColor = categoryColors[invite.category] || '#6b7b8a';
+                const catLabel = (invite.category || 'general').charAt(0).toUpperCase() + (invite.category || 'general').slice(1);
                 html += `
                     <tr>
                         <td><strong style="font-family: monospace; letter-spacing: 1px;">${invite.code}</strong></td>
+                        <td><span style="background: ${catColor}; color: white; font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: 500;">${catLabel}</span></td>
                         <td>${created}</td>
                         <td>${invite.notes || invite.clientEmail || '-'}</td>
                         <td>
@@ -4696,6 +4772,7 @@
         document.getElementById('invite-result-view').style.display = 'none';
         document.getElementById('invite-email').value = '';
         document.getElementById('invite-notes').value = '';
+        document.getElementById('invite-category').value = 'general';
         document.getElementById('invite-modal').style.display = 'flex';
     }
 
@@ -4705,8 +4782,9 @@
     async function generateInviteCode() {
         const email = document.getElementById('invite-email').value.trim();
         const notes = document.getElementById('invite-notes').value;
+        const category = document.getElementById('invite-category').value;
 
-        const code = await FirebaseDB.generateInviteCode(currentUser.uid, email, notes);
+        const code = await FirebaseDB.generateInviteCode(currentUser.uid, email, notes, category);
         const authUrl = window.location.origin + '/assessment/auth.html';
 
         // Store for email sending
@@ -5070,8 +5148,43 @@ Sleep Wellness by Dr. Alen`);
         }
     }
 
+    // Google Calendar integration
+    async function connectGoogleCalendar() {
+        try {
+            const response = await fetch(window.location.origin + '/getCalendarAuthUrl');
+            const data = await response.json();
+            if (data.authUrl) {
+                window.location.href = data.authUrl;
+            } else {
+                showToast('Calendar service not configured. Contact support.', 'warning');
+            }
+        } catch (error) {
+            console.error('Calendar connection error:', error);
+            showToast('Could not connect to calendar service.', 'error');
+        }
+    }
+
+    // Check calendar connection status on page load
+    async function checkCalendarStatus() {
+        try {
+            const statusText = document.getElementById('calendarStatusText');
+            const connectBtn = document.getElementById('calendarConnectBtn');
+
+            // Check if we just returned from OAuth
+            if (window.location.search.includes('calendar=connected')) {
+                if (statusText) statusText.textContent = 'Google Calendar: Connected';
+                if (statusText) statusText.style.color = '#2e7d32';
+                if (connectBtn) connectBtn.textContent = 'Reconnect';
+                showToast('Google Calendar connected successfully!', 'success');
+            }
+        } catch (error) {
+            console.warn('Calendar status check failed:', error);
+        }
+    }
+
     // Load appointments
     async function loadAppointments() {
+        checkCalendarStatus();
         const container = document.getElementById('appointments-list');
         const appointments = await FirebaseDB.getAllAppointments();
 
@@ -5375,7 +5488,7 @@ Sleep Wellness by Dr. Alen`);
 
         for (const category in moduleCategories) {
             const moduleIds = moduleCategories[category];
-            html += `<div style="grid-column: 1 / -1; margin-top: ${html ? '20px' : '0'};"><h4 style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); margin-bottom: 12px;">${category}</h4></div>`;
+            html += `<div style="grid-column: 1 / -1; margin-top: ${html ? '20px' : '0'}; padding-left: 4px;"><h4 style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); margin-bottom: 12px; margin-left: 10px;">${category}</h4></div>`;
 
             for (const id of moduleIds) {
                 const m = modules[id];
@@ -5385,12 +5498,12 @@ Sleep Wellness by Dr. Alen`);
                 html += `
                     <div onclick="openModuleDetail('${id}')" style="background: ${isLocked ? '#fafafa' : '#f0f9f0'}; border: 1px solid ${isLocked ? 'rgba(201, 169, 98, 0.2)' : 'rgba(46, 125, 50, 0.2)'}; border-radius: 8px; padding: 16px; position: relative; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='';this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)';">
                         ${!isLocked ? '<span style="position: absolute; top: 10px; right: 10px; background: #2e7d32; color: white; font-size: 9px; padding: 3px 8px; border-radius: 10px; text-transform: uppercase;">Free</span>' : ''}
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px; padding-left: 4px;">
                             <svg style="width: 24px; height: 24px; stroke: var(--gold); flex-shrink: 0;" viewBox="0 0 24 24" fill="none" stroke-width="1.5">${Content.getModuleIconSVG(m.icon)}</svg>
                             <h5 style="font-size: 14px; font-weight: 600; color: var(--navy); margin: 0;">${m.title}</h5>
                         </div>
-                        <p style="font-size: 12px; color: var(--text-light); margin: 0; line-height: 1.5;">${m.description}</p>
-                        <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+                        <p style="font-size: 12px; color: var(--text-light); margin: 0; line-height: 1.5; padding-left: 4px;">${m.description}</p>
+                        <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; padding-left: 4px;">
                             <span style="font-size: 10px; background: rgba(201, 169, 98, 0.15); color: var(--gold-dark); padding: 3px 8px; border-radius: 10px;">${m.duration || 'Varies'}</span>
                             <span style="font-size: 10px; background: rgba(15, 28, 46, 0.08); color: var(--navy); padding: 3px 8px; border-radius: 10px;">${m.difficulty || 'Beginner'}</span>
                         </div>
@@ -5832,11 +5945,11 @@ Sleep Wellness by Dr. Alen`);
         // Load clients
         const clients = await FirebaseDB.getAllUsers();
         clientsContainer.innerHTML = clients.map(c => `
-            <label style="display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 6px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background=''">
-                <input type="checkbox" name="questionnaire-clients" value="${c.id}" data-name="${c.displayName || c.email}" data-email="${c.email || ''}">
-                <div>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 6px; cursor: pointer; transition: background 0.2s; width: 100%; box-sizing: border-box;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background=''">
+                <input type="checkbox" name="questionnaire-clients" value="${c.id}" data-name="${c.displayName || c.email}" data-email="${c.email || ''}" style="flex-shrink: 0;">
+                <div style="flex: 1; min-width: 0;">
                     <div style="font-size: 13px; font-weight: 500; color: var(--navy);">${c.displayName || 'Unnamed'}</div>
-                    <div style="font-size: 11px; color: var(--text-light);">${c.email || ''}</div>
+                    <div style="font-size: 11px; color: var(--text-light); overflow: hidden; text-overflow: ellipsis;">${c.email || ''}</div>
                 </div>
             </label>
         `).join('');
@@ -6041,12 +6154,85 @@ Sleep Wellness by Dr. Alen`);
         const assessment = allAssessments.find(a => a.id === assessmentId);
         if (!assessment) return;
 
-        alert('Assessment Details:\n\n' +
-            'Overall Score: ' + (assessment.overallScore || 'N/A') + '/100\n' +
-            'ESS Score: ' + (assessment.scores?.ess || 'N/A') + '\n' +
-            'ISI Score: ' + (assessment.scores?.isi || 'N/A') + '\n' +
-            'STOP-BANG Score: ' + (assessment.scores?.stopbang || 'N/A') + '\n\n' +
-            'Key Findings:\n' + (assessment.findings?.join('\n') || 'None'));
+        const score = assessment.overallScore || assessment.score || 0;
+        const maxScore = assessment.maxScore || 100;
+        const pct = Math.round((score / maxScore) * 100);
+        const date = assessment.completedAt?.toDate?.()?.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) || 'N/A';
+
+        // Score color based on value
+        const scoreColor = pct >= 80 ? '#2e7d32' : pct >= 60 ? '#F57C00' : '#c62828';
+
+        const findings = assessment.findings || assessment.recommendations || [];
+        const findingsHtml = Array.isArray(findings) && findings.length > 0
+            ? findings.map(f => `<li style="margin-bottom: 6px; font-size: 13px; color: #444;">${typeof f === 'string' ? f : f.text || f.message || ''}</li>`).join('')
+            : '<li style="font-size: 13px; color: #999;">No findings recorded</li>';
+
+        // Find the client
+        const client = allClients.find(c => c.id === assessment.userId);
+        const clientName = client?.displayName || 'Unknown Client';
+
+        const modalHtml = `
+            <div id="assessment-detail-modal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 9999; display: flex; justify-content: center; align-items: center;" onclick="if(event.target===this)this.remove()">
+                <div style="background: white; border-radius: 12px; width: 90%; max-width: 550px; padding: 30px; max-height: 80vh; overflow-y: auto;" onclick="event.stopPropagation()">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #0f1c2e; margin: 0;">Assessment Details</h2>
+                        <button onclick="document.getElementById('assessment-detail-modal').remove()" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+                    </div>
+
+                    <div style="display: flex; gap: 25px; align-items: flex-start; margin-bottom: 25px;">
+                        <!-- Score Circle -->
+                        <div style="text-align: center; flex-shrink: 0;">
+                            <div style="width: 90px; height: 90px; border-radius: 50%; border: 4px solid ${scoreColor}; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">
+                                <span style="font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: ${scoreColor};">${pct}</span>
+                            </div>
+                            <span style="font-size: 11px; color: #999;">Overall Score</span>
+                        </div>
+
+                        <!-- Category Breakdown -->
+                        <div style="flex: 1;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                <div style="background: #f8f8f8; padding: 12px; border-radius: 8px; text-align: center;">
+                                    <div style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: #0f1c2e;">${assessment.scores?.isi ?? 'N/A'}</div>
+                                    <div style="font-size: 11px; color: #888; margin-top: 2px;">ISI Score</div>
+                                </div>
+                                <div style="background: #f8f8f8; padding: 12px; border-radius: 8px; text-align: center;">
+                                    <div style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: #0f1c2e;">${assessment.scores?.ess ?? 'N/A'}</div>
+                                    <div style="font-size: 11px; color: #888; margin-top: 2px;">ESS Score</div>
+                                </div>
+                                <div style="background: #f8f8f8; padding: 12px; border-radius: 8px; text-align: center;">
+                                    <div style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: #0f1c2e;">${assessment.scores?.stopbang ?? 'N/A'}</div>
+                                    <div style="font-size: 11px; color: #888; margin-top: 2px;">STOP-BANG</div>
+                                </div>
+                                <div style="background: #f8f8f8; padding: 12px; border-radius: 8px; text-align: center;">
+                                    <div style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: #0f1c2e;">${assessment.scores?.sleepHygiene ?? 'N/A'}</div>
+                                    <div style="font-size: 11px; color: #888; margin-top: 2px;">Hygiene</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Key Findings -->
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="font-size: 14px; color: #0f1c2e; margin-bottom: 10px; font-weight: 600;">Key Findings</h4>
+                        <ul style="margin: 0; padding-left: 18px; list-style: disc;">${findingsHtml}</ul>
+                    </div>
+
+                    <!-- Meta -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 1px solid #eee;">
+                        <div style="font-size: 12px; color: #999;">
+                            <strong>${clientName}</strong> &bull; ${date}
+                        </div>
+                        ${client ? `<button onclick="document.getElementById('assessment-detail-modal').remove(); viewClient('${client.id}')" style="background: #0f1c2e; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 12px; cursor: pointer;">View Client</button>` : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Remove any existing modal first
+        const existing = document.getElementById('assessment-detail-modal');
+        if (existing) existing.remove();
+
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
     }
 
     // Current client being viewed
@@ -7485,8 +7671,9 @@ Sleep Wellness by Dr. Alen`);
 
     // Logout
     async function handleLogout() {
+        sessionStorage.clear();
         await auth.signOut();
-        window.location.href = '../auth.html';
+        window.location.replace('../auth.html');
     }
 
     // Close modals on outside click
@@ -8117,9 +8304,13 @@ Sleep Wellness by Dr. Alen`);
 
             // DEV: Auto-create test data if no hotel partners exist
             if (hotelPartners.length === 0) {
-                console.log('No hotel partners found. Creating test data...');
-                await createTestHotelData();
-                hotelPartners = await FirebaseDB.getAllHotelPartners();
+                try {
+                    console.log('No hotel partners found. Creating test data...');
+                    await createTestHotelData();
+                    hotelPartners = await FirebaseDB.getAllHotelPartners();
+                } catch (e) {
+                    console.warn('Could not auto-create test data:', e.message);
+                }
             }
 
             // Calculate aggregate stats
@@ -8138,30 +8329,42 @@ Sleep Wellness by Dr. Alen`);
             }
 
             // Update stats
-            document.getElementById('stat-hotel-partners').textContent = hotelPartners.filter(p => p.partnershipStatus === 'active').length;
-            document.getElementById('stat-active-hotel-guests').textContent = totalActiveGuests;
-            document.getElementById('stat-avg-improvement').textContent = improvementCount > 0
+            const statPartners = document.getElementById('stat-hotel-partners');
+            const statGuests = document.getElementById('stat-active-hotel-guests');
+            const statImpr = document.getElementById('stat-avg-improvement');
+            if (statPartners) statPartners.textContent = hotelPartners.filter(p => p.partnershipStatus === 'active').length;
+            if (statGuests) statGuests.textContent = totalActiveGuests;
+            if (statImpr) statImpr.textContent = improvementCount > 0
                 ? Math.round(totalImprovement / improvementCount) + '%'
                 : '-';
 
             // Load pending reports
-            const pendingReports = await FirebaseDB.getStaysPendingReport();
-            document.getElementById('stat-pending-reports').textContent = pendingReports.length;
+            let pendingReports = [];
+            try {
+                pendingReports = await FirebaseDB.getStaysPendingReport();
+            } catch (e) {
+                console.warn('Could not load pending reports:', e.message);
+            }
+            const statPending = document.getElementById('stat-pending-reports');
+            if (statPending) statPending.textContent = pendingReports.length;
 
+            const pendingCard = document.getElementById('pending-reports-card');
             if (pendingReports.length > 0) {
-                document.getElementById('pending-reports-card').style.display = 'block';
+                if (pendingCard) pendingCard.style.display = 'block';
                 renderPendingReports(pendingReports);
             } else {
-                document.getElementById('pending-reports-card').style.display = 'none';
+                if (pendingCard) pendingCard.style.display = 'none';
             }
 
             // Update badge
             const badge = document.getElementById('hotel-guests-badge');
-            if (totalActiveGuests > 0) {
-                badge.textContent = totalActiveGuests;
-                badge.style.display = 'inline';
-            } else {
-                badge.style.display = 'none';
+            if (badge) {
+                if (totalActiveGuests > 0) {
+                    badge.textContent = totalActiveGuests;
+                    badge.style.display = 'inline';
+                } else {
+                    badge.style.display = 'none';
+                }
             }
 
             // Render hotel list
@@ -9313,33 +9516,42 @@ Sleep Wellness by Dr. Alen`);
             athleticPartners = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
             // Update stats
-            document.getElementById('stat-athletic-teams').textContent = athleticPartners.filter(p => p.partnershipStatus === 'active').length;
+            const statTeams = document.getElementById('stat-athletic-teams');
+            if (statTeams) statTeams.textContent = athleticPartners.filter(p => p.partnershipStatus === 'active').length;
 
             let totalAthletes = 0;
             let totalRecovery = 0;
             let recoveryCount = 0;
 
             for (const partner of athleticPartners) {
-                const athletesSnap = await db.collection('athleteProfiles').where('teamPartnerId', '==', partner.id).get();
-                partner.stats = {
-                    totalAthletes: athletesSnap.size,
-                    avgRecovery: 0
-                };
-                totalAthletes += athletesSnap.size;
+                try {
+                    const athletesSnap = await db.collection('athleteProfiles').where('teamPartnerId', '==', partner.id).get();
+                    partner.stats = {
+                        totalAthletes: athletesSnap.size,
+                        avgRecovery: 0
+                    };
+                    totalAthletes += athletesSnap.size;
 
-                // Calculate avg recovery from athletes
-                athletesSnap.docs.forEach(doc => {
-                    const data = doc.data();
-                    if (data.avgRecoveryScore) {
-                        totalRecovery += data.avgRecoveryScore;
-                        recoveryCount++;
-                    }
-                });
+                    // Calculate avg recovery from athletes
+                    athletesSnap.docs.forEach(doc => {
+                        const data = doc.data();
+                        if (data.avgRecoveryScore) {
+                            totalRecovery += data.avgRecoveryScore;
+                            recoveryCount++;
+                        }
+                    });
+                } catch (e) {
+                    console.warn('Could not load athlete stats for partner:', partner.id, e.message);
+                    partner.stats = { totalAthletes: 0, avgRecovery: 0 };
+                }
             }
 
-            document.getElementById('stat-total-athletes').textContent = totalAthletes;
-            document.getElementById('stat-avg-recovery').textContent = recoveryCount > 0 ? Math.round(totalRecovery / recoveryCount) + '%' : '-';
-            document.getElementById('stat-active-programs').textContent = athleticPartners.filter(p => p.partnershipStatus === 'active').length;
+            const statAthletes = document.getElementById('stat-total-athletes');
+            if (statAthletes) statAthletes.textContent = totalAthletes;
+            const statRecovery = document.getElementById('stat-avg-recovery');
+            if (statRecovery) statRecovery.textContent = recoveryCount > 0 ? Math.round(totalRecovery / recoveryCount) + '%' : '-';
+            const statPrograms = document.getElementById('stat-active-programs');
+            if (statPrograms) statPrograms.textContent = athleticPartners.filter(p => p.partnershipStatus === 'active').length;
 
             if (athleticPartners.length === 0) {
                 container.innerHTML = `
@@ -9594,32 +9806,41 @@ Sleep Wellness by Dr. Alen`);
             businessPartners = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
             // Update stats
-            document.getElementById('stat-business-orgs').textContent = businessPartners.filter(p => p.partnershipStatus === 'active').length;
+            const statOrgs = document.getElementById('stat-business-orgs');
+            if (statOrgs) statOrgs.textContent = businessPartners.filter(p => p.partnershipStatus === 'active').length;
 
             let totalExecs = 0;
             let totalPerformance = 0;
             let performanceCount = 0;
 
             for (const partner of businessPartners) {
-                const execsSnap = await db.collection('executiveProfiles').where('orgPartnerId', '==', partner.id).get();
-                partner.stats = {
-                    totalExecs: execsSnap.size,
-                    avgPerformance: 0
-                };
-                totalExecs += execsSnap.size;
+                try {
+                    const execsSnap = await db.collection('executiveProfiles').where('orgPartnerId', '==', partner.id).get();
+                    partner.stats = {
+                        totalExecs: execsSnap.size,
+                        avgPerformance: 0
+                    };
+                    totalExecs += execsSnap.size;
 
-                execsSnap.docs.forEach(doc => {
-                    const data = doc.data();
-                    if (data.performanceGain) {
-                        totalPerformance += data.performanceGain;
-                        performanceCount++;
-                    }
-                });
+                    execsSnap.docs.forEach(doc => {
+                        const data = doc.data();
+                        if (data.performanceGain) {
+                            totalPerformance += data.performanceGain;
+                            performanceCount++;
+                        }
+                    });
+                } catch (e) {
+                    console.warn('Could not load executive stats for partner:', partner.id, e.message);
+                    partner.stats = { totalExecs: 0, avgPerformance: 0 };
+                }
             }
 
-            document.getElementById('stat-total-executives').textContent = totalExecs;
-            document.getElementById('stat-avg-performance').textContent = performanceCount > 0 ? Math.round(totalPerformance / performanceCount) + '%' : '-';
-            document.getElementById('stat-business-programs').textContent = businessPartners.filter(p => p.partnershipStatus === 'active').length;
+            const statExecs = document.getElementById('stat-total-executives');
+            if (statExecs) statExecs.textContent = totalExecs;
+            const statPerf = document.getElementById('stat-avg-performance');
+            if (statPerf) statPerf.textContent = performanceCount > 0 ? Math.round(totalPerformance / performanceCount) + '%' : '-';
+            const statBizPrograms = document.getElementById('stat-business-programs');
+            if (statBizPrograms) statBizPrograms.textContent = businessPartners.filter(p => p.partnershipStatus === 'active').length;
 
             if (businessPartners.length === 0) {
                 container.innerHTML = `

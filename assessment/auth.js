@@ -82,8 +82,9 @@ const Auth = {
      */
     async logout() {
         try {
+            sessionStorage.clear();
             await auth.signOut();
-            window.location.href = 'auth.html';
+            window.location.replace('auth.html');
         } catch (error) {
             console.error('Logout error:', error);
         }

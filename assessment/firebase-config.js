@@ -507,7 +507,7 @@ const FirebaseDB = {
     /**
      * Generate invite code (admin)
      */
-    async generateInviteCode(adminId, clientEmail = null, notes = '') {
+    async generateInviteCode(adminId, clientEmail = null, notes = '', category = 'general') {
         // Generate a unique code: SW-XXXX-XXXX format
         const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Excluding confusing chars
         let code = 'SW-';
@@ -521,6 +521,7 @@ const FirebaseDB = {
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             clientEmail: clientEmail || null,
             notes,
+            category: category || 'general',
             used: false,
             usedBy: null,
             usedAt: null
@@ -798,12 +799,25 @@ const FirebaseDB = {
      * Get user's assigned questionnaires (client)
      */
     async getUserQuestionnaires(userId) {
-        const snapshot = await db.collection('questionnaireAssignments')
-            .where('userId', '==', userId)
-            .orderBy('assignedAt', 'desc')
-            .get();
-
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        try {
+            const snapshot = await db.collection('questionnaireAssignments')
+                .where('userId', '==', userId)
+                .orderBy('assignedAt', 'desc')
+                .get();
+            return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        } catch (error) {
+            console.warn('Ordered query failed (missing index?), falling back to unordered:', error.message);
+            const snapshot = await db.collection('questionnaireAssignments')
+                .where('userId', '==', userId)
+                .get();
+            const docs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            docs.sort((a, b) => {
+                const aTime = a.assignedAt?.toMillis?.() || 0;
+                const bTime = b.assignedAt?.toMillis?.() || 0;
+                return bTime - aTime;
+            });
+            return docs;
+        }
     },
 
     /**
@@ -861,13 +875,27 @@ const FirebaseDB = {
      * Get all questionnaire results for a user (admin)
      */
     async getUserQuestionnaireResults(userId) {
-        const snapshot = await db.collection('questionnaireAssignments')
-            .where('userId', '==', userId)
-            .where('status', '==', 'completed')
-            .orderBy('completedAt', 'desc')
-            .get();
-
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        try {
+            const snapshot = await db.collection('questionnaireAssignments')
+                .where('userId', '==', userId)
+                .where('status', '==', 'completed')
+                .orderBy('completedAt', 'desc')
+                .get();
+            return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        } catch (error) {
+            console.warn('Ordered query failed, falling back:', error.message);
+            const snapshot = await db.collection('questionnaireAssignments')
+                .where('userId', '==', userId)
+                .where('status', '==', 'completed')
+                .get();
+            const docs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            docs.sort((a, b) => {
+                const aTime = a.completedAt?.toMillis?.() || 0;
+                const bTime = b.completedAt?.toMillis?.() || 0;
+                return bTime - aTime;
+            });
+            return docs;
+        }
     },
 
     /**

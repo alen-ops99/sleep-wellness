@@ -3917,6 +3917,15 @@
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-header">
+            <!-- Whitelabel Logo -->
+            <div id="whitelabel-logo" style="text-align: center; padding: 10px 0 15px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px;">
+                <div id="whitelabel-logo-img" style="display: none;">
+                    <img id="partnerLogo" src="" alt="Partner Logo" style="max-height: 40px; max-width: 160px; object-fit: contain;">
+                </div>
+                <div id="whitelabel-logo-placeholder" style="font-family: 'Cormorant Garamond', serif; font-size: 16px; color: rgba(255,255,255,0.4); letter-spacing: 1px;">
+                    SLEEP WELLNESS
+                </div>
+            </div>
             <div class="sidebar-user">
                 <div class="sidebar-avatar" id="userAvatar">--</div>
                 <div class="sidebar-user-info">
@@ -4193,6 +4202,32 @@
                 </div>
             </div>
 
+            <!-- Latest Assessment Widget -->
+            <div id="latestAssessmentWidget" style="display: none; background: white; border: 1px solid rgba(201, 169, 98, 0.2); border-radius: 12px; padding: 25px; margin-bottom: 25px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin: 0;">Latest Assessment</h3>
+                    <span id="latestAssessmentDate" style="font-size: 12px; color: var(--text-light);"></span>
+                </div>
+                <div style="display: flex; gap: 25px; align-items: center;">
+                    <!-- Score Circle -->
+                    <div style="flex-shrink: 0; text-align: center;">
+                        <svg viewBox="0 0 80 80" width="80" height="80">
+                            <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(201,169,98,0.15)" stroke-width="5"/>
+                            <circle id="latestScoreRing" cx="40" cy="40" r="34" fill="none" stroke="var(--gold)" stroke-width="5" stroke-linecap="round" stroke-dasharray="213.63" stroke-dashoffset="213.63" transform="rotate(-90 40 40)" style="transition: stroke-dashoffset 1s ease;"/>
+                        </svg>
+                        <div style="margin-top: -55px; font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--navy); font-weight: 600;" id="latestScoreValue">--</div>
+                        <div style="margin-top: 30px; font-size: 11px; color: var(--text-light);">Overall Score</div>
+                    </div>
+                    <!-- Key Findings -->
+                    <div style="flex: 1;">
+                        <div id="latestAssessmentFindings" style="display: flex; flex-direction: column; gap: 10px;">
+                            <!-- Populated by JS -->
+                        </div>
+                        <button onclick="showSection('assessments')" style="margin-top: 15px; background: var(--navy); color: var(--cream); border: none; padding: 8px 20px; border-radius: 6px; font-size: 13px; cursor: pointer; font-family: 'Montserrat', sans-serif; transition: background 0.2s;" onmouseover="this.style.background='var(--gold)'" onmouseout="this.style.background='var(--navy)'">View Full Report</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Daily Sleep Tip -->
             <div class="daily-tip-card">
                 <div class="tip-icon">💡</div>
@@ -4223,7 +4258,7 @@
         <section class="dashboard-section" id="section-assessments">
             <div class="section-header">
                 <div class="section-header-left">
-                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                    <button class="back-btn" onclick="goBack()" title="Go Back">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
                     </button>
                     <h1>My Assessments</h1>
@@ -4242,13 +4277,20 @@
                     <a href="take-assessment.html" class="btn-primary">Take Assessment</a>
                 </div>
             </div>
+
+            <!-- Medical Disclaimer -->
+            <div style="background: rgba(15, 28, 46, 0.03); border: 1px solid rgba(15, 28, 46, 0.1); padding: 14px 18px; border-radius: 8px; margin-top: 20px;">
+                <p style="font-size: 11px; color: var(--text-light); margin: 0; line-height: 1.6;">
+                    <strong style="color: var(--navy);">Disclaimer:</strong> This assessment is for informational and educational purposes only. It does not constitute medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider regarding any medical conditions or before making changes to your health regimen.
+                </p>
+            </div>
         </section>
 
         <!-- Sleep Diary Section - Based on Consensus Sleep Diary -->
         <section class="dashboard-section" id="section-diary">
             <div class="section-header">
                 <div class="section-header-left">
-                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                    <button class="back-btn" onclick="goBack()" title="Go Back">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
                     </button>
                     <h1>Sleep Diary</h1>
@@ -4886,7 +4928,7 @@
         <section class="dashboard-section" id="section-tasks">
             <div class="section-header">
                 <div class="section-header-left">
-                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                    <button class="back-btn" onclick="goBack()" title="Go Back">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
                     </button>
                     <h1>Your Tasks</h1>
@@ -4910,7 +4952,7 @@
         <section class="dashboard-section" id="section-messages">
             <div class="section-header">
                 <div class="section-header-left">
-                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                    <button class="back-btn" onclick="goBack()" title="Go Back">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
                     </button>
                     <h1>Messages</h1>
@@ -4944,7 +4986,7 @@
         <section class="dashboard-section" id="section-appointments">
             <div class="section-header">
                 <div class="section-header-left">
-                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                    <button class="back-btn" onclick="goBack()" title="Go Back">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
                     </button>
                     <h1>Appointments</h1>
@@ -4999,16 +5041,23 @@
         <section class="dashboard-section" id="section-questionnaires">
             <div class="section-header">
                 <div class="section-header-left">
-                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                    <button class="back-btn" onclick="goBack()" title="Go Back">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
                     </button>
                     <h1>Questionnaires</h1>
                 </div>
             </div>
 
-            <p style="font-size: 15px; color: var(--text-light); margin-bottom: 25px;">
+            <p style="font-size: 15px; color: var(--text-light); margin-bottom: 15px;">
                 Complete clinical questionnaires assigned by Dr. Alen to help track your progress and guide your treatment plan.
             </p>
+
+            <!-- Medical Disclaimer -->
+            <div style="background: rgba(15, 28, 46, 0.03); border: 1px solid rgba(15, 28, 46, 0.1); padding: 12px 16px; border-radius: 8px; margin-bottom: 25px;">
+                <p style="font-size: 11px; color: var(--text-light); margin: 0; line-height: 1.6;">
+                    <strong style="color: var(--navy);">Disclaimer:</strong> These questionnaires are for informational and educational purposes only. They do not constitute medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider for medical concerns.
+                </p>
+            </div>
 
             <!-- Pending Questionnaires -->
             <div id="pendingQuestionnairesSection" style="margin-bottom: 30px;">
@@ -5031,7 +5080,7 @@
         <section class="dashboard-section" id="section-education">
             <div class="section-header">
                 <div class="section-header-left">
-                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                    <button class="back-btn" onclick="goBack()" title="Go Back">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
                     </button>
                     <h1>Learn About Sleep</h1>
@@ -5326,7 +5375,7 @@
         <section class="dashboard-section" id="section-modules">
             <div class="section-header">
                 <div class="section-header-left">
-                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                    <button class="back-btn" onclick="goBack()" title="Go Back">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
                     </button>
                     <h1>Sleep Resources</h1>
@@ -5402,7 +5451,7 @@
         <section class="dashboard-section" id="section-profile">
             <div class="section-header">
                 <div class="section-header-left">
-                    <button class="back-btn" onclick="showSection('dashboard')" title="Back to Dashboard">
+                    <button class="back-btn" onclick="goBack()" title="Go Back">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
                     </button>
                     <h1>My Profile</h1>
@@ -5531,6 +5580,31 @@
                     <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                         <button onclick="exportDiaryCSV()" class="btn-secondary" style="padding: 10px 20px; font-size: 11px;">Export Sleep Diary</button>
                         <button onclick="exportAssessmentsCSV()" class="btn-secondary" style="padding: 10px 20px; font-size: 11px;">Export Assessments</button>
+                    </div>
+                </div>
+
+                <!-- Push Notification Settings -->
+                <div style="margin-top: 30px; padding-top: 24px; border-top: 1px solid rgba(201,169,98,0.2);">
+                    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); margin-bottom: 8px;">Push Notifications</h3>
+                    <p style="font-size: 13px; color: var(--text-light); margin-bottom: 18px; line-height: 1.5;">
+                        Get notified about new tasks, appointments, questionnaires, and messages from Dr. Alen.
+                    </p>
+                    <div class="push-notif-toggle" id="pushNotifToggle">
+                        <div class="push-notif-toggle-info">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                            </svg>
+                            <div>
+                                <div class="push-notif-toggle-label">Browser Notifications</div>
+                                <div class="push-notif-toggle-desc" id="pushNotifDesc">Checking notification status...</div>
+                            </div>
+                        </div>
+                        <div class="push-notif-status" id="pushNotifActions">
+                            <div class="push-notif-status-dot" id="pushNotifDot"></div>
+                            <span class="push-notif-status-text" id="pushNotifStatusText">Unknown</span>
+                            <button class="push-notif-btn" id="pushNotifBtn" onclick="enablePushNotifications()" style="display: none;">Enable</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -6017,12 +6091,84 @@
     .hotel-checkout-btn { background: linear-gradient(135deg, #2e7d32, #388e3c) !important; color: white !important; border-color: #2e7d32 !important; }
     .hotel-checkout-btn:hover { background: linear-gradient(135deg, #388e3c, #43a047) !important; }
     .hotel-checkout-btn svg { color: white !important; }
+
+    /* Push Notification Toggle */
+    .push-notif-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        background: var(--cream);
+        border-radius: var(--radius-md);
+        margin-top: 20px;
+    }
+    .push-notif-toggle-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .push-notif-toggle-info svg {
+        color: var(--navy);
+        flex-shrink: 0;
+    }
+    .push-notif-toggle-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--navy);
+    }
+    .push-notif-toggle-desc {
+        font-size: 12px;
+        color: var(--text-light);
+        margin-top: 2px;
+    }
+    .push-notif-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .push-notif-status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #ccc;
+    }
+    .push-notif-status-dot.active {
+        background: #2e7d32;
+    }
+    .push-notif-status-dot.denied {
+        background: #c62828;
+    }
+    .push-notif-status-text {
+        font-size: 12px;
+        color: var(--text-light);
+    }
+    .push-notif-btn {
+        padding: 8px 16px;
+        border: 1px solid var(--gold);
+        background: transparent;
+        color: var(--navy);
+        border-radius: var(--radius-sm);
+        font-size: 12px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .push-notif-btn:hover {
+        background: var(--gold);
+        color: var(--navy);
+    }
+    .push-notif-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 </style>
 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js"></script>
 <script src="firebase-config.js"></script>
 <script src="demo-mode.js"></script>
 <script src="auth.js"></script>
@@ -6258,6 +6404,8 @@
     // ==================== MAIN APPLICATION VARIABLES ====================
 
     let currentUser = null;
+    let sectionHistory = ['dashboard'];
+    let currentSection = 'dashboard';
     let userProfile = null;
     let conversationId = null;
     let messagesUnsubscribe = null;
@@ -6619,6 +6767,19 @@
         }
     }
 
+    function generateGoogleCalendarUrl(task) {
+        const title = encodeURIComponent(task.title || 'Sleep Wellness Task');
+        const details = encodeURIComponent((task.description || '') + '\n\nFrom Sleep Wellness by Dr. Alen');
+        const dueDate = task.dueDate?.toDate?.() || (task.dueDate ? new Date(task.dueDate) : new Date());
+
+        // Format dates for Google Calendar URL
+        const startDate = dueDate.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+        const endTime = new Date(dueDate.getTime() + 30 * 60000);
+        const endDate = endTime.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+
+        return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&dates=${startDate}/${endDate}`;
+    }
+
     // Load full tasks section (sidebar view — all tasks including completed)
     async function loadTasksSection() {
         if (!currentUser) return;
@@ -6662,6 +6823,10 @@
                                 <div class="task-title">${task.title}</div>
                                 <div class="task-due ${isOverdue ? 'overdue' : ''}">${deadlineText}</div>
                             </div>
+                            <a href="${generateGoogleCalendarUrl(task)}" target="_blank" onclick="event.stopPropagation()" style="display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--gold-dark); text-decoration: none; padding: 4px 8px; border: 1px solid rgba(201,169,98,0.3); border-radius: 4px; transition: all 0.2s; margin-right: 8px;" onmouseover="this.style.background='rgba(201,169,98,0.1)'" onmouseout="this.style.background=''">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>
+                                Add to Calendar
+                            </a>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2">
                                 <polyline points="9 18 15 12 9 6"/>
                             </svg>
@@ -6825,13 +6990,24 @@
 
     // Show section
     function showSection(section) {
+        // Push current section to history before switching
+        if (currentSection && currentSection !== section) {
+            sectionHistory.push(currentSection);
+        }
+        currentSection = section;
+
         // Update nav
         document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
-        document.querySelector(`[href="#${section}"]`).classList.add('active');
+        const navLink = document.querySelector(`[href="#${section}"]`);
+        if (navLink) navLink.classList.add('active');
 
         // Update section
         document.querySelectorAll('.dashboard-section').forEach(s => s.classList.remove('active'));
-        document.getElementById('section-' + section).classList.add('active');
+        const sectionEl = document.getElementById('section-' + section);
+        if (sectionEl) sectionEl.classList.add('active');
+
+        // Update browser history
+        history.pushState({ section }, '', '#' + section);
 
         // Load section data
         if (section === 'assessments') loadAssessments();
@@ -6842,6 +7018,51 @@
         if (section === 'questionnaires') loadUserQuestionnaires();
         if (section === 'tasks') loadTasksSection();
     }
+
+    function goBack() {
+        if (sectionHistory.length > 0) {
+            const previousSection = sectionHistory.pop();
+            currentSection = previousSection;
+
+            // Update nav
+            document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+            const navLink = document.querySelector(`[href="#${previousSection}"]`);
+            if (navLink) navLink.classList.add('active');
+
+            // Update section
+            document.querySelectorAll('.dashboard-section').forEach(s => s.classList.remove('active'));
+            const sectionEl = document.getElementById('section-' + previousSection);
+            if (sectionEl) sectionEl.classList.add('active');
+
+            // Load section data
+            if (previousSection === 'assessments') loadAssessments();
+            if (previousSection === 'diary') loadDiaryEntries();
+            if (previousSection === 'messages') initMessages();
+            if (previousSection === 'appointments') loadAppointments();
+            if (previousSection === 'modules') loadModules();
+            if (previousSection === 'questionnaires') loadUserQuestionnaires();
+            if (previousSection === 'tasks') loadTasksSection();
+        } else {
+            showSection('dashboard');
+        }
+    }
+
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', (event) => {
+        if (event.state && event.state.section) {
+            const section = event.state.section;
+            currentSection = section;
+            sectionHistory = []; // Reset history on browser navigation
+
+            document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+            const navLink = document.querySelector(`[href="#${section}"]`);
+            if (navLink) navLink.classList.add('active');
+
+            document.querySelectorAll('.dashboard-section').forEach(s => s.classList.remove('active'));
+            const sectionEl = document.getElementById('section-' + section);
+            if (sectionEl) sectionEl.classList.add('active');
+        }
+    });
 
     // Initialize dashboard
     async function initDashboard(user, profile) {
@@ -6901,7 +7122,99 @@
         const tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
         document.getElementById('apptDate').min = tomorrow.toISOString().split('T')[0];
+
+        // Load latest assessment widget
+        loadLatestAssessmentWidget();
+
+        // Load whitelabel logo
+        loadWhitelabelLogo();
+
+        // Initialize push notifications (FCM)
+        initFCM(user);
     }
+
+    async function loadLatestAssessmentWidget() {
+        try {
+            const assessments = await FirebaseDB.getUserAssessments(currentUser.uid);
+            const widget = document.getElementById('latestAssessmentWidget');
+            if (!assessments || assessments.length === 0) {
+                if (widget) widget.style.display = 'none';
+                return;
+            }
+
+            // Sort by date, get most recent
+            const latest = assessments.sort((a, b) => {
+                const aTime = a.completedAt?.toMillis?.() || a.completedAt?.seconds * 1000 || 0;
+                const bTime = b.completedAt?.toMillis?.() || b.completedAt?.seconds * 1000 || 0;
+                return bTime - aTime;
+            })[0];
+
+            if (widget) widget.style.display = 'block';
+
+            // Set date
+            const dateEl = document.getElementById('latestAssessmentDate');
+            if (dateEl && latest.completedAt) {
+                const date = latest.completedAt?.toDate?.() || new Date(latest.completedAt?.seconds * 1000);
+                dateEl.textContent = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            }
+
+            // Set score
+            const overallScore = latest.overallScore || latest.score || 0;
+            const maxScore = latest.maxScore || 100;
+            const pct = Math.round((overallScore / maxScore) * 100);
+
+            const scoreVal = document.getElementById('latestScoreValue');
+            if (scoreVal) scoreVal.textContent = pct + '/100';
+
+            const ring = document.getElementById('latestScoreRing');
+            if (ring) {
+                const circumference = 2 * Math.PI * 34;
+                const offset = circumference - (pct / 100) * circumference;
+                ring.style.strokeDashoffset = offset;
+            }
+
+            // Set findings
+            const findingsEl = document.getElementById('latestAssessmentFindings');
+            if (findingsEl) {
+                const findings = latest.findings || latest.recommendations || [];
+                const topFindings = Array.isArray(findings) ? findings.slice(0, 3) : [];
+                if (topFindings.length > 0) {
+                    findingsEl.innerHTML = topFindings.map(f => `
+                        <div style="display: flex; align-items: flex-start; gap: 8px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <span style="font-size: 13px; color: var(--text); line-height: 1.5;">${typeof f === 'string' ? f : f.text || f.message || ''}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    findingsEl.innerHTML = '<p style="font-size: 13px; color: var(--text-light);">Complete more assessments to track your progress.</p>';
+                }
+            }
+        } catch (error) {
+            console.warn('Could not load latest assessment widget:', error);
+        }
+    }
+
+    async function loadWhitelabelLogo() {
+        try {
+            if (!userProfile?.partnerId) return;
+
+            // Try to load partner logo from any partner type
+            let partner = null;
+            try { partner = await FirebaseDB.getHotelPartner(userProfile.partnerId); } catch(e) {}
+            if (!partner) try { partner = await FirebaseDB.getAthleticPartner(userProfile.partnerId); } catch(e) {}
+            if (!partner) try { partner = await FirebaseDB.getBusinessPartner(userProfile.partnerId); } catch(e) {}
+
+            if (partner?.logoUrl) {
+                const imgContainer = document.getElementById('whitelabel-logo-img');
+                const placeholder = document.getElementById('whitelabel-logo-placeholder');
+                const logo = document.getElementById('partnerLogo');
+                if (logo) logo.src = partner.logoUrl;
+                if (imgContainer) imgContainer.style.display = 'block';
+                if (placeholder) placeholder.style.display = 'none';
+            }
+        } catch (error) {
+            console.warn('Could not load whitelabel logo:', error);
+        }
 
     // Load dashboard stats
     async function loadDashboardStats() {
@@ -9255,12 +9568,12 @@
                 pendingContainer.innerHTML = pending.map(q => {
                     const dueDate = q.dueDate?.toDate?.();
                     const isOverdue = dueDate && dueDate < new Date();
-                    const instrument = Questionnaires?.getInstrument(q.questionnaireId);
+                    const instrument = Questionnaires?.getInstrument(q.questionnaireId || q.instrumentId);
 
                     return `
                         <div class="questionnaire-card ${isOverdue ? 'overdue' : 'pending'}">
                             <div class="questionnaire-info">
-                                <h4>${q.questionnaireName || q.questionnaireId}</h4>
+                                <h4>${q.questionnaireName || q.instrumentName || q.questionnaireId || q.instrumentId}</h4>
                                 <div class="questionnaire-meta">
                                     <span>${instrument?.timeToComplete || '2-3 minutes'}</span>
                                     <span>${instrument?.questions?.length || '?'} questions</span>
@@ -9286,7 +9599,7 @@
                     return `
                         <div class="questionnaire-card completed">
                             <div class="questionnaire-info">
-                                <h4>${r.questionnaireName || r.questionnaireId}</h4>
+                                <h4>${r.questionnaireName || r.instrumentName || r.questionnaireId || r.instrumentId}</h4>
                                 <div class="questionnaire-meta">
                                     <span>Completed: ${completedDate ? completedDate.toLocaleDateString() : 'N/A'}</span>
                                 </div>
@@ -10674,6 +10987,230 @@
         }
     });
 
+    // ==================== PUSH NOTIFICATIONS (FCM) ====================
+
+    /**
+     * VAPID Key for Firebase Cloud Messaging (Web Push)
+     *
+     * SETUP: Replace this placeholder with your actual VAPID key from:
+     * Firebase Console -> Project Settings -> Cloud Messaging -> Web Push certificates
+     * Click "Generate key pair" if you haven't already, then copy the key here.
+     */
+    const FCM_VAPID_KEY = 'YOUR_VAPID_KEY_HERE';
+
+    // Firebase Messaging instance (initialized after Firebase is loaded)
+    let fcmMessaging = null;
+
+    /**
+     * Initialize Firebase Cloud Messaging
+     * Sets up the service worker, requests permission, and handles foreground messages.
+     */
+    async function initFCM(user) {
+        // Skip if browser doesn't support notifications
+        if (!('Notification' in window)) {
+            console.log('This browser does not support push notifications');
+            updatePushNotifUI('unsupported');
+            return;
+        }
+
+        // Skip if service workers aren't supported
+        if (!('serviceWorker' in navigator)) {
+            console.log('Service workers not supported');
+            updatePushNotifUI('unsupported');
+            return;
+        }
+
+        // Skip if VAPID key is not configured
+        if (FCM_VAPID_KEY === 'YOUR_VAPID_KEY_HERE') {
+            console.log('FCM VAPID key not configured. Push notifications disabled.');
+            updatePushNotifUI('not_configured');
+            return;
+        }
+
+        try {
+            // Register the FCM service worker
+            const swRegistration = await navigator.serviceWorker.register('/assessment/firebase-messaging-sw.js');
+            console.log('FCM service worker registered:', swRegistration.scope);
+
+            // Initialize Firebase Messaging
+            fcmMessaging = firebase.messaging();
+
+            // Update UI based on current permission state
+            updatePushNotifUI(Notification.permission);
+
+            // If already granted, get the token silently
+            if (Notification.permission === 'granted') {
+                await getFCMToken(user, swRegistration);
+            }
+
+            // Handle foreground messages
+            fcmMessaging.onMessage((payload) => {
+                console.log('Foreground message received:', payload);
+
+                const title = payload.notification?.title || payload.data?.title || 'Sleep Wellness';
+                const body = payload.notification?.body || payload.data?.body || 'You have a new notification.';
+                const type = payload.data?.type || 'general';
+
+                // Show in-app toast notification
+                showToast(body, 'info', title, 6000);
+
+                // Refresh the notifications panel
+                if (currentUser) {
+                    loadUserNotifications(currentUser.uid);
+                    loadClientNotifications();
+                }
+            });
+
+            // Listen for notification click messages from the service worker
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                if (event.data && event.data.type === 'NOTIFICATION_CLICK') {
+                    const notifType = event.data.notificationType;
+                    // Navigate to the relevant section based on notification type
+                    const sectionMap = {
+                        'task_assigned': 'tasks',
+                        'appointment_reminder': 'appointments',
+                        'questionnaire_assigned': 'questionnaires',
+                        'new_message': 'messages'
+                    };
+                    const section = sectionMap[notifType];
+                    if (section) {
+                        showSection(section);
+                    }
+                }
+            });
+
+        } catch (error) {
+            console.error('Error initializing FCM:', error);
+            updatePushNotifUI('error');
+        }
+    }
+
+    /**
+     * Request notification permission and get FCM token
+     */
+    async function enablePushNotifications() {
+        if (!currentUser) {
+            showToast('Please sign in to enable notifications.', 'warning');
+            return;
+        }
+
+        const btn = document.getElementById('pushNotifBtn');
+        if (btn) {
+            btn.disabled = true;
+            btn.textContent = 'Enabling...';
+        }
+
+        try {
+            const permission = await Notification.requestPermission();
+            updatePushNotifUI(permission);
+
+            if (permission === 'granted') {
+                const swRegistration = await navigator.serviceWorker.getRegistration('/assessment/firebase-messaging-sw.js');
+                if (swRegistration) {
+                    await getFCMToken(currentUser, swRegistration);
+                    showToast('Push notifications enabled! You will be notified about important updates.', 'success', 'Notifications Enabled');
+                }
+            } else if (permission === 'denied') {
+                showToast('Notifications were blocked. You can enable them in your browser settings.', 'warning', 'Notifications Blocked');
+            }
+        } catch (error) {
+            console.error('Error enabling push notifications:', error);
+            showToast('Unable to enable notifications. Please try again.', 'error');
+            updatePushNotifUI('error');
+        }
+
+        if (btn) {
+            btn.disabled = false;
+        }
+    }
+
+    /**
+     * Get FCM token and store it in the user's Firestore profile
+     */
+    async function getFCMToken(user, swRegistration) {
+        try {
+            if (!fcmMessaging) return;
+
+            const token = await fcmMessaging.getToken({
+                vapidKey: FCM_VAPID_KEY,
+                serviceWorkerRegistration: swRegistration
+            });
+
+            if (token) {
+                console.log('FCM token obtained');
+                // Store the token in the user's Firestore profile
+                await db.collection('users').doc(user.uid).update({
+                    fcmToken: token,
+                    fcmTokenUpdatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                console.log('FCM token saved to Firestore');
+            } else {
+                console.log('No FCM token available');
+            }
+        } catch (error) {
+            console.error('Error getting FCM token:', error);
+        }
+    }
+
+    /**
+     * Update the push notification UI toggle in the profile section
+     */
+    function updatePushNotifUI(status) {
+        const dot = document.getElementById('pushNotifDot');
+        const statusText = document.getElementById('pushNotifStatusText');
+        const btn = document.getElementById('pushNotifBtn');
+        const desc = document.getElementById('pushNotifDesc');
+
+        if (!dot || !statusText || !btn || !desc) return;
+
+        // Reset classes
+        dot.className = 'push-notif-status-dot';
+
+        switch (status) {
+            case 'granted':
+                dot.classList.add('active');
+                statusText.textContent = 'Enabled';
+                btn.style.display = 'none';
+                desc.textContent = 'You will receive browser notifications for new tasks, messages, and appointments.';
+                break;
+            case 'denied':
+                dot.classList.add('denied');
+                statusText.textContent = 'Blocked';
+                btn.style.display = 'none';
+                desc.textContent = 'Notifications are blocked. To enable them, click the lock icon in your browser address bar and allow notifications.';
+                break;
+            case 'default':
+                statusText.textContent = 'Not enabled';
+                btn.style.display = 'inline-block';
+                btn.textContent = 'Enable';
+                desc.textContent = 'Enable browser notifications to stay updated on your sleep wellness journey.';
+                break;
+            case 'unsupported':
+                statusText.textContent = 'Not supported';
+                btn.style.display = 'none';
+                desc.textContent = 'Your browser does not support push notifications.';
+                break;
+            case 'not_configured':
+                statusText.textContent = 'Setup pending';
+                btn.style.display = 'none';
+                desc.textContent = 'Push notifications will be available once the server configuration is complete.';
+                break;
+            case 'error':
+                statusText.textContent = 'Error';
+                btn.style.display = 'inline-block';
+                btn.textContent = 'Retry';
+                desc.textContent = 'There was an error setting up notifications. Click Retry to try again.';
+                break;
+            default:
+                statusText.textContent = 'Unknown';
+                btn.style.display = 'inline-block';
+                btn.textContent = 'Enable';
+                desc.textContent = 'Enable browser notifications to stay updated.';
+        }
+    }
+
+    // ==================== END PUSH NOTIFICATIONS ====================
+
     // Auth state listener
     auth.onAuthStateChanged(async (user) => {
         // Demo mode: use mock user/profile, skip Firebase
@@ -10755,6 +11292,12 @@
                     if (scoreEl) scoreEl.textContent = assessments[0].overallScore || '--';
                 }
             } catch (e) { /* non-critical */ }
+        }
+    });
+
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted && !auth.currentUser) {
+            window.location.replace('auth.html');
         }
     });
 </script>

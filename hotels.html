@@ -339,32 +339,44 @@
 
         .science-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            max-width: 1000px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
         .science-card {
-            background: rgba(255,255,255,0.03);
+            background: rgba(255,255,255,0.05);
             border: 1px solid rgba(201, 169, 98, 0.2);
-            padding: 35px;
-            display: flex;
-            gap: 25px;
+            border-top: 3px solid transparent;
+            padding: 35px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .science-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+            border-top-color: var(--gold);
+            background: rgba(255,255,255,0.08);
         }
 
         .science-value {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 400;
             color: var(--accent-light);
-            min-width: 80px;
+            margin-bottom: 18px;
+            display: block;
         }
 
         .science-card h4 {
-            font-size: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
             font-weight: 500;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            color: var(--cream);
         }
 
         .science-card p {
@@ -380,9 +392,9 @@
 
         .program-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            max-width: 1200px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
@@ -809,49 +821,37 @@
     <div class="science-grid">
         <div class="science-card">
             <div class="science-value">18-20°C</div>
-            <div>
-                <h4>Temperature Optimization</h4>
-                <p>Core body temperature must drop 1-2°C for sleep onset. Thermal-regulating systems maintain the optimal zone throughout the night.</p>
-                <p class="citation"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6491889/" target="_blank">Okamoto-Mizuno & Mizuno, J Physiol Anthropol, 2012</a></p>
-            </div>
+            <h4>Temperature Optimization</h4>
+            <p>Core body temperature must drop 1-2°C for sleep onset. Thermal-regulating systems maintain the optimal zone throughout the night.</p>
+            <p class="citation"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6491889/" target="_blank">Okamoto-Mizuno & Mizuno, J Physiol Anthropol, 2012</a></p>
         </div>
         <div class="science-card">
             <div class="science-value">0 lux</div>
-            <div>
-                <h4>Complete Darkness</h4>
-                <p>Light above 5 lux suppresses melatonin by 50%. Complete blackout protocols are essential for hormone optimization.</p>
-                <p class="citation"><a href="https://www.pnas.org/doi/10.1073/pnas.1901824116" target="_blank">Phillips et al., PNAS, 2019</a></p>
-            </div>
+            <h4>Complete Darkness</h4>
+            <p>Light above 5 lux suppresses melatonin by 50%. Complete blackout protocols are essential for hormone optimization.</p>
+            <p class="citation"><a href="https://www.pnas.org/doi/10.1073/pnas.1901824116" target="_blank">Phillips et al., PNAS, 2019</a></p>
         </div>
         <div class="science-card">
             <div class="science-value">< 40 dB</div>
-            <div>
-                <h4>Acoustic Control</h4>
-                <p>Ambient noise causes micro-arousals that fragment sleep architecture. Pink noise can increase deep sleep by 25%.</p>
-                <p class="citation"><a href="https://pubmed.ncbi.nlm.nih.gov/28323612/" target="_blank">Papalambros et al., Front Hum Neurosci, 2017</a></p>
-            </div>
+            <h4>Acoustic Control</h4>
+            <p>Ambient noise causes micro-arousals that fragment sleep architecture. Pink noise can increase deep sleep by 25%.</p>
+            <p class="citation"><a href="https://pubmed.ncbi.nlm.nih.gov/28323612/" target="_blank">Papalambros et al., Front Hum Neurosci, 2017</a></p>
         </div>
         <div class="science-card">
             <div class="science-value">3000K</div>
-            <div>
-                <h4>Circadian Lighting</h4>
-                <p>Warm-spectrum evening light preserves melatonin production. Dawn simulation optimizes the cortisol awakening response.</p>
-                <p class="citation"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5536841/" target="_blank">Nagare et al., Physiol Rep, 2017</a></p>
-            </div>
+            <h4>Circadian Lighting</h4>
+            <p>Warm-spectrum evening light preserves melatonin production. Dawn simulation optimizes the cortisol awakening response.</p>
+            <p class="citation"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5536841/" target="_blank">Nagare et al., Physiol Rep, 2017</a></p>
         </div>
         <div class="science-card">
             <div class="science-value">30-50%</div>
-            <div>
-                <h4>Air Quality</h4>
-                <p>Optimal humidity prevents airway irritation. HEPA filtration removes allergens. CO2 monitoring ensures freshness.</p>
-            </div>
+            <h4>Air Quality</h4>
+            <p>Optimal humidity prevents airway irritation. HEPA filtration removes allergens. CO2 monitoring ensures freshness.</p>
         </div>
         <div class="science-card">
             <div class="science-value">~24h</div>
-            <div>
-                <h4>Jet Lag Protocols</h4>
-                <p>Strategic light therapy and caffeine timing can accelerate circadian adaptation from days to hours.</p>
-            </div>
+            <h4>Jet Lag Protocols</h4>
+            <p>Strategic light therapy and caffeine timing can accelerate circadian adaptation from days to hours.</p>
         </div>
     </div>
 </section>
@@ -908,6 +908,20 @@
                 <li>Ongoing physician partnership</li>
             </ul>
             <a href="#contact" class="program-cta">Learn More</a>
+        </div>
+
+        <div class="program-card">
+            <h3>Custom Program</h3>
+            <p class="tagline">Tailored to Your Property</p>
+            <ul class="program-features">
+                <li>Every hotel is unique</li>
+                <li>Bespoke program design</li>
+                <li>Flexible engagement model</li>
+                <li>Brand-aligned delivery</li>
+                <li>Scalable across properties</li>
+                <li>Choose your own combination</li>
+            </ul>
+            <a href="#contact" class="program-cta">Discuss Options</a>
         </div>
     </div>
 </section>
