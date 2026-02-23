@@ -447,9 +447,9 @@
 
         <!-- Register Form -->
         <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
-            <!-- Hotel Welcome Banner (shown when ?hotel= param present) -->
+            <!-- Partner Welcome Banner (shown when ?hotel=, ?team=, or ?org= param present) -->
             <div id="hotel-welcome-banner" class="hotel-welcome-banner" style="display: none;">
-                <div class="hotel-logo" id="hotel-logo">
+                <div class="hotel-logo" id="partner-logo">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
                 </div>
                 <h2>Welcome, <span id="hotel-name-display">Guest</span></h2>
@@ -632,6 +632,55 @@
                 console.error('Error loading hotel partner:', error);
             }
         }
+
+        // Check for athletic team partner (?team= param)
+        const teamId = urlParams.get('team');
+        if (teamId && !isHotelMode) {
+            try {
+                const teamPartner = await FirebaseDB.getAthleticPartner(teamId);
+                if (teamPartner) {
+                    setupPartnerWelcome(teamPartner, 'Athlete', 'athlete');
+                }
+            } catch (error) {
+                console.error('Error loading athletic partner:', error);
+            }
+        }
+
+        // Check for corporate/business partner (?org= param)
+        const orgId = urlParams.get('org');
+        if (orgId && !isHotelMode) {
+            try {
+                const orgPartner = await FirebaseDB.getBusinessPartner(orgId);
+                if (orgPartner) {
+                    setupPartnerWelcome(orgPartner, 'Executive', 'executive');
+                }
+            } catch (error) {
+                console.error('Error loading business partner:', error);
+            }
+        }
+    }
+
+    // Generic partner welcome setup (for athletic teams and corporate partners)
+    function setupPartnerWelcome(partner, roleLabel, clientType) {
+        const banner = document.getElementById('hotel-welcome-banner');
+        banner.style.display = 'block';
+        document.getElementById('hotel-name-display').textContent = partner.name + ' ' + roleLabel;
+
+        if (partner.logoUrl) {
+            document.getElementById('partner-logo').innerHTML = `<img src="${partner.logoUrl}" alt="${partner.name}">`;
+        }
+
+        document.title = `${roleLabel} Registration | ${partner.name} Sleep Program`;
+
+        // Pre-select matching client type
+        const typeOption = document.querySelector(`input[name="clientType"][value="${clientType}"]`);
+        if (typeOption) {
+            typeOption.checked = true;
+            const opt = typeOption.closest('.client-type-option');
+            if (opt) opt.classList.add('selected');
+        }
+
+        showAuthTab('register');
     }
 
     // Setup hotel mode UI
@@ -646,7 +695,7 @@
 
         // Set hotel logo if available
         if (partner.logoUrl) {
-            document.getElementById('hotel-logo').innerHTML = `<img src="${partner.logoUrl}" alt="${partner.name}">`;
+            document.getElementById('partner-logo').innerHTML = `<img src="${partner.logoUrl}" alt="${partner.name}">`;
         }
 
         // Hide invite code field and notice

@@ -1231,16 +1231,49 @@
         Let's discuss how physician-designed sleep optimization can elevate your performance
         and extend your career.
     </p>
-    <!-- TODO: Set up Formspree account and replace ATHLETES_FORM_ID below -->
-    <form class="cta-form" action="https://formspree.io/f/ATHLETES_FORM_ID" method="POST" style="max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
-        <input type="hidden" name="_subject" value="Athlete/Team Inquiry">
-        <input type="text" name="name" placeholder="Your Name" required style="padding: 14px 18px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; text-align: center;">
-        <input type="email" name="email" placeholder="Your Email" required style="padding: 14px 18px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; text-align: center;">
-        <input type="text" name="sport" placeholder="Sport / Team (Optional)" style="padding: 14px 18px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; text-align: center;">
-        <button type="submit" class="cta-primary" style="border: none; cursor: pointer;">Schedule a Consultation</button>
-    </form>
+    <a href="javascript:void(0)" onclick="openBookingModal()" class="cta-primary" style="display: inline-block; text-decoration: none; margin-bottom: 15px;">Schedule a Consultation</a>
     <p style="margin-top: 20px; font-size: 14px; opacity: 0.7;">Or email directly: <a href="mailto:alen_juginovic@hms.harvard.edu" style="color: var(--gold);">alen_juginovic@hms.harvard.edu</a></p>
 </section>
+
+<!-- Booking Modal -->
+<div id="bookingModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center;" onclick="if(event.target===this)closeBookingModal()">
+    <div style="background: white; border-radius: 16px; width: 90%; max-width: 500px; max-height: 85vh; overflow-y: auto; padding: 35px;" onclick="event.stopPropagation()">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #0f1c2e; margin: 0;">Schedule a Consultation</h2>
+            <button onclick="closeBookingModal()" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+        </div>
+        <div id="bookingForm">
+            <div style="margin-bottom: 18px;">
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 6px;">Your Name *</label>
+                <input type="text" id="bookingName" placeholder="Full name" style="width: 100%; padding: 12px; border: 1px solid rgba(201,169,98,0.3); border-radius: 6px; font-size: 14px; font-family: 'Montserrat', sans-serif; box-sizing: border-box;">
+            </div>
+            <div style="margin-bottom: 18px;">
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 6px;">Your Email *</label>
+                <input type="email" id="bookingEmail" placeholder="email@example.com" style="width: 100%; padding: 12px; border: 1px solid rgba(201,169,98,0.3); border-radius: 6px; font-size: 14px; font-family: 'Montserrat', sans-serif; box-sizing: border-box;">
+            </div>
+            <div style="margin-bottom: 18px;">
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 6px;">Sport / Team (Optional)</label>
+                <input type="text" id="bookingSport" placeholder="Sport or team name" style="width: 100%; padding: 12px; border: 1px solid rgba(201,169,98,0.3); border-radius: 6px; font-size: 14px; font-family: 'Montserrat', sans-serif; box-sizing: border-box;">
+            </div>
+            <div style="margin-bottom: 18px;">
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 6px;">Preferred Time</label>
+                <div id="bookingSlots" style="max-height: 200px; overflow-y: auto; border: 1px solid rgba(201,169,98,0.2); border-radius: 6px; padding: 10px;">
+                    <p style="color: #999; font-size: 13px; text-align: center; padding: 15px;">Loading available times...</p>
+                </div>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 6px;">Notes (optional)</label>
+                <textarea id="bookingNotes" rows="2" placeholder="Tell us about your goals..." style="width: 100%; padding: 12px; border: 1px solid rgba(201,169,98,0.3); border-radius: 6px; font-size: 14px; font-family: 'Montserrat', sans-serif; resize: vertical; box-sizing: border-box;"></textarea>
+            </div>
+            <button onclick="submitBooking()" style="width: 100%; padding: 14px; background: #0f1c2e; color: #faf8f4; border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: 'Montserrat', sans-serif;">Request Consultation</button>
+        </div>
+        <div id="bookingSuccess" style="display: none; text-align: center; padding: 20px 0;">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#c9a962" stroke-width="1.5" style="margin-bottom: 15px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #0f1c2e; margin-bottom: 10px;">Request Received</h3>
+            <p style="color: #666; font-size: 14px; line-height: 1.6;">Dr. Alen will review your request and confirm the appointment. You'll receive a confirmation email shortly.</p>
+        </div>
+    </div>
+</div>
 
 <!-- Footer -->
 <footer class="footer">
@@ -1255,5 +1288,52 @@
     <span class="footer-text">© 2026 Dr. Alen Juginovic</span>
 </footer>
 
+<script>
+    const CALENDAR_API_BASE = window.location.origin;
+    function openBookingModal() {
+        document.getElementById('bookingModal').style.display = 'flex';
+        document.getElementById('bookingForm').style.display = 'block';
+        document.getElementById('bookingSuccess').style.display = 'none';
+        loadAvailableSlots();
+    }
+    function closeBookingModal() { document.getElementById('bookingModal').style.display = 'none'; }
+    async function loadAvailableSlots() {
+        const container = document.getElementById('bookingSlots');
+        try {
+            const response = await fetch(CALENDAR_API_BASE + '/getAvailableSlots');
+            const data = await response.json();
+            if (data.slots && data.slots.length > 0) {
+                container.innerHTML = data.slots.map(slot => `
+                    <label style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 13px;" onmouseover="this.style.background='rgba(201,169,98,0.08)'" onmouseout="this.style.background=''">
+                        <input type="radio" name="booking-slot" value="${slot.start}" data-end="${slot.end}" style="accent-color: #c9a962;"><span>${slot.display}</span>
+                    </label>`).join('');
+            } else {
+                container.innerHTML = '<p style="color:#666;font-size:13px;text-align:center;padding:15px;">No online slots available.<br><span style="font-size:12px;color:#999;">Submit your request and we\'ll coordinate directly.</span></p>';
+            }
+        } catch (e) {
+            container.innerHTML = '<p style="color:#666;font-size:13px;text-align:center;padding:15px;">Select a preferred time:<input type="datetime-local" id="bookingManualTime" style="display:block;width:100%;margin-top:10px;padding:10px;border:1px solid #ddd;border-radius:6px;font-family:inherit;"></p>';
+        }
+    }
+    async function submitBooking() {
+        const name = document.getElementById('bookingName').value.trim();
+        const email = document.getElementById('bookingEmail').value.trim();
+        const notes = document.getElementById('bookingNotes').value.trim();
+        const sport = document.getElementById('bookingSport')?.value.trim() || '';
+        if (!name || !email) { alert('Please enter your name and email.'); return; }
+        const selectedSlot = document.querySelector('input[name="booking-slot"]:checked');
+        const manualTime = document.getElementById('bookingManualTime');
+        let slotStart = selectedSlot?.value || (manualTime?.value ? new Date(manualTime.value).toISOString() : null);
+        let slotEnd = selectedSlot?.dataset?.end || (slotStart ? new Date(new Date(slotStart).getTime() + 45*60000).toISOString() : null);
+        try {
+            const response = await fetch(CALENDAR_API_BASE + '/bookAppointment', {
+                method: 'POST', headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({ name, email, slotStart, slotEnd, notes: sport ? `Sport/Team: ${sport}\n${notes}` : notes, clientType: 'athlete' })
+            });
+            const data = await response.json();
+            if (data.success) { document.getElementById('bookingForm').style.display = 'none'; document.getElementById('bookingSuccess').style.display = 'block'; }
+            else { alert('There was an issue. Please try emailing directly.'); }
+        } catch (e) { alert('Could not connect. Please email juginovic.alen@gmail.com directly.'); }
+    }
+</script>
 </body>
 </html>
