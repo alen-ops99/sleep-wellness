@@ -45,7 +45,7 @@
         email: DEMO_USER.email,
         displayName: 'Alex Morgan',
         phone: '+1 (555) 012-3456',
-        clientType: 'athlete',
+        clientType: 'individual',
         role: 'client',
         sessionsRemaining: 3,
         totalSessions: 6,

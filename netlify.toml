@@ -1,0 +1,22 @@
+[build]
+  publish = "."
+  command = "echo 'Static site - no build needed'"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# SPA-like behavior for assessment portal - serve index.html for clean URLs
+[[redirects]]
+  from = "/assessment/*"
+  to = "/assessment/:splat"
+  status = 200
+
+# Exclude functions directory and internal files from serving
+[[headers]]
+  for = "/functions/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
