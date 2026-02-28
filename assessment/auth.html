@@ -884,6 +884,13 @@
 
                 } catch (err) {
                     console.error('Error setting up hotel guest:', err);
+                    error.textContent = 'Account created but hotel setup encountered an issue. Please contact the front desk for assistance.';
+                    error.classList.add('visible');
+                    btn.disabled = false;
+                    btn.textContent = 'Create Account';
+                    // Still redirect after delay so user can see the message
+                    setTimeout(() => { window.location.href = 'account.html'; }, 4000);
+                    return;
                 }
 
                 window.location.href = 'account.html';

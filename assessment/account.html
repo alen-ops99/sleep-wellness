@@ -6990,6 +6990,12 @@
 
     // Show section
     function showSection(section) {
+        // Clean up listeners when leaving sections
+        if (currentSection === 'messages' && section !== 'messages' && messagesUnsubscribe) {
+            messagesUnsubscribe();
+            messagesUnsubscribe = null;
+        }
+
         // Push current section to history before switching
         if (currentSection && currentSection !== section) {
             sectionHistory.push(currentSection);
@@ -10224,11 +10230,17 @@
 
         // Process and respond
         setTimeout(async () => {
-            const response = await generateResponse(message);
-            hideTypingIndicator();
-            addChatMessage(response.text, 'assistant', response.showContactBtn);
-            isChatProcessing = false;
-            document.getElementById('chatSendBtn').disabled = false;
+            try {
+                const response = await generateResponse(message);
+                addChatMessage(response.text, 'assistant', response.showContactBtn);
+            } catch (err) {
+                console.error('Chat error:', err);
+                addChatMessage("I'm sorry, I'm having trouble responding right now. Please try again in a moment.", 'assistant');
+            } finally {
+                hideTypingIndicator();
+                isChatProcessing = false;
+                document.getElementById('chatSendBtn').disabled = false;
+            }
         }, 800 + Math.random() * 700);
     }
 
@@ -10281,7 +10293,9 @@
                 content: msg.content
             }));
 
-            // Call Claude API via Cloud Function
+            // Call Claude API via Cloud Function (30s timeout)
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 30000);
             const response = await fetch(CHAT_API_URL, {
                 method: 'POST',
                 headers: {
@@ -10291,8 +10305,10 @@
                     message: message,
                     userId: currentUser ? currentUser.uid : null,
                     conversationHistory: conversationHistory
-                })
+                }),
+                signal: controller.signal
             });
+            clearTimeout(timeoutId);
 
             if (!response.ok) {
                 throw new Error(`API error: ${response.status}`);
@@ -11296,10 +11312,147 @@
     });
 
     window.addEventListener('pageshow', (event) => {
-        if (event.persisted && !auth.currentUser) {
+        if (event.persisted && !auth.currentUser && !window.isDemoMode?.()) {
             window.location.replace('auth.html');
         }
     });
+</script>
+
+<!-- Demo mode hardcoded fallback: populates dashboard even if Firebase fails -->
+<script>
+(function() {
+    if (new URLSearchParams(window.location.search).get('demo') !== 'true'
+        && sessionStorage.getItem('demoMode') !== 'true') return;
+
+    sessionStorage.setItem('demoMode', 'true');
+
+    function populate() {
+        // Prevent any redirect to auth
+        window.addEventListener('beforeunload', function() {}, false);
+
+        // User name
+        document.querySelectorAll('[data-user-name]').forEach(el => {
+            el.textContent = 'Alex';
+        });
+
+        // Avatar
+        const avatar = document.getElementById('userAvatar');
+        if (avatar) avatar.textContent = 'AM';
+
+        // Assessment count
+        const ac = document.getElementById('assessmentCount');
+        if (ac) ac.textContent = '2';
+
+        // Sleep efficiency
+        const eff = document.getElementById('avgEfficiency');
+        if (eff) eff.textContent = '82%';
+
+        // Next appointment
+        const appt = document.getElementById('nextAppointment');
+        const apptDetails = document.getElementById('nextAppointmentDetails');
+        const nextDate = new Date();
+        nextDate.setDate(nextDate.getDate() + 5);
+        if (appt) appt.textContent = nextDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        if (apptDetails) apptDetails.textContent = '10:00 AM';
+
+        // Unlocked resources
+        const uc = document.getElementById('unlockedCount');
+        if (uc) uc.textContent = '1';
+
+        // Sleep score ring + value
+        const scoreEl = document.getElementById('dashboardSleepScore');
+        if (scoreEl) { scoreEl.textContent = '85'; scoreEl.style.color = '#4CAF50'; }
+        const ringEl = document.getElementById('dashboardScoreRing');
+        if (ringEl) {
+            const circumference = 2 * Math.PI * 24;
+            const offset = circumference - (85 / 100) * circumference;
+            ringEl.style.strokeDashoffset = offset;
+            ringEl.style.stroke = '#4CAF50';
+        }
+
+        // Recent activity
+        const actContainer = document.getElementById('recentActivity') || document.getElementById('activityList');
+        if (actContainer) {
+            actContainer.innerHTML = `
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #eee;">
+                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(201,169,98,0.15);display:flex;align-items:center;justify-content:center;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A962" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    </div>
+                    <div style="flex:1">
+                        <div style="font-size:14px;font-weight:500;color:#0f1c2e">Completed Follow-Up Assessment</div>
+                        <div style="font-size:12px;color:#888">Score: 78/100 — 3 days ago</div>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #eee;">
+                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(201,169,98,0.15);display:flex;align-items:center;justify-content:center;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A962" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div style="flex:1">
+                        <div style="font-size:14px;font-weight:500;color:#0f1c2e">Sleep Diary Logged</div>
+                        <div style="font-size:12px;color:#888">Sleep efficiency: 86% — Today</div>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 0;">
+                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(201,169,98,0.15);display:flex;align-items:center;justify-content:center;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A962" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    </div>
+                    <div style="flex:1">
+                        <div style="font-size:14px;font-weight:500;color:#0f1c2e">Completed Baseline Assessment</div>
+                        <div style="font-size:12px;color:#888">Score: 62/100 — 4 weeks ago</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Tasks banner
+        const tasksList = document.getElementById('tasksList');
+        const tasksSub = document.getElementById('tasksSubtitle');
+        if (tasksSub) tasksSub.textContent = '2 pending tasks';
+        if (tasksList) {
+            tasksList.innerHTML = `
+                <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f8f7f4;border-radius:8px;margin-bottom:8px;">
+                    <input type="checkbox" disabled style="width:18px;height:18px;accent-color:#C9A962;">
+                    <div style="flex:1">
+                        <div style="font-size:14px;font-weight:500;color:#0f1c2e;">Complete Follow-Up Assessment</div>
+                        <div style="font-size:12px;color:#888;">Due in 2 days</div>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f8f7f4;border-radius:8px;">
+                    <input type="checkbox" disabled style="width:18px;height:18px;accent-color:#C9A962;">
+                    <div style="flex:1">
+                        <div style="font-size:14px;font-weight:500;color:#0f1c2e;">Log Sleep Diary Daily</div>
+                        <div style="font-size:12px;color:#888;">Due in 7 days</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Show the dashboard section
+        document.querySelectorAll('.dashboard-section').forEach(s => s.classList.remove('active'));
+        const dash = document.getElementById('section-dashboard');
+        if (dash) dash.classList.add('active');
+
+        // Ensure main content is visible (remove any login-required hiding)
+        const main = document.querySelector('.dashboard-main');
+        if (main) { main.style.display = 'block'; main.style.visibility = 'visible'; }
+        const layout = document.querySelector('.dashboard-layout');
+        if (layout) { layout.style.display = 'flex'; layout.style.visibility = 'visible'; }
+
+        // Hide loading spinners
+        document.querySelectorAll('.loading, .spinner').forEach(el => el.style.display = 'none');
+
+        console.log('[Demo Fallback] Dashboard populated with hardcoded data');
+    }
+
+    // Try multiple times to ensure DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => setTimeout(populate, 500));
+    } else {
+        setTimeout(populate, 500);
+    }
+    // Also retry after 2s in case Firebase overrides DOM later
+    setTimeout(populate, 2000);
+})();
 </script>
 
 </body>

@@ -488,7 +488,7 @@ const FirebaseDB = {
         ]);
 
         const recentAssessments = assessments.docs.filter(doc => {
-            const createdAt = doc.data().createdAt?.toDate();
+            const createdAt = doc.data().createdAt?.toDate?.();
             return createdAt && createdAt >= thirtyDaysAgo;
         });
 
@@ -498,7 +498,7 @@ const FirebaseDB = {
             recentAssessments: recentAssessments.length,
             pendingAppointments: appointments.docs.filter(d => d.data().status === 'pending').length,
             upcomingAppointments: appointments.docs.filter(d => {
-                const dt = d.data().dateTime?.toDate();
+                const dt = d.data().dateTime?.toDate?.();
                 return dt && dt >= now && d.data().status === 'confirmed';
             }).length
         };
@@ -860,13 +860,21 @@ const FirebaseDB = {
         });
 
         // Create notification for admin
-        await this.createNotification(
-            ADMIN_UID,
-            'questionnaire_completed',
-            `Questionnaire completed: ${result.instrumentName}`,
-            `Score: ${result.score}/${result.maxScore} - ${result.label}`,
-            { assignmentId, userId: (await db.collection('questionnaireAssignments').doc(assignmentId).get()).data().userId }
-        );
+        try {
+            const assignmentDoc = await db.collection('questionnaireAssignments').doc(assignmentId).get();
+            const assignmentUserId = assignmentDoc.exists ? assignmentDoc.data().userId : null;
+            if (assignmentUserId) {
+                await this.createNotification(
+                    ADMIN_UID,
+                    'questionnaire_completed',
+                    `Questionnaire completed: ${result.instrumentName}`,
+                    `Score: ${result.score}/${result.maxScore} - ${result.label}`,
+                    { assignmentId, userId: assignmentUserId }
+                );
+            }
+        } catch (notifError) {
+            console.error('Error creating completion notification:', notifError);
+        }
 
         return true;
     },
@@ -1162,6 +1170,22 @@ const FirebaseDB = {
      */
     async getHotelPartner(partnerId) {
         const doc = await db.collection('hotelPartners').doc(partnerId).get();
+        return doc.exists ? { id: doc.id, ...doc.data() } : null;
+    },
+
+    /**
+     * Get athletic partner by ID
+     */
+    async getAthleticPartner(partnerId) {
+        const doc = await db.collection('athleticPartners').doc(partnerId).get();
+        return doc.exists ? { id: doc.id, ...doc.data() } : null;
+    },
+
+    /**
+     * Get business partner by ID
+     */
+    async getBusinessPartner(partnerId) {
+        const doc = await db.collection('businessPartners').doc(partnerId).get();
         return doc.exists ? { id: doc.id, ...doc.data() } : null;
     },
 
