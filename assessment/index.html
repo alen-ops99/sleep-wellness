@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sleep Assessment | Sleep Wellness by Dr. Alen</title>
     <meta name="description" content="Comprehensive sleep health assessment by Dr. Alen Juginovic. Evaluate your sleep quality, identify potential disorders, and receive personalized recommendations.">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -115,7 +118,6 @@
                         <li>Restless Legs Syndrome screening</li>
                         <li>Parasomnia and circadian rhythm assessment</li>
                         <li>Environment and lifestyle factors</li>
-                        <li>Optional wearable data integration</li>
                     </ul>
                 </div>
 
@@ -136,7 +138,7 @@
 
         <!-- Step 2: Client Type -->
         <section class="step-section" data-step="clientType">
-            <p class="step-label">Step 1 of 11</p>
+            <p class="step-label">Step 1 of 10</p>
             <h2 class="step-title">How Would You Describe Yourself?</h2>
             <p class="step-subtitle">This helps us tailor the assessment and recommendations to your specific needs.</p>
 
@@ -177,7 +179,7 @@
 
         <!-- Step 3: Demographics -->
         <section class="step-section" data-step="demographics">
-            <p class="step-label">Step 2 of 11</p>
+            <p class="step-label">Step 2 of 10</p>
             <h2 class="step-title">Basic Information</h2>
             <p class="step-subtitle">This information helps us provide more accurate assessments and recommendations.</p>
 
@@ -222,7 +224,7 @@
 
         <!-- Step 4: Sleep Schedule -->
         <section class="step-section" data-step="sleepSchedule">
-            <p class="step-label">Step 3 of 11</p>
+            <p class="step-label">Step 3 of 10</p>
             <h2 class="step-title">Your Sleep Schedule</h2>
             <p class="step-subtitle">Tell us about your typical sleep patterns over the past month.</p>
 
@@ -293,7 +295,7 @@
 
         <!-- Step 5: Epworth Sleepiness Scale -->
         <section class="step-section" data-step="epworth">
-            <p class="step-label">Step 4 of 11</p>
+            <p class="step-label">Step 4 of 10</p>
             <h2 class="step-title">Epworth Sleepiness Scale</h2>
             <p class="step-subtitle">
                 How likely are you to doze off or fall asleep in the following situations?
@@ -319,7 +321,7 @@
 
         <!-- Step 6: Insomnia Severity Index -->
         <section class="step-section" data-step="isi">
-            <p class="step-label">Step 5 of 11</p>
+            <p class="step-label">Step 5 of 10</p>
             <h2 class="step-title">Insomnia Severity Index</h2>
             <p class="step-subtitle">Please rate the current (i.e., last 2 weeks) severity of your insomnia problem(s).</p>
 
@@ -335,7 +337,7 @@
 
         <!-- Step 7: STOP-BANG -->
         <section class="step-section" data-step="stopbang">
-            <p class="step-label">Step 6 of 11</p>
+            <p class="step-label">Step 6 of 10</p>
             <h2 class="step-title">STOP-BANG Sleep Apnea Screening</h2>
             <p class="step-subtitle">Answer yes or no to the following questions to assess sleep apnea risk.</p>
 
@@ -351,7 +353,7 @@
 
         <!-- Step 8: Additional Disorder Screening -->
         <section class="step-section" data-step="disorders">
-            <p class="step-label">Step 7 of 11</p>
+            <p class="step-label">Step 7 of 10</p>
             <h2 class="step-title">Additional Sleep Disorder Screening</h2>
             <p class="step-subtitle">These questions help identify other potential sleep-related conditions.</p>
 
@@ -391,7 +393,7 @@
 
         <!-- Step 9: Environment & Lifestyle -->
         <section class="step-section" data-step="environment">
-            <p class="step-label">Step 8 of 11</p>
+            <p class="step-label">Step 8 of 10</p>
             <h2 class="step-title">Environment & Lifestyle</h2>
             <p class="step-subtitle">Your sleep environment and daily habits significantly impact sleep quality.</p>
 
@@ -510,7 +512,7 @@
 
         <!-- Step 10: Client-Specific Questions -->
         <section class="step-section" data-step="clientSpecific">
-            <p class="step-label">Step 9 of 11</p>
+            <p class="step-label">Step 9 of 10</p>
             <h2 class="step-title" id="clientSpecificTitle">Additional Questions</h2>
             <p class="step-subtitle" id="clientSpecificSubtitle">Questions specific to your profile.</p>
 
@@ -728,130 +730,11 @@
 
             <div class="step-actions">
                 <button class="btn-secondary" onclick="App.previousStep()">Back</button>
-                <button class="btn-primary" onclick="App.nextStep()">Continue</button>
-            </div>
-        </section>
-
-        <!-- Step 11: Wearable Data -->
-        <section class="step-section" data-step="wearable">
-            <p class="step-label">Step 10 of 11</p>
-            <h2 class="step-title">Wearable Data (Optional)</h2>
-            <p class="step-subtitle">
-                If you use a sleep tracker, you can upload your data for more comprehensive analysis.
-            </p>
-
-            <div class="wearable-section">
-                <div class="upload-zone" id="uploadZone">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="upload-icon">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="17 8 12 3 7 8"/>
-                        <line x1="12" y1="3" x2="12" y2="15"/>
-                    </svg>
-                    <p>Drag and drop your sleep data file here</p>
-                    <p class="upload-hint">or click to browse</p>
-                    <input type="file" id="wearableFile" accept=".csv,.json,.xlsx" style="display: none;">
-                </div>
-                <p class="upload-status" id="uploadStatus"></p>
-            </div>
-
-            <div class="wearable-instructions">
-                <h4>Export Instructions by Device</h4>
-
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <button class="accordion-header" onclick="toggleAccordion(this)">
-                            <span>WHOOP</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="accordion-icon">
-                                <polyline points="6 9 12 15 18 9"/>
-                            </svg>
-                        </button>
-                        <div class="accordion-content">
-                            <ol>
-                                <li>Open the WHOOP app</li>
-                                <li>Go to Profile > Settings > Data Export</li>
-                                <li>Select date range and export as CSV</li>
-                                <li>Email the file to yourself and upload here</li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <button class="accordion-header" onclick="toggleAccordion(this)">
-                            <span>Oura Ring</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="accordion-icon">
-                                <polyline points="6 9 12 15 18 9"/>
-                            </svg>
-                        </button>
-                        <div class="accordion-content">
-                            <ol>
-                                <li>Log into cloud.ouraring.com</li>
-                                <li>Navigate to Settings > Data Export</li>
-                                <li>Select "Sleep" data and date range</li>
-                                <li>Download and upload the JSON file</li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <button class="accordion-header" onclick="toggleAccordion(this)">
-                            <span>Apple Watch</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="accordion-icon">
-                                <polyline points="6 9 12 15 18 9"/>
-                            </svg>
-                        </button>
-                        <div class="accordion-content">
-                            <ol>
-                                <li>Open the Health app on your iPhone</li>
-                                <li>Tap your profile picture > Export All Health Data</li>
-                                <li>Wait for export to complete (may take a few minutes)</li>
-                                <li>Upload the export.zip file</li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <button class="accordion-header" onclick="toggleAccordion(this)">
-                            <span>Fitbit</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="accordion-icon">
-                                <polyline points="6 9 12 15 18 9"/>
-                            </svg>
-                        </button>
-                        <div class="accordion-content">
-                            <ol>
-                                <li>Log into fitbit.com</li>
-                                <li>Go to Settings > Data Export</li>
-                                <li>Request your data export</li>
-                                <li>Download and upload the file when ready</li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <button class="accordion-header" onclick="toggleAccordion(this)">
-                            <span>Garmin</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="accordion-icon">
-                                <polyline points="6 9 12 15 18 9"/>
-                            </svg>
-                        </button>
-                        <div class="accordion-content">
-                            <ol>
-                                <li>Log into connect.garmin.com</li>
-                                <li>Go to Settings > Account Information > Export Your Data</li>
-                                <li>Request export and wait for email</li>
-                                <li>Download and upload the file</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="step-actions">
-                <button class="btn-secondary" onclick="App.previousStep()">Back</button>
                 <button class="btn-primary" onclick="App.calculateResults()">View Results</button>
             </div>
         </section>
 
-        <!-- Step 12: Results -->
+        <!-- Step 11: Results -->
         <section class="step-section" data-step="results">
             <div class="results-header">
                 <p class="step-label">Your Results</p>
@@ -871,6 +754,9 @@
                     <div class="score-label">Overall Sleep Health Score</div>
                     <div class="score-interpretation" id="scoreInterpretation"></div>
                 </div>
+                <p class="score-disclaimer" style="max-width: 600px; margin: 16px auto 0; font-size: 12px; color: #7a8a9e; line-height: 1.5; text-align: center;">
+                    This Overall Sleep Health Score is a summary metric based on your questionnaire responses. It is not a validated clinical instrument. Individual scores (ESS, ISI, STOP-BANG) below are based on peer-reviewed, validated scales.
+                </p>
             </div>
 
             <!-- Individual Scores -->

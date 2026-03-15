@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sleep Wellness by Dr. Alen | The Science of Restorative Sleep</title>
+    <meta name="description" content="Physician-designed sleep optimization by Dr. Alen Juginovic, Harvard Medical School neuroscientist. Evidence-based programs for luxury hotels, elite athletes, and corporate leaders.">
+    <link rel="canonical" href="https://sleep-wellness.netlify.app/">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sleep-wellness.netlify.app/">
+    <meta property="og:title" content="Sleep Wellness by Dr. Alen | The Science of Restorative Sleep">
+    <meta property="og:description" content="Physician-designed sleep optimization by Dr. Alen Juginovic, Harvard Medical School neuroscientist. Evidence-based programs for luxury hotels, elite athletes, and corporate leaders.">
+    <meta property="og:image" content="https://sleep-wellness.netlify.app/dr-alen.jpg">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sleep Wellness by Dr. Alen | The Science of Restorative Sleep">
+    <meta name="twitter:description" content="Physician-designed sleep optimization by Dr. Alen Juginovic, Harvard Medical School neuroscientist.">
+    <meta name="twitter:image" content="https://sleep-wellness.netlify.app/dr-alen.jpg">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Google Analytics - Replace G-XXXXXXXXXX with your Measurement ID -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -958,6 +975,22 @@
             letter-spacing: 2px;
         }
 
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
         .footer-text {
             font-size: 12px;
             color: rgba(255,255,255,0.4);
@@ -1376,6 +1409,11 @@
                 gap: 20px;
                 text-align: center;
             }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -1640,7 +1678,7 @@
         <div class="about-container">
             <div class="about-image">
                 <div class="about-image-main">
-                    <img src="dr-alen.jpg" alt="Dr. Alen Juginovic" class="about-photo">
+                    <img src="dr-alen.jpg" alt="Dr. Alen Juginovic" class="about-photo" loading="lazy" width="400" height="500">
                 </div>
                 <div class="about-image-accent"></div>
             </div>
@@ -1810,7 +1848,6 @@
             Join 4,000+ readers getting the latest sleep science, practical tips,
             and exclusive insights delivered to your inbox.
         </p>
-        <!-- TODO: Set up Formspree account and replace FORM_ID below -->
         <form class="newsletter-form" action="https://formspree.io/f/FORM_ID" method="POST">
             <input type="hidden" name="_subject" value="New Sleepletter Subscriber">
             <input type="email" name="email" placeholder="Enter your email" required>
@@ -1825,7 +1862,6 @@
     <div class="contact-container">
         <div class="contact-col">
             <h4>Start a Conversation</h4>
-            <!-- TODO: Set up Formspree account and replace CONTACT_FORM_ID below -->
             <form class="contact-form" action="https://formspree.io/f/CONTACT_FORM_ID" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
                 <input type="hidden" name="_subject" value="Sleep Wellness Inquiry">
                 <input type="text" name="name" placeholder="Your Name" required style="padding: 12px 15px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px;">
@@ -1864,6 +1900,13 @@
 <!-- Footer -->
 <footer class="footer">
     <span class="footer-brand">SLEEP WELLNESS</span>
+    <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="hotels.html">Hotels</a>
+        <a href="athletes.html">Athletes</a>
+        <a href="corporate.html">Corporate</a>
+        <a href="#about">About</a>
+    </div>
     <span class="footer-text">© 2026 Dr. Alen Juginovic. All rights reserved.</span>
 </footer>
 

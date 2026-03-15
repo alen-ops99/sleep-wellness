@@ -324,7 +324,17 @@ const Results = {
     },
 
     /**
-     * Calculate overall sleep health score (0-100)
+     * Calculate overall sleep health score (0-100).
+     *
+     * This is a proprietary composite metric that combines weighted sub-scores
+     * from validated instruments (ESS, ISI, STOP-BANG) and non-validated
+     * assessments (sleep schedule consistency, environment quality). It is
+     * intended as a high-level summary for client engagement and should NOT
+     * be interpreted as a clinically validated diagnostic measure. Individual
+     * sub-scale scores retain their original validated interpretations.
+     *
+     * @param {Object} scores - Object containing individual assessment scores
+     * @returns {Object} Overall score object with value (0-100), severity, and interpretation
      */
     calculateOverallScore(scores) {
         let totalWeight = 0;

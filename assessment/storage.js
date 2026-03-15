@@ -8,8 +8,7 @@ const Storage = {
         CURRENT_STEP: 'sleepAssessment_currentStep',
         CLIENT_TYPE: 'sleepAssessment_clientType',
         RESULTS: 'sleepAssessment_results',
-        UNLOCK_CODES: 'sleepAssessment_unlockCodes',
-        WEARABLE_DATA: 'sleepAssessment_wearableData'
+        UNLOCK_CODES: 'sleepAssessment_unlockCodes'
     },
 
     /**
@@ -176,32 +175,6 @@ const Storage = {
     },
 
     /**
-     * Save wearable data
-     */
-    saveWearableData(data) {
-        try {
-            localStorage.setItem(this.KEYS.WEARABLE_DATA, JSON.stringify(data));
-            return true;
-        } catch (e) {
-            console.error('Error saving wearable data:', e);
-            return false;
-        }
-    },
-
-    /**
-     * Get wearable data
-     */
-    getWearableData() {
-        try {
-            const data = localStorage.getItem(this.KEYS.WEARABLE_DATA);
-            return data ? JSON.parse(data) : null;
-        } catch (e) {
-            console.error('Error reading wearable data:', e);
-            return null;
-        }
-    },
-
-    /**
      * Check if there's saved progress
      */
     hasSavedProgress() {
@@ -219,7 +192,6 @@ const Storage = {
             localStorage.removeItem(this.KEYS.CURRENT_STEP);
             localStorage.removeItem(this.KEYS.CLIENT_TYPE);
             localStorage.removeItem(this.KEYS.RESULTS);
-            localStorage.removeItem(this.KEYS.WEARABLE_DATA);
             // Note: We don't clear unlock codes - they persist
             return true;
         } catch (e) {
@@ -236,7 +208,6 @@ const Storage = {
             responses: this.getResponses(),
             clientType: this.getClientType(),
             results: this.getResults(),
-            wearableData: this.getWearableData(),
             exportedAt: new Date().toISOString()
         };
     },

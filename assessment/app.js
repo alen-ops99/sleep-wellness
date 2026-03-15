@@ -15,7 +15,6 @@ const App = {
         'disorders',
         'environment',
         'clientSpecific',
-        'wearable',
         'results'
     ],
 
@@ -183,37 +182,6 @@ const App = {
             });
         });
 
-        // Wearable upload
-        const uploadZone = document.getElementById('uploadZone');
-        const fileInput = document.getElementById('wearableFile');
-
-        if (uploadZone && fileInput) {
-            uploadZone.addEventListener('click', () => fileInput.click());
-
-            uploadZone.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadZone.classList.add('dragover');
-            });
-
-            uploadZone.addEventListener('dragleave', () => {
-                uploadZone.classList.remove('dragover');
-            });
-
-            uploadZone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadZone.classList.remove('dragover');
-                if (e.dataTransfer.files.length) {
-                    this.handleFileUpload(e.dataTransfer.files[0]);
-                }
-            });
-
-            fileInput.addEventListener('change', (e) => {
-                if (e.target.files.length) {
-                    this.handleFileUpload(e.target.files[0]);
-                }
-            });
-        }
-
         // Modal close on backdrop click
         const modal = document.getElementById('contentModal');
         if (modal) {
@@ -229,36 +197,6 @@ const App = {
             if (e.key === 'Escape') {
                 Content.closeModal();
             }
-        });
-    },
-
-    /**
-     * Handle wearable file upload
-     */
-    handleFileUpload(file) {
-        const statusEl = document.getElementById('uploadStatus');
-        const allowedTypes = ['text/csv', 'application/json', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
-        const allowedExtensions = ['.csv', '.json', '.xlsx'];
-
-        const extension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
-
-        if (!allowedExtensions.includes(extension)) {
-            statusEl.textContent = 'Invalid file type. Please upload CSV, JSON, or XLSX.';
-            statusEl.className = 'upload-status error';
-            return;
-        }
-
-        // For now, just acknowledge the upload
-        // Full parsing would be implemented based on specific wearable formats
-        statusEl.textContent = `File uploaded: ${file.name}`;
-        statusEl.className = 'upload-status success';
-
-        // Store basic info
-        Storage.saveWearableData({
-            filename: file.name,
-            size: file.size,
-            type: file.type,
-            uploadedAt: new Date().toISOString()
         });
     },
 
@@ -577,21 +515,6 @@ const App = {
 };
 
 // Helper functions
-function toggleAccordion(button) {
-    const item = button.parentElement;
-    const isActive = item.classList.contains('active');
-
-    // Close all
-    document.querySelectorAll('.accordion-item').forEach(i => {
-        i.classList.remove('active');
-    });
-
-    // Open clicked if wasn't active
-    if (!isActive) {
-        item.classList.add('active');
-    }
-}
-
 function toggleMobileMenu() {
     const menu = document.getElementById('mobileMenu');
     menu.classList.toggle('active');

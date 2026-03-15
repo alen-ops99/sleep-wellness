@@ -57,6 +57,22 @@ STYLE:
 USER CONTEXT:
 {USER_CONTEXT}`;
 
+// ==================== RATE LIMITER ====================
+// In-memory rate limiter: Map<userId, { count, windowStart }>
+const rateLimitMap = new Map();
+const RATE_LIMIT_MAX = 10;          // max requests per window
+const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
+
+// Clean up stale entries every 5 minutes to prevent memory leaks
+setInterval(() => {
+    const now = Date.now();
+    for (const [key, entry] of rateLimitMap) {
+        if (now - entry.windowStart > RATE_LIMIT_WINDOW_MS * 2) {
+            rateLimitMap.delete(key);
+        }
+    }
+}, 5 * 60 * 1000);
+
 // Cloud Function to chat with Claude
 exports.chatWithClaude = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
@@ -67,6 +83,25 @@ exports.chatWithClaude = functions.https.onRequest((req, res) => {
 
         try {
             const { message, userId, conversationHistory = [] } = req.body;
+
+            // --- Rate limiting (per authenticated user) ---
+            if (userId) {
+                const now = Date.now();
+                const entry = rateLimitMap.get(userId);
+
+                if (entry && now - entry.windowStart < RATE_LIMIT_WINDOW_MS) {
+                    if (entry.count >= RATE_LIMIT_MAX) {
+                        res.status(429).json({
+                            error: 'Too many requests. Please wait a minute before sending another message.',
+                            retryAfterMs: RATE_LIMIT_WINDOW_MS - (now - entry.windowStart)
+                        });
+                        return;
+                    }
+                    entry.count++;
+                } else {
+                    rateLimitMap.set(userId, { count: 1, windowStart: now });
+                }
+            }
 
             if (!message) {
                 res.status(400).json({ error: 'Message is required' });
