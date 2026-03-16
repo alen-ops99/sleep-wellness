@@ -6182,6 +6182,17 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
 <script>
+    // ==================== HTML SANITIZATION HELPER ====================
+    function sanitizeHTML(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    function escapeJSString(str) {
+        if (!str) return '';
+        return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
+    }
+
     // ==================== TOAST NOTIFICATION SYSTEM ====================
 
     function showToast(message, type = 'info', title = null, duration = 4000) {
@@ -6206,8 +6217,8 @@
         toast.innerHTML = `
             <div class="toast-icon">${icons[type]}</div>
             <div class="toast-content">
-                <div class="toast-title">${title || defaultTitles[type]}</div>
-                <div class="toast-message">${message}</div>
+                <div class="toast-title">${sanitizeHTML(title || defaultTitles[type])}</div>
+                <div class="toast-message">${sanitizeHTML(message)}</div>
             </div>
             <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
         `;
@@ -6752,10 +6763,10 @@
                 const deadlineText = dueDate ? (isOverdue ? 'Overdue' : 'Due ' + dueDate.toLocaleDateString()) : '';
 
                 return `
-                    <div class="task-item ${isHighPriority ? 'high-priority' : ''}" onclick="handleTaskClick('${task.id}', '${task.taskType}')">
+                    <div class="task-item ${isHighPriority ? 'high-priority' : ''}" onclick="handleTaskClick('${escapeJSString(task.id)}', '${escapeJSString(task.taskType)}')">
                         <div class="task-checkbox"></div>
                         <div class="task-info">
-                            <div class="task-title">${task.title}</div>
+                            <div class="task-title">${sanitizeHTML(task.title)}</div>
                             <div class="task-due ${isOverdue ? 'overdue' : ''}">${deadlineText}</div>
                         </div>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2">
@@ -6820,10 +6831,10 @@
                     const deadlineText = dueDate ? (isOverdue ? 'Overdue' : 'Due ' + dueDate.toLocaleDateString()) : '';
 
                     return `
-                        <div class="task-item ${isHighPriority ? 'high-priority' : ''}" onclick="handleTaskClick('${task.id}', '${task.taskType}')">
+                        <div class="task-item ${isHighPriority ? 'high-priority' : ''}" onclick="handleTaskClick('${escapeJSString(task.id)}', '${escapeJSString(task.taskType)}')">
                             <div class="task-checkbox"></div>
                             <div class="task-info">
-                                <div class="task-title">${task.title}</div>
+                                <div class="task-title">${sanitizeHTML(task.title)}</div>
                                 <div class="task-due ${isOverdue ? 'overdue' : ''}">${deadlineText}</div>
                             </div>
                             <a href="${generateGoogleCalendarUrl(task)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--gold-dark); text-decoration: none; padding: 4px 8px; border: 1px solid rgba(201,169,98,0.3); border-radius: 4px; transition: all 0.2s; margin-right: 8px;" onmouseover="this.style.background='rgba(201,169,98,0.1)'" onmouseout="this.style.background=''">
@@ -6851,7 +6862,7 @@
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
                             </div>
                             <div class="task-info">
-                                <div class="task-title" style="text-decoration: line-through; color: var(--text-light);">${task.title}</div>
+                                <div class="task-title" style="text-decoration: line-through; color: var(--text-light);">${sanitizeHTML(task.title)}</div>
                                 <div class="task-due">${dateText}</div>
                             </div>
                         </div>
@@ -6940,9 +6951,9 @@
                         month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
                     }) : '';
                     return `
-                        <div class="notification-item" onclick="markNotificationRead('${n.id}', this)">
-                            <div class="notification-item-title">${n.title || 'Notification'}</div>
-                            <div class="notification-item-message">${n.message || ''}</div>
+                        <div class="notification-item" onclick="markNotificationRead('${escapeJSString(n.id)}', this)">
+                            <div class="notification-item-title">${sanitizeHTML(n.title || 'Notification')}</div>
+                            <div class="notification-item-message">${sanitizeHTML(n.message || '')}</div>
                             <div class="notification-item-time">${time}</div>
                         </div>
                     `;
@@ -7191,7 +7202,7 @@
                     findingsEl.innerHTML = topFindings.map(f => `
                         <div style="display: flex; align-items: flex-start; gap: 8px;">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            <span style="font-size: 13px; color: var(--text); line-height: 1.5;">${typeof f === 'string' ? f : f.text || f.message || ''}</span>
+                            <span style="font-size: 13px; color: var(--text); line-height: 1.5;">${sanitizeHTML(typeof f === 'string' ? f : f.text || f.message || '')}</span>
                         </div>
                     `).join('');
                 } else {
@@ -7457,8 +7468,8 @@
                     </svg>
                 </div>
                 <div class="activity-content">
-                    <h4>${a.title}</h4>
-                    <p>${a.description}</p>
+                    <h4>${sanitizeHTML(a.title)}</h4>
+                    <p>${sanitizeHTML(a.description)}</p>
                 </div>
                 <span class="activity-time">${formatTimeAgo(a.time)}</span>
             </div>
@@ -7663,7 +7674,7 @@
                         <p>${date} - ${a.clientType || 'General'}</p>
                     </div>
                     <div class="assessment-actions">
-                        <button class="btn-secondary" onclick="viewAssessment('${a.id}', this)">View Details</button>
+                        <button class="btn-secondary" onclick="viewAssessment('${escapeJSString(a.id)}', this)">View Details</button>
                     </div>
                 </div>
             `;
@@ -7701,14 +7712,14 @@
             for (const [key, label] of Object.entries(scoreLabels)) {
                 if (scores[key] !== undefined) {
                     const val = typeof scores[key] === 'object' ? (scores[key].score ?? scores[key].total ?? JSON.stringify(scores[key])) : scores[key];
-                    scoreRows += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(201,169,98,0.1);"><span>${label}</span><strong>${val}</strong></div>`;
+                    scoreRows += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(201,169,98,0.1);"><span>${sanitizeHTML(label)}</span><strong>${sanitizeHTML(String(val))}</strong></div>`;
                 }
             }
 
             let recList = '';
             if (recs.length > 0) {
                 recList = '<div style="margin-top:12px;"><strong style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--gold-dark);">Recommendations</strong>' +
-                    recs.slice(0, 5).map(r => `<div style="padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.05);font-size:13px;">${r.text || r}</div>`).join('') + '</div>';
+                    recs.slice(0, 5).map(r => `<div style="padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.05);font-size:13px;">${sanitizeHTML(r.text || r)}</div>`).join('') + '</div>';
             }
 
             const panel = document.createElement('div');
@@ -8532,9 +8543,9 @@
         if (insights.length > 0) {
             document.getElementById('insightsList').innerHTML = insights.map(insight => `
                 <div class="insight-card">
-                    <div class="insight-type">${insight.type}</div>
-                    <p class="insight-text">${insight.text}</p>
-                    ${insight.action ? `<div class="insight-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 18l6-6-6-6"/></svg> ${insight.action}</div>` : ''}
+                    <div class="insight-type">${sanitizeHTML(insight.type)}</div>
+                    <p class="insight-text">${sanitizeHTML(insight.text)}</p>
+                    ${insight.action ? `<div class="insight-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 18l6-6-6-6"/></svg> ${sanitizeHTML(insight.action)}</div>` : ''}
                 </div>
             `).join('');
         }
@@ -8722,8 +8733,8 @@
 
         document.getElementById('eveningTips').innerHTML = tips.map(tip => `
             <div class="insight-card">
-                <div class="insight-type">${tip.type}</div>
-                <p class="insight-text">${tip.text}</p>
+                <div class="insight-type">${sanitizeHTML(tip.type)}</div>
+                <p class="insight-text">${sanitizeHTML(tip.text)}</p>
             </div>
         `).join('');
     }
@@ -9308,7 +9319,7 @@
             const time = m.createdAt?.toDate().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
             return `
                 <div class="message ${isSent ? 'sent' : 'received'}">
-                    <p>${m.text}</p>
+                    <p>${sanitizeHTML(m.text)}</p>
                     <div class="message-time">${time || ''}</div>
                 </div>
             `;
@@ -9475,10 +9486,10 @@
 
             if (isUnlocked) {
                 return `
-                    <div class="module-card" onclick="Content.openModule('${id}')" style="cursor: pointer;">
+                    <div class="module-card" onclick="Content.openModule('${escapeJSString(id)}')" style="cursor: pointer;">
                         <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${Content.getModuleIconSVG(m.icon)}</svg>
-                        <h4>${m.title}</h4>
-                        <p>${m.description}</p>
+                        <h4>${sanitizeHTML(m.title)}</h4>
+                        <p>${sanitizeHTML(m.description)}</p>
                     </div>
                 `;
             } else if (isPending) {
@@ -9486,8 +9497,8 @@
                     <div class="module-card locked" style="cursor: default;">
                         <span class="pending-badge" style="position: absolute; top: 15px; right: 15px; background: var(--warning); color: white; font-size: 10px; padding: 4px 10px; border-radius: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Pending</span>
                         <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${Content.getModuleIconSVG(m.icon)}</svg>
-                        <h4>${m.title}</h4>
-                        <p>${m.description}</p>
+                        <h4>${sanitizeHTML(m.title)}</h4>
+                        <p>${sanitizeHTML(m.description)}</p>
                         <p style="font-size: 12px; color: var(--warning); margin-top: 10px;">Request submitted - awaiting approval</p>
                     </div>
                 `;
@@ -9496,9 +9507,9 @@
                     <div class="module-card locked" style="cursor: default; position: relative;">
                         <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                         <svg class="module-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${Content.getModuleIconSVG(m.icon)}</svg>
-                        <h4>${m.title}</h4>
-                        <p>${m.description}</p>
-                        <button class="btn-request" onclick="openRequestModal('${id}', '${m.title.replace(/'/g, "\\'")}'); event.stopPropagation();" style="margin-top: 12px; width: 100%; padding: 10px; background: transparent; border: 1px solid var(--gold); color: var(--gold-dark); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.5px;">
+                        <h4>${sanitizeHTML(m.title)}</h4>
+                        <p>${sanitizeHTML(m.description)}</p>
+                        <button class="btn-request" onclick="openRequestModal('${escapeJSString(id)}', '${escapeJSString(m.title)}'); event.stopPropagation();" style="margin-top: 12px; width: 100%; padding: 10px; background: transparent; border: 1px solid var(--gold); color: var(--gold-dark); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.5px;">
                             Request Access
                         </button>
                     </div>
@@ -9582,15 +9593,15 @@
                     return `
                         <div class="questionnaire-card ${isOverdue ? 'overdue' : 'pending'}">
                             <div class="questionnaire-info">
-                                <h4>${q.questionnaireName || q.instrumentName || q.questionnaireId || q.instrumentId}</h4>
+                                <h4>${sanitizeHTML(q.questionnaireName || q.instrumentName || q.questionnaireId || q.instrumentId)}</h4>
                                 <div class="questionnaire-meta">
-                                    <span>${instrument?.timeToComplete || '2-3 minutes'}</span>
+                                    <span>${sanitizeHTML(instrument?.timeToComplete || '2-3 minutes')}</span>
                                     <span>${instrument?.questions?.length || '?'} questions</span>
                                     ${dueDate ? `<span style="${isOverdue ? 'color: #c62828; font-weight: 600;' : ''}">Due: ${dueDate.toLocaleDateString()}${isOverdue ? ' (Overdue)' : ''}</span>` : ''}
                                 </div>
-                                ${q.notes ? `<p style="font-size: 13px; color: var(--text-light); margin-top: 8px;">${q.notes}</p>` : ''}
+                                ${q.notes ? `<p style="font-size: 13px; color: var(--text-light); margin-top: 8px;">${sanitizeHTML(q.notes)}</p>` : ''}
                             </div>
-                            <button onclick="startQuestionnaire('${q.id}', '${q.questionnaireId}')" class="btn-primary" style="white-space: nowrap;">
+                            <button onclick="startQuestionnaire('${escapeJSString(q.id)}', '${escapeJSString(q.questionnaireId)}')" class="btn-primary" style="white-space: nowrap;">
                                 Start
                             </button>
                         </div>
@@ -9608,14 +9619,14 @@
                     return `
                         <div class="questionnaire-card completed">
                             <div class="questionnaire-info">
-                                <h4>${r.questionnaireName || r.instrumentName || r.questionnaireId || r.instrumentId}</h4>
+                                <h4>${sanitizeHTML(r.questionnaireName || r.instrumentName || r.questionnaireId || r.instrumentId)}</h4>
                                 <div class="questionnaire-meta">
                                     <span>Completed: ${completedDate ? completedDate.toLocaleDateString() : 'N/A'}</span>
                                 </div>
                             </div>
                             <div class="questionnaire-result">
                                 <div class="questionnaire-score">${r.score}/${r.maxScore}</div>
-                                <span class="questionnaire-severity" style="background: ${r.color || '#666'};">${r.interpretation || 'N/A'}</span>
+                                <span class="questionnaire-severity" style="background: ${sanitizeHTML(r.color || '#666')};">${sanitizeHTML(r.interpretation || 'N/A')}</span>
                             </div>
                         </div>
                     `;
@@ -10252,10 +10263,10 @@
         const msgDiv = document.createElement('div');
         msgDiv.className = `chat-message ${role}`;
 
-        let content = `<div class="chat-bubble">${text}</div>`;
+        let content = `<div class="chat-bubble">${sanitizeHTML(text)}</div>`;
 
         if (showContactBtn) {
-            content = `<div class="chat-bubble">${text}
+            content = `<div class="chat-bubble">${sanitizeHTML(text)}
                 <button class="chat-contact-btn" onclick="contactDrAlen()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -10898,14 +10909,14 @@
             const icon = getNotificationIcon(notif.type);
             const bgColor = notif.read ? 'transparent' : 'rgba(201, 169, 98, 0.08)';
 
-            return '<div onclick="handleNotificationClick(\'' + notif.id + '\', \'' + notif.type + '\')" style="padding: 12px 15px; border-bottom: 1px solid #f0f0f0; cursor: pointer; background: ' + bgColor + '; transition: background 0.2s;">' +
+            return '<div onclick="handleNotificationClick(\'' + escapeJSString(notif.id) + '\', \'' + escapeJSString(notif.type) + '\')" style="padding: 12px 15px; border-bottom: 1px solid #f0f0f0; cursor: pointer; background: ' + bgColor + '; transition: background 0.2s;">' +
                 '<div style="display: flex; gap: 12px; align-items: flex-start;">' +
                     '<div style="width: 36px; height: 36px; background: rgba(201, 169, 98, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">' +
                         icon +
                     '</div>' +
                     '<div style="flex: 1; min-width: 0;">' +
-                        '<p style="font-size: 13px; color: #0f1c2e; margin: 0 0 4px 0; font-weight: ' + (notif.read ? '400' : '500') + ';">' + notif.title + '</p>' +
-                        '<p style="font-size: 12px; color: #666; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + notif.message + '</p>' +
+                        '<p style="font-size: 13px; color: #0f1c2e; margin: 0 0 4px 0; font-weight: ' + (notif.read ? '400' : '500') + ';">' + sanitizeHTML(notif.title) + '</p>' +
+                        '<p style="font-size: 12px; color: #666; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + sanitizeHTML(notif.message) + '</p>' +
                         '<p style="font-size: 11px; color: #999; margin: 4px 0 0 0;">' + timeAgo + '</p>' +
                     '</div>' +
                 '</div>' +

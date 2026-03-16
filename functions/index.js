@@ -1,7 +1,15 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const Anthropic = require('@anthropic-ai/sdk');
-const cors = require('cors')({ origin: true });
+const corsOptions = {
+    origin: [
+        'https://sleep-wellness.netlify.app',
+        'http://localhost:5000',
+        'http://localhost:3000',
+        'http://127.0.0.1:5000'
+    ]
+};
+const cors = require('cors')(corsOptions);
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -67,6 +75,22 @@ const BOOKING_RATE_LIMIT_MAX = 5;   // max bookings per window
 const BOOKING_RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 
 /**
+ * Prune expired entries from the rate limit map to prevent unbounded growth.
+ * Called periodically from checkRateLimit.
+ */
+let rateLimitPruneCounter = 0;
+const PRUNE_EVERY_N_CALLS = 100;
+
+function pruneRateLimitMap() {
+    const now = Date.now();
+    for (const [key, data] of rateLimitMap.entries()) {
+        if (now - data.windowStart > (data.windowMs || RATE_LIMIT_WINDOW_MS)) {
+            rateLimitMap.delete(key);
+        }
+    }
+}
+
+/**
  * Generic rate-limit check.
  * @param {string} key - identifier (uid or IP)
  * @param {number} max - max requests per window
@@ -74,6 +98,13 @@ const BOOKING_RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
  * @returns {{ limited: boolean, retryAfterMs?: number }}
  */
 function checkRateLimit(key, max = RATE_LIMIT_MAX, windowMs = RATE_LIMIT_WINDOW_MS) {
+    // Periodically prune expired entries
+    rateLimitPruneCounter++;
+    if (rateLimitPruneCounter >= PRUNE_EVERY_N_CALLS) {
+        rateLimitPruneCounter = 0;
+        pruneRateLimitMap();
+    }
+
     const now = Date.now();
     const entry = rateLimitMap.get(key);
 
@@ -83,7 +114,7 @@ function checkRateLimit(key, max = RATE_LIMIT_MAX, windowMs = RATE_LIMIT_WINDOW_
         }
         entry.count++;
     } else {
-        rateLimitMap.set(key, { count: 1, windowStart: now });
+        rateLimitMap.set(key, { count: 1, windowStart: now, windowMs: windowMs });
     }
     return { limited: false };
 }
@@ -137,7 +168,7 @@ exports.chatWithClaude = functions.https.onRequest((req, res) => {
 
             const authenticatedUid = decodedToken.uid;
 
-            const { message, conversationHistory = [] } = req.body;
+            const { message, conversationHistory } = req.body;
 
             // --- Rate limiting (mandatory — uses authenticated uid, IP as fallback) ---
             const rateLimitKey = authenticatedUid || `ip:${getClientIp(req)}`;
@@ -155,6 +186,30 @@ exports.chatWithClaude = functions.https.onRequest((req, res) => {
                 return;
             }
 
+            // --- H6: Input length validation ---
+            if (typeof message !== 'string' || message.length > 4000) {
+                res.status(400).json({ error: 'Message must be a string of 4000 characters or fewer.' });
+                return;
+            }
+
+            // --- H5: Validate conversationHistory ---
+            const MAX_HISTORY_LENGTH = 20;
+            const allowedRoles = new Set(['user', 'assistant']);
+            let sanitizedHistory = [];
+            if (Array.isArray(conversationHistory)) {
+                sanitizedHistory = conversationHistory
+                    .filter(entry =>
+                        entry &&
+                        typeof entry === 'object' &&
+                        typeof entry.role === 'string' &&
+                        allowedRoles.has(entry.role) &&
+                        typeof entry.content === 'string' &&
+                        entry.content.trim().length > 0
+                    )
+                    .slice(-MAX_HISTORY_LENGTH)
+                    .map(entry => ({ role: entry.role, content: entry.content }));
+            }
+
             // Fetch user context using the authenticated uid
             let userContext = 'No user data available.';
             userContext = await getUserContext(authenticatedUid);
@@ -164,7 +219,7 @@ exports.chatWithClaude = functions.https.onRequest((req, res) => {
 
             // Build messages array
             const messages = [
-                ...conversationHistory.slice(-10), // Keep last 10 messages for context
+                ...sanitizedHistory.slice(-10), // Keep last 10 messages for context
                 { role: 'user', content: message }
             ];
 
@@ -194,8 +249,7 @@ exports.chatWithClaude = functions.https.onRequest((req, res) => {
         } catch (error) {
             console.error('Error calling Claude:', error);
             res.status(500).json({
-                error: 'Failed to get response',
-                details: error.message
+                error: 'Service temporarily unavailable. Please try again later.'
             });
         }
     });
@@ -329,23 +383,43 @@ function getOAuth2Client() {
     return _oauth2Client;
 }
 
+// Admin UID for authorization checks
+const ADMIN_UID = 'iHDuOEJXsQe7dL5C4QwA3fLX9zi2';
+
 // Step 1: Admin connects their Google Calendar
 exports.getCalendarAuthUrl = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
         try {
+            // --- H7: Require authenticated admin ---
+            const decodedToken = await verifyAuthToken(req);
+            if (!decodedToken || decodedToken.uid !== ADMIN_UID) {
+                res.status(403).json({ error: 'Forbidden. Admin access required.' });
+                return;
+            }
+
             const oauth2Client = getOAuth2Client();
+
+            // Generate a state token to verify the callback
+            const stateToken = require('crypto').randomBytes(32).toString('hex');
+            await db.collection('adminConfig').doc('oauthState').set({
+                state: stateToken,
+                createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                uid: decodedToken.uid
+            });
+
             const authUrl = oauth2Client.generateAuthUrl({
                 access_type: 'offline',
                 scope: [
                     'https://www.googleapis.com/auth/calendar.events',
                     'https://www.googleapis.com/auth/calendar.readonly'
                 ],
-                prompt: 'consent'
+                prompt: 'consent',
+                state: stateToken
             });
             res.json({ authUrl });
         } catch (error) {
             console.error('Error generating auth URL:', error);
-            res.status(500).json({ error: error.message });
+            res.status(500).json({ error: 'An internal error occurred.' });
         }
     });
 });
@@ -354,11 +428,26 @@ exports.getCalendarAuthUrl = functions.https.onRequest((req, res) => {
 exports.calendarAuthCallback = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
         try {
-            const { code } = req.query;
+            const { code, state } = req.query;
             if (!code) {
                 res.status(400).send('Missing authorization code');
                 return;
             }
+
+            // --- H7: Verify the state token matches what was generated ---
+            if (!state) {
+                res.status(400).send('Missing state parameter.');
+                return;
+            }
+
+            const stateDoc = await db.collection('adminConfig').doc('oauthState').get();
+            if (!stateDoc.exists || stateDoc.data().state !== state) {
+                res.status(403).send('Invalid or expired OAuth state. Please restart the authorization flow.');
+                return;
+            }
+
+            // Delete the used state token to prevent replay
+            await db.collection('adminConfig').doc('oauthState').delete();
 
             const oauth2Client = getOAuth2Client();
             const { tokens } = await oauth2Client.getToken(code);
@@ -374,7 +463,7 @@ exports.calendarAuthCallback = functions.https.onRequest((req, res) => {
             res.redirect('/assessment/admin/index.html?calendar=connected#appointments');
         } catch (error) {
             console.error('Calendar auth error:', error);
-            res.status(500).send('Calendar connection failed: ' + error.message);
+            res.status(500).send('Calendar connection failed. Please try again.');
         }
     });
 });
@@ -487,7 +576,7 @@ exports.getAvailableSlots = functions.https.onRequest((req, res) => {
             res.json({ slots: availableSlots });
         } catch (error) {
             console.error('Error getting slots:', error);
-            res.json({ slots: [], error: error.message });
+            res.json({ slots: [], error: 'Unable to retrieve available slots. Please try again later.' });
         }
     });
 });
@@ -725,10 +814,11 @@ exports.onAppointmentReminder = functions.pubsub
             const in24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000);
 
             // Query confirmed appointments in the next 24 hours
+            // Note: bookAppointment saves the field as 'startTime', not 'dateTime'
             const snapshot = await db.collection('appointments')
                 .where('status', '==', 'confirmed')
-                .where('dateTime', '>=', now)
-                .where('dateTime', '<=', in24Hours)
+                .where('startTime', '>=', now)
+                .where('startTime', '<=', in24Hours)
                 .get();
 
             if (snapshot.empty) {
@@ -750,7 +840,7 @@ exports.onAppointmentReminder = functions.pubsub
                 if (!userId) continue;
 
                 // Format the appointment time
-                const appointmentTime = appointment.dateTime.toDate();
+                const appointmentTime = appointment.startTime.toDate();
                 const timeStr = appointmentTime.toLocaleTimeString('en-US', {
                     hour: 'numeric',
                     minute: '2-digit',

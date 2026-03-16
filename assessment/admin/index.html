@@ -3415,6 +3415,11 @@
         return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
+    function escapeJSString(str) {
+        if (!str) return '';
+        return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
+    }
+
     // ==================== TOAST NOTIFICATION SYSTEM ====================
 
     function showToast(message, type = 'info', title = null, duration = 4000) {
@@ -3812,7 +3817,7 @@
 
             html += `
                 <div style="display: flex; align-items: flex-start; gap: 12px; padding: 15px 20px; border-bottom: 1px solid rgba(0,0,0,0.05); ${isOverdue ? 'background: rgba(211, 47, 47, 0.05);' : ''}">
-                    <button onclick="${isMockup ? "showToast('This is a demo feature', 'info', 'Demo Mode')" : `completeTask('${task.id}')`}" style="flex-shrink: 0; width: 22px; height: 22px; border: 2px solid ${priorityColor}; border-radius: 50%; background: none; cursor: pointer; margin-top: 2px;" title="Mark complete"></button>
+                    <button onclick="${isMockup ? "showToast('This is a demo feature', 'info', 'Demo Mode')" : `completeTask('${escapeJSString(task.id)}')`}" style="flex-shrink: 0; width: 22px; height: 22px; border: 2px solid ${priorityColor}; border-radius: 50%; background: none; cursor: pointer; margin-top: 2px;" title="Mark complete"></button>
                     <div style="flex: 1; min-width: 0;">
                         <div style="font-size: 14px; color: var(--navy); font-weight: 500;">${sanitizeHTML(task.title)}</div>
                         <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; font-size: 12px; color: var(--text-light);">
@@ -3822,7 +3827,7 @@
                         </div>
                         ${task.notes ? `<div style="font-size: 12px; color: var(--text-light); margin-top: 6px; font-style: italic;">${sanitizeHTML(task.notes)}</div>` : ''}
                     </div>
-                    <button onclick="${isMockup ? "showToast('This is a demo feature', 'info', 'Demo Mode')" : `deleteTask('${task.id}')`}" style="flex-shrink: 0; background: none; border: none; cursor: pointer; color: #999; padding: 4px;" title="Delete task">
+                    <button onclick="${isMockup ? "showToast('This is a demo feature', 'info', 'Demo Mode')" : `deleteTask('${escapeJSString(task.id)}')`}" style="flex-shrink: 0; background: none; border: none; cursor: pointer; color: #999; padding: 4px;" title="Delete task">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                     </button>
                 </div>
@@ -3939,7 +3944,7 @@
                 const time = msg.timestamp?.toDate()?.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) || '';
 
                 html += `
-                    <div onclick="openConversation('${msg.conversationId}')" style="display: flex; align-items: flex-start; gap: 12px; padding: 15px 20px; border-bottom: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='rgba(201,169,98,0.05)'" onmouseout="this.style.background='transparent'">
+                    <div onclick="openConversation('${escapeJSString(msg.conversationId)}')" style="display: flex; align-items: flex-start; gap: 12px; padding: 15px 20px; border-bottom: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='rgba(201,169,98,0.05)'" onmouseout="this.style.background='transparent'">
                         <div style="width: 40px; height: 40px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; flex-shrink: 0;">${sanitizeHTML((msg.clientName || '?')[0].toUpperCase())}</div>
                         <div style="flex: 1; min-width: 0;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
@@ -4096,8 +4101,8 @@
                         <div style="font-size: 14px; color: var(--navy);">${item.text}</div>
                         <div style="font-size: 12px; color: var(--text-light);">${item.subtext}</div>
                     </div>
-                    ${item.clientId ? `<button onclick="viewClient('${item.clientId}')" class="action-btn action-btn-secondary" style="font-size: 11px; padding: 6px 12px;">View Client</button>` : ''}
-                    ${item.taskId ? `<button onclick="completeTask('${item.taskId}')" class="action-btn action-btn-primary" style="font-size: 11px; padding: 6px 12px;">Complete</button>` : ''}
+                    ${item.clientId ? `<button onclick="viewClient('${escapeJSString(item.clientId)}')" class="action-btn action-btn-secondary" style="font-size: 11px; padding: 6px 12px;">View Client</button>` : ''}
+                    ${item.taskId ? `<button onclick="completeTask('${escapeJSString(item.taskId)}')" class="action-btn action-btn-primary" style="font-size: 11px; padding: 6px 12px;">Complete</button>` : ''}
                     ${item.requestId ? `<button onclick="showSection('modules')" class="action-btn action-btn-secondary" style="font-size: 11px; padding: 6px 12px;">Review</button>` : ''}
                 </div>
             `;
@@ -4262,8 +4267,8 @@
                         <td>${sanitizeHTML(apt.type || 'Consultation')}</td>
                         <td>${formattedDate}</td>
                         <td>
-                            <button class="action-btn action-btn-primary" onclick="confirmAppointment('${apt.id}')">Confirm</button>
-                            <button class="action-btn action-btn-danger" onclick="cancelAppointment('${apt.id}')">Decline</button>
+                            <button class="action-btn action-btn-primary" onclick="confirmAppointment('${escapeJSString(apt.id)}')">Confirm</button>
+                            <button class="action-btn action-btn-danger" onclick="cancelAppointment('${escapeJSString(apt.id)}')">Decline</button>
                         </td>
                     </tr>
                 `;
@@ -4340,8 +4345,8 @@
                             </div>
                         </div>
                         <div style="display: flex; gap: 10px;">
-                            <button onclick="viewClient('${client.id}')" style="padding: 8px 16px; background: transparent; border: 1px solid var(--gold); color: var(--gold); border-radius: 4px; font-size: 13px; cursor: pointer;">View</button>
-                            <button onclick="restoreClient('${client.id}')" style="padding: 8px 16px; background: #2e7d32; border: none; color: white; border-radius: 4px; font-size: 13px; cursor: pointer;">Restore</button>
+                            <button onclick="viewClient('${escapeJSString(client.id)}')" style="padding: 8px 16px; background: transparent; border: 1px solid var(--gold); color: var(--gold); border-radius: 4px; font-size: 13px; cursor: pointer;">View</button>
+                            <button onclick="restoreClient('${escapeJSString(client.id)}')" style="padding: 8px 16px; background: #2e7d32; border: none; color: white; border-radius: 4px; font-size: 13px; cursor: pointer;">Restore</button>
                         </div>
                     </div>
                 `).join('')}
@@ -4394,13 +4399,13 @@
                                 <p style="margin: 0;">No ${info.label.toLowerCase()} yet</p>
                             </div>
                         ` : group.map(client => `
-                            <div style="display: flex; align-items: center; gap: 12px; padding: 15px 20px; border-bottom: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: background 0.2s;" onclick="viewClient('${client.id}')" onmouseover="this.style.background='rgba(201,169,98,0.08)'" onmouseout="this.style.background='transparent'">
-                                <div style="width: 40px; height: 40px; background: ${info.color}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 16px;">${(client.displayName || client.email || '?')[0].toUpperCase()}</div>
+                            <div style="display: flex; align-items: center; gap: 12px; padding: 15px 20px; border-bottom: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: background 0.2s;" onclick="viewClient('${escapeJSString(client.id)}')" onmouseover="this.style.background='rgba(201,169,98,0.08)'" onmouseout="this.style.background='transparent'">
+                                <div style="width: 40px; height: 40px; background: ${info.color}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 16px;">${sanitizeHTML((client.displayName || client.email || '?')[0].toUpperCase())}</div>
                                 <div style="flex: 1; min-width: 0;">
-                                    <div style="font-weight: 500; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${client.displayName || 'Unknown'}</div>
-                                    <div style="font-size: 12px; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${client.email || ''}</div>
+                                    <div style="font-weight: 500; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${sanitizeHTML(client.displayName || 'Unknown')}</div>
+                                    <div style="font-size: 12px; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${sanitizeHTML(client.email || '')}</div>
                                 </div>
-                                <button onclick="event.stopPropagation(); messageClient('${client.id}')" style="padding: 6px 12px; background: transparent; border: 1px solid ${info.color}; color: ${info.color}; border-radius: 4px; font-size: 11px; cursor: pointer;">Message</button>
+                                <button onclick="event.stopPropagation(); messageClient('${escapeJSString(client.id)}')" style="padding: 6px 12px; background: transparent; border: 1px solid ${info.color}; color: ${info.color}; border-radius: 4px; font-size: 11px; cursor: pointer;">Message</button>
                             </div>
                         `).join('')}
                     </div>
@@ -4426,12 +4431,12 @@
                         <tbody>
                             ${grouped.other.map(client => `
                                 <tr>
-                                    <td><strong>${client.displayName || 'Unknown'}</strong></td>
-                                    <td>${client.email || ''}</td>
+                                    <td><strong>${sanitizeHTML(client.displayName || 'Unknown')}</strong></td>
+                                    <td>${sanitizeHTML(client.email || '')}</td>
                                     <td>${client.createdAt?.toDate()?.toLocaleDateString() || 'N/A'}</td>
                                     <td>
-                                        <button class="action-btn action-btn-secondary" onclick="viewClient('${client.id}')">View</button>
-                                        <button class="action-btn action-btn-primary" onclick="messageClient('${client.id}')">Message</button>
+                                        <button class="action-btn action-btn-secondary" onclick="viewClient('${escapeJSString(client.id)}')">View</button>
+                                        <button class="action-btn action-btn-primary" onclick="messageClient('${escapeJSString(client.id)}')">Message</button>
                                     </td>
                                 </tr>
                             `).join('')}
@@ -4544,7 +4549,7 @@
             const date = a.createdAt?.toDate()?.toLocaleDateString() || 'N/A';
 
             return `
-                <div style="background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.2s;" onclick="viewAssessment('${a.id}')" onmouseover="this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+                <div style="background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.2s;" onclick="viewAssessment('${escapeJSString(a.id)}')" onmouseover="this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
                         <div>
                             <div style="font-weight: 600; color: var(--navy);">${sanitizeHTML(a.client?.displayName || 'Unknown')}</div>
@@ -4653,7 +4658,7 @@
                     <td><span class="badge ${score >= 70 ? 'badge-confirmed' : score >= 40 ? 'badge-pending' : 'badge-cancelled'}">${score}/100</span></td>
                     <td style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${sanitizeHTML(findings)}</td>
                     <td>${date}</td>
-                    <td><button class="action-btn action-btn-secondary" onclick="viewAssessment('${a.id}')">View Details</button></td>
+                    <td><button class="action-btn action-btn-secondary" onclick="viewAssessment('${escapeJSString(a.id)}')">View Details</button></td>
                 </tr>
             `;
         }
@@ -4730,8 +4735,8 @@
                         <td>${created}</td>
                         <td>${sanitizeHTML(invite.notes || invite.clientEmail || '-')}</td>
                         <td>
-                            <button class="action-btn action-btn-secondary" onclick="copyCode('${invite.code}')">Copy</button>
-                            <button class="action-btn action-btn-danger" onclick="deleteInvite('${invite.code}')">Delete</button>
+                            <button class="action-btn action-btn-secondary" onclick="copyCode('${escapeJSString(invite.code)}')">Copy</button>
+                            <button class="action-btn action-btn-danger" onclick="deleteInvite('${escapeJSString(invite.code)}')">Delete</button>
                         </td>
                     </tr>
                 `;
@@ -4771,7 +4776,7 @@
                             <td><span style="font-family: monospace; font-size: 12px; color: var(--text-light);">${sanitizeHTML(invite.code)}</span></td>
                             <td><strong>${sanitizeHTML(clientName)}</strong></td>
                             <td>${regDate}</td>
-                            <td><button class="action-btn action-btn-secondary" onclick="viewClient('${invite.usedBy}')">View Client</button></td>
+                            <td><button class="action-btn action-btn-secondary" onclick="viewClient('${escapeJSString(invite.usedBy)}')">View Client</button></td>
                         </tr>
                     `;
                 }
@@ -5051,7 +5056,7 @@ Sleep Wellness by Dr. Alen`);
                     const clientName = conv.client?.displayName || 'Client';
 
                     html += `
-                        <div class="conversation-item" onclick="openChat('${conv.id}', '${conv.clientId}', '${sanitizeHTML(clientName)}')">
+                        <div class="conversation-item" onclick="openChat('${escapeJSString(conv.id)}', '${escapeJSString(conv.clientId)}', '${escapeJSString(clientName)}')">
                             <div class="conversation-avatar" style="background: ${info.color};">${sanitizeHTML(clientName[0].toUpperCase())}</div>
                             <div class="conversation-info">
                                 <div class="conversation-name">${sanitizeHTML(clientName)}</div>
@@ -5254,10 +5259,10 @@ Sleep Wellness by Dr. Alen`);
                     <td><span class="badge ${statusClass}">${sanitizeHTML(apt.status)}</span></td>
                     <td>
                         ${showActions && apt.status === 'pending' ? `
-                            <button class="action-btn action-btn-primary" onclick="confirmAppointment('${apt.id}')">Confirm</button>
-                            <button class="action-btn action-btn-danger" onclick="cancelAppointment('${apt.id}')">Decline</button>
+                            <button class="action-btn action-btn-primary" onclick="confirmAppointment('${escapeJSString(apt.id)}')">Confirm</button>
+                            <button class="action-btn action-btn-danger" onclick="cancelAppointment('${escapeJSString(apt.id)}')">Decline</button>
                         ` : `
-                            <button class="action-btn action-btn-secondary" onclick="messageClient('${apt.userId}')">Message</button>
+                            <button class="action-btn action-btn-secondary" onclick="messageClient('${escapeJSString(apt.userId)}')">Message</button>
                         `}
                     </td>
                 </tr>
@@ -5416,10 +5421,10 @@ Sleep Wellness by Dr. Alen`);
                         <td>${requested}</td>
                         <td>
                             <div style="display: flex; gap: 8px;">
-                                <button onclick="approveRequest('${req.id}')" class="action-btn action-btn-primary" style="padding: 8px 16px; font-size: 12px;">
+                                <button onclick="approveRequest('${escapeJSString(req.id)}')" class="action-btn action-btn-primary" style="padding: 8px 16px; font-size: 12px;">
                                     Approve
                                 </button>
-                                <button onclick="denyRequest('${req.id}')" class="action-btn action-btn-secondary" style="padding: 8px 16px; font-size: 12px;">
+                                <button onclick="denyRequest('${escapeJSString(req.id)}')" class="action-btn action-btn-secondary" style="padding: 8px 16px; font-size: 12px;">
                                     Deny
                                 </button>
                             </div>
@@ -5508,7 +5513,7 @@ Sleep Wellness by Dr. Alen`);
 
                 const isLocked = m.locked;
                 html += `
-                    <div onclick="openModuleDetail('${id}')" style="background: ${isLocked ? '#fafafa' : '#f0f9f0'}; border: 1px solid ${isLocked ? 'rgba(201, 169, 98, 0.2)' : 'rgba(46, 125, 50, 0.2)'}; border-radius: 8px; padding: 16px; position: relative; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='';this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)';">
+                    <div onclick="openModuleDetail('${escapeJSString(id)}')" style="background: ${isLocked ? '#fafafa' : '#f0f9f0'}; border: 1px solid ${isLocked ? 'rgba(201, 169, 98, 0.2)' : 'rgba(46, 125, 50, 0.2)'}; border-radius: 8px; padding: 16px; position: relative; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='';this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)';">
                         ${!isLocked ? '<span style="position: absolute; top: 10px; right: 10px; background: #2e7d32; color: white; font-size: 9px; padding: 3px 8px; border-radius: 10px; text-transform: uppercase;">Free</span>' : ''}
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px; padding-left: 4px;">
                             <svg style="width: 24px; height: 24px; stroke: var(--gold); flex-shrink: 0;" viewBox="0 0 24 24" fill="none" stroke-width="1.5">${Content.getModuleIconSVG(m.icon)}</svg>
@@ -5758,7 +5763,7 @@ Sleep Wellness by Dr. Alen`);
         for (const inst of instruments) {
             const catColor = categoryColors[inst.category] || 'var(--gold)';
             html += `
-                <div onclick="openQuestionnaireDetail('${inst.id}')" style="background: white; border: 1px solid rgba(201, 169, 98, 0.2); border-radius: 10px; padding: 20px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.04);" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 6px 16px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 8px rgba(0,0,0,0.04)';">
+                <div onclick="openQuestionnaireDetail('${escapeJSString(inst.id)}')" style="background: white; border: 1px solid rgba(201, 169, 98, 0.2); border-radius: 10px; padding: 20px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.04);" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 6px 16px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 8px rgba(0,0,0,0.04)';">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
                         <span style="background: ${catColor}; color: white; font-size: 10px; padding: 4px 10px; border-radius: 12px; font-weight: 500;">${inst.category}</span>
                         <span style="font-size: 11px; color: var(--text-light);">${inst.timeToComplete}</span>
@@ -5896,7 +5901,7 @@ Sleep Wellness by Dr. Alen`);
                         </td>
                         <td>${completedDate ? completedDate.toLocaleDateString() : 'N/A'}</td>
                         <td>
-                            <button onclick="viewQuestionnaireResult('${result.id}')" class="action-btn action-btn-secondary" style="padding: 6px 12px; font-size: 11px;">
+                            <button onclick="viewQuestionnaireResult('${escapeJSString(result.id)}')" class="action-btn action-btn-secondary" style="padding: 6px 12px; font-size: 11px;">
                                 View Details
                             </button>
                         </td>
@@ -6092,7 +6097,7 @@ Sleep Wellness by Dr. Alen`);
                 const iconColor = n.type === 'questionnaire_completed' ? '#2e7d32' : 'var(--gold)';
 
                 return `
-                    <div style="padding: 12px 20px; border-bottom: 1px solid rgba(201, 169, 98, 0.1); display: flex; gap: 12px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f8f6f3'" onmouseout="this.style.background=''" onclick="handleNotificationClick('${n.id}', '${n.type}')">
+                    <div style="padding: 12px 20px; border-bottom: 1px solid rgba(201, 169, 98, 0.1); display: flex; gap: 12px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f8f6f3'" onmouseout="this.style.background=''" onclick="handleNotificationClick('${escapeJSString(n.id)}', '${escapeJSString(n.type)}')">
                         <div style="width: 36px; height: 36px; border-radius: 50%; background: ${iconColor}15; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${iconColor}" stroke-width="2">
                                 ${n.type === 'questionnaire_completed' ?
@@ -6233,7 +6238,7 @@ Sleep Wellness by Dr. Alen`);
                         <div style="font-size: 12px; color: #999;">
                             <strong>${clientName}</strong> &bull; ${date}
                         </div>
-                        ${client ? `<button onclick="document.getElementById('assessment-detail-modal').remove(); viewClient('${client.id}')" style="background: #0f1c2e; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 12px; cursor: pointer;">View Client</button>` : ''}
+                        ${client ? `<button onclick="document.getElementById('assessment-detail-modal').remove(); viewClient('${escapeJSString(client.id)}')" style="background: #0f1c2e; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 12px; cursor: pointer;">View Client</button>` : ''}
                     </div>
                 </div>
             </div>
@@ -6878,7 +6883,7 @@ Sleep Wellness by Dr. Alen`);
 
                 return `
                     <div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #eee; ${isCompleted ? 'opacity: 0.6;' : ''}">
-                        <input type="checkbox" ${isCompleted ? 'checked' : ''} onchange="toggleAction('${action.id}', this.checked)"
+                        <input type="checkbox" ${isCompleted ? 'checked' : ''} onchange="toggleAction('${escapeJSString(action.id)}', this.checked)"
                             style="width: 20px; height: 20px; margin-top: 2px; cursor: pointer; accent-color: var(--gold);">
                         <div style="flex: 1;">
                             <div style="font-size: 14px; color: ${priorityColor}; ${isCompleted ? 'text-decoration: line-through;' : ''}">${sanitizeHTML(action.text)}</div>
@@ -6888,7 +6893,7 @@ Sleep Wellness by Dr. Alen`);
                                 ${dueDate ? `<span style="font-size: 11px; color: var(--text-light);">Due: ${dueDate}</span>` : ''}
                             </div>
                         </div>
-                        <button onclick="deleteAction('${action.id}')" style="background: none; border: none; color: #999; cursor: pointer; font-size: 18px;" title="Delete">&times;</button>
+                        <button onclick="deleteAction('${escapeJSString(action.id)}')" style="background: none; border: none; color: #999; cursor: pointer; font-size: 18px;" title="Delete">&times;</button>
                     </div>
                 `;
             }).join('');
@@ -7263,7 +7268,7 @@ Sleep Wellness by Dr. Alen`);
             grid.innerHTML = `<p style="grid-column: 1/-1; color: var(--text-light); text-align: center; padding: 20px;">No available slots for this appointment type on this day.</p>`;
         } else {
             grid.innerHTML = slots.map(slot => `
-                <button onclick="selectTimeSlot('${slot.time}', this)" class="time-slot-btn" style="
+                <button onclick="selectTimeSlot('${escapeJSString(slot.time)}', this)" class="time-slot-btn" style="
                     padding: 12px 8px;
                     border: 1px solid rgba(201, 169, 98, 0.3);
                     background: white;
@@ -8461,7 +8466,7 @@ Sleep Wellness by Dr. Alen`);
             }
 
             container.innerHTML = hotelPartners.map(partner => `
-                <div class="hotel-partner-card" onclick="viewHotelDetail('${partner.id}')">
+                <div class="hotel-partner-card" onclick="viewHotelDetail('${escapeJSString(partner.id)}')">
                     <div class="hotel-partner-logo">
                         ${partner.logoUrl
                             ? `<img src="${sanitizeHTML(partner.logoUrl)}" alt="${sanitizeHTML(partner.name)}">`
@@ -8502,13 +8507,13 @@ Sleep Wellness by Dr. Alen`);
     function renderPendingReports(reports) {
         const container = document.getElementById('pending-reports-list');
         container.innerHTML = reports.map(stay => `
-            <div class="guest-stay-row" onclick="viewGuestStay('${stay.id}')">
+            <div class="guest-stay-row" onclick="viewGuestStay('${escapeJSString(stay.id)}')">
                 <div class="guest-avatar">${sanitizeHTML((stay.guestName || 'G')[0].toUpperCase())}</div>
                 <div class="guest-info">
                     <div class="guest-name">${sanitizeHTML(stay.guestName)}</div>
                     <div class="guest-dates">${sanitizeHTML(stay.hotelName)} • Checked out ${formatDate(stay.actualCheckoutDate?.toDate?.())}</div>
                 </div>
-                <button class="action-btn action-btn-primary" onclick="event.stopPropagation(); generateReportForStay('${stay.id}')">Generate Report</button>
+                <button class="action-btn action-btn-primary" onclick="event.stopPropagation(); generateReportForStay('${escapeJSString(stay.id)}')">Generate Report</button>
             </div>
         `).join('');
     }
@@ -8677,7 +8682,7 @@ Sleep Wellness by Dr. Alen`);
             }
 
             return `
-                <div class="guest-stay-row" onclick="viewGuestStay('${stay.id}')">
+                <div class="guest-stay-row" onclick="viewGuestStay('${escapeJSString(stay.id)}')">
                     <div class="guest-avatar">${sanitizeHTML((stay.guestName || 'G')[0].toUpperCase())}</div>
                     <div class="guest-info">
                         <div class="guest-name">${sanitizeHTML(stay.guestName)}</div>
@@ -9001,13 +9006,23 @@ Sleep Wellness by Dr. Alen`);
         if (hotelRecs.length === 0) hotelRecs.push('Guest rated all room factors highly - maintain current standards');
         const hotelRecsHTML = hotelRecs.map(r => '<li style="padding: 5px 0; font-size: 11px; color: #333;">• ' + r + '</li>').join('');
 
+        // Sanitize all user-controlled data for the report (rendered via document.write)
+        const safeGuestIdentifier = sanitizeHTML(guestIdentifier);
+        const safeHotelName = sanitizeHTML(hotel?.name || 'Partner Hotel');
+        const safeRoomNumber = sanitizeHTML(stay.roomNumber || 'N/A');
+        const safeComments = sanitizeHTML(stay.guestFeedback?.comments || '');
+        const safeTopFactor = sanitizeHTML(stay.hotelExperience?.topFactor || 'Room darkness & blackout curtains');
+        const safeMostHelpful = sanitizeHTML(interventionLabels[stay.guestFeedback?.mostHelpful] || stay.guestFeedback?.mostHelpful || 'Personalized Schedule');
+        const safeConclusions = conclusions.map(c => sanitizeHTML(c));
+        const safeInterventions = interventions.map(i => sanitizeHTML(i));
+
         // Create HTML report
         const reportHTML = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sleep Wellness Report - ${guestIdentifier}</title>
+    <title>Sleep Wellness Report - ${safeGuestIdentifier}</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         @page { size: letter; margin: 0; }
@@ -9286,7 +9301,7 @@ Sleep Wellness by Dr. Alen`);
                 <div class="logo-sub">BY DR. ALEN JUGINOVIC • HARVARD MEDICAL SCHOOL</div>
             </div>
             <div class="header-info">
-                <strong>${hotel?.name || 'Partner Hotel'}</strong><br>
+                <strong>${safeHotelName}</strong><br>
                 Report Generated: ${formatDate(new Date())}
             </div>
         </div>
@@ -9295,8 +9310,8 @@ Sleep Wellness by Dr. Alen`);
 
         <div class="guest-banner">
             <div class="guest-banner-left">
-                <div class="guest-banner-name">${guestIdentifier}</div>
-                <div class="guest-banner-details">${stay.roomNumber || 'N/A'} • ${formatShortDate(checkIn)} – ${formatShortDate(checkOut)}</div>
+                <div class="guest-banner-name">${safeGuestIdentifier}</div>
+                <div class="guest-banner-details">${safeRoomNumber} • ${formatShortDate(checkIn)} – ${formatShortDate(checkOut)}</div>
             </div>
             <div class="guest-banner-right">
                 <div class="stay-duration">${stayDuration}</div>
@@ -9338,11 +9353,11 @@ Sleep Wellness by Dr. Alen`);
             </div>
         </div>
 
-        ${conclusions.length > 0 ? `
+        ${safeConclusions.length > 0 ? `
         <div class="conclusions-box">
             <div class="conclusions-title">Key Outcomes</div>
             <ul class="conclusions-list">
-                ${conclusions.map(c => `<li>${c}</li>`).join('')}
+                ${safeConclusions.map(c => `<li>${c}</li>`).join('')}
             </ul>
         </div>
         ` : ''}
@@ -9368,7 +9383,7 @@ Sleep Wellness by Dr. Alen`);
         <div class="header">
             <div class="logo">
                 <div class="logo-main">DETAILED ANALYSIS</div>
-                <div class="logo-sub">${guestIdentifier} • ${hotel?.name || 'Partner Hotel'}</div>
+                <div class="logo-sub">${safeGuestIdentifier} • ${safeHotelName}</div>
             </div>
             <div class="header-info">
                 ${formatShortDate(checkIn)} – ${formatShortDate(checkOut)}
@@ -9463,10 +9478,10 @@ Sleep Wellness by Dr. Alen`);
             </div>
         </div>
 
-        ${interventions.length > 0 ? `
+        ${safeInterventions.length > 0 ? `
         <div class="section-title">Personalized Interventions Delivered</div>
         <div class="interventions-grid">
-            ${interventions.map(i => `<div class="intervention-item">${i}</div>`).join('')}
+            ${safeInterventions.map(i => `<div class="intervention-item">${i}</div>`).join('')}
         </div>
         ` : ''}
 
@@ -9481,7 +9496,7 @@ Sleep Wellness by Dr. Alen`);
         <div class="header">
             <div class="logo">
                 <div class="logo-main">GUEST EXPERIENCE</div>
-                <div class="logo-sub">${guestIdentifier} • ${hotel?.name || 'Partner Hotel'}</div>
+                <div class="logo-sub">${safeGuestIdentifier} • ${safeHotelName}</div>
             </div>
             <div class="header-info">
                 Insights & Feedback
@@ -9497,11 +9512,11 @@ Sleep Wellness by Dr. Alen`);
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
             <div style="background: linear-gradient(135deg, rgba(201,169,98,0.1), rgba(201,169,98,0.05)); border: 1px solid rgba(201,169,98,0.3); border-radius: 10px; padding: 18px;">
                 <div style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Top Sleep Factor</div>
-                <div style="font-size: 15px; font-weight: 600; color: #0f1c2e;">${stay.hotelExperience?.topFactor || 'Room darkness & blackout curtains'}</div>
+                <div style="font-size: 15px; font-weight: 600; color: #0f1c2e;">${safeTopFactor}</div>
             </div>
             <div style="background: linear-gradient(135deg, rgba(46,125,50,0.1), rgba(46,125,50,0.05)); border: 1px solid rgba(46,125,50,0.3); border-radius: 10px; padding: 18px;">
                 <div style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Program Feature</div>
-                <div style="font-size: 15px; font-weight: 600; color: #0f1c2e;">${interventionLabels[stay.guestFeedback?.mostHelpful] || stay.guestFeedback?.mostHelpful || 'Personalized Schedule'}</div>
+                <div style="font-size: 15px; font-weight: 600; color: #0f1c2e;">${safeMostHelpful}</div>
             </div>
         </div>
 
@@ -9519,7 +9534,7 @@ Sleep Wellness by Dr. Alen`);
                 <div class="feedback-stars">${'★'.repeat(stay.guestFeedback.rating)}${'☆'.repeat(5 - stay.guestFeedback.rating)}</div>
                 ${stay.guestFeedback.wouldRecommend ? '<span class="feedback-recommend">✓ Would Recommend</span>' : ''}
             </div>
-            <div class="feedback-quote">"${stay.guestFeedback.comments}"</div>
+            <div class="feedback-quote">"${safeComments}"</div>
         </div>
         ` : ''}
 
@@ -9536,7 +9551,7 @@ Sleep Wellness by Dr. Alen`);
         </div>
 
         <div class="footer">
-            <div>Sleep Wellness by Dr. Alen Juginovic | This report is confidential and intended for ${hotel?.name || 'hotel partner'} use only</div>
+            <div>Sleep Wellness by Dr. Alen Juginovic | This report is confidential and intended for ${safeHotelName} use only</div>
             <div>Page 3 of 3</div>
         </div>
     </div>
@@ -9643,7 +9658,7 @@ Sleep Wellness by Dr. Alen`);
             }
 
             container.innerHTML = athleticPartners.map(partner => `
-                <div class="partner-card" onclick="viewAthleticDetail('${partner.id}')">
+                <div class="partner-card" onclick="viewAthleticDetail('${escapeJSString(partner.id)}')">
                     <div class="partner-card-logo athletic">
                         ${partner.logoUrl
                             ? '<img src="' + sanitizeHTML(partner.logoUrl) + '" alt="' + sanitizeHTML(partner.name) + '">'
@@ -9932,7 +9947,7 @@ Sleep Wellness by Dr. Alen`);
             }
 
             container.innerHTML = businessPartners.map(partner => `
-                <div class="partner-card" onclick="viewBusinessDetail('${partner.id}')">
+                <div class="partner-card" onclick="viewBusinessDetail('${escapeJSString(partner.id)}')">
                     <div class="partner-card-logo business">
                         ${partner.logoUrl
                             ? '<img src="' + sanitizeHTML(partner.logoUrl) + '" alt="' + sanitizeHTML(partner.name) + '">'

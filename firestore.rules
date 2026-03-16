@@ -7,14 +7,7 @@ service cloud.firestore {
       allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
-    // Sleep diary entries - users can manage their own, admins can read all
-    match /sleepDiary/{entryId} {
-      allow read, write: if request.auth != null && resource.data.userId == request.auth.uid;
-      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
-      allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
-    }
-
-    // Diary entries (alternate collection name)
+    // Diary entries - users can manage their own, admins can read all
     match /diaryEntries/{entryId} {
       allow read, write: if request.auth != null && resource.data.userId == request.auth.uid;
       allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
@@ -56,10 +49,13 @@ service cloud.firestore {
       allow read, write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
-    // Notifications - users can read/update their own
+    // Notifications - users can read/update their own, create restricted to owner or admin
     match /notifications/{notificationId} {
       allow read, update: if request.auth != null && resource.data.userId == request.auth.uid;
-      allow create: if request.auth != null;
+      allow create: if request.auth != null && (
+        request.resource.data.userId == request.auth.uid ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
       allow read, write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
@@ -95,9 +91,14 @@ service cloud.firestore {
       allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
-    // Invite codes - anyone can read (for verification), admins can manage
+    // Admin config - deny all client access (Admin SDK bypasses rules)
+    match /adminConfig/{document=**} {
+      allow read, write: if false;
+    }
+
+    // Invite codes - single-doc lookup only (no list enumeration), admins can manage
     match /inviteCodes/{codeId} {
-      allow read: if true;
+      allow get: if true;
       allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
@@ -120,7 +121,7 @@ service cloud.firestore {
     // Guest stays - users can read/update their own, admins can manage all
     match /guestStays/{stayId} {
       allow read, update: if request.auth != null && resource.data.guestUserId == request.auth.uid;
-      allow create: if request.auth != null;
+      allow create: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
       allow read, write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
@@ -137,7 +138,7 @@ service cloud.firestore {
     // Athlete profiles - users can read/update their own, admins can manage all
     match /athleteProfiles/{profileId} {
       allow read, update: if request.auth != null && resource.data.userId == request.auth.uid;
-      allow create: if request.auth != null;
+      allow create: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
       allow read, write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
@@ -154,7 +155,7 @@ service cloud.firestore {
     // Executive profiles - users can read/update their own, admins can manage all
     match /executiveProfiles/{profileId} {
       allow read, update: if request.auth != null && resource.data.userId == request.auth.uid;
-      allow create: if request.auth != null;
+      allow create: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
       allow read, write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
   }
