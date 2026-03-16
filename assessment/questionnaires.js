@@ -546,16 +546,24 @@ const Questionnaires = {
         return this.instruments.stopbang || { id: 'stopbang', questions: [] };
     },
     get rls() {
-        return this.instruments.rls || { id: 'rls', questions: [] };
+        const csds = this.instruments.csds;
+        if (!csds) return { id: 'csds', questions: [] };
+        return { id: 'csds', questions: csds.questions.filter(q => q.domain === 'rls') };
     },
     get parasomnias() {
-        return this.instruments.csds || { id: 'csds', questions: [] };
+        const csds = this.instruments.csds;
+        if (!csds) return { id: 'csds', questions: [] };
+        return { id: 'csds', questions: csds.questions.filter(q => q.domain === 'parasomnia') };
     },
     get remBehavior() {
-        return this.instruments.csds || { id: 'csds', questions: [] };
+        const csds = this.instruments.csds;
+        if (!csds) return { id: 'csds', questions: [] };
+        return { id: 'csds', questions: csds.questions.filter(q => q.domain === 'rbd') };
     },
     get circadian() {
-        return this.instruments.csds || { id: 'csds', questions: [] };
+        const csds = this.instruments.csds;
+        if (!csds) return { id: 'csds', questions: [] };
+        return { id: 'csds', questions: csds.questions.filter(q => q.domain === 'circadian') };
     }
 };
 

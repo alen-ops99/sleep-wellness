@@ -256,7 +256,8 @@ const App = {
         this.responses = {};
         this.clientType = null;
         this.currentStep = 'welcome';
-        document.getElementById('resumeNotice').style.display = 'none';
+        const resumeNotice = document.getElementById('resumeNotice');
+        if (resumeNotice) resumeNotice.style.display = 'none';
         this.showStep('welcome');
     },
 

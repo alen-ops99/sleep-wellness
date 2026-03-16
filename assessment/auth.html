@@ -445,7 +445,7 @@
             </div>
 
             <div class="forgot-link">
-                <a href="#" onclick="showResetForm()">Forgot your password?</a>
+                <a href="#" onclick="showResetForm(); return false;">Forgot your password?</a>
             </div>
         </form>
 
@@ -555,7 +555,7 @@
 
         <!-- Reset Password Form -->
         <div class="reset-form" id="resetForm">
-            <a href="#" class="back-link" onclick="hideResetForm()">
+            <a href="#" class="back-link" onclick="hideResetForm(); return false;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="15 18 9 12 15 6"/>
                 </svg>
