@@ -166,6 +166,15 @@
             // Update display name
             await user.updateProfile({ displayName: name });
 
+            // Create Firestore admin profile
+            const db = firebase.firestore();
+            await db.collection('users').doc(user.uid).set({
+                role: 'admin',
+                email: user.email,
+                displayName: name,
+                createdAt: new Date()
+            });
+
             // Show success
             successDiv.textContent = 'Account created successfully!';
             successDiv.style.display = 'block';

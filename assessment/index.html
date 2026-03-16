@@ -31,15 +31,15 @@
         <a href="account.html">My Account</a>
         <a href="../index.html#contact" class="nav-cta">Contact</a>
     </div>
-    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
     </button>
 </nav>
 
 <!-- Mobile Menu -->
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
     <a href="../hotels.html">Hotels</a>
     <a href="../athletes.html">Athletes</a>
     <a href="../corporate.html">Corporate</a>

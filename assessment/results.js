@@ -69,20 +69,51 @@ const Results = {
     },
 
     /**
+     * Convert flat responses object to the {value, label, questionId} array
+     * that Questionnaires.calculateScore() expects.
+     *
+     * @param {string} instrumentId - e.g. 'ess', 'isi', 'stopbang', 'csds'
+     * @param {Object} responses - flat key-value map (e.g. {ess_q1: "2", ess_q2: "0", ...})
+     * @returns {Array} Array of {value: Number, label: String, questionId: Number}
+     */
+    buildAnswerArray(instrumentId, responses) {
+        const instrument = Questionnaires.getInstrument(instrumentId);
+        if (!instrument) return [];
+
+        return instrument.questions.map(q => {
+            // Keys are stored as "<instrumentId>_q<questionId>" by renderQuestions
+            const key = `${instrumentId}_q${q.id}`;
+            const rawValue = responses[key];
+            const numValue = rawValue != null ? parseInt(rawValue, 10) : 0;
+            // Find the matching option label, or fall back to empty string
+            const option = (q.options || []).find(o => o.value === numValue);
+            return {
+                value: isNaN(numValue) ? 0 : numValue,
+                label: option ? option.label : '',
+                questionId: q.id
+            };
+        });
+    },
+
+    /**
      * Calculate Epworth Sleepiness Scale score
      */
     calculateEpworth(responses) {
-        const score = Questionnaires.epworth.calculateScore(responses);
-        const interpretation = Questionnaires.epworth.getInterpretation(score);
+        const answers = this.buildAnswerArray('ess', responses);
+        const result = Questionnaires.calculateScore('ess', answers);
+
+        if (!result) {
+            return { name: 'Epworth Sleepiness Scale', score: 0, maxScore: 24, percentage: 0, label: 'Incomplete', severity: 'normal', description: 'Not enough data to score.' };
+        }
 
         return {
-            name: 'Epworth Sleepiness Scale',
-            score: score,
-            maxScore: 24,
-            percentage: (score / 24) * 100,
-            label: interpretation.label,
-            severity: interpretation.severity,
-            description: score <= 10 ?
+            name: result.instrumentName,
+            score: result.score,
+            maxScore: result.maxScore,
+            percentage: (result.score / result.maxScore) * 100,
+            label: result.label,
+            severity: result.severity,
+            description: result.score <= 10 ?
                 'Normal daytime sleepiness levels' :
                 'Elevated daytime sleepiness - may indicate insufficient sleep or a sleep disorder'
         };
@@ -92,17 +123,21 @@ const Results = {
      * Calculate Insomnia Severity Index score
      */
     calculateISI(responses) {
-        const score = Questionnaires.isi.calculateScore(responses);
-        const interpretation = Questionnaires.isi.getInterpretation(score);
+        const answers = this.buildAnswerArray('isi', responses);
+        const result = Questionnaires.calculateScore('isi', answers);
+
+        if (!result) {
+            return { name: 'Insomnia Severity Index', score: 0, maxScore: 28, percentage: 0, label: 'Incomplete', severity: 'normal', description: 'Not enough data to score.' };
+        }
 
         return {
-            name: 'Insomnia Severity Index',
-            score: score,
-            maxScore: 28,
-            percentage: (score / 28) * 100,
-            label: interpretation.label,
-            severity: interpretation.severity,
-            description: score < 8 ?
+            name: result.instrumentName,
+            score: result.score,
+            maxScore: result.maxScore,
+            percentage: (result.score / result.maxScore) * 100,
+            label: result.label,
+            severity: result.severity,
+            description: result.score < 8 ?
                 'No clinically significant insomnia symptoms' :
                 'Insomnia symptoms present - may benefit from treatment'
         };
@@ -110,103 +145,157 @@ const Results = {
 
     /**
      * Calculate STOP-BANG score
+     * Uses both the questionnaire answers (manual yes/no items) and demographic
+     * data (BMI, age, neck, gender) to produce the full 8-item score.
      */
     calculateStopBang(responses, demographics) {
-        const score = Questionnaires.stopbang.calculateScore(responses, demographics);
-        const interpretation = Questionnaires.stopbang.getInterpretation(score);
+        const answers = this.buildAnswerArray('stopbang', responses);
+
+        // Augment answers with calculated demographic items
+        // STOP-BANG Q5: BMI > 35
+        if (demographics && demographics.bmi) {
+            const bmiAnswer = answers.find(a => a.questionId === 5);
+            if (bmiAnswer) bmiAnswer.value = parseFloat(demographics.bmi) > 35 ? 1 : 0;
+        }
+        // STOP-BANG Q6: Age > 50
+        if (demographics && demographics.age) {
+            const ageAnswer = answers.find(a => a.questionId === 6);
+            if (ageAnswer) ageAnswer.value = demographics.age > 50 ? 1 : 0;
+        }
+        // STOP-BANG Q7: Neck > 40cm
+        if (demographics && demographics.neckCircumference) {
+            const neckAnswer = answers.find(a => a.questionId === 7);
+            if (neckAnswer) neckAnswer.value = demographics.neckCircumference > 40 ? 1 : 0;
+        }
+        // STOP-BANG Q8: Male gender
+        if (demographics && demographics.gender) {
+            const genderAnswer = answers.find(a => a.questionId === 8);
+            if (genderAnswer) genderAnswer.value = demographics.gender === 'male' ? 1 : 0;
+        }
+
+        const result = Questionnaires.calculateScore('stopbang', answers);
+
+        if (!result) {
+            return { name: 'Sleep Apnea Risk (STOP-BANG)', score: 0, maxScore: 8, percentage: 0, label: 'Incomplete', severity: 'low', description: 'Not enough data to score.' };
+        }
 
         return {
             name: 'Sleep Apnea Risk (STOP-BANG)',
-            score: score,
-            maxScore: 8,
-            percentage: (score / 8) * 100,
-            label: interpretation.label,
-            severity: interpretation.severity,
-            description: score <= 2 ?
+            score: result.score,
+            maxScore: result.maxScore,
+            percentage: (result.score / result.maxScore) * 100,
+            label: result.label,
+            severity: result.severity,
+            description: result.score <= 2 ?
                 'Low risk for obstructive sleep apnea' :
-                score <= 4 ?
+                result.score <= 4 ?
                     'Intermediate risk for obstructive sleep apnea - monitoring recommended' :
                     'High risk for obstructive sleep apnea - consultation recommended'
         };
     },
 
     /**
-     * Calculate RLS assessment
+     * Calculate RLS assessment using the CSDS RLS domain (questions 7-9)
      */
     calculateRLS(responses) {
-        const interpretation = Questionnaires.rls.getInterpretation(responses);
-        const criteriaMet = Questionnaires.rls.calculateCriteriaMet(responses);
+        const answers = this.buildAnswerArray('csds', responses);
+        const result = Questionnaires.calculateScore('csds', answers);
+
+        // Extract just the RLS domain from the multi-domain result
+        const rlsDomain = result && result.domains && result.domains.rls ? result.domains.rls : null;
+
+        if (!rlsDomain) {
+            return { name: 'Restless Legs Syndrome', score: 0, maxScore: 9, percentage: 0, label: 'Incomplete', severity: 'normal', description: 'Not enough data to score.' };
+        }
 
         return {
             name: 'Restless Legs Syndrome',
-            score: criteriaMet,
-            maxScore: 4,
-            percentage: (criteriaMet / 4) * 100,
-            label: interpretation.label,
-            severity: interpretation.severity,
-            description: criteriaMet < 4 ?
-                'RLS diagnostic criteria not fully met' :
-                'RLS criteria met - consider evaluation'
+            score: rlsDomain.score,
+            maxScore: rlsDomain.maxScore,
+            percentage: rlsDomain.percentage,
+            label: rlsDomain.label,
+            severity: rlsDomain.severity === 'low' ? 'normal' : rlsDomain.severity,
+            description: rlsDomain.flagged ?
+                'RLS symptoms present - consider evaluation by a sleep specialist' :
+                'RLS diagnostic criteria not significantly elevated'
         };
     },
 
     /**
-     * Calculate Parasomnia score
+     * Calculate Parasomnia score using the CSDS parasomnia domain (questions 10-12)
      */
     calculateParasomnias(responses) {
-        const score = Questionnaires.parasomnias.calculateScore(responses);
-        const interpretation = Questionnaires.parasomnias.getInterpretation(score);
+        const answers = this.buildAnswerArray('csds', responses);
+        const result = Questionnaires.calculateScore('csds', answers);
+
+        const parasomniaDomain = result && result.domains && result.domains.parasomnia ? result.domains.parasomnia : null;
+
+        if (!parasomniaDomain) {
+            return { name: 'Parasomnia Symptoms', score: 0, maxScore: 9, percentage: 0, label: 'Incomplete', severity: 'normal', description: 'Not enough data to score.' };
+        }
 
         return {
             name: 'Parasomnia Symptoms',
-            score: score,
-            maxScore: 16,
-            percentage: (score / 16) * 100,
-            label: interpretation.label,
-            severity: interpretation.severity,
-            description: score <= 4 ?
-                'Minimal or no parasomnia symptoms' :
-                'Parasomnia symptoms present - may need evaluation'
+            score: parasomniaDomain.score,
+            maxScore: parasomniaDomain.maxScore,
+            percentage: parasomniaDomain.percentage,
+            label: parasomniaDomain.label,
+            severity: parasomniaDomain.severity === 'low' ? 'normal' : parasomniaDomain.severity,
+            description: parasomniaDomain.flagged ?
+                'Parasomnia symptoms present - may need evaluation' :
+                'Minimal or no parasomnia symptoms'
         };
     },
 
     /**
-     * Calculate REM Behavior Disorder assessment
+     * Calculate REM Behavior Disorder assessment using CSDS RBD domain (questions 13-14)
      */
     calculateREMBehavior(responses) {
-        const interpretation = Questionnaires.remBehavior.getInterpretation(responses);
-        const positiveCount = ['rem1', 'rem2', 'rem3'].filter(id => responses[id] === 'yes').length;
+        const answers = this.buildAnswerArray('csds', responses);
+        const result = Questionnaires.calculateScore('csds', answers);
+
+        const rbdDomain = result && result.domains && result.domains.rbd ? result.domains.rbd : null;
+
+        if (!rbdDomain) {
+            return { name: 'REM Behavior Disorder', score: 0, maxScore: 6, percentage: 0, label: 'Incomplete', severity: 'normal', description: 'Not enough data to score.' };
+        }
 
         return {
             name: 'REM Behavior Disorder',
-            score: positiveCount,
-            maxScore: 3,
-            percentage: (positiveCount / 3) * 100,
-            label: interpretation.label,
-            severity: interpretation.severity,
-            description: positiveCount < 2 ?
-                'No significant REM behavior disorder indicators' :
-                'Possible REM behavior disorder - consultation recommended'
+            score: rbdDomain.score,
+            maxScore: rbdDomain.maxScore,
+            percentage: rbdDomain.percentage,
+            label: rbdDomain.label,
+            severity: rbdDomain.severity === 'low' ? 'normal' : rbdDomain.severity,
+            description: rbdDomain.flagged ?
+                'Possible REM behavior disorder - consultation recommended' :
+                'No significant REM behavior disorder indicators'
         };
     },
 
     /**
-     * Calculate Circadian assessment
+     * Calculate Circadian assessment using CSDS circadian domain (questions 17-18)
      */
     calculateCircadian(responses) {
-        const chronotype = Questionnaires.circadian.getChronotype(responses);
-        const socialJetLag = Questionnaires.circadian.getSocialJetLag(responses);
-        const jetLagScore = parseInt(responses.circ4) || 0;
+        const answers = this.buildAnswerArray('csds', responses);
+        const result = Questionnaires.calculateScore('csds', answers);
+
+        const circadianDomain = result && result.domains && result.domains.circadian ? result.domains.circadian : null;
+
+        if (!circadianDomain) {
+            return { name: 'Circadian Rhythm', score: 0, maxScore: 6, percentage: 0, label: 'Incomplete', severity: 'normal', description: 'No circadian rhythm concerns.' };
+        }
 
         return {
             name: 'Circadian Rhythm',
-            chronotype: chronotype,
-            socialJetLag: socialJetLag.label,
-            severity: socialJetLag.severity,
-            score: jetLagScore,
-            maxScore: 4,
-            percentage: (jetLagScore / 4) * 100,
-            description: `${chronotype}. ${socialJetLag.label}.`
+            score: circadianDomain.score,
+            maxScore: circadianDomain.maxScore,
+            percentage: circadianDomain.percentage,
+            label: circadianDomain.label,
+            severity: circadianDomain.severity === 'low' ? 'normal' : circadianDomain.severity,
+            description: circadianDomain.flagged ?
+                'Circadian rhythm concerns detected - irregular sleep-wake patterns may benefit from light therapy or schedule adjustments' :
+                'No significant circadian rhythm concerns'
         };
     },
 
@@ -229,8 +318,8 @@ const Results = {
         if (durationMinutes < 0) durationMinutes += 24 * 60;
 
         const tib = durationMinutes;
-        const tst = tib - latency - (awakenings * wakeTime);
-        const sleepEfficiency = ((tst / tib) * 100).toFixed(1);
+        const tst = Math.max(0, tib - latency - (awakenings * wakeTime));
+        const sleepEfficiency = tib > 0 ? ((tst / tib) * 100).toFixed(1) : '0.0';
 
         let severity = 'normal';
         if (tst < 360 || sleepEfficiency < 75) severity = 'moderate';

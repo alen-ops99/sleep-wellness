@@ -975,10 +975,10 @@
 <div class="toast-container" id="toastContainer"></div>
 
 <!-- Confirmation Modal -->
-<div class="confirm-modal-overlay" id="confirmModal">
+<div class="confirm-modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
     <div class="confirm-modal">
         <div class="confirm-modal-icon warning" id="confirmIcon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
                 <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
             </svg>
@@ -994,8 +994,8 @@
 
 <div class="admin-layout">
     <!-- Mobile Menu Button -->
-    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M3 12h18M3 6h18M3 18h18"/>
         </svg>
     </button>
@@ -1007,11 +1007,11 @@
             <div class="sidebar-subtitle">Admin Portal</div>
         </div>
 
-        <nav class="sidebar-nav">
+        <nav class="sidebar-nav" aria-label="Admin navigation">
             <div class="nav-section">
                 <div class="nav-section-title">Overview</div>
                 <a class="nav-item active" onclick="showSection('dashboard')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <rect x="3" y="3" width="7" height="7"/>
                         <rect x="14" y="3" width="7" height="7"/>
                         <rect x="14" y="14" width="7" height="7"/>
@@ -1024,7 +1024,7 @@
             <div class="nav-section">
                 <div class="nav-section-title">Clients</div>
                 <a class="nav-item" onclick="showSection('clients')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                         <circle cx="9" cy="7" r="4"/>
                         <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
@@ -1033,14 +1033,14 @@
                     <span>All Clients</span>
                 </a>
                 <a class="nav-item" onclick="showSection('invites')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                     </svg>
                     <span>Invite Codes</span>
                 </a>
                 <a class="nav-item" onclick="showSection('assessments')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path d="M9 11l3 3L22 4"/>
                         <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
                     </svg>
@@ -1051,13 +1051,13 @@
             <div class="nav-section">
                 <div class="nav-section-title">Communication</div>
                 <a class="nav-item" onclick="showSection('messages')" id="nav-messages">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                     </svg>
                     <span>Messages</span>
                 </a>
                 <a class="nav-item" onclick="showSection('appointments')" id="nav-appointments">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
                         <line x1="16" y1="2" x2="16" y2="6"/>
                         <line x1="8" y1="2" x2="8" y2="6"/>
@@ -1071,7 +1071,7 @@
             <div class="nav-section">
                 <div class="nav-section-title">Content</div>
                 <a class="nav-item" onclick="showSection('questionnaires')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path d="M9 11l3 3L22 4"/>
                         <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
                     </svg>
@@ -1079,7 +1079,7 @@
                     <span class="badge" id="questionnaires-badge" style="display: none;">0</span>
                 </a>
                 <a class="nav-item" onclick="showSection('modules')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                         <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
                     </svg>
@@ -1091,7 +1091,7 @@
             <div class="nav-section">
                 <div class="nav-section-title">Partners</div>
                 <a class="nav-item" onclick="showSection('hotel-partners')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path d="M3 21h18"/>
                         <path d="M5 21V7l8-4v18"/>
                         <path d="M19 21V11l-6-4"/>
@@ -1104,7 +1104,7 @@
                     <span class="badge" id="hotel-guests-badge" style="display: none;">0</span>
                 </a>
                 <a class="nav-item" onclick="showSection('athletic-partners')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <circle cx="12" cy="5" r="3"/>
                         <path d="M12 8v8"/>
                         <path d="M8 21l4-4 4 4"/>
@@ -1115,7 +1115,7 @@
                     <span class="badge" id="athletic-badge" style="display: none;">0</span>
                 </a>
                 <a class="nav-item" onclick="showSection('business-partners')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
                         <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
                     </svg>
@@ -1144,10 +1144,10 @@
             <div class="page-header">
                 <div>
                     <h1 class="page-title">Dashboard</h1>
-                    <p class="page-subtitle">Welcome back, Dr. Alen</p>
+                    <p class="page-subtitle" id="welcome-name">Welcome back, Dr. Alen</p>
                 </div>
-                <div id="notification-bell" style="position: relative; cursor: pointer;" onclick="toggleNotifications()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2">
+                <div id="notification-bell" style="position: relative; cursor: pointer;" onclick="toggleNotifications()" role="button" aria-label="Notifications" aria-expanded="false">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" aria-hidden="true">
                         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
                         <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
                     </svg>
@@ -1263,8 +1263,8 @@
             </div>
 
             <div class="search-bar">
-                <input type="text" class="search-input" placeholder="Search clients..." id="client-search" oninput="filterClients()">
-                <select class="filter-select" id="client-filter" onchange="filterClients()">
+                <input type="text" class="search-input" placeholder="Search clients..." id="client-search" aria-label="Search clients" oninput="filterClients()">
+                <select class="filter-select" id="client-filter" aria-label="Filter clients by type" onchange="filterClients()">
                     <option value="">All Active</option>
                     <option value="athlete">Athletes</option>
                     <option value="executive">Executives</option>
@@ -1690,7 +1690,7 @@
                     </div>
                 </div>
                 <p style="font-size: 12px; color: var(--text-light); margin-top: 12px;">
-                    <strong>Zoom Link:</strong> <a href="https://harvard.zoom.us/my/alen1" target="_blank" style="color: var(--gold);">https://harvard.zoom.us/my/alen1</a>
+                    <strong>Zoom Link:</strong> <a href="https://harvard.zoom.us/my/alen1" target="_blank" rel="noopener noreferrer" style="color: var(--gold);">https://harvard.zoom.us/my/alen1</a>
                 </p>
             </div>
 
@@ -2298,7 +2298,7 @@
             </div>
             <div>
                 <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Priority</label>
-                <select id="task-priority" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+                <select id="add-task-priority" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
                     <option value="normal">Normal</option>
                     <option value="high">High</option>
                     <option value="low">Low</option>
@@ -2525,7 +2525,7 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
             <div>
                 <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 8px;">Priority</label>
-                <select id="task-priority" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
+                <select id="assign-task-priority" style="width: 100%; padding: 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px;">
                     <option value="normal">Normal</option>
                     <option value="high">High Priority</option>
                     <option value="low">Low Priority</option>
@@ -3409,7 +3409,11 @@
 <script src="../questionnaires.js"></script>
 
 <script>
-    console.log('Admin JS starting...');
+    // ==================== HTML SANITIZATION HELPER ====================
+    function sanitizeHTML(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
 
     // ==================== TOAST NOTIFICATION SYSTEM ====================
 
@@ -3430,8 +3434,8 @@
         toast.innerHTML = `
             <div class="toast-icon">${icons[type]}</div>
             <div class="toast-content">
-                <div class="toast-title">${title || defaultTitles[type]}</div>
-                <div class="toast-message">${message}</div>
+                <div class="toast-title">${sanitizeHTML(title || defaultTitles[type])}</div>
+                <div class="toast-message">${sanitizeHTML(message)}</div>
             </div>
             <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
         `;
@@ -3506,13 +3510,15 @@
     // Toggle mobile menu - defined early so it works immediately
     function toggleMobileMenu() {
         const sidebar = document.getElementById('admin-sidebar');
+        const btn = document.querySelector('.mobile-menu-btn');
         if (sidebar) sidebar.classList.toggle('mobile-open');
+        if (btn) {
+            btn.setAttribute('aria-expanded', sidebar && sidebar.classList.contains('mobile-open'));
+        }
     }
 
     // Show section - defined early so nav works immediately
     function showSection(sectionId) {
-        console.log('showSection called:', sectionId);
-
         // Push current section to history before switching
         if (currentSection && currentSection !== sectionId) {
             sectionHistory.push(currentSection);
@@ -3523,12 +3529,14 @@
         const sidebar = document.getElementById('admin-sidebar');
         if (sidebar) sidebar.classList.remove('mobile-open');
 
-        // Update nav highlight
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        if (typeof event !== 'undefined' && event && event.target) {
-            const navItem = event.target.closest('.nav-item');
-            if (navItem) navItem.classList.add('active');
-        }
+        // Update nav highlight by matching section name in onclick handlers
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+            const onclick = item.getAttribute('onclick') || '';
+            if (onclick.includes("showSection('" + sectionId + "')")) {
+                item.classList.add('active');
+            }
+        });
 
         // Show the requested section
         document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
@@ -3597,7 +3605,6 @@
                     return;
                 }
 
-                console.log('Auth state changed:', user ? user.email : 'no user');
                 if (!user) {
                     window.location.href = '../auth.html';
                     return;
@@ -3613,9 +3620,16 @@
                 document.getElementById('adminName').textContent = profile.displayName || 'Admin';
                 document.getElementById('adminAvatar').textContent = (profile.displayName || 'A')[0].toUpperCase();
 
+                // Update welcome greeting dynamically
+                const welcomeEl = document.getElementById('welcome-name');
+                if (welcomeEl && user.displayName) {
+                    welcomeEl.textContent = `Welcome back, ${user.displayName}`;
+                }
+
                 // Load dashboard data
                 loadDashboard();
                 loadNotifications();
+                loadAvailability();
             });
 
             window.addEventListener('pageshow', (event) => {
@@ -3628,17 +3642,9 @@
         }
     });
 
-    // Navigate to section (from stat cards)
+    // Navigate to section (from stat cards) — routes through showSection for history/nav tracking
     function navigateToSection(sectionId) {
-        // Update nav
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-
-        // Show section
-        document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
-        document.getElementById('section-' + sectionId).classList.add('active');
-
-        // Load section data
-        loadSectionData(sectionId);
+        showSection(sectionId);
     }
 
     // Load section data
@@ -3685,14 +3691,14 @@
     function showAddTaskModal() {
         document.getElementById('task-title').value = '';
         document.getElementById('task-notes').value = '';
-        document.getElementById('task-priority').value = 'normal';
+        document.getElementById('add-task-priority').value = 'normal';
         document.getElementById('task-due').value = '';
 
         // Populate client dropdown
         const clientSelect = document.getElementById('task-client');
         clientSelect.innerHTML = '<option value="">No specific client</option>';
         allClients.forEach(c => {
-            clientSelect.innerHTML += `<option value="${c.id}">${c.displayName || c.email}</option>`;
+            clientSelect.innerHTML += `<option value="${sanitizeHTML(c.id)}">${sanitizeHTML(c.displayName || c.email)}</option>`;
         });
 
         document.getElementById('task-modal').style.display = 'flex';
@@ -3713,7 +3719,7 @@
             clientId: document.getElementById('task-client').value || null,
             clientName: document.getElementById('task-client').selectedOptions[0]?.text || null,
             dueDate: document.getElementById('task-due').value || null,
-            priority: document.getElementById('task-priority').value,
+            priority: document.getElementById('add-task-priority').value,
             notes: document.getElementById('task-notes').value.trim(),
             completed: false,
             createdAt: new Date().toISOString()
@@ -3742,9 +3748,8 @@
     // Delete task
     function deleteTask(taskId) {
         showConfirm('Delete Task', 'Are you sure you want to delete this task?', () => {
-            // Continue with deletion
+            confirmDeleteTask(taskId);
         }, 'danger', 'Delete');
-        return; // The actual deletion will happen in the confirm callback
     }
 
     async function confirmDeleteTask(taskId) {
@@ -3809,13 +3814,13 @@
                 <div style="display: flex; align-items: flex-start; gap: 12px; padding: 15px 20px; border-bottom: 1px solid rgba(0,0,0,0.05); ${isOverdue ? 'background: rgba(211, 47, 47, 0.05);' : ''}">
                     <button onclick="${isMockup ? "showToast('This is a demo feature', 'info', 'Demo Mode')" : `completeTask('${task.id}')`}" style="flex-shrink: 0; width: 22px; height: 22px; border: 2px solid ${priorityColor}; border-radius: 50%; background: none; cursor: pointer; margin-top: 2px;" title="Mark complete"></button>
                     <div style="flex: 1; min-width: 0;">
-                        <div style="font-size: 14px; color: var(--navy); font-weight: 500;">${task.title}</div>
+                        <div style="font-size: 14px; color: var(--navy); font-weight: 500;">${sanitizeHTML(task.title)}</div>
                         <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; font-size: 12px; color: var(--text-light);">
-                            ${task.clientName ? `<span style="display: flex; align-items: center; gap: 4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21v-2a5 5 0 0 1 10 0v2"/></svg>${task.clientName}</span>` : ''}
+                            ${task.clientName ? `<span style="display: flex; align-items: center; gap: 4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21v-2a5 5 0 0 1 10 0v2"/></svg>${sanitizeHTML(task.clientName)}</span>` : ''}
                             ${dueText ? `<span style="color: ${isOverdue ? '#d32f2f' : 'inherit'};">${isOverdue ? 'Overdue: ' : ''}${dueText}</span>` : ''}
                             ${task.priority === 'high' ? '<span style="color: #d32f2f; font-weight: 500;">High Priority</span>' : ''}
                         </div>
-                        ${task.notes ? `<div style="font-size: 12px; color: var(--text-light); margin-top: 6px; font-style: italic;">${task.notes}</div>` : ''}
+                        ${task.notes ? `<div style="font-size: 12px; color: var(--text-light); margin-top: 6px; font-style: italic;">${sanitizeHTML(task.notes)}</div>` : ''}
                     </div>
                     <button onclick="${isMockup ? "showToast('This is a demo feature', 'info', 'Demo Mode')" : `deleteTask('${task.id}')`}" style="flex-shrink: 0; background: none; border: none; cursor: pointer; color: #999; padding: 4px;" title="Delete task">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -3858,13 +3863,13 @@
 
                 html += `
                     <div onclick="showToast('This is a demo feature', 'info', 'Demo Mode')" style="display: flex; align-items: flex-start; gap: 12px; padding: 15px 20px; border-bottom: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='rgba(201,169,98,0.05)'" onmouseout="this.style.background='transparent'">
-                        <div style="width: 40px; height: 40px; background: ${avatarColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; flex-shrink: 0;">${msg.clientName[0]}</div>
+                        <div style="width: 40px; height: 40px; background: ${avatarColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; flex-shrink: 0;">${sanitizeHTML(msg.clientName[0])}</div>
                         <div style="flex: 1; min-width: 0;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                                <span style="font-weight: 500; color: var(--navy);">${msg.clientName}</span>
+                                <span style="font-weight: 500; color: var(--navy);">${sanitizeHTML(msg.clientName)}</span>
                                 <span style="font-size: 11px; color: var(--text-light);">${time}</span>
                             </div>
-                            <div style="font-size: 13px; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${msg.text}</div>
+                            <div style="font-size: 13px; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${sanitizeHTML(msg.text)}</div>
                         </div>
                         <div style="width: 10px; height: 10px; background: var(--gold); border-radius: 50%; flex-shrink: 0; margin-top: 5px;"></div>
                     </div>
@@ -3876,35 +3881,42 @@
         }
 
         try {
-            // Get all conversations and find unread messages
+            // Build client lookup map from already-loaded allClients to avoid N+1 getUserProfile calls
+            const clientMap = {};
+            allClients.forEach(c => { clientMap[c.id] = c; });
+
+            // Get all conversations
             const snapshot = await db.collection('conversations').get();
             let unreadMessages = [];
 
-            for (const doc of snapshot.docs) {
+            // Fetch messages from all conversations in parallel instead of sequentially
+            const conversationPromises = snapshot.docs.map(doc => {
                 const conv = { id: doc.id, ...doc.data() };
                 const clientId = conv.participants?.find(p => p !== currentUser.uid);
-                const client = clientId ? await FirebaseDB.getUserProfile(clientId) : null;
+                const client = clientId ? clientMap[clientId] || null : null;
 
-                // Get messages in this conversation
-                const messagesSnap = await db.collection('conversations').doc(doc.id)
+                return db.collection('conversations').doc(doc.id)
                     .collection('messages')
                     .orderBy('timestamp', 'desc')
                     .limit(5)
-                    .get();
-
-                messagesSnap.docs.forEach(msgDoc => {
-                    const msg = msgDoc.data();
-                    if (msg.senderId !== currentUser.uid && !msg.read) {
-                        unreadMessages.push({
-                            ...msg,
-                            conversationId: doc.id,
-                            clientId,
-                            clientName: client?.displayName || 'Unknown',
-                            clientType: client?.clientType || 'unknown'
+                    .get()
+                    .then(messagesSnap => {
+                        messagesSnap.docs.forEach(msgDoc => {
+                            const msg = msgDoc.data();
+                            if (msg.senderId !== currentUser.uid && !msg.read) {
+                                unreadMessages.push({
+                                    ...msg,
+                                    conversationId: doc.id,
+                                    clientId,
+                                    clientName: client?.displayName || 'Unknown',
+                                    clientType: client?.clientType || 'unknown'
+                                });
+                            }
                         });
-                    }
-                });
-            }
+                    });
+            });
+
+            await Promise.all(conversationPromises);
 
             // Update stat
             document.getElementById('stat-messages').textContent = unreadMessages.length;
@@ -3928,13 +3940,13 @@
 
                 html += `
                     <div onclick="openConversation('${msg.conversationId}')" style="display: flex; align-items: flex-start; gap: 12px; padding: 15px 20px; border-bottom: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='rgba(201,169,98,0.05)'" onmouseout="this.style.background='transparent'">
-                        <div style="width: 40px; height: 40px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; flex-shrink: 0;">${(msg.clientName || '?')[0].toUpperCase()}</div>
+                        <div style="width: 40px; height: 40px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; flex-shrink: 0;">${sanitizeHTML((msg.clientName || '?')[0].toUpperCase())}</div>
                         <div style="flex: 1; min-width: 0;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                                <span style="font-weight: 500; color: var(--navy);">${msg.clientName}</span>
+                                <span style="font-weight: 500; color: var(--navy);">${sanitizeHTML(msg.clientName)}</span>
                                 <span style="font-size: 11px; color: var(--text-light);">${time}</span>
                             </div>
-                            <div style="font-size: 13px; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${msg.text || ''}</div>
+                            <div style="font-size: 13px; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${sanitizeHTML(msg.text || '')}</div>
                         </div>
                         <div style="width: 10px; height: 10px; background: var(--gold); border-radius: 50%; flex-shrink: 0; margin-top: 5px;"></div>
                     </div>
@@ -3984,8 +3996,8 @@
                     <div style="display: flex; align-items: center; gap: 15px; padding: 15px 25px; border-bottom: 1px solid ${borderColor}; background: ${bgColor};">
                         <div style="width: 36px; height: 36px; background: ${item.priority === 'high' ? 'rgba(211, 47, 47, 0.1)' : 'var(--cream)'}; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: ${item.priority === 'high' ? '#d32f2f' : 'var(--navy)'};">${icons[item.icon]}</div>
                         <div style="flex: 1;">
-                            <div style="font-size: 14px; color: var(--navy);">${item.text}</div>
-                            <div style="font-size: 12px; color: var(--text-light);">${item.subtext}</div>
+                            <div style="font-size: 14px; color: var(--navy);">${sanitizeHTML(item.text)}</div>
+                            <div style="font-size: 12px; color: var(--text-light);">${sanitizeHTML(item.subtext)}</div>
                         </div>
                         <button onclick="showToast('This is a demo feature', 'info', 'Demo Mode')" class="action-btn action-btn-secondary" style="font-size: 11px; padding: 6px 12px;">${item.type === 'no-assessment' ? 'View Client' : item.type === 'overdue-task' ? 'Complete' : 'Review'}</button>
                     </div>
@@ -3999,20 +4011,22 @@
         let items = [];
 
         try {
-            // Check for clients without assessments
-            for (const client of allClients) {
-                const assessments = await db.collection('assessments')
-                    .where('userId', '==', client.id)
-                    .limit(1)
-                    .get();
+            // Batch: single query for all assessments, then find clients without any
+            const allAssessmentsSnap = await db.collection('assessments').get();
+            const clientsWithAssessments = new Set();
+            allAssessmentsSnap.docs.forEach(doc => {
+                const userId = doc.data().userId;
+                if (userId) clientsWithAssessments.add(userId);
+            });
 
-                if (assessments.empty) {
+            for (const client of allClients) {
+                if (!clientsWithAssessments.has(client.id)) {
                     const joinedDays = Math.floor((Date.now() - (client.createdAt?.toDate() || Date.now())) / (1000 * 60 * 60 * 24));
                     if (joinedDays >= 3) {
                         items.push({
                             type: 'no-assessment',
                             icon: 'clipboard',
-                            text: `${client.displayName || client.email} hasn't completed their assessment`,
+                            text: `${sanitizeHTML(client.displayName || client.email)} hasn't completed their assessment`,
                             subtext: `Joined ${joinedDays} days ago`,
                             clientId: client.id,
                             priority: joinedDays > 7 ? 'high' : 'normal'
@@ -4028,7 +4042,7 @@
                     items.push({
                         type: 'overdue-task',
                         icon: 'clock',
-                        text: task.title,
+                        text: sanitizeHTML(task.title),
                         subtext: `Due: ${formatDueDate(task.dueDate)}`,
                         taskId: task.id,
                         priority: 'high'
@@ -4084,7 +4098,7 @@
                     </div>
                     ${item.clientId ? `<button onclick="viewClient('${item.clientId}')" class="action-btn action-btn-secondary" style="font-size: 11px; padding: 6px 12px;">View Client</button>` : ''}
                     ${item.taskId ? `<button onclick="completeTask('${item.taskId}')" class="action-btn action-btn-primary" style="font-size: 11px; padding: 6px 12px;">Complete</button>` : ''}
-                    ${item.requestId ? `<button onclick="showSection('requests')" class="action-btn action-btn-secondary" style="font-size: 11px; padding: 6px 12px;">Review</button>` : ''}
+                    ${item.requestId ? `<button onclick="showSection('modules')" class="action-btn action-btn-secondary" style="font-size: 11px; padding: 6px 12px;">Review</button>` : ''}
                 </div>
             `;
         });
@@ -4139,7 +4153,7 @@
                 const snapshot = await db.collection('users').where('role', '==', 'client').get();
                 allClients = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             } catch (e) {
-                console.log('Using mockup data');
+                // Fall back to mockup data
             }
         }
 
@@ -4195,10 +4209,10 @@
                 html += `
                     <tr>
                         <td>
-                            <div class="client-name">${apt.clientName}</div>
-                            <div class="client-email">${apt.clientEmail}</div>
+                            <div class="client-name">${sanitizeHTML(apt.clientName)}</div>
+                            <div class="client-email">${sanitizeHTML(apt.clientEmail)}</div>
                         </td>
-                        <td>${apt.type}</td>
+                        <td>${sanitizeHTML(apt.type)}</td>
                         <td>${apt.dateTime.toLocaleString()}</td>
                         <td>
                             <button class="action-btn action-btn-primary" onclick="showToast('This is a demo feature', 'info', 'Demo Mode')">Confirm</button>
@@ -4242,10 +4256,10 @@
                 html += `
                     <tr>
                         <td>
-                            <div class="client-name">${client?.displayName || 'Unknown'}</div>
-                            <div class="client-email">${client?.email || ''}</div>
+                            <div class="client-name">${sanitizeHTML(client?.displayName || 'Unknown')}</div>
+                            <div class="client-email">${sanitizeHTML(client?.email || '')}</div>
                         </td>
-                        <td>${apt.type || 'Consultation'}</td>
+                        <td>${sanitizeHTML(apt.type || 'Consultation')}</td>
                         <td>${formattedDate}</td>
                         <td>
                             <button class="action-btn action-btn-primary" onclick="confirmAppointment('${apt.id}')">Confirm</button>
@@ -4280,14 +4294,13 @@
                 return bTime - aTime;
             });
 
-            console.log('Loaded clients:', allClients.length, allClients);
             renderClients(allClients);
         } catch (error) {
             console.error('Error loading clients:', error);
             container.innerHTML = `
                 <div class="empty-state">
                     <h3>Error Loading Clients</h3>
-                    <p>${error.message}</p>
+                    <p>${sanitizeHTML(error.message)}</p>
                     <button class="action-btn action-btn-primary" onclick="loadClients()">Retry</button>
                 </div>
             `;
@@ -4316,14 +4329,14 @@
                 </div>
                 ${clients.map(client => `
                     <div style="display: flex; align-items: center; gap: 15px; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 12px; background: #fafafa;">
-                        <div style="width: 50px; height: 50px; background: #9e9e9e; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 18px;">${(client.displayName || '?')[0].toUpperCase()}</div>
+                        <div style="width: 50px; height: 50px; background: #9e9e9e; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 18px;">${sanitizeHTML((client.displayName || '?')[0].toUpperCase())}</div>
                         <div style="flex: 1;">
-                            <div style="font-weight: 600; color: var(--navy);">${client.displayName || 'Unknown'}</div>
-                            <div style="font-size: 13px; color: var(--text-light);">${client.email || ''}</div>
+                            <div style="font-weight: 600; color: var(--navy);">${sanitizeHTML(client.displayName || 'Unknown')}</div>
+                            <div style="font-size: 13px; color: var(--text-light);">${sanitizeHTML(client.email || '')}</div>
                             <div style="font-size: 12px; color: #888; margin-top: 4px;">
-                                <span style="text-transform: capitalize;">${client.clientType || 'Client'}</span>
+                                <span style="text-transform: capitalize;">${sanitizeHTML(client.clientType || 'Client')}</span>
                                 ${client.archivedAt ? ` • Archived ${client.archivedAt?.toDate?.().toLocaleDateString() || ''}` : ''}
-                                ${client.archiveReason ? ` • ${client.archiveReason.replace(/_/g, ' ')}` : ''}
+                                ${client.archiveReason ? ` • ${sanitizeHTML(client.archiveReason.replace(/_/g, ' '))}` : ''}
                             </div>
                         </div>
                         <div style="display: flex; gap: 10px;">
@@ -4534,7 +4547,7 @@
                 <div style="background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.2s;" onclick="viewAssessment('${a.id}')" onmouseover="this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
                         <div>
-                            <div style="font-weight: 600; color: var(--navy);">${a.client?.displayName || 'Unknown'}</div>
+                            <div style="font-weight: 600; color: var(--navy);">${sanitizeHTML(a.client?.displayName || 'Unknown')}</div>
                             <div style="font-size: 12px; color: var(--text-light);">${date}</div>
                         </div>
                         <div style="text-align: right;">
@@ -4548,7 +4561,7 @@
                     </div>
                     ${a.findings && a.findings.length > 0 ? `
                         <div style="margin-top: 12px; font-size: 12px; color: var(--text-light);">
-                            <strong>Key findings:</strong> ${a.findings.slice(0, 2).join(', ')}
+                            <strong>Key findings:</strong> ${a.findings.slice(0, 2).map(f => sanitizeHTML(f)).join(', ')}
                         </div>
                     ` : ''}
                 </div>
@@ -4634,11 +4647,11 @@
             html += `
                 <tr>
                     <td>
-                        <div class="client-name">${a.client?.displayName || 'Unknown'}</div>
-                        <div class="client-email">${a.client?.email || ''}</div>
+                        <div class="client-name">${sanitizeHTML(a.client?.displayName || 'Unknown')}</div>
+                        <div class="client-email">${sanitizeHTML(a.client?.email || '')}</div>
                     </td>
                     <td><span class="badge ${score >= 70 ? 'badge-confirmed' : score >= 40 ? 'badge-pending' : 'badge-cancelled'}">${score}/100</span></td>
-                    <td style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${findings}</td>
+                    <td style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${sanitizeHTML(findings)}</td>
                     <td>${date}</td>
                     <td><button class="action-btn action-btn-secondary" onclick="viewAssessment('${a.id}')">View Details</button></td>
                 </tr>
@@ -4712,10 +4725,10 @@
                 const catLabel = (invite.category || 'general').charAt(0).toUpperCase() + (invite.category || 'general').slice(1);
                 html += `
                     <tr>
-                        <td><strong style="font-family: monospace; letter-spacing: 1px;">${invite.code}</strong></td>
-                        <td><span style="background: ${catColor}; color: white; font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: 500;">${catLabel}</span></td>
+                        <td><strong style="font-family: monospace; letter-spacing: 1px;">${sanitizeHTML(invite.code)}</strong></td>
+                        <td><span style="background: ${catColor}; color: white; font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: 500;">${sanitizeHTML(catLabel)}</span></td>
                         <td>${created}</td>
-                        <td>${invite.notes || invite.clientEmail || '-'}</td>
+                        <td>${sanitizeHTML(invite.notes || invite.clientEmail || '-')}</td>
                         <td>
                             <button class="action-btn action-btn-secondary" onclick="copyCode('${invite.code}')">Copy</button>
                             <button class="action-btn action-btn-danger" onclick="deleteInvite('${invite.code}')">Delete</button>
@@ -4755,8 +4768,8 @@
 
                     html += `
                         <tr>
-                            <td><span style="font-family: monospace; font-size: 12px; color: var(--text-light);">${invite.code}</span></td>
-                            <td><strong>${clientName}</strong></td>
+                            <td><span style="font-family: monospace; font-size: 12px; color: var(--text-light);">${sanitizeHTML(invite.code)}</span></td>
+                            <td><strong>${sanitizeHTML(clientName)}</strong></td>
                             <td>${regDate}</td>
                             <td><button class="action-btn action-btn-secondary" onclick="viewClient('${invite.usedBy}')">View Client</button></td>
                         </tr>
@@ -4826,11 +4839,11 @@
                 <p style="margin: 0 0 15px 0;">Your personalized client portal is now ready. This secure space will allow us to work together on optimizing your sleep health, track your progress, and communicate directly.</p>
 
                 <p style="margin: 0 0 10px 0;"><strong>Your Personal Invite Code:</strong></p>
-                <p style="margin: 0 0 15px 0; font-family: 'Courier New', monospace; font-size: 18px; background: #f0f0f0; padding: 12px; text-align: center; letter-spacing: 2px; font-weight: bold;">${code}</p>
+                <p style="margin: 0 0 15px 0; font-family: 'Courier New', monospace; font-size: 18px; background: #f0f0f0; padding: 12px; text-align: center; letter-spacing: 2px; font-weight: bold;">${sanitizeHTML(code)}</p>
 
                 <p style="margin: 0 0 10px 0;"><strong>To get started:</strong></p>
                 <ol style="margin: 0 0 15px 0; padding-left: 20px;">
-                    <li style="margin-bottom: 5px;">Visit: <a href="${authUrl}" style="color: #9a7b3c;">${authUrl}</a></li>
+                    <li style="margin-bottom: 5px;">Visit: <a href="${sanitizeHTML(authUrl)}" style="color: #9a7b3c;">${sanitizeHTML(authUrl)}</a></li>
                     <li style="margin-bottom: 5px;">Click "Create Account"</li>
                     <li style="margin-bottom: 5px;">Enter your invite code above</li>
                     <li style="margin-bottom: 5px;">Complete your profile</li>
@@ -4959,11 +4972,11 @@ Sleep Wellness by Dr. Alen`);
         setTimeout(() => event.target.textContent = 'Copy', 2000);
     }
 
-    async function deleteInvite(code) {
-        if (confirm('Are you sure you want to delete this invite code?')) {
+    function deleteInvite(code) {
+        showConfirm('Delete Invite', 'Are you sure you want to delete this invite code?', async () => {
             await FirebaseDB.deleteInviteCode(code);
             loadInvites();
-        }
+        }, 'danger', 'Delete');
     }
 
     // Load conversations
@@ -5038,11 +5051,11 @@ Sleep Wellness by Dr. Alen`);
                     const clientName = conv.client?.displayName || 'Client';
 
                     html += `
-                        <div class="conversation-item" onclick="openChat('${conv.id}', '${conv.clientId}', '${clientName}')">
-                            <div class="conversation-avatar" style="background: ${info.color};">${clientName[0].toUpperCase()}</div>
+                        <div class="conversation-item" onclick="openChat('${conv.id}', '${conv.clientId}', '${sanitizeHTML(clientName)}')">
+                            <div class="conversation-avatar" style="background: ${info.color};">${sanitizeHTML(clientName[0].toUpperCase())}</div>
                             <div class="conversation-info">
-                                <div class="conversation-name">${clientName}</div>
-                                <div class="conversation-preview">${conv.lastMessage || 'No messages yet'}</div>
+                                <div class="conversation-name">${sanitizeHTML(clientName)}</div>
+                                <div class="conversation-preview">${sanitizeHTML(conv.lastMessage || 'No messages yet')}</div>
                             </div>
                             <div class="conversation-time">${timeStr}</div>
                         </div>
@@ -5057,7 +5070,7 @@ Sleep Wellness by Dr. Alen`);
             container.innerHTML = `
                 <div class="empty-state">
                     <h3>Error Loading Messages</h3>
-                    <p>${error.message}</p>
+                    <p>${sanitizeHTML(error.message)}</p>
                 </div>
             `;
         }
@@ -5088,7 +5101,7 @@ Sleep Wellness by Dr. Alen`);
             const container = document.getElementById('chat-messages');
             container.innerHTML = messages.map(m => `
                 <div class="message ${m.senderId === currentUser.uid ? 'sent' : 'received'}">
-                    <div class="message-content">${m.text}</div>
+                    <div class="message-content">${sanitizeHTML(m.text)}</div>
                     <div class="message-time">${m.createdAt?.toDate()?.toLocaleTimeString() || ''}</div>
                 </div>
             `).join('');
@@ -5129,13 +5142,9 @@ Sleep Wellness by Dr. Alen`);
 
     async function messageClient(clientId) {
         try {
-            console.log('Messaging client:', clientId);
             // Get or create conversation
             const conv = await FirebaseDB.getOrCreateConversation(clientId, currentUser.uid);
             const client = await FirebaseDB.getUserProfile(clientId);
-
-            console.log('Conversation:', conv);
-            console.log('Client:', client);
 
             // Navigate to messages section
             document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
@@ -5237,12 +5246,12 @@ Sleep Wellness by Dr. Alen`);
             return `
                 <tr>
                     <td>
-                        <div class="client-name">${apt.client?.displayName || 'Unknown'}</div>
-                        <div class="client-email">${apt.client?.email || ''}</div>
+                        <div class="client-name">${sanitizeHTML(apt.client?.displayName || 'Unknown')}</div>
+                        <div class="client-email">${sanitizeHTML(apt.client?.email || '')}</div>
                     </td>
-                    <td>${apt.type || 'Consultation'}</td>
+                    <td>${sanitizeHTML(apt.type || 'Consultation')}</td>
                     <td>${formattedDate}</td>
-                    <td><span class="badge ${statusClass}">${apt.status}</span></td>
+                    <td><span class="badge ${statusClass}">${sanitizeHTML(apt.status)}</span></td>
                     <td>
                         ${showActions && apt.status === 'pending' ? `
                             <button class="action-btn action-btn-primary" onclick="confirmAppointment('${apt.id}')">Confirm</button>
@@ -5342,12 +5351,12 @@ Sleep Wellness by Dr. Alen`);
         loadDashboard();
     }
 
-    async function cancelAppointment(appointmentId) {
-        if (confirm('Are you sure you want to decline this appointment?')) {
+    function cancelAppointment(appointmentId) {
+        showConfirm('Decline Appointment', 'Are you sure you want to decline this appointment?', async () => {
             await FirebaseDB.updateAppointmentStatus(appointmentId, 'cancelled');
             loadAppointments();
             loadDashboard();
-        }
+        }, 'danger', 'Decline');
     }
 
     // Load module requests
@@ -5399,11 +5408,11 @@ Sleep Wellness by Dr. Alen`);
                 html += `
                     <tr id="request-${req.id}">
                         <td>
-                            <div class="client-name">${req.userName}</div>
-                            <div class="client-email">${req.userEmail}</div>
+                            <div class="client-name">${sanitizeHTML(req.userName)}</div>
+                            <div class="client-email">${sanitizeHTML(req.userEmail)}</div>
                         </td>
-                        <td><strong>${req.moduleName || req.moduleId}</strong></td>
-                        <td style="max-width: 250px; font-size: 13px; color: var(--text-light);">${req.reason || '<em>No reason provided</em>'}</td>
+                        <td><strong>${sanitizeHTML(req.moduleName || req.moduleId)}</strong></td>
+                        <td style="max-width: 250px; font-size: 13px; color: var(--text-light);">${req.reason ? sanitizeHTML(req.reason) : '<em>No reason provided</em>'}</td>
                         <td>${requested}</td>
                         <td>
                             <div style="display: flex; gap: 8px;">
@@ -5428,17 +5437,17 @@ Sleep Wellness by Dr. Alen`);
     }
 
     // Approve module request
-    async function approveRequest(requestId) {
-        if (!confirm('Approve this module request?')) return;
-
-        try {
-            await FirebaseDB.approveModuleRequest(requestId);
-            showToast('The module has been unlocked for this client.', 'success', 'Request Approved');
-            loadModulesSection(); // Refresh the entire modules section
-        } catch (error) {
-            console.error('Error approving request:', error);
-            showToast('Error approving request. Please try again.', 'error');
-        }
+    function approveRequest(requestId) {
+        showConfirm('Approve Request', 'Approve this module request?', async () => {
+            try {
+                await FirebaseDB.approveModuleRequest(requestId);
+                showToast('The module has been unlocked for this client.', 'success', 'Request Approved');
+                loadModulesSection(); // Refresh the entire modules section
+            } catch (error) {
+                console.error('Error approving request:', error);
+                showToast('Error approving request. Please try again.', 'error');
+            }
+        }, 'info', 'Approve');
     }
 
     // Deny module request
@@ -5588,7 +5597,7 @@ Sleep Wellness by Dr. Alen`);
                     <label style="display: flex; align-items: center; gap: 10px; padding: 8px; cursor: ${hasModule ? 'default' : 'pointer'}; border-radius: 6px; ${hasModule ? 'opacity: 0.6;' : ''}" ${hasModule ? '' : `onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background=''"`}>
                         <input type="checkbox" name="module-assign-client" value="${c.id}" ${hasModule ? 'disabled checked' : ''} style="width: 16px; height: 16px;">
                         <div>
-                            <div style="font-size: 13px; font-weight: 500; color: var(--navy);">${c.displayName || c.email}</div>
+                            <div style="font-size: 13px; font-weight: 500; color: var(--navy);">${sanitizeHTML(c.displayName || c.email)}</div>
                             ${hasModule ? '<div style="font-size: 11px; color: #2e7d32;">Already has access</div>' : ''}
                         </div>
                     </label>
@@ -5597,7 +5606,6 @@ Sleep Wellness by Dr. Alen`);
         }
 
             // Show modal
-            console.log('Showing modal now');
             document.getElementById('module-detail-modal').classList.add('active');
         } catch (error) {
             console.error('Error in openModuleDetail:', error);
@@ -5678,12 +5686,12 @@ Sleep Wellness by Dr. Alen`);
             html += `
                 <tr>
                     <td>
-                        <div class="client-name">${client?.displayName || 'Unknown'}</div>
-                        <div class="client-email">${client?.email || ''}</div>
+                        <div class="client-name">${sanitizeHTML(client?.displayName || 'Unknown')}</div>
+                        <div class="client-email">${sanitizeHTML(client?.email || '')}</div>
                     </td>
-                    <td>${unlock.modules?.join(', ') || '-'}</td>
+                    <td>${sanitizeHTML(unlock.modules?.join(', ') || '-')}</td>
                     <td>${granted}</td>
-                    <td>${unlock.notes || '-'}</td>
+                    <td>${sanitizeHTML(unlock.notes || '-')}</td>
                 </tr>
             `;
         }
@@ -5698,7 +5706,7 @@ Sleep Wellness by Dr. Alen`);
         const clients = await FirebaseDB.getAllUsers();
 
         select.innerHTML = '<option value="">Select a client</option>' +
-            clients.map(c => `<option value="${c.id}">${c.displayName || c.email}</option>`).join('');
+            clients.map(c => `<option value="${sanitizeHTML(c.id)}">${sanitizeHTML(c.displayName || c.email)}</option>`).join('');
 
         document.querySelectorAll('input[name="unlock-modules"]').forEach(cb => cb.checked = false);
         document.getElementById('unlock-notes').value = '';
@@ -5814,10 +5822,10 @@ Sleep Wellness by Dr. Alen`);
                 html += `
                     <tr>
                         <td>
-                            <div class="client-name">${data.userName || 'Unknown'}</div>
-                            <div class="client-email">${data.userEmail || ''}</div>
+                            <div class="client-name">${sanitizeHTML(data.userName || 'Unknown')}</div>
+                            <div class="client-email">${sanitizeHTML(data.userEmail || '')}</div>
                         </td>
-                        <td><strong>${data.questionnaireName || data.questionnaireId}</strong></td>
+                        <td><strong>${sanitizeHTML(data.questionnaireName || data.questionnaireId)}</strong></td>
                         <td style="color: ${isOverdue ? '#c62828' : 'inherit'}; font-weight: ${isOverdue ? '600' : 'normal'};">
                             ${dueDate ? dueDate.toLocaleDateString() : 'No due date'}
                             ${isOverdue ? ' <span style="font-size: 10px;">(Overdue)</span>' : ''}
@@ -5876,14 +5884,14 @@ Sleep Wellness by Dr. Alen`);
                 html += `
                     <tr>
                         <td>
-                            <div class="client-name">${result.userName || 'Unknown'}</div>
-                            <div class="client-email">${result.userEmail || ''}</div>
+                            <div class="client-name">${sanitizeHTML(result.userName || 'Unknown')}</div>
+                            <div class="client-email">${sanitizeHTML(result.userEmail || '')}</div>
                         </td>
-                        <td><strong>${result.questionnaireName || result.questionnaireId}</strong></td>
+                        <td><strong>${sanitizeHTML(result.questionnaireName || result.questionnaireId)}</strong></td>
                         <td style="font-weight: 600; font-size: 16px;">${result.score}/${result.maxScore}</td>
                         <td>
                             <span style="background: ${result.color || '#666'}; color: white; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 500;">
-                                ${result.interpretation || 'N/A'}
+                                ${sanitizeHTML(result.interpretation || 'N/A')}
                             </span>
                         </td>
                         <td>${completedDate ? completedDate.toLocaleDateString() : 'N/A'}</td>
@@ -5949,10 +5957,10 @@ Sleep Wellness by Dr. Alen`);
         const clients = await FirebaseDB.getAllUsers();
         clientsContainer.innerHTML = clients.map(c => `
             <label style="display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 6px; cursor: pointer; transition: background 0.2s; width: 100%; box-sizing: border-box;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background=''">
-                <input type="checkbox" name="questionnaire-clients" value="${c.id}" data-name="${c.displayName || c.email}" data-email="${c.email || ''}" style="flex-shrink: 0;">
+                <input type="checkbox" name="questionnaire-clients" value="${sanitizeHTML(c.id)}" data-name="${sanitizeHTML(c.displayName || c.email)}" data-email="${sanitizeHTML(c.email || '')}" style="flex-shrink: 0;">
                 <div style="flex: 1; min-width: 0;">
-                    <div style="font-size: 13px; font-weight: 500; color: var(--navy);">${c.displayName || 'Unnamed'}</div>
-                    <div style="font-size: 11px; color: var(--text-light); overflow: hidden; text-overflow: ellipsis;">${c.email || ''}</div>
+                    <div style="font-size: 13px; font-weight: 500; color: var(--navy);">${sanitizeHTML(c.displayName || 'Unnamed')}</div>
+                    <div style="font-size: 11px; color: var(--text-light); overflow: hidden; text-overflow: ellipsis;">${sanitizeHTML(c.email || '')}</div>
                 </div>
             </label>
         `).join('');
@@ -6093,8 +6101,8 @@ Sleep Wellness by Dr. Alen`);
                             </svg>
                         </div>
                         <div style="flex: 1; min-width: 0;">
-                            <div style="font-size: 13px; font-weight: 500; color: var(--navy); margin-bottom: 3px;">${n.title}</div>
-                            <div style="font-size: 12px; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${n.message}</div>
+                            <div style="font-size: 13px; font-weight: 500; color: var(--navy); margin-bottom: 3px;">${sanitizeHTML(n.title)}</div>
+                            <div style="font-size: 12px; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${sanitizeHTML(n.message)}</div>
                             <div style="font-size: 11px; color: var(--gold-dark); margin-top: 4px;">${timeAgo}</div>
                         </div>
                     </div>
@@ -6242,14 +6250,10 @@ Sleep Wellness by Dr. Alen`);
     let currentViewedClient = null;
 
     async function viewClient(clientId) {
-        console.log('viewClient called with:', clientId);
-        console.log('allClients:', allClients);
-
         let client = allClients.find(c => c.id === clientId);
 
         // If not in cache, fetch directly
         if (!client) {
-            console.log('Client not in cache, fetching from database...');
             try {
                 const profile = await FirebaseDB.getUserProfile(clientId);
                 if (profile) {
@@ -6286,13 +6290,13 @@ Sleep Wellness by Dr. Alen`);
         const goalEl = document.getElementById('client-primary-goal');
         const notesEl = document.getElementById('client-notes');
         if (client.primaryGoal) {
-            goalEl.innerHTML = `<p style="margin: 0; font-weight: 500;">${client.primaryGoal}</p>`;
+            goalEl.innerHTML = `<p style="margin: 0; font-weight: 500;">${sanitizeHTML(client.primaryGoal)}</p>`;
         } else {
             goalEl.innerHTML = `<p style="margin: 0; color: var(--text-light); font-style: italic;">No primary goal set</p>`;
         }
         if (client.notes) {
             notesEl.style.display = 'block';
-            notesEl.innerHTML = `<strong>Notes:</strong> ${client.notes}`;
+            notesEl.innerHTML = `<strong>Notes:</strong> ${sanitizeHTML(client.notes)}`;
         } else {
             notesEl.style.display = 'none';
         }
@@ -6834,7 +6838,7 @@ Sleep Wellness by Dr. Alen`);
         const findings = assessment.findings || [];
         if (findings.length > 0) {
             findingsCard.style.display = 'block';
-            findingsList.innerHTML = findings.map(f => `<li style="margin-bottom: 8px;">${f}</li>`).join('');
+            findingsList.innerHTML = findings.map(f => `<li style="margin-bottom: 8px;">${sanitizeHTML(f)}</li>`).join('');
         } else {
             findingsCard.style.display = 'none';
         }
@@ -6877,7 +6881,7 @@ Sleep Wellness by Dr. Alen`);
                         <input type="checkbox" ${isCompleted ? 'checked' : ''} onchange="toggleAction('${action.id}', this.checked)"
                             style="width: 20px; height: 20px; margin-top: 2px; cursor: pointer; accent-color: var(--gold);">
                         <div style="flex: 1;">
-                            <div style="font-size: 14px; color: ${priorityColor}; ${isCompleted ? 'text-decoration: line-through;' : ''}">${action.text}</div>
+                            <div style="font-size: 14px; color: ${priorityColor}; ${isCompleted ? 'text-decoration: line-through;' : ''}">${sanitizeHTML(action.text)}</div>
                             <div style="display: flex; align-items: center; gap: 10px; margin-top: 6px;">
                                 ${statusBadge}
                                 ${action.priority === 'high' ? '<span style="background: #d32f2f22; color: #d32f2f; font-size: 10px; padding: 2px 8px; border-radius: 10px;">HIGH PRIORITY</span>' : ''}
@@ -6937,7 +6941,7 @@ Sleep Wellness by Dr. Alen`);
                             ${isAdmin ? 'You' : currentViewedClient?.displayName?.charAt(0) || '?'}
                         </div>
                         <div style="flex: 1;">
-                            <div style="font-size: 13px; color: var(--navy);">${msg.text}</div>
+                            <div style="font-size: 13px; color: var(--navy);">${sanitizeHTML(msg.text)}</div>
                             <div style="font-size: 11px; color: var(--text-light); margin-top: 4px;">${timeStr}</div>
                         </div>
                     </div>
@@ -7070,15 +7074,15 @@ Sleep Wellness by Dr. Alen`);
         }
     }
 
-    async function deleteAction(actionId) {
-        if (!confirm('Delete this action?')) return;
-
-        try {
-            await db.collection('clientActions').doc(actionId).delete();
-            if (currentViewedClient) loadClientActions(currentViewedClient.id);
-        } catch (error) {
-            console.error('Error deleting action:', error);
-        }
+    function deleteAction(actionId) {
+        showConfirm('Delete Action', 'Delete this action?', async () => {
+            try {
+                await db.collection('clientActions').doc(actionId).delete();
+                if (currentViewedClient) loadClientActions(currentViewedClient.id);
+            } catch (error) {
+                console.error('Error deleting action:', error);
+            }
+        }, 'danger', 'Delete');
     }
 
     // Open chat with current client
@@ -7130,22 +7134,22 @@ Sleep Wellness by Dr. Alen`);
         }
     }
 
-    async function restoreClient(clientId) {
-        if (!confirm('Restore this client to active status?')) return;
+    function restoreClient(clientId) {
+        showConfirm('Restore Client', 'Restore this client to active status?', async () => {
+            try {
+                await db.collection('users').doc(clientId).update({
+                    status: 'active',
+                    restoredAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    restoredBy: currentUser.uid
+                });
 
-        try {
-            await db.collection('users').doc(clientId).update({
-                status: 'active',
-                restoredAt: firebase.firestore.FieldValue.serverTimestamp(),
-                restoredBy: currentUser.uid
-            });
-
-            showToast('Client restored successfully!', 'success');
-            loadClients();
-        } catch (error) {
-            console.error('Error restoring client:', error);
-            alert('Error restoring client. Please try again.');
-        }
+                showToast('Client restored successfully!', 'success');
+                loadClients();
+            } catch (error) {
+                console.error('Error restoring client:', error);
+                showToast('Error restoring client. Please try again.', 'error');
+            }
+        }, 'warning', 'Restore');
     }
 
     // ============ APPOINTMENT SCHEDULING ============
@@ -7186,7 +7190,7 @@ Sleep Wellness by Dr. Alen`);
         const select = document.getElementById('schedule-client');
         const activeClients = allClients.filter(c => c.status !== 'archived' && c.role !== 'admin');
         select.innerHTML = '<option value="">Choose a client...</option>' +
-            activeClients.map(c => `<option value="${c.id}" data-email="${c.email || ''}">${c.displayName || c.email}</option>`).join('');
+            activeClients.map(c => `<option value="${sanitizeHTML(c.id)}" data-email="${sanitizeHTML(c.email || '')}">${sanitizeHTML(c.displayName || c.email)}</option>`).join('');
 
         document.getElementById('schedule-appointment-modal').style.display = 'flex';
     }
@@ -7406,7 +7410,7 @@ Sleep Wellness by Dr. Alen`);
                 <div style="display: grid; gap: 12px;">
                     <div style="display: flex; justify-content: space-between;">
                         <span style="color: #666;">Client:</span>
-                        <span style="font-weight: 500; color: #0f1c2e;">${client.displayName || client.email}</span>
+                        <span style="font-weight: 500; color: #0f1c2e;">${sanitizeHTML(client.displayName || client.email)}</span>
                     </div>
                     <div style="display: flex; justify-content: space-between;">
                         <span style="color: #666;">Date:</span>
@@ -7427,7 +7431,7 @@ Sleep Wellness by Dr. Alen`);
                     ${meetingLink ? `
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span style="color: #666;">Meeting Link:</span>
-                        <a href="${meetingLink}" target="_blank" style="color: var(--gold); font-weight: 500;">${meetingLink}</a>
+                        <a href="${meetingLink}" target="_blank" rel="noopener noreferrer" style="color: var(--gold); font-weight: 500;">${meetingLink}</a>
                     </div>
                     ` : ''}
                 </div>
@@ -7482,11 +7486,86 @@ Sleep Wellness by Dr. Alen`);
         document.getElementById(`avail-${day}-end`).disabled = closed;
     }
 
-    function saveAvailability() {
-        // In a full implementation, this would save to Firestore
-        // For now, we'll just close the modal
-        alert('Availability settings saved!');
-        closeModal('set-availability-modal');
+    async function saveAvailability() {
+        const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+        const availability = {};
+
+        days.forEach(day => {
+            availability[day] = {
+                start: document.getElementById(`avail-${day}-start`).value || '09:00',
+                end: document.getElementById(`avail-${day}-end`).value || '17:00',
+                closed: document.getElementById(`avail-${day}-closed`).checked
+            };
+        });
+
+        availability.zoomLink = document.getElementById('avail-zoom-link').value || '';
+        availability.defaultDuration = parseInt(document.getElementById('avail-default-duration').value) || 30;
+
+        try {
+            await db.collection('settings').doc('availability').set(availability);
+
+            // Update the in-memory defaultAvailability so scheduling uses new values immediately
+            days.forEach(day => {
+                defaultAvailability[day] = { ...availability[day] };
+            });
+            defaultAvailability.zoomLink = availability.zoomLink;
+            defaultAvailability.defaultDuration = availability.defaultDuration;
+
+            showToast('Availability settings saved successfully!', 'success', 'Availability Updated');
+            closeModal('set-availability-modal');
+        } catch (error) {
+            console.error('Error saving availability:', error);
+            showToast('Error saving availability settings. Please try again.', 'error');
+        }
+    }
+
+    async function loadAvailability() {
+        try {
+            const doc = await db.collection('settings').doc('availability').get();
+            if (!doc.exists) return; // Use defaults if no saved data
+
+            const data = doc.data();
+            const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+            days.forEach(day => {
+                if (data[day]) {
+                    const startInput = document.getElementById(`avail-${day}-start`);
+                    const endInput = document.getElementById(`avail-${day}-end`);
+                    const closedInput = document.getElementById(`avail-${day}-closed`);
+
+                    if (startInput) startInput.value = data[day].start || '09:00';
+                    if (endInput) endInput.value = data[day].end || '17:00';
+                    if (closedInput) {
+                        closedInput.checked = !!data[day].closed;
+                        // Disable/enable time inputs based on closed state
+                        if (startInput) startInput.disabled = !!data[day].closed;
+                        if (endInput) endInput.disabled = !!data[day].closed;
+                    }
+
+                    // Update in-memory defaults
+                    defaultAvailability[day] = {
+                        start: data[day].start || '09:00',
+                        end: data[day].end || '17:00',
+                        closed: !!data[day].closed
+                    };
+                }
+            });
+
+            if (data.zoomLink !== undefined) {
+                const zoomInput = document.getElementById('avail-zoom-link');
+                if (zoomInput) zoomInput.value = data.zoomLink;
+                defaultAvailability.zoomLink = data.zoomLink;
+            }
+
+            if (data.defaultDuration !== undefined) {
+                const durationSelect = document.getElementById('avail-default-duration');
+                if (durationSelect) durationSelect.value = data.defaultDuration;
+                defaultAvailability.defaultDuration = data.defaultDuration;
+            }
+        } catch (error) {
+            console.error('Error loading availability:', error);
+            // Silently fall back to defaults
+        }
     }
 
     // ============ END APPOINTMENT SCHEDULING ============
@@ -7525,7 +7604,7 @@ Sleep Wellness by Dr. Alen`);
         document.getElementById('task-type').value = '';
         document.getElementById('custom-task-title').value = '';
         document.getElementById('task-instructions').value = '';
-        document.getElementById('task-priority').value = 'normal';
+        document.getElementById('assign-task-priority').value = 'normal';
         document.getElementById('task-due-date').value = '';
         document.getElementById('task-send-notification').checked = true;
         document.getElementById('custom-task-field').style.display = 'none';
@@ -7565,7 +7644,7 @@ Sleep Wellness by Dr. Alen`);
         const taskType = document.getElementById('task-type').value;
         const customTitle = document.getElementById('custom-task-title').value.trim();
         const instructions = document.getElementById('task-instructions').value.trim();
-        const priority = document.getElementById('task-priority').value;
+        const priority = document.getElementById('assign-task-priority').value;
         const dueDate = document.getElementById('task-due-date').value;
         const sendNotification = document.getElementById('task-send-notification').checked;
 
@@ -7657,7 +7736,7 @@ Sleep Wellness by Dr. Alen`);
         const clients = await FirebaseDB.getAllUsers();
 
         select.innerHTML = '<option value="">Select a client</option>' +
-            clients.map(c => `<option value="${c.id}" ${c.id === currentViewedClient.id ? 'selected' : ''}>${c.displayName || c.email}</option>`).join('');
+            clients.map(c => `<option value="${sanitizeHTML(c.id)}" ${c.id === currentViewedClient.id ? 'selected' : ''}>${sanitizeHTML(c.displayName || c.email)}</option>`).join('');
 
         document.querySelectorAll('input[name="unlock-modules"]').forEach(cb => cb.checked = false);
         document.getElementById('unlock-notes').value = '';
@@ -7986,7 +8065,7 @@ Sleep Wellness by Dr. Alen`);
         // Add user message
         messagesContainer.innerHTML += `
             <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
-                <div style="max-width: 85%; background: #0f1c2e; color: white; padding: 12px 16px; border-radius: 18px 18px 4px 18px; font-size: 14px;">${question}</div>
+                <div style="max-width: 85%; background: #0f1c2e; color: white; padding: 12px 16px; border-radius: 18px 18px 4px 18px; font-size: 14px;">${sanitizeHTML(question)}</div>
             </div>
         `;
         input.value = '';
@@ -8044,7 +8123,7 @@ Sleep Wellness by Dr. Alen`);
             }
             const names = highISI.slice(0, 5).map(a => {
                 const client = allClients.find(c => c.id === a.userId);
-                return client?.displayName || 'Unknown';
+                return sanitizeHTML(client?.displayName || 'Unknown');
             });
             return `<strong>${highISI.length} client(s)</strong> have ISI scores above 14:<br><br>
                 ${names.map(n => `• ${n}`).join('<br>')}<br><br>
@@ -8301,14 +8380,11 @@ Sleep Wellness by Dr. Alen`);
         container.innerHTML = '<div class="loading">Loading hotel partners...</div>';
 
         try {
-            console.log('Loading hotel partners...');
             hotelPartners = await FirebaseDB.getAllHotelPartners();
-            console.log('Loaded hotel partners:', hotelPartners);
 
             // DEV: Auto-create test data if no hotel partners exist
             if (hotelPartners.length === 0) {
                 try {
-                    console.log('No hotel partners found. Creating test data...');
                     await createTestHotelData();
                     hotelPartners = await FirebaseDB.getAllHotelPartners();
                 } catch (e) {
@@ -8388,13 +8464,13 @@ Sleep Wellness by Dr. Alen`);
                 <div class="hotel-partner-card" onclick="viewHotelDetail('${partner.id}')">
                     <div class="hotel-partner-logo">
                         ${partner.logoUrl
-                            ? `<img src="${partner.logoUrl}" alt="${partner.name}">`
+                            ? `<img src="${sanitizeHTML(partner.logoUrl)}" alt="${sanitizeHTML(partner.name)}">`
                             : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>`
                         }
                     </div>
                     <div class="hotel-partner-info">
-                        <div class="hotel-partner-name">${partner.name}</div>
-                        <div class="hotel-partner-contact">${partner.contactName} • ${partner.contactEmail}</div>
+                        <div class="hotel-partner-name">${sanitizeHTML(partner.name)}</div>
+                        <div class="hotel-partner-contact">${sanitizeHTML(partner.contactName)} • ${sanitizeHTML(partner.contactEmail)}</div>
                     </div>
                     <div class="hotel-partner-stats">
                         <div class="hotel-stat">
@@ -8417,7 +8493,7 @@ Sleep Wellness by Dr. Alen`);
             console.error('Error loading hotel partners:', error);
             container.innerHTML = `<div style="color: #d32f2f; padding: 20px; text-align: center;">
                 Error loading hotel partners<br>
-                <small style="color: #666;">${error.message || error}</small>
+                <small style="color: #666;">${sanitizeHTML(error.message || String(error))}</small>
             </div>`;
         }
     }
@@ -8427,10 +8503,10 @@ Sleep Wellness by Dr. Alen`);
         const container = document.getElementById('pending-reports-list');
         container.innerHTML = reports.map(stay => `
             <div class="guest-stay-row" onclick="viewGuestStay('${stay.id}')">
-                <div class="guest-avatar">${(stay.guestName || 'G')[0].toUpperCase()}</div>
+                <div class="guest-avatar">${sanitizeHTML((stay.guestName || 'G')[0].toUpperCase())}</div>
                 <div class="guest-info">
-                    <div class="guest-name">${stay.guestName}</div>
-                    <div class="guest-dates">${stay.hotelName} • Checked out ${formatDate(stay.actualCheckoutDate?.toDate?.())}</div>
+                    <div class="guest-name">${sanitizeHTML(stay.guestName)}</div>
+                    <div class="guest-dates">${sanitizeHTML(stay.hotelName)} • Checked out ${formatDate(stay.actualCheckoutDate?.toDate?.())}</div>
                 </div>
                 <button class="action-btn action-btn-primary" onclick="event.stopPropagation(); generateReportForStay('${stay.id}')">Generate Report</button>
             </div>
@@ -8573,11 +8649,8 @@ Sleep Wellness by Dr. Alen`);
         const container = document.getElementById('hotel-guests-list');
         container.innerHTML = '<div class="loading" style="padding: 20px;">Loading guests...</div>';
 
-        console.log('switchHotelTab called, currentHotelId:', currentHotelId, 'tab:', tab);
-
         const status = tab === 'active' ? 'active' : null;
         let stays = await FirebaseDB.getHotelGuestStays(currentHotelId, status);
-        console.log('Stays loaded:', stays);
 
         // Filter for completed tab
         if (tab === 'completed') {
@@ -8605,12 +8678,12 @@ Sleep Wellness by Dr. Alen`);
 
             return `
                 <div class="guest-stay-row" onclick="viewGuestStay('${stay.id}')">
-                    <div class="guest-avatar">${(stay.guestName || 'G')[0].toUpperCase()}</div>
+                    <div class="guest-avatar">${sanitizeHTML((stay.guestName || 'G')[0].toUpperCase())}</div>
                     <div class="guest-info">
-                        <div class="guest-name">${stay.guestName}</div>
+                        <div class="guest-name">${sanitizeHTML(stay.guestName)}</div>
                         <div class="guest-dates">${formatDate(checkIn)} - ${checkOut ? formatDate(checkOut) : 'Ongoing'}</div>
                     </div>
-                    <div class="guest-room">${stay.roomNumber || 'No room'}</div>
+                    <div class="guest-room">${sanitizeHTML(stay.roomNumber || 'No room')}</div>
                     <div class="guest-improvement">
                         ${improvement !== null
                             ? `<div class="guest-improvement-value ${improvement > 0 ? 'positive' : 'neutral'}">${improvement > 0 ? '+' : ''}${improvement}%</div>
@@ -8657,13 +8730,13 @@ Sleep Wellness by Dr. Alen`);
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
                 <div>
                     <h4 style="font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 8px;">Guest Information</h4>
-                    <p style="font-size: 18px; color: #0f1c2e; font-weight: 500;">${userProfile?.displayName || 'Unknown Guest'}</p>
-                    <p style="font-size: 13px; color: #666;">${userProfile?.email || ''}</p>
+                    <p style="font-size: 18px; color: #0f1c2e; font-weight: 500;">${sanitizeHTML(userProfile?.displayName || 'Unknown Guest')}</p>
+                    <p style="font-size: 13px; color: #666;">${sanitizeHTML(userProfile?.email || '')}</p>
                 </div>
                 <div>
                     <h4 style="font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 8px;">Stay Details</h4>
-                    <p style="font-size: 14px; color: #0f1c2e;">${hotel?.name || 'Unknown Hotel'}</p>
-                    <p style="font-size: 13px; color: #666;">Room ${stay.roomNumber || 'N/A'}</p>
+                    <p style="font-size: 14px; color: #0f1c2e;">${sanitizeHTML(hotel?.name || 'Unknown Hotel')}</p>
+                    <p style="font-size: 13px; color: #666;">Room ${sanitizeHTML(stay.roomNumber || 'N/A')}</p>
                     <p style="font-size: 13px; color: #666;">${formatDate(checkIn)} - ${checkOut ? formatDate(checkOut) : 'Ongoing'}</p>
                 </div>
             </div>
@@ -8746,7 +8819,7 @@ Sleep Wellness by Dr. Alen`);
 
             <div style="margin-top: 20px;">
                 <p style="font-size: 12px; color: #888;">Status: <span class="guest-status ${stay.stayStatus}">${formatStatus(stay.stayStatus)}</span></p>
-                ${stay.reportPdfUrl ? `<p style="font-size: 12px; color: #888; margin-top: 10px;">Report: <a href="${stay.reportPdfUrl}" target="_blank" style="color: var(--gold);">View PDF</a></p>` : ''}
+                ${stay.reportPdfUrl ? `<p style="font-size: 12px; color: #888; margin-top: 10px;">Report: <a href="${stay.reportPdfUrl}" target="_blank" rel="noopener noreferrer" style="color: var(--gold);">View PDF</a></p>` : ''}
             </div>
         `;
 
@@ -9573,15 +9646,15 @@ Sleep Wellness by Dr. Alen`);
                 <div class="partner-card" onclick="viewAthleticDetail('${partner.id}')">
                     <div class="partner-card-logo athletic">
                         ${partner.logoUrl
-                            ? '<img src="' + partner.logoUrl + '" alt="' + partner.name + '">'
+                            ? '<img src="' + sanitizeHTML(partner.logoUrl) + '" alt="' + sanitizeHTML(partner.name) + '">'
                             : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><path d="M12 8v8"/><path d="M8 21l4-4 4 4"/></svg>'
                         }
                     </div>
                     <div class="partner-card-info">
-                        <div class="partner-card-name">${partner.name}</div>
+                        <div class="partner-card-name">${sanitizeHTML(partner.name)}</div>
                         <div class="partner-card-meta">
-                            <span class="sport-badge">${partner.sport || 'Sport'}</span>
-                            ${partner.competitionLevel || 'Professional'} • ${partner.contactName}
+                            <span class="sport-badge">${sanitizeHTML(partner.sport || 'Sport')}</span>
+                            ${sanitizeHTML(partner.competitionLevel || 'Professional')} • ${sanitizeHTML(partner.contactName)}
                         </div>
                     </div>
                     <div class="partner-card-stats">
@@ -9701,10 +9774,10 @@ Sleep Wellness by Dr. Alen`);
                 const a = doc.data();
                 return `
                     <div class="guest-stay-row">
-                        <div class="guest-avatar">${(a.displayName || 'A')[0].toUpperCase()}</div>
+                        <div class="guest-avatar">${sanitizeHTML((a.displayName || 'A')[0].toUpperCase())}</div>
                         <div class="guest-info">
-                            <div class="guest-name">${a.displayName || 'Athlete'}</div>
-                            <div class="guest-dates">${a.position || 'Position'} • Joined ${formatDate(a.enrolledAt?.toDate?.())}</div>
+                            <div class="guest-name">${sanitizeHTML(a.displayName || 'Athlete')}</div>
+                            <div class="guest-dates">${sanitizeHTML(a.position || 'Position')} • Joined ${formatDate(a.enrolledAt?.toDate?.())}</div>
                         </div>
                         <div class="guest-improvement">
                             <div class="guest-improvement-value ${a.avgRecoveryScore >= 80 ? 'positive' : ''}">${a.avgRecoveryScore || '-'}%</div>
@@ -9726,9 +9799,8 @@ Sleep Wellness by Dr. Alen`);
     }
 
     // Create demo athletic data
-    async function createDemoAthleticData() {
-        if (!confirm('Create demo athletic partner data?')) return;
-
+    function createDemoAthleticData() {
+        showConfirm('Create Demo Data', 'Create demo athletic partner data?', async () => {
         try {
             const teamId = 'boston-celtics-demo';
             await db.collection('athleticPartners').doc(teamId).set({
@@ -9766,12 +9838,13 @@ Sleep Wellness by Dr. Alen`);
                 });
             }
 
-            alert('Demo athletic data created successfully!');
+            showToast('Demo athletic data created successfully!', 'success');
             loadAthleticPartners();
         } catch (error) {
             console.error('Error creating demo data:', error);
-            alert('Error: ' + error.message);
+            showToast('Error: ' + error.message, 'error');
         }
+        }, 'info', 'Create');
     }
 
     function editCurrentAthleticPartner() {
@@ -9862,15 +9935,15 @@ Sleep Wellness by Dr. Alen`);
                 <div class="partner-card" onclick="viewBusinessDetail('${partner.id}')">
                     <div class="partner-card-logo business">
                         ${partner.logoUrl
-                            ? '<img src="' + partner.logoUrl + '" alt="' + partner.name + '">'
+                            ? '<img src="' + sanitizeHTML(partner.logoUrl) + '" alt="' + sanitizeHTML(partner.name) + '">'
                             : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>'
                         }
                     </div>
                     <div class="partner-card-info">
-                        <div class="partner-card-name">${partner.name}</div>
+                        <div class="partner-card-name">${sanitizeHTML(partner.name)}</div>
                         <div class="partner-card-meta">
-                            <span class="industry-badge">${partner.industry || 'Industry'}</span>
-                            ${partner.programType || 'Executive Coaching'} • ${partner.contactName}
+                            <span class="industry-badge">${sanitizeHTML(partner.industry || 'Industry')}</span>
+                            ${sanitizeHTML(partner.programType || 'Executive Coaching')} • ${sanitizeHTML(partner.contactName)}
                         </div>
                     </div>
                     <div class="partner-card-stats">
@@ -9990,10 +10063,10 @@ Sleep Wellness by Dr. Alen`);
                 const e = doc.data();
                 return `
                     <div class="guest-stay-row">
-                        <div class="guest-avatar">${(e.displayName || 'E')[0].toUpperCase()}</div>
+                        <div class="guest-avatar">${sanitizeHTML((e.displayName || 'E')[0].toUpperCase())}</div>
                         <div class="guest-info">
-                            <div class="guest-name">${e.displayName || 'Executive'}</div>
-                            <div class="guest-dates">${e.title || 'Title'} • Started ${formatDate(e.enrolledAt?.toDate?.())}</div>
+                            <div class="guest-name">${sanitizeHTML(e.displayName || 'Executive')}</div>
+                            <div class="guest-dates">${sanitizeHTML(e.title || 'Title')} • Started ${formatDate(e.enrolledAt?.toDate?.())}</div>
                         </div>
                         <div class="guest-improvement">
                             <div class="guest-improvement-value ${e.performanceGain >= 15 ? 'positive' : ''}">${e.performanceGain || '-'}%</div>
@@ -10015,9 +10088,8 @@ Sleep Wellness by Dr. Alen`);
     }
 
     // Create demo business data
-    async function createDemoBusinessData() {
-        if (!confirm('Create demo business partner data?')) return;
-
+    function createDemoBusinessData() {
+        showConfirm('Create Demo Data', 'Create demo business partner data?', async () => {
         try {
             const orgId = 'goldman-sachs-demo';
             await db.collection('businessPartners').doc(orgId).set({
@@ -10055,12 +10127,13 @@ Sleep Wellness by Dr. Alen`);
                 });
             }
 
-            alert('Demo business data created successfully!');
+            showToast('Demo business data created successfully!', 'success');
             loadBusinessPartners();
         } catch (error) {
             console.error('Error creating demo data:', error);
-            alert('Error: ' + error.message);
+            showToast('Error: ' + error.message, 'error');
         }
+        }, 'info', 'Create');
     }
 
     function editCurrentBusinessPartner() {

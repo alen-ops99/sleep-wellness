@@ -29,9 +29,10 @@
         gtag('js', new Date());
         gtag('config', 'G-XXXXXXXXXX');
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
-
         :root {
             --deep-navy: #0f1c2e;
             --navy: #1a2744;
@@ -1415,9 +1416,35 @@
                 justify-content: center;
             }
         }
+        /* Skip to content link */
+        .skip-to-content {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            z-index: 10000;
+        }
+        .skip-to-content:focus {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: auto;
+            height: auto;
+            padding: 12px 24px;
+            background: #c8a86e;
+            color: #1a1a2e;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 10000;
+        }
     </style>
 </head>
 <body>
+
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
 
 <!-- Navigation -->
 <nav class="nav" id="nav">
@@ -1433,15 +1460,15 @@
         <a href="assessment/auth.html" class="nav-portal">Client Portal</a>
         <a href="#contact" class="nav-cta">Start a Conversation</a>
     </div>
-    <button class="mobile-menu-btn" id="mobileMenuBtn">
-        <span></span>
-        <span></span>
-        <span></span>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
     </button>
 </nav>
 
 <!-- Mobile Menu -->
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
     <a href="hotels.html">Hotels</a>
     <a href="athletes.html">Athletes</a>
     <a href="corporate.html">Corporate</a>
@@ -1451,7 +1478,7 @@
 </div>
 
 <!-- Hero -->
-<section class="hero">
+<section class="hero" id="main-content">
     <div class="hero-content">
         <p class="hero-label">Harvard Medical School Expertise</p>
         <h1>The Science of<br>Restorative Sleep</h1>
@@ -1504,7 +1531,7 @@
         <!-- Hotels -->
         <div class="audience-card hotels">
             <div class="audience-icon">
-                <svg viewBox="0 0 24 24">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M3 21h18M3 10h18M3 7l9-4 9 4M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
                 </svg>
             </div>
@@ -1527,7 +1554,7 @@
         <!-- Athletes -->
         <div class="audience-card athletes">
             <div class="audience-icon">
-                <svg viewBox="0 0 24 24">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
                     <circle cx="12" cy="12" r="10"/>
                     <path d="M12 2a10 10 0 0 1 0 20M12 2a10 10 0 0 0 0 20M2 12h20M12 2v20"/>
                 </svg>
@@ -1551,7 +1578,7 @@
         <!-- Corporate -->
         <div class="audience-card corporate">
             <div class="audience-icon">
-                <svg viewBox="0 0 24 24">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
                     <rect x="2" y="3" width="20" height="14" rx="2"/>
                     <path d="M8 21h8M12 17v4"/>
                 </svg>
@@ -1578,32 +1605,32 @@
 <section class="stats">
     <div class="stats-grid">
         <div class="stat-item">
-            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5627640/" target="_blank" style="text-decoration: none;">
+            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5627640/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div class="stat-number">$411B</div>
             </a>
             <div class="stat-label">Annual cost of sleep deprivation to US economy</div>
-            <div class="stat-citation"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5627640/" target="_blank">Hafner et al., RAND Corporation, 2016</a></div>
+            <div class="stat-citation"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5627640/" target="_blank" rel="noopener noreferrer">Hafner et al., RAND Corporation, 2016</a></div>
         </div>
         <div class="stat-item">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank" style="text-decoration: none;">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div class="stat-number">1.7x</div>
             </a>
             <div class="stat-label">Higher injury risk with inadequate sleep</div>
-            <div class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank">Milewski et al., J Pediatr Orthop, 2014</a></div>
+            <div class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank" rel="noopener noreferrer">Milewski et al., J Pediatr Orthop, 2014</a></div>
         </div>
         <div class="stat-item">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/21075236/" target="_blank" style="text-decoration: none;">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/21075236/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div class="stat-number">-40%</div>
             </a>
             <div class="stat-label">Cognitive performance decline when sleep-deprived</div>
-            <div class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/21075236/" target="_blank">Alhola & Polo-Kantola, Neuropsychiatr Dis Treat, 2007</a></div>
+            <div class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/21075236/" target="_blank" rel="noopener noreferrer">Alhola & Polo-Kantola, Neuropsychiatr Dis Treat, 2007</a></div>
         </div>
         <div class="stat-item">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" style="text-decoration: none;">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div class="stat-number">70%</div>
             </a>
             <div class="stat-label">Of growth hormone released during deep sleep</div>
-            <div class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank">Van Cauter et al., J Clin Endocrinol Metab, 1996</a></div>
+            <div class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" rel="noopener noreferrer">Van Cauter et al., J Clin Endocrinol Metab, 1996</a></div>
         </div>
     </div>
 </section>
@@ -1621,52 +1648,52 @@
 
     <div class="science-grid">
         <div class="science-card">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/30712880/" target="_blank" style="text-decoration: none;">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/30712880/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div class="science-value">18-20°C</div>
             </a>
             <h4>Temperature</h4>
             <p>Core body temperature must drop for sleep onset. Precision thermal management is foundational.</p>
-            <p class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/30712880/" target="_blank">Harding et al., Curr Opin Physiol, 2019</a></p>
+            <p class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/30712880/" target="_blank" rel="noopener noreferrer">Harding et al., Curr Opin Physiol, 2019</a></p>
         </div>
         <div class="science-card">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/21552190/" target="_blank" style="text-decoration: none;">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/21552190/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div class="science-value">0 lux</div>
             </a>
             <h4>Light Control</h4>
             <p>Even dim light suppresses melatonin by 50%. Complete darkness protocols are non-negotiable.</p>
-            <p class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/21552190/" target="_blank">Gooley et al., J Clin Endocrinol Metab, 2011</a></p>
+            <p class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/21552190/" target="_blank" rel="noopener noreferrer">Gooley et al., J Clin Endocrinol Metab, 2011</a></p>
         </div>
         <div class="science-card">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" style="text-decoration: none;">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div class="science-value">70%</div>
             </a>
             <h4>HGH Release</h4>
             <p>Majority of growth hormone secreted during deep sleep. Critical for recovery and repair.</p>
-            <p class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank">Van Cauter et al., JCEM, 1996</a></p>
+            <p class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" rel="noopener noreferrer">Van Cauter et al., JCEM, 1996</a></p>
         </div>
         <div class="science-card">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/2178013/" target="_blank" style="text-decoration: none;">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/2178013/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div class="science-value">90 min</div>
             </a>
             <h4>Sleep Cycles</h4>
             <p>Understanding ultradian rhythms enables strategic scheduling of high-performance activities.</p>
-            <p class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/2178013/" target="_blank">Carskadon & Dement, Sleep Med, 1989</a></p>
+            <p class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/2178013/" target="_blank" rel="noopener noreferrer">Carskadon & Dement, Sleep Med, 1989</a></p>
         </div>
         <div class="science-card">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/27594802/" target="_blank" style="text-decoration: none;">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/27594802/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div class="science-value">4-6x</div>
             </a>
             <h4>Jet Lag Recovery</h4>
             <p>Strategic protocols compress adaptation from days to hours for peak competition performance.</p>
-            <p class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/27594802/" target="_blank">Eastman & Burgess, Sleep Med Clin, 2009</a></p>
+            <p class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/27594802/" target="_blank" rel="noopener noreferrer">Eastman & Burgess, Sleep Med Clin, 2009</a></p>
         </div>
         <div class="science-card">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/28323455/" target="_blank" style="text-decoration: none;">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/28323455/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div class="science-value">HRV</div>
             </a>
             <h4>Recovery Metrics</h4>
             <p>Objective tracking provides actionable data on readiness, recovery, and optimization progress.</p>
-            <p class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/28323455/" target="_blank">Boneva et al., Sleep Med Rev, 2017</a></p>
+            <p class="stat-citation"><a href="https://pubmed.ncbi.nlm.nih.gov/28323455/" target="_blank" rel="noopener noreferrer">Boneva et al., Sleep Med Rev, 2017</a></p>
         </div>
     </div>
 </section>
@@ -1710,19 +1737,19 @@
     <!-- Sub-zone 2: Media Logos Bar -->
     <div class="about-mega-media">
         <div class="featured-logos">
-            <a href="https://www.nytimes.com/athletic/5686704/2024/08/08/nhl-sleep-hacks-tips-hockey-health-naps/" target="_blank" class="featured-logo">
+            <a href="https://www.nytimes.com/athletic/5686704/2024/08/08/nhl-sleep-hacks-tips-hockey-health-naps/" target="_blank" rel="noopener noreferrer" class="featured-logo">
                 <span class="featured-logo-text">The New York Times</span>
                 <span class="featured-logo-sub">The Athletic</span>
             </a>
-            <a href="https://www.forbes.com/sites/forbes-personal-shopper/article/best-sleep-tracker-ring/" target="_blank" class="featured-logo">
+            <a href="https://www.forbes.com/sites/forbes-personal-shopper/article/best-sleep-tracker-ring/" target="_blank" rel="noopener noreferrer" class="featured-logo">
                 <span class="featured-logo-text">Forbes</span>
                 <span class="featured-logo-sub">Expert Contributor</span>
             </a>
-            <a href="https://brain.harvard.edu/hbi_humans/alen-juginovic/" target="_blank" class="featured-logo">
+            <a href="https://brain.harvard.edu/hbi_humans/alen-juginovic/" target="_blank" rel="noopener noreferrer" class="featured-logo">
                 <span class="featured-logo-text">Harvard</span>
                 <span class="featured-logo-sub">Brain Initiative</span>
             </a>
-            <a href="https://www.barnesandnoble.com/w/sleep-science-made-simple-alen-juginovic/1147216471" target="_blank" class="featured-logo">
+            <a href="https://www.barnesandnoble.com/w/sleep-science-made-simple-alen-juginovic/1147216471" target="_blank" rel="noopener noreferrer" class="featured-logo">
                 <span class="featured-logo-text">Springer</span>
                 <span class="featured-logo-sub">Published Author</span>
             </a>
@@ -1774,17 +1801,17 @@
                     </div>
                 </div>
             </div>
-            <a href="https://www.nytimes.com/athletic/5686704/2024/08/08/nhl-sleep-hacks-tips-hockey-health-naps/" target="_blank" class="featured-article">
+            <a href="https://www.nytimes.com/athletic/5686704/2024/08/08/nhl-sleep-hacks-tips-hockey-health-naps/" target="_blank" rel="noopener noreferrer" class="featured-article">
                 <p class="featured-article-source">The Athletic / New York Times</p>
                 <h4 class="featured-article-title">NHL Sleep Hacks: Tips for Hockey Health and Naps</h4>
                 <p class="featured-article-date">August 2024</p>
             </a>
-            <a href="https://link.springer.com/chapter/10.1007/978-3-031-92060-8_18" target="_blank" class="featured-article">
+            <a href="https://link.springer.com/chapter/10.1007/978-3-031-92060-8_18" target="_blank" rel="noopener noreferrer" class="featured-article">
                 <p class="featured-article-source">Springer Nature</p>
                 <h4 class="featured-article-title">The Crucial Role of Sleep for Athletes</h4>
                 <p class="featured-article-date">Book Chapter, June 2025</p>
             </a>
-            <a href="https://wearable-technologies.com/speakers/alen-juginovic" target="_blank" class="featured-article">
+            <a href="https://wearable-technologies.com/speakers/alen-juginovic" target="_blank" rel="noopener noreferrer" class="featured-article">
                 <p class="featured-article-source">WT Conference Europe</p>
                 <h4 class="featured-article-title">Featured Speaker: Wearable Technologies Conference</h4>
                 <p class="featured-article-date">2025</p>
@@ -1850,7 +1877,7 @@
         </p>
         <form class="newsletter-form" action="https://formspree.io/f/FORM_ID" method="POST">
             <input type="hidden" name="_subject" value="New Sleepletter Subscriber">
-            <input type="email" name="email" placeholder="Enter your email" required>
+            <input type="email" name="email" placeholder="Enter your email" required aria-label="Email address for newsletter">
             <button type="submit">Subscribe</button>
         </form>
         <p class="newsletter-note">No spam. Unsubscribe anytime.</p>
@@ -1864,16 +1891,16 @@
             <h4>Start a Conversation</h4>
             <form class="contact-form" action="https://formspree.io/f/CONTACT_FORM_ID" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
                 <input type="hidden" name="_subject" value="Sleep Wellness Inquiry">
-                <input type="text" name="name" placeholder="Your Name" required style="padding: 12px 15px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px;">
-                <input type="email" name="email" placeholder="Your Email" required style="padding: 12px 15px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px;">
-                <select name="interest" required style="padding: 12px 15px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px;">
+                <input type="text" name="name" placeholder="Your Name" required aria-label="Your name" style="padding: 12px 15px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px;">
+                <input type="email" name="email" placeholder="Your Email" required aria-label="Your email" style="padding: 12px 15px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px;">
+                <select name="interest" required aria-label="Area of interest" style="padding: 12px 15px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px;">
                     <option value="" disabled selected style="color: #666;">Area of Interest</option>
                     <option value="hotels" style="color: #333;">Luxury Hotels</option>
                     <option value="athletes" style="color: #333;">Elite Athletes</option>
                     <option value="corporate" style="color: #333;">Corporate / Executive</option>
                     <option value="other" style="color: #333;">Other</option>
                 </select>
-                <textarea name="message" placeholder="Tell us about your goals..." rows="3" style="padding: 12px 15px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; resize: vertical;"></textarea>
+                <textarea name="message" placeholder="Tell us about your goals..." rows="3" aria-label="Your message" style="padding: 12px 15px; border: 1px solid rgba(201, 169, 98, 0.3); background: rgba(255,255,255,0.05); color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 14px; resize: vertical;"></textarea>
                 <button type="submit" style="background: var(--gold); color: var(--deep-navy); border: none; padding: 14px 30px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: background 0.3s;">Schedule Consultation</button>
             </form>
         </div>
@@ -1886,7 +1913,7 @@
             </ul>
             <h4 style="margin-top: 30px;">Direct Contact</h4>
             <p><a href="mailto:alen_juginovic@hms.harvard.edu">alen_juginovic@hms.harvard.edu</a></p>
-            <p>+1 (617) 982-8835</p>
+            <p><a href="tel:+16179828835">+1 (617) 982-8835</a></p>
         </div>
         <div class="contact-col">
             <h4>Location</h4>
@@ -1942,7 +1969,9 @@
     mobileMenuBtn.addEventListener('click', () => {
         mobileMenuBtn.classList.toggle('active');
         mobileMenu.classList.toggle('active');
-        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        const isOpen = mobileMenu.classList.contains('active');
+        mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
     // Close mobile menu when clicking a link
@@ -1950,6 +1979,7 @@
         link.addEventListener('click', () => {
             mobileMenuBtn.classList.remove('active');
             mobileMenu.classList.remove('active');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
         });
     });
@@ -1964,37 +1994,49 @@
             contactToggle.addEventListener('click', () => {
                 contactPanel.classList.toggle('active');
                 contactToggle.classList.toggle('active');
+                contactToggle.setAttribute('aria-expanded', contactPanel.classList.contains('active'));
             });
 
             document.addEventListener('click', (e) => {
                 if (!contactWidget.contains(e.target) && contactPanel.classList.contains('active')) {
                     contactPanel.classList.remove('active');
                     contactToggle.classList.remove('active');
+                    contactToggle.setAttribute('aria-expanded', 'false');
                 }
             });
+        }
+    });
+
+    // Close booking modal on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const bookingModal = document.getElementById('bookingModal');
+            if (bookingModal && bookingModal.style.display !== 'none') {
+                closeBookingModal();
+            }
         }
     });
 </script>
 
 <!-- Booking Modal -->
-<div id="bookingModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center;" onclick="if(event.target===this)closeBookingModal()">
+<div id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center;" onclick="if(event.target===this)closeBookingModal()">
     <div style="background: white; border-radius: 16px; width: 90%; max-width: 500px; max-height: 85vh; overflow-y: auto; padding: 35px;" onclick="event.stopPropagation()">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--deep-navy); margin: 0;">Schedule a Consultation</h2>
-            <button onclick="closeBookingModal()" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+            <h2 id="bookingModalTitle" style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--deep-navy); margin: 0;">Schedule a Consultation</h2>
+            <button onclick="closeBookingModal()" aria-label="Close dialog" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
         </div>
 
         <div id="bookingForm">
             <div style="margin-bottom: 18px;">
-                <label style="display: block; font-size: 13px; font-weight: 500; color: var(--deep-navy); margin-bottom: 6px;">Your Name *</label>
+                <label for="bookingName" style="display: block; font-size: 13px; font-weight: 500; color: var(--deep-navy); margin-bottom: 6px;">Your Name *</label>
                 <input type="text" id="bookingName" placeholder="Full name" style="width: 100%; padding: 12px; border: 1px solid rgba(201,169,98,0.3); border-radius: 6px; font-size: 14px; font-family: 'Montserrat', sans-serif; box-sizing: border-box;">
             </div>
             <div style="margin-bottom: 18px;">
-                <label style="display: block; font-size: 13px; font-weight: 500; color: var(--deep-navy); margin-bottom: 6px;">Your Email *</label>
+                <label for="bookingEmail" style="display: block; font-size: 13px; font-weight: 500; color: var(--deep-navy); margin-bottom: 6px;">Your Email *</label>
                 <input type="email" id="bookingEmail" placeholder="email@example.com" style="width: 100%; padding: 12px; border: 1px solid rgba(201,169,98,0.3); border-radius: 6px; font-size: 14px; font-family: 'Montserrat', sans-serif; box-sizing: border-box;">
             </div>
             <div style="margin-bottom: 18px;">
-                <label style="display: block; font-size: 13px; font-weight: 500; color: var(--deep-navy); margin-bottom: 6px;">I'm interested as a...</label>
+                <label for="bookingType" style="display: block; font-size: 13px; font-weight: 500; color: var(--deep-navy); margin-bottom: 6px;">I'm interested as a...</label>
                 <select id="bookingType" style="width: 100%; padding: 12px; border: 1px solid rgba(201,169,98,0.3); border-radius: 6px; font-size: 14px; font-family: 'Montserrat', sans-serif; background: white; box-sizing: border-box;">
                     <option value="general">General Inquiry</option>
                     <option value="hotel">Hotel / Hospitality</option>
@@ -2003,13 +2045,13 @@
                 </select>
             </div>
             <div style="margin-bottom: 18px;">
-                <label style="display: block; font-size: 13px; font-weight: 500; color: var(--deep-navy); margin-bottom: 6px;">Preferred Time</label>
+                <label for="bookingSlots" style="display: block; font-size: 13px; font-weight: 500; color: var(--deep-navy); margin-bottom: 6px;">Preferred Time</label>
                 <div id="bookingSlots" style="max-height: 200px; overflow-y: auto; border: 1px solid rgba(201,169,98,0.2); border-radius: 6px; padding: 10px;">
                     <p style="color: #999; font-size: 13px; text-align: center; padding: 15px;">Loading available times...</p>
                 </div>
             </div>
             <div style="margin-bottom: 20px;">
-                <label style="display: block; font-size: 13px; font-weight: 500; color: var(--deep-navy); margin-bottom: 6px;">Notes (optional)</label>
+                <label for="bookingNotes" style="display: block; font-size: 13px; font-weight: 500; color: var(--deep-navy); margin-bottom: 6px;">Notes (optional)</label>
                 <textarea id="bookingNotes" rows="2" placeholder="Tell us about your goals..." style="width: 100%; padding: 12px; border: 1px solid rgba(201,169,98,0.3); border-radius: 6px; font-size: 14px; font-family: 'Montserrat', sans-serif; resize: vertical; box-sizing: border-box;"></textarea>
             </div>
             <button onclick="submitBooking()" style="width: 100%; padding: 14px; background: var(--deep-navy); color: var(--cream); border: none; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: 'Montserrat', sans-serif; transition: background 0.2s;" onmouseover="this.style.background='var(--gold)';this.style.color='var(--deep-navy)'" onmouseout="this.style.background='var(--deep-navy)';this.style.color='var(--cream)'">Request Consultation</button>
@@ -2080,8 +2122,8 @@
     </div>
 
     <!-- Toggle Button -->
-    <button id="contactToggle" style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); border: none; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 20px rgba(201, 169, 98, 0.4); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
-        <svg id="contactIcon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="transition: all 0.3s ease;">
+    <button id="contactToggle" aria-label="Contact us" aria-expanded="false" style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); border: none; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 20px rgba(201, 169, 98, 0.4); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+        <svg id="contactIcon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="transition: all 0.3s ease;" aria-hidden="true">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
         </svg>
     </button>
@@ -2147,8 +2189,11 @@
 
     async function loadAvailableSlots() {
         const container = document.getElementById('bookingSlots');
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
         try {
-            const response = await fetch(CALENDAR_API_BASE + '/getAvailableSlots');
+            const response = await fetch(CALENDAR_API_BASE + '/getAvailableSlots', { signal: controller.signal });
+            clearTimeout(timeoutId);
             const data = await response.json();
 
             if (data.slots && data.slots.length > 0) {
@@ -2166,10 +2211,12 @@
                     </p>`;
             }
         } catch (error) {
+            clearTimeout(timeoutId);
             console.warn('Could not load calendar slots:', error);
             container.innerHTML = `
                 <p style="color: #666; font-size: 13px; text-align: center; padding: 15px;">
-                    Select a preferred time and we'll confirm availability.
+                    Unable to load available times. Please select a preferred time below, or email
+                    <a href="mailto:alen_juginovic@hms.harvard.edu" style="color: var(--gold);">alen_juginovic@hms.harvard.edu</a> to schedule.
                     <input type="datetime-local" id="bookingManualTime" style="display: block; width: 100%; margin-top: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit;">
                 </p>`;
         }
@@ -2193,12 +2240,16 @@
         let slotStart = selectedSlot?.value || (manualTime?.value ? new Date(manualTime.value).toISOString() : null);
         let slotEnd = selectedSlot?.dataset?.end || (slotStart ? new Date(new Date(slotStart).getTime() + 45 * 60000).toISOString() : null);
 
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
         try {
             const response = await fetch(CALENDAR_API_BASE + '/bookAppointment', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, slotStart, slotEnd, notes, clientType })
+                body: JSON.stringify({ name, email, slotStart, slotEnd, notes, clientType }),
+                signal: controller.signal
             });
+            clearTimeout(timeoutId);
 
             const data = await response.json();
             if (data.success) {
@@ -2208,8 +2259,9 @@
                 alert('There was an issue submitting your request. Please try the contact form instead.');
             }
         } catch (error) {
+            clearTimeout(timeoutId);
             console.error('Booking error:', error);
-            alert('Could not connect to the booking system. Please email juginovic.alen@gmail.com directly.');
+            alert('Could not connect to the booking system. Please email alen_juginovic@hms.harvard.edu directly.');
         }
     }
 </script>

@@ -1,7 +1,7 @@
 {
   "indexes": [
     {
-      "collectionGroup": "sleepDiary",
+      "collectionGroup": "diaryEntries",
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "userId", "order": "ASCENDING" },

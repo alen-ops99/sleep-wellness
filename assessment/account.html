@@ -3763,10 +3763,10 @@
 <div class="toast-container" id="toastContainer"></div>
 
 <!-- Confirmation Modal -->
-<div class="confirm-modal-overlay" id="confirmModal">
+<div class="confirm-modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
     <div class="confirm-modal">
         <div class="confirm-modal-icon warning" id="confirmIcon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
                 <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
             </svg>
@@ -3781,10 +3781,10 @@
 </div>
 
 <!-- Session Timeout Warning -->
-<div class="session-warning" id="sessionWarning">
+<div class="session-warning" id="sessionWarning" role="alertdialog" aria-modal="true" aria-label="Session expiring warning">
     <div class="session-warning-box">
         <div class="confirm-modal-icon warning">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
             </svg>
         </div>
@@ -3797,7 +3797,7 @@
 </div>
 
 <!-- Welcome Modal (for new users) -->
-<div class="welcome-modal" id="welcomeModal">
+<div class="welcome-modal" id="welcomeModal" role="dialog" aria-modal="true" aria-label="Welcome to Sleep Wellness">
     <div class="particles" id="welcomeParticles"></div>
     <div class="welcome-card">
         <div class="welcome-header">
@@ -3812,19 +3812,19 @@
             <div class="welcome-features" id="welcomeFeatures">
                 <div class="welcome-feature">
                     <div class="welcome-feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                     </div>
                     <span>Personalized sleep assessment & analysis</span>
                 </div>
                 <div class="welcome-feature">
                     <div class="welcome-feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
                     </div>
                     <span>Daily tracking & progress monitoring</span>
                 </div>
                 <div class="welcome-feature">
                     <div class="welcome-feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                     </div>
                     <span>Direct messaging with Dr. Alen</span>
                 </div>
@@ -3862,7 +3862,7 @@
 </div>
 
 <!-- Assessment Reminder Modal -->
-<div class="assessment-modal" id="assessmentModal">
+<div class="assessment-modal" id="assessmentModal" role="dialog" aria-modal="true" aria-label="Assessment reminder">
     <div class="assessment-card">
         <div class="assessment-header">
             <div class="assessment-icon">
@@ -3900,8 +3900,8 @@
         <span class="nav-brand-sub">by Dr. Alen</span>
     </a>
     <div class="nav-links">
-        <div class="notification-bell" id="notificationBell" data-auth="logged-in" onclick="toggleNotificationDropdown()" title="Notifications">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <div class="notification-bell" id="notificationBell" data-auth="logged-in" onclick="toggleNotificationDropdown()" title="Notifications" role="button" aria-label="Notifications" aria-expanded="false">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
             <span class="notification-badge" id="notificationBadge" style="display:none;">0</span>
         </div>
         <a href="account.html" class="active" data-auth="logged-in">My Account</a>
@@ -3938,16 +3938,16 @@
             </div>
         </div>
 
-        <nav class="sidebar-nav">
+        <nav class="sidebar-nav" aria-label="Dashboard navigation">
             <li><a href="#dashboard" class="active" onclick="showSection('dashboard')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
                     <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
                 </svg>
                 <span>Dashboard</span>
             </a></li>
             <li><a href="#assessments" onclick="showSection('assessments')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                     <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/>
                     <line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
@@ -3955,7 +3955,7 @@
                 <span>Assessments</span>
             </a></li>
             <li><a href="#questionnaires" onclick="showSection('questionnaires')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M9 11l3 3L22 4"/>
                     <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
                 </svg>
@@ -3963,14 +3963,14 @@
                 <span class="badge" id="questionnaireBadge" style="display: none;">0</span>
             </a></li>
             <li><a href="#diary" onclick="showSection('diary')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
                     <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
                 </svg>
                 <span>Sleep Diary</span>
             </a></li>
             <li><a href="#tasks" onclick="showSection('tasks')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                     <polyline points="14 2 14 8 20 8"/>
                     <line x1="16" y1="13" x2="8" y2="13"/>
@@ -3980,14 +3980,14 @@
                 <span class="badge" id="tasksBadge" style="display: none;">0</span>
             </a></li>
             <li><a href="#messages" onclick="showSection('messages')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                 </svg>
                 <span>Messages</span>
                 <span class="badge" id="unreadBadge" style="display: none;">0</span>
             </a></li>
             <li><a href="#appointments" onclick="showSection('appointments')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
                     <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
                     <line x1="3" y1="10" x2="21" y2="10"/>
@@ -3995,21 +3995,21 @@
                 <span>Appointments</span>
             </a></li>
             <li><a href="#education" onclick="showSection('education')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
                     <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
                 </svg>
                 <span>Learn About Sleep</span>
             </a></li>
             <li><a href="#modules" onclick="showSection('modules')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <polygon points="12 2 2 7 12 12 22 7 12 2"/>
                     <polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
                 </svg>
                 <span>Sleep Resources</span>
             </a></li>
             <li><a href="#profile" onclick="showSection('profile')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                     <circle cx="12" cy="7" r="4"/>
                 </svg>
@@ -6826,7 +6826,7 @@
                                 <div class="task-title">${task.title}</div>
                                 <div class="task-due ${isOverdue ? 'overdue' : ''}">${deadlineText}</div>
                             </div>
-                            <a href="${generateGoogleCalendarUrl(task)}" target="_blank" onclick="event.stopPropagation()" style="display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--gold-dark); text-decoration: none; padding: 4px 8px; border: 1px solid rgba(201,169,98,0.3); border-radius: 4px; transition: all 0.2s; margin-right: 8px;" onmouseover="this.style.background='rgba(201,169,98,0.1)'" onmouseout="this.style.background=''">
+                            <a href="${generateGoogleCalendarUrl(task)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--gold-dark); text-decoration: none; padding: 4px 8px; border: 1px solid rgba(201,169,98,0.3); border-radius: 4px; transition: all 0.2s; margin-right: 8px;" onmouseover="this.style.background='rgba(201,169,98,0.1)'" onmouseout="this.style.background=''">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>
                                 Add to Calendar
                             </a>
@@ -11049,7 +11049,6 @@
         try {
             // Register the FCM service worker
             const swRegistration = await navigator.serviceWorker.register('/assessment/firebase-messaging-sw.js');
-            console.log('FCM service worker registered:', swRegistration.scope);
 
             // Initialize Firebase Messaging
             fcmMessaging = firebase.messaging();
@@ -11064,8 +11063,6 @@
 
             // Handle foreground messages
             fcmMessaging.onMessage((payload) => {
-                console.log('Foreground message received:', payload);
-
                 const title = payload.notification?.title || payload.data?.title || 'Sleep Wellness';
                 const body = payload.notification?.body || payload.data?.body || 'You have a new notification.';
                 const type = payload.data?.type || 'general';
@@ -11156,15 +11153,11 @@
             });
 
             if (token) {
-                console.log('FCM token obtained');
                 // Store the token in the user's Firestore profile
                 await db.collection('users').doc(user.uid).update({
                     fcmToken: token,
                     fcmTokenUpdatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                console.log('FCM token saved to Firestore');
-            } else {
-                console.log('No FCM token available');
             }
         } catch (error) {
             console.error('Error getting FCM token:', error);
@@ -11443,8 +11436,6 @@
 
         // Hide loading spinners
         document.querySelectorAll('.loading, .spinner').forEach(el => el.style.display = 'none');
-
-        console.log('[Demo Fallback] Dashboard populated with hardcoded data');
     }
 
     // Try multiple times to ensure DOM is ready

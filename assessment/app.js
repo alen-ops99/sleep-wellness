@@ -26,8 +26,6 @@ const App = {
      * Initialize the application
      */
     init() {
-        console.log('App.init() starting...');
-
         // Load saved data
         this.responses = Storage.getResponses() || {};
         this.clientType = Storage.getClientType() || null;
@@ -40,8 +38,6 @@ const App = {
             this.currentStep = 'welcome';
         }
 
-        console.log('Loaded state:', { responses: this.responses, clientType: this.clientType, currentStep: this.currentStep });
-
         // Check for saved progress
         const resumeNotice = document.getElementById('resumeNotice');
         if (resumeNotice && Storage.hasSavedProgress() && this.currentStep !== 'welcome' && this.currentStep !== 'results') {
@@ -50,23 +46,18 @@ const App = {
 
         // Render step indicators
         this.renderStepIndicators();
-        console.log('Step indicators rendered');
 
         // Render questionnaires
         this.renderQuestionnaires();
-        console.log('Questionnaires rendered');
 
         // Set up event listeners
         this.setupEventListeners();
-        console.log('Event listeners set up');
 
         // Show current step
         this.showStep(this.currentStep);
-        console.log('Showing step:', this.currentStep);
 
         // Update progress
         this.updateProgress();
-        console.log('App.init() complete');
     },
 
     /**
@@ -90,7 +81,6 @@ const App = {
      */
     renderQuestionnaires() {
         try {
-            console.log('Rendering questionnaires...');
             if (typeof Questionnaires !== 'undefined' && Questionnaires.renderQuestions) {
                 Questionnaires.renderQuestions(Questionnaires.epworth, 'epworthQuestions', this.responses);
                 Questionnaires.renderQuestions(Questionnaires.isi, 'isiQuestions', this.responses);
@@ -99,7 +89,6 @@ const App = {
             }
             this.renderStopBangQuestions();
             this.renderDisorderQuestions();
-            console.log('Questionnaires rendered');
         } catch (error) {
             console.error('Error rendering questionnaires:', error);
         }
@@ -112,19 +101,25 @@ const App = {
         const container = document.getElementById('stopbangQuestions');
         if (!container) return;
 
-        const manualQuestions = Questionnaires.stopbang.questions.filter(q => q.type !== 'calculated');
+        // STOP-BANG questions 1-4 are manually answered (S, T, O, P);
+        // questions 5-8 (B, A, N, G) are calculated from demographics.
+        // Only render manual questions (first 4).
+        const manualQuestions = Questionnaires.stopbang.questions.filter(q => q.id <= 4);
 
         let html = '';
         manualQuestions.forEach((q, index) => {
-            const yesSelected = this.responses[q.id] === 'yes' ? 'selected' : '';
-            const noSelected = this.responses[q.id] === 'no' ? 'selected' : '';
+            const questionKey = `stopbang_q${q.id}`;
+            const savedValue = this.responses[questionKey];
+            // Options are {value: 1, label: 'Yes'} and {value: 0, label: 'No'}
+            const yesSelected = String(savedValue) === '1' ? 'selected' : '';
+            const noSelected = String(savedValue) === '0' ? 'selected' : '';
 
             html += `
                 <div class="questionnaire-item yes-no">
                     <div class="question">${index + 1}. ${q.text}</div>
                     <div class="options">
-                        <button type="button" class="option-btn ${yesSelected}" data-question="${q.id}" data-value="yes">Yes</button>
-                        <button type="button" class="option-btn ${noSelected}" data-question="${q.id}" data-value="no">No</button>
+                        <button type="button" class="option-btn ${yesSelected}" data-question="${questionKey}" data-value="1">Yes</button>
+                        <button type="button" class="option-btn ${noSelected}" data-question="${questionKey}" data-value="0">No</button>
                     </div>
                 </div>
             `;
@@ -213,16 +208,12 @@ const App = {
      * Start the assessment
      */
     startAssessment() {
-        console.log('startAssessment() called');
-        console.log('Current step before:', this.currentStep);
-
         try {
             this.currentStep = 'clientType';
             Storage.saveCurrentStep('clientType');
 
             // Force show the clientType step
             const allSections = document.querySelectorAll('.step-section');
-            console.log('Found sections:', allSections.length);
 
             allSections.forEach(section => {
                 section.classList.remove('active');
@@ -234,7 +225,6 @@ const App = {
                 clientTypeSection.classList.add('active');
                 clientTypeSection.style.display = 'block';
                 clientTypeSection.style.visibility = 'visible';
-                console.log('ClientType section shown');
             } else {
                 console.error('ClientType section NOT FOUND');
                 alert('Error: Could not find client type section');
@@ -243,7 +233,6 @@ const App = {
             this.updateProgress();
             this.renderStepIndicators();
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            console.log('Current step after:', this.currentStep);
         } catch (error) {
             console.error('Error in startAssessment:', error);
             alert('Error starting assessment: ' + error.message);
@@ -378,11 +367,8 @@ const App = {
      * Show a specific step
      */
     showStep(stepName) {
-        console.log('showStep called with:', stepName);
-
         // Hide all steps first
         const allSections = document.querySelectorAll('.step-section');
-        console.log('Found', allSections.length, 'step sections');
 
         allSections.forEach(section => {
             section.classList.remove('active');
@@ -396,7 +382,6 @@ const App = {
             targetSection.classList.add('active');
             targetSection.style.display = 'block';
             targetSection.style.visibility = 'visible';
-            console.log('SUCCESS: Showing section:', stepName);
         } else {
             console.error('ERROR: Section not found for step:', stepName);
             // Fallback - show welcome
@@ -454,7 +439,7 @@ const App = {
         document.querySelectorAll('.option-btn').forEach(btn => {
             const questionId = btn.dataset.question;
             const value = btn.dataset.value;
-            if (this.responses[questionId] == value) {
+            if (String(this.responses[questionId]) === String(value)) {
                 btn.classList.add('selected');
             }
         });
@@ -487,6 +472,17 @@ const App = {
      * Collect all form responses
      */
     collectFormResponses() {
+        // T3.6 fix: Reset all checkbox arrays before collecting to avoid
+        // appending to stale data on repeated calls
+        const checkboxKeys = new Set();
+        document.querySelectorAll('input[type="checkbox"]').forEach(el => {
+            const key = el.name || el.id;
+            if (key) checkboxKeys.add(key);
+        });
+        checkboxKeys.forEach(key => {
+            this.responses[key] = [];
+        });
+
         // Collect from all form inputs
         document.querySelectorAll('input, select').forEach(el => {
             const key = el.name || el.id;
@@ -496,12 +492,7 @@ const App = {
                         this.responses[key] = el.value;
                     }
                 } else if (el.type === 'checkbox') {
-                    // For checkboxes with same name, collect as array
-                    if (!this.responses[key]) this.responses[key] = [];
                     if (el.checked) {
-                        if (!Array.isArray(this.responses[key])) {
-                            this.responses[key] = [this.responses[key]];
-                        }
                         this.responses[key].push(el.value);
                     }
                 } else {
@@ -517,15 +508,17 @@ const App = {
 // Helper functions
 function toggleMobileMenu() {
     const menu = document.getElementById('mobileMenu');
+    const btn = document.querySelector('.mobile-menu-btn');
     menu.classList.toggle('active');
+    if (btn) {
+        btn.setAttribute('aria-expanded', menu.classList.contains('active'));
+    }
 }
 
 // Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded, initializing App...');
     try {
         App.init();
-        console.log('App initialized successfully');
     } catch (error) {
         console.error('Error initializing App:', error);
         // Show welcome section as fallback

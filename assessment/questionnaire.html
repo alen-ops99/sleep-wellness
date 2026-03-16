@@ -551,11 +551,13 @@
                 card.innerHTML = `
                     <div class="question-number">Question ${index + 1} of ${instrument.questions.length}</div>
                     <div class="question-text">${question.text}</div>
-                    <div class="options-container">
+                    <div class="options-container" role="radiogroup" aria-label="Question ${index + 1} options">
                         ${question.options.map((opt, i) => `
-                            <div class="option ${answers[index]?.value === opt.value ? 'selected' : ''}" 
-                                 onclick="selectOption(${index}, ${opt.value}, '${opt.label.replace(/'/g, "\\'")}')">
-                                <div class="option-radio"></div>
+                            <div class="option ${answers[index]?.value === opt.value ? 'selected' : ''}"
+                                 role="radio" aria-checked="${answers[index]?.value === opt.value ? 'true' : 'false'}"
+                                 tabindex="${i === 0 ? '0' : '-1'}"
+                                 onclick="selectOption(${index}, ${opt.value}, '${opt.label.replace(/'/g, "\\'")}', this)">
+                                <div class="option-radio" aria-hidden="true"></div>
                                 <div class="option-label">${opt.label}</div>
                             </div>
                         `).join('')}
@@ -563,7 +565,7 @@
                     <div class="nav-buttons">
                         ${index > 0 ? `
                             <button class="nav-btn nav-btn-back" onclick="previousQuestion()">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                     <polyline points="15 18 9 12 15 6"/>
                                 </svg>
                                 Back
@@ -572,14 +574,14 @@
                         ${index < instrument.questions.length - 1 ? `
                             <button class="nav-btn nav-btn-next" id="next-btn" onclick="nextQuestion()" ${!answers[index] ? 'disabled' : ''}>
                                 Next
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                     <polyline points="9 18 15 12 9 6"/>
                                 </svg>
                             </button>
                         ` : `
                             <button class="nav-btn nav-btn-submit" id="submit-btn" onclick="submitQuestionnaire()" ${!answers[index] ? 'disabled' : ''}>
                                 Submit
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                     <polyline points="20 6 9 17 4 12"/>
                                 </svg>
                             </button>
@@ -590,18 +592,47 @@
                 card.classList.remove('slide-out', 'slide-in');
                 card.classList.add(direction === 'next' ? 'slide-in' : 'slide-out');
 
+                // Add keyboard navigation to options
+                const optionsContainer = card.querySelector('.options-container');
+                if (optionsContainer) {
+                    optionsContainer.addEventListener('keydown', (e) => {
+                        const opts = Array.from(optionsContainer.querySelectorAll('.option'));
+                        const currentIdx = opts.indexOf(document.activeElement);
+                        if (currentIdx === -1) return;
+
+                        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                            e.preventDefault();
+                            const next = (currentIdx + 1) % opts.length;
+                            opts[next].focus();
+                            opts.forEach((o, i) => o.setAttribute('tabindex', i === next ? '0' : '-1'));
+                        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                            e.preventDefault();
+                            const prev = (currentIdx - 1 + opts.length) % opts.length;
+                            opts[prev].focus();
+                            opts.forEach((o, i) => o.setAttribute('tabindex', i === prev ? '0' : '-1'));
+                        } else if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            opts[currentIdx].click();
+                        }
+                    });
+                }
+
                 setTimeout(() => {
                     card.classList.remove('slide-out', 'slide-in');
                 }, 50);
             }, 200);
         }
 
-        function selectOption(questionIndex, value, label) {
+        function selectOption(questionIndex, value, label, element) {
             answers[questionIndex] = { value, label };
 
             // Update UI
-            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-            event.currentTarget.classList.add('selected');
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+                opt.setAttribute('aria-checked', 'false');
+            });
+            element.classList.add('selected');
+            element.setAttribute('aria-checked', 'true');
 
             // Enable next/submit button
             const nextBtn = document.getElementById('next-btn');
@@ -659,14 +690,14 @@
 
             card.innerHTML = `
                 <div class="results-screen">
-                    <div class="results-icon" style="background: ${result.color}22;">
+                    <div class="results-icon" style="background: ${result.color}22;" aria-hidden="true">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="${result.color}" stroke-width="2">
                             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                             <polyline points="22 4 12 14.01 9 11.01"/>
                         </svg>
                     </div>
                     <h2>Questionnaire Complete</h2>
-                    <div class="score-display" style="color: ${result.color};">
+                    <div class="score-display" style="color: ${result.color};" aria-label="Score: ${result.score} out of ${result.maxScore}">
                         ${result.score}<span style="font-size: 24px; color: var(--text-light);">/${result.maxScore}</span>
                     </div>
                     <div class="score-label" style="background: ${result.color}22; color: ${result.color};">

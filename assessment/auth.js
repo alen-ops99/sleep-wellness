@@ -141,6 +141,18 @@ const Auth = {
     },
 
     /**
+     * Check if a redirect URL is safe (relative path only)
+     */
+    isSafeRedirect(url) {
+        const decoded = decodeURIComponent(url);
+        // Block protocol-relative URLs (//evil.com)
+        if (decoded.startsWith('//')) return false;
+        // Block absolute URLs with any protocol (https:, javascript:, data:, etc.)
+        if (/^[a-zA-Z][a-zA-Z0-9+\-.]*:/.test(decoded)) return false;
+        return true;
+    },
+
+    /**
      * Handle redirect after auth
      */
     handleAuthRedirect() {
@@ -148,7 +160,11 @@ const Auth = {
         const redirect = urlParams.get('redirect');
 
         if (redirect && window.location.pathname.includes('auth.html')) {
-            window.location.href = decodeURIComponent(redirect);
+            if (this.isSafeRedirect(redirect)) {
+                window.location.href = decodeURIComponent(redirect);
+            } else {
+                window.location.href = 'index.html';
+            }
         }
     },
 

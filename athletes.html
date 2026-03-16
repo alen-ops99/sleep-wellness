@@ -29,9 +29,10 @@
         gtag('js', new Date());
         gtag('config', 'G-XXXXXXXXXX');
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
-
         :root {
             --deep-navy: #0f1c2e;
             --navy: #1a2744;
@@ -150,6 +151,80 @@
         .nav-portal:hover {
             background: var(--gold);
             color: var(--deep-navy);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: var(--cream);
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--deep-navy);
+            z-index: 999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--cream);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--gold);
+        }
+
+        .mobile-menu .mobile-cta {
+            margin-top: 20px;
+            background: var(--gold);
+            color: var(--deep-navy);
+            padding: 15px 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         /* Hero */
@@ -880,6 +955,7 @@
         @media (max-width: 768px) {
             .nav { padding: 15px 30px; }
             .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
             section { padding: 80px 30px; }
             .hero { padding: 120px 30px 80px; }
             .hero h1 { font-size: 36px; }
@@ -890,9 +966,36 @@
             .problem-card.highlight { grid-column: span 1; }
             .footer { flex-direction: column; gap: 20px; text-align: center; }
         }
+
+        /* Skip to content link */
+        .skip-to-content {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            z-index: 10000;
+        }
+        .skip-to-content:focus {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: auto;
+            height: auto;
+            padding: 12px 24px;
+            background: #c8a86e;
+            color: #1a1a2e;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 10000;
+        }
     </style>
 </head>
 <body>
+
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
 
 <!-- Navigation -->
 <nav class="nav">
@@ -908,10 +1011,26 @@
         <a href="assessment/auth.html" class="nav-portal">Client Portal</a>
         <a href="#contact" class="nav-cta">Get Started</a>
     </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+    </button>
 </nav>
 
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+    <a href="index.html" class="mobile-nav-link">Home</a>
+    <a href="hotels.html" class="mobile-nav-link">Hotels</a>
+    <a href="athletes.html" class="mobile-nav-link">Athletes</a>
+    <a href="corporate.html" class="mobile-nav-link">Corporate</a>
+    <a href="index.html#about" class="mobile-nav-link">About</a>
+    <a href="assessment/auth.html" class="mobile-nav-link">Client Portal</a>
+    <a href="#contact" class="mobile-cta mobile-nav-link">Get Started</a>
+</div>
+
 <!-- Hero -->
-<section class="hero">
+<section class="hero" id="main-content">
     <div class="hero-content">
         <p class="hero-label">For Elite Athletes & Teams</p>
         <h1>Sleep is Your<br>Greatest Advantage</h1>
@@ -931,32 +1050,32 @@
 <section class="stats">
     <div class="stats-grid">
         <div class="stat-item">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank" style="text-decoration: none;">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div class="stat-number">1.7x</div>
             </a>
             <div class="stat-label">Higher injury rate with less than 8 hours sleep</div>
-            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank" style="color: var(--accent-light);">Milewski et al., J Pediatr Orthop, 2014</a></p>
+            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-light);">Milewski et al., J Pediatr Orthop, 2014</a></p>
         </div>
         <div class="stat-item">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" style="text-decoration: none;">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div class="stat-number">70%</div>
             </a>
             <div class="stat-label">Of growth hormone released during deep sleep</div>
-            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" style="color: var(--accent-light);">Van Cauter et al., J Clin Endocrinol Metab, 1996</a></p>
+            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-light);">Van Cauter et al., J Clin Endocrinol Metab, 1996</a></p>
         </div>
         <div class="stat-item">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/21731144/" target="_blank" style="text-decoration: none;">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/21731144/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div class="stat-number">+9%</div>
             </a>
             <div class="stat-label">Improvement in shooting accuracy with extended sleep</div>
-            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pubmed.ncbi.nlm.nih.gov/21731144/" target="_blank" style="color: var(--accent-light);">Mah et al., SLEEP, 2011</a></p>
+            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pubmed.ncbi.nlm.nih.gov/21731144/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-light);">Mah et al., SLEEP, 2011</a></p>
         </div>
         <div class="stat-item">
-            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6988893/" target="_blank" style="text-decoration: none;">
+            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6988893/" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                 <div class="stat-number">2x</div>
             </a>
             <div class="stat-label">Faster recovery with optimized sleep</div>
-            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6988893/" target="_blank" style="color: var(--accent-light);">Vitale et al., Int J Sports Physiol Perform, 2019</a></p>
+            <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6988893/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-light);">Vitale et al., Int J Sports Physiol Perform, 2019</a></p>
         </div>
     </div>
 </section>
@@ -981,28 +1100,28 @@
         </div>
         <div class="problem-visual">
             <div class="problem-card">
-                <a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank" style="text-decoration: none; color: inherit;">
+                <a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
                     <div class="problem-card-value">-70%</div>
                 </a>
                 <h4>Injury Reduction</h4>
                 <p>Athletes sleeping 8+ hours show dramatically lower injury rates</p>
-                <p class="citation"><a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank">Milewski et al., J Pediatr Orthop, 2014</a></p>
+                <p class="citation"><a href="https://pubmed.ncbi.nlm.nih.gov/25028798/" target="_blank" rel="noopener noreferrer">Milewski et al., J Pediatr Orthop, 2014</a></p>
             </div>
             <div class="problem-card">
-                <a href="https://pubmed.ncbi.nlm.nih.gov/21731144/" target="_blank" style="text-decoration: none; color: inherit;">
+                <a href="https://pubmed.ncbi.nlm.nih.gov/21731144/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
                     <div class="problem-card-value">+9%</div>
                 </a>
                 <h4>Shooting Accuracy</h4>
                 <p>Stanford basketball players improved free throw accuracy with sleep extension</p>
-                <p class="citation"><a href="https://pubmed.ncbi.nlm.nih.gov/21731144/" target="_blank">Mah et al., SLEEP, 2011</a></p>
+                <p class="citation"><a href="https://pubmed.ncbi.nlm.nih.gov/21731144/" target="_blank" rel="noopener noreferrer">Mah et al., SLEEP, 2011</a></p>
             </div>
             <div class="problem-card highlight">
-                <a href="https://pubmed.ncbi.nlm.nih.gov/12819785/" target="_blank" style="text-decoration: none; color: inherit;">
+                <a href="https://pubmed.ncbi.nlm.nih.gov/12819785/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
                     <div class="problem-card-value">REM</div>
                 </a>
                 <h4>Motor Learning</h4>
                 <p>Skills and techniques are consolidated during REM sleep. Miss it and you lose the benefit of practice.</p>
-                <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pubmed.ncbi.nlm.nih.gov/12819785/" target="_blank" style="color: var(--accent-light);">Walker et al., Neuron, 2003</a></p>
+                <p class="citation" style="color: rgba(255,255,255,0.5);"><a href="https://pubmed.ncbi.nlm.nih.gov/12819785/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-light);">Walker et al., Neuron, 2003</a></p>
             </div>
         </div>
     </div>
@@ -1052,7 +1171,7 @@
 
     <div class="science-grid">
         <div class="science-card">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" class="research-link">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/8627466/" target="_blank" rel="noopener noreferrer" class="research-link">
                 <div class="science-icon">HGH</div>
                 <h4>Growth Hormone</h4>
                 <p>70% of daily HGH is secreted during deep sleep. This is essential for muscle protein synthesis, tissue repair, and adaptation to training loads.</p>
@@ -1060,7 +1179,7 @@
             </a>
         </div>
         <div class="science-card">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/12819785/" target="_blank" class="research-link">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/12819785/" target="_blank" rel="noopener noreferrer" class="research-link">
                 <div class="science-icon">REM</div>
                 <h4>Motor Consolidation</h4>
                 <p>During REM sleep, your brain replays and strengthens the motor patterns you practiced. This is how techniques become automatic.</p>
@@ -1068,7 +1187,7 @@
             </a>
         </div>
         <div class="science-card">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/28323455/" target="_blank" class="research-link">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/28323455/" target="_blank" rel="noopener noreferrer" class="research-link">
                 <div class="science-icon">HRV</div>
                 <h4>Autonomic Recovery</h4>
                 <p>Heart rate variability reflects nervous system recovery. Sleep quality directly predicts next-day readiness and performance capacity.</p>
@@ -1076,7 +1195,7 @@
             </a>
         </div>
         <div class="science-card">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/2178013/" target="_blank" class="research-link">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/2178013/" target="_blank" rel="noopener noreferrer" class="research-link">
                 <div class="science-icon">90m</div>
                 <h4>Sleep Cycles</h4>
                 <p>Understanding your 90-minute ultradian rhythms enables strategic scheduling of training, competition, and recovery.</p>
@@ -1084,7 +1203,7 @@
             </a>
         </div>
         <div class="science-card">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/27594802/" target="_blank" class="research-link">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/27594802/" target="_blank" rel="noopener noreferrer" class="research-link">
                 <div class="science-icon">Jet Lag</div>
                 <h4>Travel Optimization</h4>
                 <p>Strategic light exposure and timing protocols can compress multi-day jet lag adaptation into hours.</p>
@@ -1092,7 +1211,7 @@
             </a>
         </div>
         <div class="science-card">
-            <a href="https://pubmed.ncbi.nlm.nih.gov/17340444/" target="_blank" class="research-link">
+            <a href="https://pubmed.ncbi.nlm.nih.gov/17340444/" target="_blank" rel="noopener noreferrer" class="research-link">
                 <div class="science-icon">Naps</div>
                 <h4>Strategic Napping</h4>
                 <p>Properly timed naps can enhance afternoon performance, support recovery, and extend effective training capacity.</p>
@@ -1156,21 +1275,21 @@
 <!-- Sports Media -->
 <section class="sports-media">
     <div class="sports-media-content">
-        <a href="https://www.nytimes.com/athletic/5686704/2024/08/08/nhl-sleep-hacks-tips-hockey-health-naps/" target="_blank" class="sports-media-item">
+        <a href="https://www.nytimes.com/athletic/5686704/2024/08/08/nhl-sleep-hacks-tips-hockey-health-naps/" target="_blank" rel="noopener noreferrer" class="sports-media-item">
             <span class="sports-media-icon">NYT</span>
             <div class="sports-media-text">
                 <span class="sports-media-source">The Athletic / New York Times</span>
                 <span class="sports-media-title">NHL Sleep Hacks</span>
             </div>
         </a>
-        <a href="https://link.springer.com/chapter/10.1007/978-3-031-92060-8_18" target="_blank" class="sports-media-item">
+        <a href="https://link.springer.com/chapter/10.1007/978-3-031-92060-8_18" target="_blank" rel="noopener noreferrer" class="sports-media-item">
             <span class="sports-media-icon">Book</span>
             <div class="sports-media-text">
                 <span class="sports-media-source">Springer Nature</span>
                 <span class="sports-media-title">The Crucial Role of Sleep for Athletes</span>
             </div>
         </a>
-        <a href="https://www.sportsdoctorsnetwork.com/team/dr-alen-juginovic" target="_blank" class="sports-media-item">
+        <a href="https://www.sportsdoctorsnetwork.com/team/dr-alen-juginovic" target="_blank" rel="noopener noreferrer" class="sports-media-item">
             <span class="sports-media-icon">Pro</span>
             <div class="sports-media-text">
                 <span class="sports-media-source">Sports Doctors Network</span>
@@ -1252,20 +1371,20 @@
 </section>
 
 <!-- Booking Modal -->
-<div id="bookingModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center;" onclick="if(event.target===this)closeBookingModal()">
+<div id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center;" onclick="if(event.target===this)closeBookingModal()">
     <div style="background: white; border-radius: 16px; width: 90%; max-width: 500px; max-height: 85vh; overflow-y: auto; padding: 35px;" onclick="event.stopPropagation()">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #0f1c2e; margin: 0;">Schedule a Consultation</h2>
-            <button onclick="closeBookingModal()" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
+            <h2 id="bookingModalTitle" style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #0f1c2e; margin: 0;">Schedule a Consultation</h2>
+            <button onclick="closeBookingModal()" aria-label="Close dialog" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #666;">&times;</button>
         </div>
         <div id="bookingForm">
             <div style="margin-bottom: 18px;">
                 <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 6px;">Your Name *</label>
-                <input type="text" id="bookingName" placeholder="Full name" style="width: 100%; padding: 12px; border: 1px solid rgba(201,169,98,0.3); border-radius: 6px; font-size: 14px; font-family: 'Montserrat', sans-serif; box-sizing: border-box;">
+                <input type="text" id="bookingName" aria-label="Your name" placeholder="Full name" style="width: 100%; padding: 12px; border: 1px solid rgba(201,169,98,0.3); border-radius: 6px; font-size: 14px; font-family: 'Montserrat', sans-serif; box-sizing: border-box;">
             </div>
             <div style="margin-bottom: 18px;">
                 <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 6px;">Your Email *</label>
-                <input type="email" id="bookingEmail" placeholder="email@example.com" style="width: 100%; padding: 12px; border: 1px solid rgba(201,169,98,0.3); border-radius: 6px; font-size: 14px; font-family: 'Montserrat', sans-serif; box-sizing: border-box;">
+                <input type="email" id="bookingEmail" aria-label="Your email" placeholder="email@example.com" style="width: 100%; padding: 12px; border: 1px solid rgba(201,169,98,0.3); border-radius: 6px; font-size: 14px; font-family: 'Montserrat', sans-serif; box-sizing: border-box;">
             </div>
             <div style="margin-bottom: 18px;">
                 <label style="display: block; font-size: 13px; font-weight: 500; color: #0f1c2e; margin-bottom: 6px;">Sport / Team (Optional)</label>
@@ -1301,10 +1420,42 @@
         <a href="corporate.html">Corporate</a>
         <a href="index.html#about">About</a>
     </div>
-    <span class="footer-text">© 2026 Dr. Alen Juginovic</span>
+    <span class="footer-text">© 2026 Dr. Alen Juginovic. All rights reserved.</span>
 </footer>
 
 <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenuBtn.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        const isOpen = mobileMenu.classList.contains('active');
+        mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    // Close booking modal on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const bookingModal = document.getElementById('bookingModal');
+            if (bookingModal && bookingModal.style.display !== 'none') {
+                closeBookingModal();
+            }
+        }
+    });
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenuBtn.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        });
+    });
+
     const CALENDAR_API_BASE = 'https://us-central1-sleep-wellness-48d57.cloudfunctions.net';
     function openBookingModal() {
         document.getElementById('bookingModal').style.display = 'flex';
@@ -1315,8 +1466,11 @@
     function closeBookingModal() { document.getElementById('bookingModal').style.display = 'none'; }
     async function loadAvailableSlots() {
         const container = document.getElementById('bookingSlots');
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
         try {
-            const response = await fetch(CALENDAR_API_BASE + '/getAvailableSlots');
+            const response = await fetch(CALENDAR_API_BASE + '/getAvailableSlots', { signal: controller.signal });
+            clearTimeout(timeoutId);
             const data = await response.json();
             if (data.slots && data.slots.length > 0) {
                 container.innerHTML = data.slots.map(slot => `
@@ -1327,7 +1481,8 @@
                 container.innerHTML = '<p style="color:#666;font-size:13px;text-align:center;padding:15px;">No online slots available.<br><span style="font-size:12px;color:#999;">Submit your request and we\'ll coordinate directly.</span></p>';
             }
         } catch (e) {
-            container.innerHTML = '<p style="color:#666;font-size:13px;text-align:center;padding:15px;">Select a preferred time:<input type="datetime-local" id="bookingManualTime" style="display:block;width:100%;margin-top:10px;padding:10px;border:1px solid #ddd;border-radius:6px;font-family:inherit;"></p>';
+            clearTimeout(timeoutId);
+            container.innerHTML = '<p style="color:#666;font-size:13px;text-align:center;padding:15px;">Unable to load available times. Please select a preferred time below, or email <a href="mailto:alen_juginovic@hms.harvard.edu" style="color:#c9a962;">alen_juginovic@hms.harvard.edu</a> to schedule.<input type="datetime-local" id="bookingManualTime" style="display:block;width:100%;margin-top:10px;padding:10px;border:1px solid #ddd;border-radius:6px;font-family:inherit;"></p>';
         }
     }
     async function submitBooking() {
@@ -1340,15 +1495,19 @@
         const manualTime = document.getElementById('bookingManualTime');
         let slotStart = selectedSlot?.value || (manualTime?.value ? new Date(manualTime.value).toISOString() : null);
         let slotEnd = selectedSlot?.dataset?.end || (slotStart ? new Date(new Date(slotStart).getTime() + 45*60000).toISOString() : null);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
         try {
             const response = await fetch(CALENDAR_API_BASE + '/bookAppointment', {
                 method: 'POST', headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({ name, email, slotStart, slotEnd, notes: sport ? `Sport/Team: ${sport}\n${notes}` : notes, clientType: 'athlete' })
+                body: JSON.stringify({ name, email, slotStart, slotEnd, notes: sport ? `Sport/Team: ${sport}\n${notes}` : notes, clientType: 'athlete' }),
+                signal: controller.signal
             });
+            clearTimeout(timeoutId);
             const data = await response.json();
             if (data.success) { document.getElementById('bookingForm').style.display = 'none'; document.getElementById('bookingSuccess').style.display = 'block'; }
             else { alert('There was an issue. Please try emailing directly.'); }
-        } catch (e) { alert('Could not connect. Please email juginovic.alen@gmail.com directly.'); }
+        } catch (e) { clearTimeout(timeoutId); alert('Could not connect. Please email alen_juginovic@hms.harvard.edu directly.'); }
     }
 </script>
 </body>

@@ -38,8 +38,8 @@ messaging.onBackgroundMessage((payload) => {
     const notificationTitle = payload.notification?.title || payload.data?.title || 'Sleep Wellness';
     const notificationOptions = {
         body: payload.notification?.body || payload.data?.body || 'You have a new notification.',
-        icon: '/assessment/images/logo-icon.png',
-        badge: '/assessment/images/logo-icon.png',
+        icon: '/apple-touch-icon.png',
+        badge: '/apple-touch-icon.png',
         tag: payload.data?.type || 'general',
         data: {
             url: payload.data?.clickAction || payload.fcmOptions?.link || '/assessment/account.html',

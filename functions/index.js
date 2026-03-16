@@ -58,20 +58,66 @@ USER CONTEXT:
 {USER_CONTEXT}`;
 
 // ==================== RATE LIMITER ====================
-// In-memory rate limiter: Map<userId, { count, windowStart }>
+// In-memory rate limiter: Map<key, { count, windowStart }>
+// Note: Resets on cold start — that's acceptable as defense-in-depth after auth.
 const rateLimitMap = new Map();
-const RATE_LIMIT_MAX = 10;          // max requests per window
+const RATE_LIMIT_MAX = 10;          // max requests per window (chatbot)
 const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
+const BOOKING_RATE_LIMIT_MAX = 5;   // max bookings per window
+const BOOKING_RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 
-// Clean up stale entries every 5 minutes to prevent memory leaks
-setInterval(() => {
+/**
+ * Generic rate-limit check.
+ * @param {string} key - identifier (uid or IP)
+ * @param {number} max - max requests per window
+ * @param {number} windowMs - window duration in ms
+ * @returns {{ limited: boolean, retryAfterMs?: number }}
+ */
+function checkRateLimit(key, max = RATE_LIMIT_MAX, windowMs = RATE_LIMIT_WINDOW_MS) {
     const now = Date.now();
-    for (const [key, entry] of rateLimitMap) {
-        if (now - entry.windowStart > RATE_LIMIT_WINDOW_MS * 2) {
-            rateLimitMap.delete(key);
+    const entry = rateLimitMap.get(key);
+
+    if (entry && now - entry.windowStart < windowMs) {
+        if (entry.count >= max) {
+            return { limited: true, retryAfterMs: windowMs - (now - entry.windowStart) };
         }
+        entry.count++;
+    } else {
+        rateLimitMap.set(key, { count: 1, windowStart: now });
     }
-}, 5 * 60 * 1000);
+    return { limited: false };
+}
+
+/**
+ * Extract client IP from request (respects X-Forwarded-For behind proxies).
+ */
+function getClientIp(req) {
+    return (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.ip || 'unknown';
+}
+
+/**
+ * Verify a Firebase ID token from the Authorization header.
+ * Returns the decoded token or null.
+ */
+async function verifyAuthToken(req) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return null;
+    }
+    const idToken = authHeader.split('Bearer ')[1];
+    try {
+        return await admin.auth().verifyIdToken(idToken);
+    } catch (err) {
+        return null;
+    }
+}
+
+/**
+ * Simple email format validation.
+ */
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
 // Cloud Function to chat with Claude
 exports.chatWithClaude = functions.https.onRequest((req, res) => {
@@ -82,25 +128,26 @@ exports.chatWithClaude = functions.https.onRequest((req, res) => {
         }
 
         try {
-            const { message, userId, conversationHistory = [] } = req.body;
+            // --- Authentication: require Firebase ID token ---
+            const decodedToken = await verifyAuthToken(req);
+            if (!decodedToken) {
+                res.status(401).json({ error: 'Authentication required. Please sign in.' });
+                return;
+            }
 
-            // --- Rate limiting (per authenticated user) ---
-            if (userId) {
-                const now = Date.now();
-                const entry = rateLimitMap.get(userId);
+            const authenticatedUid = decodedToken.uid;
 
-                if (entry && now - entry.windowStart < RATE_LIMIT_WINDOW_MS) {
-                    if (entry.count >= RATE_LIMIT_MAX) {
-                        res.status(429).json({
-                            error: 'Too many requests. Please wait a minute before sending another message.',
-                            retryAfterMs: RATE_LIMIT_WINDOW_MS - (now - entry.windowStart)
-                        });
-                        return;
-                    }
-                    entry.count++;
-                } else {
-                    rateLimitMap.set(userId, { count: 1, windowStart: now });
-                }
+            const { message, conversationHistory = [] } = req.body;
+
+            // --- Rate limiting (mandatory — uses authenticated uid, IP as fallback) ---
+            const rateLimitKey = authenticatedUid || `ip:${getClientIp(req)}`;
+            const rl = checkRateLimit(rateLimitKey, RATE_LIMIT_MAX, RATE_LIMIT_WINDOW_MS);
+            if (rl.limited) {
+                res.status(429).json({
+                    error: 'Too many requests. Please wait a minute before sending another message.',
+                    retryAfterMs: rl.retryAfterMs
+                });
+                return;
             }
 
             if (!message) {
@@ -108,11 +155,9 @@ exports.chatWithClaude = functions.https.onRequest((req, res) => {
                 return;
             }
 
-            // Fetch user context if userId provided
+            // Fetch user context using the authenticated uid
             let userContext = 'No user data available.';
-            if (userId) {
-                userContext = await getUserContext(userId);
-            }
+            userContext = await getUserContext(authenticatedUid);
 
             // Build the system prompt with user context
             const systemPrompt = SYSTEM_PROMPT.replace('{USER_CONTEXT}', userContext);
@@ -170,7 +215,7 @@ async function getUserContext(userId) {
         }
 
         // Get recent sleep diary entries (last 7 days)
-        const diarySnapshot = await db.collection('sleepDiary')
+        const diarySnapshot = await db.collection('diaryEntries')
             .where('userId', '==', userId)
             .orderBy('date', 'desc')
             .limit(7)
@@ -253,7 +298,12 @@ function formatResponse(text) {
 
 const { google } = require('googleapis');
 
+// Singleton OAuth2 client — avoids re-registering event listeners per request (T2.14)
+let _oauth2Client = null;
+
 function getOAuth2Client() {
+    if (_oauth2Client) return _oauth2Client;
+
     const clientId = functions.config().google?.client_id || process.env.GOOGLE_CLIENT_ID;
     const clientSecret = functions.config().google?.client_secret || process.env.GOOGLE_CLIENT_SECRET;
     const redirectUri = functions.config().google?.redirect_uri || process.env.GOOGLE_REDIRECT_URI;
@@ -262,7 +312,21 @@ function getOAuth2Client() {
         throw new Error('Google OAuth credentials not configured. Run: firebase functions:config:set google.client_id="..." google.client_secret="..."');
     }
 
-    return new google.auth.OAuth2(clientId, clientSecret, redirectUri);
+    _oauth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUri);
+
+    // Register token-refresh handler once at module scope to avoid listener accumulation
+    _oauth2Client.on('tokens', async (tokens) => {
+        try {
+            await db.collection('adminConfig').doc('googleCalendar').update({
+                'tokens.access_token': tokens.access_token,
+                ...(tokens.refresh_token && { 'tokens.refresh_token': tokens.refresh_token })
+            });
+        } catch (err) {
+            console.error('Error persisting refreshed OAuth tokens:', err);
+        }
+    });
+
+    return _oauth2Client;
 }
 
 // Step 1: Admin connects their Google Calendar
@@ -328,13 +392,7 @@ exports.getAvailableSlots = functions.https.onRequest((req, res) => {
             const oauth2Client = getOAuth2Client();
             oauth2Client.setCredentials(configDoc.data().tokens);
 
-            // Auto-refresh token if needed
-            oauth2Client.on('tokens', async (tokens) => {
-                await db.collection('adminConfig').doc('googleCalendar').update({
-                    'tokens.access_token': tokens.access_token,
-                    ...(tokens.refresh_token && { 'tokens.refresh_token': tokens.refresh_token })
-                });
-            });
+            // Token refresh is handled by the module-scope listener in getOAuth2Client()
 
             const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
             const calendarId = functions.config().google?.calendar_id || 'primary';
@@ -353,39 +411,77 @@ exports.getAvailableSlots = functions.https.onRequest((req, res) => {
 
             const busySlots = freeBusy.data.calendars[calendarId]?.busy || [];
 
-            // Generate available 45-min slots (9am-5pm, Mon-Fri, ET)
-            const availableSlots = [];
-            const current = new Date(now);
-            current.setHours(0, 0, 0, 0);
-            current.setDate(current.getDate() + 1); // Start from tomorrow
+            // Generate available 45-min slots (9am-5pm, Mon-Fri, Eastern Time)
+            // Determine ET offset: EDT (UTC-4) Mar second Sun – Nov first Sun, else EST (UTC-5)
+            function getEasternOffsetHours(date) {
+                const year = date.getUTCFullYear();
+                // Second Sunday of March
+                const mar1 = new Date(Date.UTC(year, 2, 1));
+                const marSecondSun = new Date(Date.UTC(year, 2, 8 + (7 - mar1.getUTCDay()) % 7));
+                marSecondSun.setUTCHours(7); // 2 AM EST = 7 AM UTC
+                // First Sunday of November
+                const nov1 = new Date(Date.UTC(year, 10, 1));
+                const novFirstSun = new Date(Date.UTC(year, 10, 1 + (7 - nov1.getUTCDay()) % 7));
+                novFirstSun.setUTCHours(6); // 2 AM EDT = 6 AM UTC
+                return (date >= marSecondSun && date < novFirstSun) ? -4 : -5;
+            }
 
-            while (current < twoWeeksLater && availableSlots.length < 20) {
-                const dayOfWeek = current.getDay();
-                if (dayOfWeek >= 1 && dayOfWeek <= 5) { // Mon-Fri
+            const availableSlots = [];
+
+            // Start from "tomorrow in ET": figure out what day it is in ET right now
+            const etOffsetNow = getEasternOffsetHours(now);
+            const nowEtMs = now.getTime() + etOffsetNow * 3600000;
+            // Midnight ET tomorrow expressed as a UTC Date
+            const midnightEtTomorrow = new Date(now);
+            // Set to midnight UTC, then adjust for ET offset
+            midnightEtTomorrow.setUTCHours(0, 0, 0, 0);
+            midnightEtTomorrow.setUTCDate(midnightEtTomorrow.getUTCDate() + 1);
+            // This gives us a date counter; we'll compute each slot in UTC using the ET offset
+
+            let dayCounter = new Date(midnightEtTomorrow);
+
+            while (dayCounter < twoWeeksLater && availableSlots.length < 20) {
+                // Determine ET offset for this day
+                const etOffset = getEasternOffsetHours(dayCounter);
+                // Compute the UTC date/day by interpreting dayCounter as an ET date
+                // Midnight ET of this day in UTC:
+                const midnightEtInUtc = new Date(dayCounter.getTime() - etOffset * 3600000);
+                const dayOfWeek = midnightEtInUtc.getUTCDay();
+                // Adjust: dayOfWeek should be based on ET date, not UTC
+                const etDayOfWeek = dayCounter.getUTCDay();
+
+                if (etDayOfWeek >= 1 && etDayOfWeek <= 5) { // Mon-Fri in ET
                     for (let hour = 9; hour < 17; hour++) {
-                        const slotStart = new Date(current);
-                        slotStart.setHours(hour, 0, 0, 0);
-                        const slotEnd = new Date(slotStart);
-                        slotEnd.setMinutes(45);
+                        // Slot start: this ET hour converted to UTC
+                        const slotStartUtc = new Date(midnightEtInUtc.getTime() + hour * 3600000);
+                        const slotEndUtc = new Date(slotStartUtc.getTime() + 45 * 60000);
 
                         // Check if slot conflicts with busy times
                         const isBusy = busySlots.some(busy => {
                             const busyStart = new Date(busy.start);
                             const busyEnd = new Date(busy.end);
-                            return slotStart < busyEnd && slotEnd > busyStart;
+                            return slotStartUtc < busyEnd && slotEndUtc > busyStart;
                         });
 
-                        if (!isBusy && slotStart > now) {
+                        if (!isBusy && slotStartUtc > now) {
+                            // Format display in Eastern Time
+                            const etHour = hour > 12 ? hour - 12 : hour;
+                            const ampm = hour >= 12 ? 'PM' : 'AM';
+                            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                            const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+                            const displayDay = days[etDayOfWeek];
+                            const displayMonth = months[dayCounter.getUTCMonth()];
+                            const displayDate = dayCounter.getUTCDate();
+
                             availableSlots.push({
-                                start: slotStart.toISOString(),
-                                end: slotEnd.toISOString(),
-                                display: slotStart.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) +
-                                    ' at ' + slotStart.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+                                start: slotStartUtc.toISOString(),
+                                end: slotEndUtc.toISOString(),
+                                display: `${displayDay}, ${displayMonth} ${displayDate} at ${etHour}:00 ${ampm} ET`
                             });
                         }
                     }
                 }
-                current.setDate(current.getDate() + 1);
+                dayCounter.setUTCDate(dayCounter.getUTCDate() + 1);
             }
 
             res.json({ slots: availableSlots });
@@ -409,6 +505,28 @@ exports.bookAppointment = functions.https.onRequest((req, res) => {
 
             if (!name || !email || !slotStart) {
                 res.status(400).json({ error: 'Name, email, and time slot are required' });
+                return;
+            }
+
+            // --- Email format validation ---
+            if (!isValidEmail(email)) {
+                res.status(400).json({ error: 'Invalid email format' });
+                return;
+            }
+
+            // --- Optional auth: use token uid if provided, otherwise IP ---
+            const decodedToken = await verifyAuthToken(req);
+            const bookingRateLimitKey = decodedToken
+                ? `booking:${decodedToken.uid}`
+                : `booking:ip:${getClientIp(req)}`;
+
+            // --- Rate limit: max 5 bookings per hour ---
+            const rl = checkRateLimit(bookingRateLimitKey, BOOKING_RATE_LIMIT_MAX, BOOKING_RATE_LIMIT_WINDOW_MS);
+            if (rl.limited) {
+                res.status(429).json({
+                    error: 'Too many booking requests. Please try again later.',
+                    retryAfterMs: rl.retryAfterMs
+                });
                 return;
             }
 
@@ -523,8 +641,8 @@ async function sendPushNotification(userId, title, body, type = 'general', click
             },
             webpush: {
                 notification: {
-                    icon: '/assessment/images/logo-icon.png',
-                    badge: '/assessment/images/logo-icon.png',
+                    icon: '/apple-touch-icon.png',
+                    badge: '/apple-touch-icon.png',
                     tag: type,
                     requireInteraction: false
                 },

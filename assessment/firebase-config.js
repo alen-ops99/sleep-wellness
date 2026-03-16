@@ -28,14 +28,22 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Enable offline persistence for Firestore
-db.enablePersistence().catch((err) => {
-    if (err.code === 'failed-precondition') {
-        console.log('Persistence failed: Multiple tabs open');
-    } else if (err.code === 'unimplemented') {
-        console.log('Persistence not available in this browser');
-    }
-});
+// Enable offline persistence for Firestore (skip in demo mode to avoid stale cached data)
+const isDemoPersistenceSkip =
+    new URLSearchParams(window.location.search).get('demo') === 'true'
+    || sessionStorage.getItem('demoMode') === 'true';
+
+if (isDemoPersistenceSkip) {
+    console.log('Firestore persistence disabled — demo mode active');
+} else {
+    db.enablePersistence().catch((err) => {
+        if (err.code === 'failed-precondition') {
+            console.log('Persistence failed: Multiple tabs open');
+        } else if (err.code === 'unimplemented') {
+            console.log('Persistence not available in this browser');
+        }
+    });
+}
 
 /**
  * Firestore Security Rules (copy to Firebase Console > Firestore > Rules):
