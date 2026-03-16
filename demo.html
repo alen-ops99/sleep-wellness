@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo | Sleep Wellness by Dr. Alen</title>
+    <meta name="description" content="Experience the Sleep Wellness platform with realistic demo data. Explore portals designed for luxury hotels, elite athletes, and corporate leaders. No sign-up required.">
+    <link rel="canonical" href="https://sleep-wellness.netlify.app/demo.html">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sleep-wellness.netlify.app/demo.html">
+    <meta property="og:title" content="Demo | Sleep Wellness by Dr. Alen">
+    <meta property="og:description" content="Experience the Sleep Wellness platform with realistic demo data. Explore portals for hotels, athletes, and executives. No sign-up required.">
+    <meta property="og:image" content="https://sleep-wellness.netlify.app/dr-alen.jpg">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Demo | Sleep Wellness by Dr. Alen">
+    <meta name="twitter:description" content="Experience the Sleep Wellness platform with realistic demo data. No sign-up required.">
+    <meta name="twitter:image" content="https://sleep-wellness.netlify.app/dr-alen.jpg">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap">
+    <style>
+        :root {
+            --deep-navy: #0f1c2e;
+            --navy: #1a2744;
+            --navy-light: #2d3e5f;
+            --gold: #C9A962;
+            --gold-light: #E8D5A3;
+            --gold-dark: #a08540;
+            --cream: #FAF8F5;
+            --warm-white: #FDFCFA;
+            --text: #2c2c2c;
+            --text-light: #666;
+            --hotels-accent: #8B4D5C;
+            --athletes-accent: #2A8B8B;
+            --corporate-accent: #4A6085;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            color: var(--text);
+            line-height: 1.7;
+            background: var(--cream);
+            overflow-x: hidden;
+        }
+
+        /* Skip to content */
+        .skip-to-content {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            z-index: 10000;
+        }
+        .skip-to-content:focus {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: auto;
+            height: auto;
+            padding: 12px 24px;
+            background: var(--gold);
+            color: var(--deep-navy);
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 10000;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 28, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 60px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav.scrolled {
+            padding: 15px 60px;
+            background: rgba(15, 28, 46, 0.98);
+        }
+
+        .nav-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-decoration: none;
+        }
+
+        .nav-brand-main {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--cream);
+            font-size: 22px;
+            font-weight: 400;
+            letter-spacing: 3px;
+        }
+
+        .nav-brand-sub {
+            font-size: 10px;
+            color: var(--gold);
+            letter-spacing: 2px;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-cta {
+            background: var(--gold);
+            color: var(--deep-navy) !important;
+            padding: 12px 28px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold-light);
+            color: var(--deep-navy) !important;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: var(--cream);
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--deep-navy);
+            z-index: 999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--cream);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--gold);
+        }
+
+        .mobile-menu .mobile-cta {
+            margin-top: 20px;
+            background: var(--gold);
+            color: var(--deep-navy);
+            padding: 15px 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--navy) 50%, var(--navy-light) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 140px 40px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 70%, rgba(201, 169, 98, 0.05) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero-label {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 64px;
+            font-weight: 300;
+            color: var(--cream);
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--gold-light);
+            margin-bottom: 25px;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Demo Cards Section */
+        .demo-cards {
+            padding: 100px 60px;
+            background: var(--cream);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 70px;
+        }
+
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .demo-card {
+            background: white;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            padding: 50px 40px 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .demo-card.hotels::before { background: var(--hotels-accent); }
+        .demo-card.athletes::before { background: var(--athletes-accent); }
+        .demo-card.corporate::before { background: var(--corporate-accent); }
+
+        .demo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .demo-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Card Icons */
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-card.hotels .card-icon { background: linear-gradient(135deg, var(--hotels-accent) 0%, #A66B7A 100%); }
+        .demo-card.athletes .card-icon { background: linear-gradient(135deg, var(--athletes-accent) 0%, #3AACAC 100%); }
+        .demo-card.corporate .card-icon { background: linear-gradient(135deg, var(--corporate-accent) 0%, #6B82A8 100%); }
+
+        .card-icon svg {
+            width: 36px;
+            height: 36px;
+            stroke: var(--gold);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .demo-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+
+        .card-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 35px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+            border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .card-features li {
+            font-size: 13px;
+            color: var(--text);
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-features li::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .card-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-client {
+            display: inline-block;
+            background: var(--navy);
+            color: var(--cream);
+            padding: 14px 30px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .demo-card.hotels .btn-client:hover { background: var(--hotels-accent); color: white; }
+        .demo-card.athletes .btn-client:hover { background: var(--athletes-accent); color: white; }
+        .demo-card.corporate .btn-client:hover { background: var(--corporate-accent); color: white; }
+
+        .btn-admin {
+            display: inline-block;
+            background: transparent;
+            color: var(--navy);
+            padding: 13px 30px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid rgba(201, 169, 98, 0.4);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .btn-admin:hover {
+            border-color: var(--gold);
+            background: var(--gold);
+            color: var(--deep-navy);
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            padding: 100px 60px;
+        }
+
+        .how-it-works .section-title {
+            color: var(--cream);
+        }
+
+        .how-it-works .section-subtitle {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step::after {
+            content: '';
+            position: absolute;
+            top: 40px;
+            right: -25px;
+            width: 50px;
+            height: 2px;
+            background: var(--gold);
+            opacity: 0.4;
+        }
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            color: var(--gold);
+            margin: 0 auto 25px;
+        }
+
+        .step h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--cream);
+            margin-bottom: 12px;
+        }
+
+        .step p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.7;
+        }
+
+        .demo-note {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+        }
+
+        .demo-note p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            font-style: italic;
+        }
+
+        /* Footer */
+        .footer-cta {
+            padding: 80px 60px;
+            background: var(--deep-navy);
+            text-align: center;
+        }
+
+        .footer-cta h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 400;
+            color: var(--cream);
+            margin-bottom: 15px;
+        }
+
+        .footer-cta p {
+            font-size: 16px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .footer-cta a.contact-link {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--deep-navy);
+            padding: 16px 45px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-cta a.contact-link:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            padding: 40px 60px;
+            background: var(--deep-navy);
+            border-top: 1px solid rgba(201, 169, 98, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: var(--cream);
+            letter-spacing: 2px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+                max-width: 550px;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+
+            .step::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 15px 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 120px 30px 60px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+                letter-spacing: 2px;
+            }
+
+            .hero-tagline {
+                font-size: 20px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .demo-cards,
+            .how-it-works {
+                padding: 80px 30px;
+            }
+
+            .footer-cta {
+                padding: 60px 30px;
+            }
+
+            .footer-cta h2 {
+                font-size: 32px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+                padding: 30px;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+<!-- Navigation -->
+<nav class="nav" id="nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-brand" aria-label="Sleep Wellness home">
+        <span class="nav-brand-main">SLEEP WELLNESS</span>
+        <span class="nav-brand-sub">by Dr. Alen</span>
+    </a>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="hotels.html">Hotels</a>
+        <a href="athletes.html">Athletes</a>
+        <a href="corporate.html">Corporate</a>
+        <a href="index.html#contact" class="nav-cta">Contact</a>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+    </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="hotels.html">Hotels</a>
+    <a href="athletes.html">Athletes</a>
+    <a href="corporate.html">Corporate</a>
+    <a href="index.html#contact" class="mobile-cta">Contact</a>
+</div>
+
+<!-- Hero -->
+<section class="hero" id="main-content" aria-label="Demo introduction">
+    <div class="hero-content">
+        <p class="hero-label">Interactive Platform Preview</p>
+        <h1>See It In Action</h1>
+        <p class="hero-tagline">Explore our platform with realistic demo data. No sign-up required.</p>
+        <p class="hero-description">
+            Walk through the same dashboards and assessments your clients will experience.
+            Choose your industry below to launch a tailored demo with simulated data.
+        </p>
+    </div>
+</section>
+
+<!-- Demo Cards -->
+<section class="demo-cards" aria-label="Industry demo options">
+    <div class="section-header">
+        <p class="section-label">Choose Your Experience</p>
+        <h2 class="section-title">Three Worlds, One Platform</h2>
+        <p class="section-subtitle">
+            Each industry gets a fully customized portal. Select the demo that matches your needs
+            to see exactly what your team or guests will experience.
+        </p>
+    </div>
+
+    <div class="cards-grid">
+        <!-- Hotels & Hospitality -->
+        <div class="demo-card hotels">
+            <div class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 21h18M3 10h18M3 7l9-4 9 4M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
+                </svg>
+            </div>
+            <h3>Hotels &amp; Hospitality</h3>
+            <ul class="card-features">
+                <li>Guest sleep tracking &amp; room optimization</li>
+                <li>Nightly sleep scores &amp; improvement trends</li>
+                <li>Guest feedback &amp; satisfaction metrics</li>
+                <li>Hotel partner management dashboard</li>
+            </ul>
+            <div class="card-buttons">
+                <a href="assessment/account.html?demo=hotel" class="btn-client" aria-label="Launch hotel client portal demo">Client Portal Demo</a>
+                <a href="assessment/admin/index.html?demo=true" class="btn-admin" aria-label="Launch hotel admin dashboard demo">Admin Dashboard Demo</a>
+            </div>
+        </div>
+
+        <!-- Sports & Athletics -->
+        <div class="demo-card athletes">
+            <div class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 2a10 10 0 0 1 0 20M12 2a10 10 0 0 0 0 20M2 12h20M12 2v20"/>
+                </svg>
+            </div>
+            <h3>Sports &amp; Athletics</h3>
+            <ul class="card-features">
+                <li>Game-day vs recovery sleep protocols</li>
+                <li>Team-wide sleep analytics</li>
+                <li>Athlete performance correlation</li>
+                <li>Sports science dashboard</li>
+            </ul>
+            <div class="card-buttons">
+                <a href="assessment/account.html?demo=athlete" class="btn-client" aria-label="Launch athlete client portal demo">Client Portal Demo</a>
+                <a href="assessment/admin/index.html?demo=true" class="btn-admin" aria-label="Launch athlete admin dashboard demo">Admin Dashboard Demo</a>
+            </div>
+        </div>
+
+        <!-- Corporate & Executive -->
+        <div class="demo-card corporate">
+            <div class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                    <rect x="2" y="3" width="20" height="14" rx="2"/>
+                    <path d="M8 21h8M12 17v4"/>
+                </svg>
+            </div>
+            <h3>Corporate &amp; Executive</h3>
+            <ul class="card-features">
+                <li>Executive sleep assessments</li>
+                <li>Travel fatigue management</li>
+                <li>Wellness program analytics</li>
+                <li>ROI &amp; engagement metrics</li>
+            </ul>
+            <div class="card-buttons">
+                <a href="assessment/account.html?demo=true" class="btn-client" aria-label="Launch corporate client portal demo">Client Portal Demo</a>
+                <a href="assessment/admin/index.html?demo=true" class="btn-admin" aria-label="Launch corporate admin dashboard demo">Admin Dashboard Demo</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-it-works" aria-label="How the demo works">
+    <div class="section-header">
+        <p class="section-label">How It Works</p>
+        <h2 class="section-title">Three Simple Steps</h2>
+        <p class="section-subtitle">
+            No account, no commitment. Just pick your industry and explore.
+        </p>
+    </div>
+
+    <div class="steps-grid">
+        <div class="step">
+            <div class="step-number" aria-hidden="true">1</div>
+            <h4>Choose Your Industry</h4>
+            <p>Select the demo that best matches your organization: hotels, sports, or corporate.</p>
+        </div>
+        <div class="step">
+            <div class="step-number" aria-hidden="true">2</div>
+            <h4>Explore the Portal</h4>
+            <p>Navigate through assessments, dashboards, and analytics with pre-loaded demo data.</p>
+        </div>
+        <div class="step">
+            <div class="step-number" aria-hidden="true">3</div>
+            <h4>See Real Results</h4>
+            <p>Review the same reports and insights your clients will receive from our platform.</p>
+        </div>
+    </div>
+
+    <div class="demo-note">
+        <p>All data shown in the demos is simulated for illustration purposes.</p>
+    </div>
+</section>
+
+<!-- Footer CTA -->
+<section class="footer-cta" aria-label="Contact call to action">
+    <h2>Ready to Get Started?</h2>
+    <p>Let's discuss how Sleep Wellness can serve your organization.</p>
+    <a href="mailto:alen_juginovic@hms.harvard.edu" class="contact-link">Contact Dr. Alen</a>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-brand">SLEEP WELLNESS</div>
+    <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="hotels.html">Hotels</a>
+        <a href="athletes.html">Athletes</a>
+        <a href="corporate.html">Corporate</a>
+    </div>
+    <p class="footer-text">&copy; 2026 Sleep Wellness by Dr. Alen. All rights reserved.</p>
+</footer>
+
+<script>
+    // Nav scroll effect
+    window.addEventListener('scroll', function() {
+        var nav = document.getElementById('nav');
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+
+    // Mobile menu toggle
+    var menuBtn = document.getElementById('mobileMenuBtn');
+    var mobileMenu = document.getElementById('mobileMenu');
+
+    menuBtn.addEventListener('click', function() {
+        menuBtn.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        var isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+        menuBtn.setAttribute('aria-expanded', !isExpanded);
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Close mobile menu on link click
+    var mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(function(link) {
+        link.addEventListener('click', function() {
+            menuBtn.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            menuBtn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        });
+    });
+</script>
+
+</body>
+</html>

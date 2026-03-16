@@ -8387,8 +8387,8 @@ Sleep Wellness by Dr. Alen`);
         try {
             hotelPartners = await FirebaseDB.getAllHotelPartners();
 
-            // DEV: Auto-create test data if no hotel partners exist
-            if (hotelPartners.length === 0) {
+            // DEV: Auto-create test data if no hotel partners exist (skip in demo mode)
+            if (hotelPartners.length === 0 && !(typeof isDemoMode === 'function' && isDemoMode())) {
                 try {
                     await createTestHotelData();
                     hotelPartners = await FirebaseDB.getAllHotelPartners();

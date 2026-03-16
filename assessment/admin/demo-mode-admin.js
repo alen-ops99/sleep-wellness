@@ -62,6 +62,487 @@
         return { toDate: () => d, seconds: Math.floor(d.getTime() / 1000), nanoseconds: 0 };
     }
 
+    // ==================== MOCK HOTEL PARTNERS & GUEST STAYS ====================
+
+    const MOCK_HOTEL_PARTNERS = [
+        {
+            id: 'ritz-carlton-boston',
+            name: 'The Ritz-Carlton, Boston',
+            contactName: 'Sarah Mitchell',
+            contactEmail: 'sarah.mitchell@ritzcarlton-boston.com',
+            contactPhone: '+1 617-574-7100',
+            logoUrl: null,
+            partnershipStatus: 'active',
+            address: '10 Avery Street, Boston, MA 02111',
+            hotelType: 'luxury',
+            starRating: 5,
+            totalRooms: 200,
+            roomsEnrolled: 48,
+            programTier: 'Premium',
+            reportSettings: {
+                includeGuestName: true,
+                emailOnCheckout: true
+            },
+            createdAt: makeTimestamp(new Date(Date.now() - 120 * 86400000)),
+            createdBy: DEMO_ADMIN_UID
+        },
+        {
+            id: 'movenpick-kvarner-bay',
+            name: 'Movenpick Resort & Spa, Kvarner Bay',
+            contactName: 'Marco Petrovic',
+            contactEmail: 'marco.petrovic@movenpick-kvarner.hr',
+            contactPhone: '+385 51 710 444',
+            logoUrl: null,
+            partnershipStatus: 'active',
+            address: 'Obala Marshala Tita 1, 51410 Opatija, Croatia',
+            hotelType: 'boutique-luxury',
+            starRating: 5,
+            totalRooms: 126,
+            roomsEnrolled: 32,
+            programTier: 'Premium',
+            reportSettings: {
+                includeGuestName: false,
+                emailOnCheckout: true
+            },
+            createdAt: makeTimestamp(new Date(Date.now() - 75 * 86400000)),
+            createdBy: DEMO_ADMIN_UID
+        }
+    ];
+
+    // Guest user profiles (added to MOCK_CLIENTS for user lookups)
+    const MOCK_HOTEL_GUEST_USERS = [
+        { id: 'demo-guest-001', displayName: 'Sarah Johnson', email: 'sarah.johnson@email.com', role: 'client', clientType: 'hotel', hotelAffiliation: { hotelPartnerId: 'ritz-carlton-boston', isHotelGuest: true }, createdAt: { toDate: () => new Date(Date.now() - 12 * 86400000) } },
+        { id: 'demo-guest-002', displayName: 'Michael Chen', email: 'michael.chen.guest@email.com', role: 'client', clientType: 'hotel', hotelAffiliation: { hotelPartnerId: 'ritz-carlton-boston', isHotelGuest: true }, createdAt: { toDate: () => new Date(Date.now() - 8 * 86400000) } },
+        { id: 'demo-guest-003', displayName: 'Emma Williams', email: 'emma.williams@email.com', role: 'client', clientType: 'hotel', hotelAffiliation: { hotelPartnerId: 'ritz-carlton-boston', isHotelGuest: true }, createdAt: { toDate: () => new Date(Date.now() - 3 * 86400000) } },
+        { id: 'demo-guest-004', displayName: 'Luka Babic', email: 'luka.babic@email.com', role: 'client', clientType: 'hotel', hotelAffiliation: { hotelPartnerId: 'movenpick-kvarner-bay', isHotelGuest: true }, createdAt: { toDate: () => new Date(Date.now() - 18 * 86400000) } },
+        { id: 'demo-guest-005', displayName: 'Ana Kovac', email: 'ana.kovac@email.com', role: 'client', clientType: 'hotel', hotelAffiliation: { hotelPartnerId: 'movenpick-kvarner-bay', isHotelGuest: true }, createdAt: { toDate: () => new Date(Date.now() - 5 * 86400000) } }
+    ];
+
+    const checkIn1 = new Date(Date.now() - 10 * 86400000);
+    const checkout1 = new Date(Date.now() - 3 * 86400000);
+    const checkIn2 = new Date(Date.now() - 7 * 86400000);
+    const checkout2 = new Date(Date.now() - 1 * 86400000);
+    const checkIn3 = new Date(Date.now() - 2 * 86400000);
+    const checkout3 = new Date(Date.now() + 3 * 86400000);
+    const checkIn4 = new Date(Date.now() - 20 * 86400000);
+    const checkout4 = new Date(Date.now() - 13 * 86400000);
+    const checkIn5 = new Date(Date.now() - 4 * 86400000);
+    const checkout5 = new Date(Date.now() + 2 * 86400000);
+
+    const MOCK_GUEST_STAYS = [
+        // Ritz-Carlton, Boston — Guest 1: Completed 7-day stay, dramatic improvement
+        {
+            id: 'stay-001',
+            guestUserId: 'demo-guest-001',
+            guestName: 'Sarah Johnson',
+            hotelPartnerId: 'ritz-carlton-boston',
+            checkInDate: makeTimestamp(checkIn1),
+            checkoutDate: makeTimestamp(checkout1),
+            actualCheckoutDate: makeTimestamp(checkout1),
+            roomNumber: 'Suite 412',
+            stayStatus: 'checked-out',
+            baselineAssessments: { isi: 21, ess: 16 },
+            postStayAssessments: { isi: 8, ess: 7 },
+            engagement: {
+                chatSessions: 12,
+                diaryEntries: 7,
+                guidesViewed: 5,
+                interventions: ['personalized-schedule', 'room-optimization', 'relaxation-techniques', 'light-therapy', 'sleep-hygiene']
+            },
+            sleepMetrics: {
+                avgSleepDuration: { baseline: 4.8, postStay: 7.4 },
+                avgSleepLatency: { baseline: 55, postStay: 12 },
+                avgAwakenings: { baseline: 4.1, postStay: 0.8 },
+                avgSleepEfficiency: { baseline: 68, postStay: 92 },
+                avgRestedness: { baseline: 3.2, postStay: 8.6 },
+                avgDaytimeEnergy: { baseline: 3.8, postStay: 8.2 }
+            },
+            hotelExperience: {
+                mattress: 10, pillows: 9, bedding: 9, roomTemp: 9,
+                darkness: 10, quietness: 8, airQuality: 9,
+                topFactor: 'The blackout curtains and mattress quality were exceptional'
+            },
+            guestFeedback: {
+                rating: 5,
+                wouldRecommend: true,
+                mostHelpful: 'personalized-schedule',
+                comments: 'Life-changing experience! I came here exhausted from chronic insomnia and left feeling like a new person. The personalized sleep schedule and Dr. Alen\'s guidance through the app were incredible. My sleep improved dramatically by day 3.',
+                submittedAt: makeTimestamp(checkout1)
+            },
+            reportPdfUrl: null,
+            reportSentAt: null,
+            createdAt: makeTimestamp(checkIn1)
+        },
+        // Ritz-Carlton, Boston — Guest 2: Completed 6-day stay, good improvement
+        {
+            id: 'stay-002',
+            guestUserId: 'demo-guest-002',
+            guestName: 'Michael Chen',
+            hotelPartnerId: 'ritz-carlton-boston',
+            checkInDate: makeTimestamp(checkIn2),
+            checkoutDate: makeTimestamp(checkout2),
+            actualCheckoutDate: makeTimestamp(checkout2),
+            roomNumber: 'Room 308',
+            stayStatus: 'checked-out',
+            baselineAssessments: { isi: 15, ess: 12 },
+            postStayAssessments: { isi: 7, ess: 6 },
+            engagement: {
+                chatSessions: 8,
+                diaryEntries: 5,
+                guidesViewed: 3,
+                interventions: ['room-optimization', 'relaxation-techniques', 'caffeine-timing']
+            },
+            sleepMetrics: {
+                avgSleepDuration: { baseline: 5.8, postStay: 7.1 },
+                avgSleepLatency: { baseline: 35, postStay: 18 },
+                avgAwakenings: { baseline: 2.5, postStay: 1.2 },
+                avgSleepEfficiency: { baseline: 76, postStay: 88 },
+                avgRestedness: { baseline: 4.5, postStay: 7.8 },
+                avgDaytimeEnergy: { baseline: 5.0, postStay: 7.5 }
+            },
+            hotelExperience: {
+                mattress: 8, pillows: 9, bedding: 8, roomTemp: 10,
+                darkness: 9, quietness: 6, airQuality: 8,
+                topFactor: 'Perfect room temperature control made all the difference'
+            },
+            guestFeedback: {
+                rating: 5,
+                wouldRecommend: true,
+                mostHelpful: 'room-optimization',
+                comments: 'The room optimization tips were game-changers - especially the blackout guidance and temperature settings. Slept better here than at home!',
+                submittedAt: makeTimestamp(checkout2)
+            },
+            reportPdfUrl: null,
+            reportSentAt: null,
+            createdAt: makeTimestamp(checkIn2)
+        },
+        // Ritz-Carlton, Boston — Guest 3: Currently active stay
+        {
+            id: 'stay-003',
+            guestUserId: 'demo-guest-003',
+            guestName: 'Emma Williams',
+            hotelPartnerId: 'ritz-carlton-boston',
+            checkInDate: makeTimestamp(checkIn3),
+            checkoutDate: makeTimestamp(checkout3),
+            roomNumber: 'Suite 501',
+            stayStatus: 'active',
+            baselineAssessments: { isi: 18, ess: 14 },
+            postStayAssessments: null,
+            engagement: {
+                chatSessions: 3,
+                diaryEntries: 2,
+                guidesViewed: 2,
+                interventions: ['personalized-schedule', 'room-optimization']
+            },
+            guestFeedback: null,
+            reportPdfUrl: null,
+            reportSentAt: null,
+            createdAt: makeTimestamp(checkIn3)
+        },
+        // Movenpick, Kvarner Bay — Guest 4: Completed stay with report sent
+        {
+            id: 'stay-004',
+            guestUserId: 'demo-guest-004',
+            guestName: 'Luka Babic',
+            hotelPartnerId: 'movenpick-kvarner-bay',
+            checkInDate: makeTimestamp(checkIn4),
+            checkoutDate: makeTimestamp(checkout4),
+            actualCheckoutDate: makeTimestamp(checkout4),
+            roomNumber: 'Deluxe Sea View 214',
+            stayStatus: 'report-sent',
+            baselineAssessments: { isi: 12, ess: 10 },
+            postStayAssessments: { isi: 5, ess: 4 },
+            engagement: {
+                chatSessions: 6,
+                diaryEntries: 7,
+                guidesViewed: 4,
+                interventions: ['relaxation-techniques', 'light-therapy', 'sleep-hygiene', 'caffeine-timing']
+            },
+            sleepMetrics: {
+                avgSleepDuration: { baseline: 6.0, postStay: 7.8 },
+                avgSleepLatency: { baseline: 25, postStay: 8 },
+                avgAwakenings: { baseline: 2.0, postStay: 0.5 },
+                avgSleepEfficiency: { baseline: 78, postStay: 95 },
+                avgRestedness: { baseline: 5.0, postStay: 9.1 },
+                avgDaytimeEnergy: { baseline: 5.5, postStay: 8.8 }
+            },
+            hotelExperience: {
+                mattress: 9, pillows: 8, bedding: 9, roomTemp: 9,
+                darkness: 10, quietness: 10, airQuality: 10,
+                topFactor: 'The sea breeze and natural darkness cycle were incredibly restorative'
+            },
+            guestFeedback: {
+                rating: 5,
+                wouldRecommend: true,
+                mostHelpful: 'light-therapy',
+                comments: 'Odlicno iskustvo! The combination of the natural coastal environment and the structured sleep program was perfect. I now have tools I can use at home.',
+                submittedAt: makeTimestamp(checkout4)
+            },
+            reportPdfUrl: 'https://example.com/reports/stay-004-report.pdf',
+            reportSentAt: makeTimestamp(new Date(Date.now() - 11 * 86400000)),
+            createdAt: makeTimestamp(checkIn4)
+        },
+        // Movenpick, Kvarner Bay — Guest 5: Currently active stay
+        {
+            id: 'stay-005',
+            guestUserId: 'demo-guest-005',
+            guestName: 'Ana Kovac',
+            hotelPartnerId: 'movenpick-kvarner-bay',
+            checkInDate: makeTimestamp(checkIn5),
+            checkoutDate: makeTimestamp(checkout5),
+            roomNumber: 'Premium Suite 301',
+            stayStatus: 'active',
+            baselineAssessments: { isi: 16, ess: 13 },
+            postStayAssessments: null,
+            engagement: {
+                chatSessions: 4,
+                diaryEntries: 3,
+                guidesViewed: 3,
+                interventions: ['personalized-schedule', 'relaxation-techniques', 'room-optimization']
+            },
+            guestFeedback: null,
+            reportPdfUrl: null,
+            reportSentAt: null,
+            createdAt: makeTimestamp(checkIn5)
+        }
+    ];
+
+    // ==================== MOCK ATHLETIC PARTNERS & ATHLETE PROFILES ====================
+
+    const MOCK_ATHLETIC_PARTNERS = [
+        {
+            id: 'boston-celtics',
+            name: 'Boston Celtics',
+            sport: 'basketball',
+            competitionLevel: 'professional',
+            league: 'NBA',
+            contactName: 'Dr. James Walsh',
+            contactEmail: 'james.walsh@celtics.com',
+            contactPhone: '+1 617-854-8000',
+            logoUrl: null,
+            partnershipStatus: 'active',
+            athleteCount: 15,
+            programTier: 'Elite',
+            programFocus: {
+                recovery: true,
+                travel: true,
+                performance: true
+            },
+            createdAt: makeTimestamp(new Date(Date.now() - 90 * 86400000)),
+            createdBy: DEMO_ADMIN_UID
+        },
+        {
+            id: 'harvard-mens-soccer',
+            name: 'Harvard Men\'s Soccer',
+            sport: 'soccer',
+            competitionLevel: 'collegiate',
+            league: 'Ivy League / NCAA D1',
+            contactName: 'Coach Mike Reynolds',
+            contactEmail: 'mreynolds@fas.harvard.edu',
+            contactPhone: '+1 617-495-2211',
+            logoUrl: null,
+            partnershipStatus: 'active',
+            athleteCount: 28,
+            programTier: 'Standard',
+            programFocus: {
+                recovery: true,
+                travel: false,
+                performance: true
+            },
+            createdAt: makeTimestamp(new Date(Date.now() - 45 * 86400000)),
+            createdBy: DEMO_ADMIN_UID
+        }
+    ];
+
+    const MOCK_ATHLETE_PROFILES = [
+        // Celtics athletes
+        {
+            id: 'athlete-001',
+            teamPartnerId: 'boston-celtics',
+            displayName: 'Jaylen Torres',
+            position: 'Point Guard',
+            sport: 'Basketball',
+            jerseyNumber: 11,
+            avgSleepScore: 88,
+            avgRecoveryScore: 92,
+            injuryRiskLevel: 'low',
+            complianceRate: 96,
+            enrolledAt: makeTimestamp(new Date(Date.now() - 85 * 86400000)),
+            lastAssessment: makeTimestamp(new Date(Date.now() - 2 * 86400000)),
+            performanceData: {
+                preSleep: { avgSleepHours: 5.8, avgReactionTime: 285, avgSprintSpeed: 17.2 },
+                postSleep: { avgSleepHours: 8.1, avgReactionTime: 248, avgSprintSpeed: 18.1 }
+            }
+        },
+        {
+            id: 'athlete-002',
+            teamPartnerId: 'boston-celtics',
+            displayName: 'Marcus Thompson',
+            position: 'Shooting Guard',
+            sport: 'Basketball',
+            jerseyNumber: 7,
+            avgSleepScore: 74,
+            avgRecoveryScore: 78,
+            injuryRiskLevel: 'moderate',
+            complianceRate: 68,
+            enrolledAt: makeTimestamp(new Date(Date.now() - 80 * 86400000)),
+            lastAssessment: makeTimestamp(new Date(Date.now() - 5 * 86400000))
+        },
+        {
+            id: 'athlete-003',
+            teamPartnerId: 'boston-celtics',
+            displayName: 'David Okonkwo',
+            position: 'Center',
+            sport: 'Basketball',
+            jerseyNumber: 34,
+            avgSleepScore: 82,
+            avgRecoveryScore: 85,
+            injuryRiskLevel: 'low',
+            complianceRate: 91,
+            enrolledAt: makeTimestamp(new Date(Date.now() - 75 * 86400000)),
+            lastAssessment: makeTimestamp(new Date(Date.now() - 1 * 86400000))
+        },
+        // Harvard Soccer athletes
+        {
+            id: 'athlete-004',
+            teamPartnerId: 'harvard-mens-soccer',
+            displayName: 'Ryan Fitzgerald',
+            position: 'Midfielder',
+            sport: 'Soccer',
+            jerseyNumber: 10,
+            avgSleepScore: 79,
+            avgRecoveryScore: 83,
+            injuryRiskLevel: 'low',
+            complianceRate: 88,
+            enrolledAt: makeTimestamp(new Date(Date.now() - 40 * 86400000)),
+            lastAssessment: makeTimestamp(new Date(Date.now() - 3 * 86400000))
+        },
+        {
+            id: 'athlete-005',
+            teamPartnerId: 'harvard-mens-soccer',
+            displayName: 'Carlos Mendez',
+            position: 'Striker',
+            sport: 'Soccer',
+            jerseyNumber: 9,
+            avgSleepScore: 65,
+            avgRecoveryScore: 71,
+            injuryRiskLevel: 'elevated',
+            complianceRate: 55,
+            enrolledAt: makeTimestamp(new Date(Date.now() - 38 * 86400000)),
+            lastAssessment: makeTimestamp(new Date(Date.now() - 7 * 86400000))
+        }
+    ];
+
+    // ==================== MOCK BUSINESS PARTNERS & EXECUTIVE PROFILES ====================
+
+    const MOCK_BUSINESS_PARTNERS = [
+        {
+            id: 'mckinsey-company',
+            name: 'McKinsey & Company',
+            industry: 'consulting',
+            programType: 'executive',
+            contactName: 'Lisa Chen',
+            contactEmail: 'lisa.chen@mckinsey.com',
+            contactPhone: '+1 212-446-7000',
+            logoUrl: null,
+            partnershipStatus: 'active',
+            employeesEnrolled: 24,
+            programTier: 'Enterprise',
+            programFocus: {
+                decision: true,
+                travel: true,
+                stress: true
+            },
+            createdAt: makeTimestamp(new Date(Date.now() - 60 * 86400000)),
+            createdBy: DEMO_ADMIN_UID
+        },
+        {
+            id: 'boston-dynamics',
+            name: 'Boston Dynamics',
+            industry: 'technology',
+            programType: 'team-wellness',
+            contactName: 'Dr. Rachel Park',
+            contactEmail: 'rpark@bostondynamics.com',
+            contactPhone: '+1 781-849-1000',
+            logoUrl: null,
+            partnershipStatus: 'active',
+            employeesEnrolled: 12,
+            programTier: 'Standard',
+            programFocus: {
+                decision: true,
+                travel: false,
+                stress: true
+            },
+            createdAt: makeTimestamp(new Date(Date.now() - 30 * 86400000)),
+            createdBy: DEMO_ADMIN_UID
+        }
+    ];
+
+    const MOCK_EXECUTIVE_PROFILES = [
+        // McKinsey executives
+        {
+            id: 'exec-001',
+            orgPartnerId: 'mckinsey-company',
+            displayName: 'Robert Ashworth',
+            title: 'Senior Partner',
+            company: 'McKinsey & Company',
+            avgSleepScore: 72,
+            stressLevel: 'high',
+            travelFrequency: '3-4 trips/month',
+            complianceRate: 82,
+            performanceGain: 28,
+            keyConcerns: ['jet lag', 'late-night client calls', 'high cognitive demand'],
+            enrolledAt: makeTimestamp(new Date(Date.now() - 55 * 86400000)),
+            lastAssessment: makeTimestamp(new Date(Date.now() - 4 * 86400000))
+        },
+        {
+            id: 'exec-002',
+            orgPartnerId: 'mckinsey-company',
+            displayName: 'Jennifer Nakamura',
+            title: 'Associate Partner',
+            company: 'McKinsey & Company',
+            avgSleepScore: 64,
+            stressLevel: 'very-high',
+            travelFrequency: '2-3 trips/month',
+            complianceRate: 71,
+            performanceGain: 22,
+            keyConcerns: ['sleep onset insomnia', 'work anxiety', 'screen time before bed'],
+            enrolledAt: makeTimestamp(new Date(Date.now() - 50 * 86400000)),
+            lastAssessment: makeTimestamp(new Date(Date.now() - 2 * 86400000))
+        },
+        {
+            id: 'exec-003',
+            orgPartnerId: 'mckinsey-company',
+            displayName: 'Daniel Osei',
+            title: 'Engagement Manager',
+            company: 'McKinsey & Company',
+            avgSleepScore: 81,
+            stressLevel: 'moderate',
+            travelFrequency: '1-2 trips/month',
+            complianceRate: 94,
+            performanceGain: 35,
+            keyConcerns: ['maintaining routine while traveling', 'caffeine dependency'],
+            enrolledAt: makeTimestamp(new Date(Date.now() - 45 * 86400000)),
+            lastAssessment: makeTimestamp(new Date(Date.now() - 1 * 86400000))
+        },
+        // Boston Dynamics executive
+        {
+            id: 'exec-004',
+            orgPartnerId: 'boston-dynamics',
+            displayName: 'Sarah Volkov',
+            title: 'VP of Engineering',
+            company: 'Boston Dynamics',
+            avgSleepScore: 58,
+            stressLevel: 'high',
+            travelFrequency: '1 trip/month',
+            complianceRate: 65,
+            performanceGain: 18,
+            keyConcerns: ['early morning meetings', 'irregular schedule', 'blue light exposure'],
+            enrolledAt: makeTimestamp(new Date(Date.now() - 25 * 86400000)),
+            lastAssessment: makeTimestamp(new Date(Date.now() - 3 * 86400000))
+        }
+    ];
+
     // ==================== MOCK DATA COLLECTIONS ====================
 
     const MOCK_ASSESSMENTS = [
@@ -131,9 +612,11 @@
         { id: 'ct-003', clientId: 'client-002', title: 'Review Guest Feedback Report', description: 'Analyze sleep program guest satisfaction', type: 'custom', status: 'completed', completedAt: makeTimestamp(new Date(Date.now() - 3 * 86400000)), createdAt: makeTimestamp(new Date(Date.now() - 10 * 86400000)) }
     ];
 
-    // Client lookup helper
+    // Client lookup helper (includes hotel guest users)
     function getClientById(id) {
-        return MOCK_CLIENTS.find(c => c.id === id) || null;
+        return MOCK_CLIENTS.find(c => c.id === id)
+            || MOCK_HOTEL_GUEST_USERS.find(c => c.id === id)
+            || null;
     }
 
     // ==================== DEMO TOAST ====================
@@ -215,7 +698,7 @@
         }
 
         const collectionData = {
-            'users': MOCK_CLIENTS.concat([DEMO_ADMIN_PROFILE]),
+            'users': MOCK_CLIENTS.concat([DEMO_ADMIN_PROFILE]).concat(MOCK_HOTEL_GUEST_USERS),
             'assessments': MOCK_ASSESSMENTS,
             'appointments': MOCK_APPOINTMENTS,
             'conversations': MOCK_CONVERSATIONS,
@@ -232,7 +715,13 @@
             'clientActions': [],
             'questionnaireResults': [],
             'eveningCheckins': [],
-            'dischargeSurveys': []
+            'dischargeSurveys': [],
+            'hotelPartners': MOCK_HOTEL_PARTNERS,
+            'guestStays': MOCK_GUEST_STAYS,
+            'athleticPartners': MOCK_ATHLETIC_PARTNERS,
+            'athleteProfiles': MOCK_ATHLETE_PROFILES,
+            'businessPartners': MOCK_BUSINESS_PARTNERS,
+            'executiveProfiles': MOCK_EXECUTIVE_PROFILES
         };
 
         db.collection = function(name) {
@@ -411,7 +900,74 @@
         // --- Profile writes ---
         FirebaseDB.createUserProfile = async () => DEMO_ADMIN_PROFILE;
 
-        console.log('[Admin Demo Mode] FirebaseDB methods overridden');
+        // --- Hotel Partners ---
+        FirebaseDB.getAllHotelPartners = async () => [...MOCK_HOTEL_PARTNERS];
+        FirebaseDB.getHotelPartner = async (partnerId) => MOCK_HOTEL_PARTNERS.find(p => p.id === partnerId) || null;
+        FirebaseDB.createHotelPartner = async () => { showDemoToast('Demo mode — not saved'); return 'demo-hotel'; };
+        FirebaseDB.updateHotelPartner = async () => { showDemoToast('Demo mode — not saved'); };
+        FirebaseDB.deleteHotelPartner = async () => { showDemoToast('Demo mode — not deleted'); };
+
+        FirebaseDB.getHotelPartnerStats = async (partnerId) => {
+            const stays = MOCK_GUEST_STAYS.filter(s => s.hotelPartnerId === partnerId);
+            const completedStays = stays.filter(s => s.stayStatus === 'checked-out' || s.stayStatus === 'report-sent');
+            let totalImprovement = 0;
+            let improvementCount = 0;
+            completedStays.forEach(stay => {
+                if (stay.baselineAssessments?.isi && stay.postStayAssessments?.isi) {
+                    const improvement = ((stay.baselineAssessments.isi - stay.postStayAssessments.isi) / stay.baselineAssessments.isi) * 100;
+                    if (improvement > 0) { totalImprovement += improvement; improvementCount++; }
+                }
+            });
+            return {
+                totalGuests: stays.length,
+                activeGuests: stays.filter(s => s.stayStatus === 'active').length,
+                completedStays: completedStays.length,
+                avgImprovement: improvementCount > 0 ? Math.round(totalImprovement / improvementCount) : 0
+            };
+        };
+
+        FirebaseDB.getHotelGuestStays = async (hotelPartnerId, status) => {
+            let stays = MOCK_GUEST_STAYS.filter(s => s.hotelPartnerId === hotelPartnerId);
+            if (status) stays = stays.filter(s => s.stayStatus === status);
+            return stays.map(s => ({ ...s }));
+        };
+
+        FirebaseDB.getGuestStay = async (stayId) => {
+            const stay = MOCK_GUEST_STAYS.find(s => s.id === stayId);
+            return stay ? { ...stay } : null;
+        };
+
+        FirebaseDB.getStaysPendingReport = async () => {
+            return MOCK_GUEST_STAYS
+                .filter(s => s.stayStatus === 'checked-out')
+                .map(s => ({
+                    ...s,
+                    hotelName: (MOCK_HOTEL_PARTNERS.find(p => p.id === s.hotelPartnerId) || {}).name || 'Unknown Hotel'
+                }));
+        };
+
+        FirebaseDB.createGuestStay = async () => { showDemoToast('Demo mode — not saved'); return 'demo-stay'; };
+        FirebaseDB.updateGuestStay = async () => { showDemoToast('Demo mode — not saved'); };
+        FirebaseDB.completeGuestCheckout = async () => { showDemoToast('Demo mode — not saved'); };
+        FirebaseDB.markReportSent = async () => { showDemoToast('Demo mode — not saved'); };
+        FirebaseDB.recordBaselineAssessment = async () => { showDemoToast('Demo mode — not saved'); };
+        FirebaseDB.recordPostStayAssessment = async () => { showDemoToast('Demo mode — not saved'); };
+        FirebaseDB.incrementEngagement = async () => { showDemoToast('Demo mode — not saved'); };
+        FirebaseDB.addIntervention = async () => { showDemoToast('Demo mode — not saved'); };
+        FirebaseDB.updateUserHotelAffiliation = async () => { showDemoToast('Demo mode — not saved'); };
+        FirebaseDB.getActiveGuestStay = async (userId) => {
+            return MOCK_GUEST_STAYS.find(s => s.guestUserId === userId && s.stayStatus === 'active') || null;
+        };
+        FirebaseDB.getStayAssessments = async () => [];
+        FirebaseDB.saveAssessmentWithContext = async () => { showDemoToast('Demo mode — not saved'); return 'demo'; };
+
+        // --- Athletic Partners ---
+        FirebaseDB.getAthleticPartner = async (partnerId) => MOCK_ATHLETIC_PARTNERS.find(p => p.id === partnerId) || null;
+
+        // --- Business Partners ---
+        FirebaseDB.getBusinessPartner = async (partnerId) => MOCK_BUSINESS_PARTNERS.find(p => p.id === partnerId) || null;
+
+        console.log('[Admin Demo Mode] FirebaseDB methods overridden (including hotel, athletic, business)');
     }
 
     // ==================== AUTH OVERRIDE ====================

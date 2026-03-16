@@ -11329,10 +11329,77 @@
 <!-- Demo mode hardcoded fallback: populates dashboard even if Firebase fails -->
 <script>
 (function() {
-    if (new URLSearchParams(window.location.search).get('demo') !== 'true'
-        && sessionStorage.getItem('demoMode') !== 'true') return;
+    const _dp = new URLSearchParams(window.location.search).get('demo');
+    const _isDemo = _dp === 'true' || _dp === 'hotel' || _dp === 'athlete'
+        || sessionStorage.getItem('demoMode') === 'true';
+    if (!_isDemo) return;
 
     sessionStorage.setItem('demoMode', 'true');
+
+    // Determine persona
+    const persona = (function() {
+        if (_dp === 'hotel') return 'hotel';
+        if (_dp === 'athlete') return 'athlete';
+        return sessionStorage.getItem('demoPersona') || 'individual';
+    })();
+
+    // Persona-specific fallback data
+    const personaData = {
+        individual: {
+            firstName: 'Alex', initials: 'AM', score: 85, scoreColor: '#4CAF50',
+            efficiency: '82%', assessmentCount: '2', unlockedCount: '1',
+            apptDaysFromNow: 5, apptTime: '10:00 AM',
+            pendingTasks: 2,
+            activity: [
+                { title: 'Completed Follow-Up Assessment', detail: 'Score: 78/100 \u2014 3 days ago', icon: 'doc' },
+                { title: 'Sleep Diary Logged', detail: 'Sleep efficiency: 86% \u2014 Today', icon: 'clock' },
+                { title: 'Completed Baseline Assessment', detail: 'Score: 62/100 \u2014 4 weeks ago', icon: 'doc' }
+            ],
+            tasks: [
+                { title: 'Complete Follow-Up Assessment', due: 'Due in 2 days' },
+                { title: 'Log Sleep Diary Daily', due: 'Due in 7 days' }
+            ]
+        },
+        hotel: {
+            firstName: 'James', initials: 'JR', score: 72, scoreColor: '#F9A825',
+            efficiency: '76%', assessmentCount: '2', unlockedCount: '0',
+            apptDaysFromNow: 2, apptTime: '9:00 AM',
+            pendingTasks: 1,
+            activity: [
+                { title: 'Mid-Stay Assessment Completed', detail: 'Score: 72/100 \u2014 improved from 58 \u2014 1 day ago', icon: 'doc' },
+                { title: 'Sleep Diary Logged', detail: 'Sleep efficiency: 82% \u2014 Today', icon: 'clock' },
+                { title: 'Pre-Stay Baseline Assessment', detail: 'Score: 58/100 \u2014 at check-in', icon: 'doc' }
+            ],
+            tasks: [
+                { title: 'Complete morning sleep survey', due: 'Due today' }
+            ]
+        },
+        athlete: {
+            firstName: 'Marcus', initials: 'MT', score: 79, scoreColor: '#4CAF50',
+            efficiency: '84%', assessmentCount: '2', unlockedCount: '1',
+            apptDaysFromNow: 4, apptTime: '11:00 AM',
+            pendingTasks: 3,
+            activity: [
+                { title: 'Mid-Season Assessment Completed', detail: 'Score: 79/100 \u2014 up from 65 \u2014 5 days ago', icon: 'doc' },
+                { title: 'Sleep Diary Logged', detail: 'Rest day \u2014 Sleep efficiency: 91% \u2014 Today', icon: 'clock' },
+                { title: 'Post-Game Wind-Down Protocol', detail: 'Completed \u2014 1 day ago', icon: 'doc' }
+            ],
+            tasks: [
+                { title: 'No screens 90 min before bed', due: 'Due tomorrow' },
+                { title: 'Take melatonin at 9:30 PM (travel day)', due: 'Due in 3 days' },
+                { title: 'Complete recovery questionnaire', due: 'Due today' }
+            ]
+        }
+    };
+
+    const pd = personaData[persona] || personaData.individual;
+
+    function makeActivityIcon(type) {
+        if (type === 'clock') {
+            return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A962" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+        }
+        return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A962" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
+    }
 
     function populate() {
         // Prevent any redirect to auth
@@ -11340,99 +11407,74 @@
 
         // User name
         document.querySelectorAll('[data-user-name]').forEach(el => {
-            el.textContent = 'Alex';
+            el.textContent = pd.firstName;
         });
 
         // Avatar
         const avatar = document.getElementById('userAvatar');
-        if (avatar) avatar.textContent = 'AM';
+        if (avatar) avatar.textContent = pd.initials;
 
         // Assessment count
         const ac = document.getElementById('assessmentCount');
-        if (ac) ac.textContent = '2';
+        if (ac) ac.textContent = pd.assessmentCount;
 
         // Sleep efficiency
         const eff = document.getElementById('avgEfficiency');
-        if (eff) eff.textContent = '82%';
+        if (eff) eff.textContent = pd.efficiency;
 
         // Next appointment
         const appt = document.getElementById('nextAppointment');
         const apptDetails = document.getElementById('nextAppointmentDetails');
         const nextDate = new Date();
-        nextDate.setDate(nextDate.getDate() + 5);
+        nextDate.setDate(nextDate.getDate() + pd.apptDaysFromNow);
         if (appt) appt.textContent = nextDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        if (apptDetails) apptDetails.textContent = '10:00 AM';
+        if (apptDetails) apptDetails.textContent = pd.apptTime;
 
         // Unlocked resources
         const uc = document.getElementById('unlockedCount');
-        if (uc) uc.textContent = '1';
+        if (uc) uc.textContent = pd.unlockedCount;
 
         // Sleep score ring + value
         const scoreEl = document.getElementById('dashboardSleepScore');
-        if (scoreEl) { scoreEl.textContent = '85'; scoreEl.style.color = '#4CAF50'; }
+        if (scoreEl) { scoreEl.textContent = String(pd.score); scoreEl.style.color = pd.scoreColor; }
         const ringEl = document.getElementById('dashboardScoreRing');
         if (ringEl) {
             const circumference = 2 * Math.PI * 24;
-            const offset = circumference - (85 / 100) * circumference;
+            const offset = circumference - (pd.score / 100) * circumference;
             ringEl.style.strokeDashoffset = offset;
-            ringEl.style.stroke = '#4CAF50';
+            ringEl.style.stroke = pd.scoreColor;
         }
 
         // Recent activity
         const actContainer = document.getElementById('recentActivity') || document.getElementById('activityList');
         if (actContainer) {
-            actContainer.innerHTML = `
-                <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #eee;">
+            actContainer.innerHTML = pd.activity.map((a, idx) => `
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 0;${idx < pd.activity.length - 1 ? 'border-bottom:1px solid #eee;' : ''}">
                     <div style="width:36px;height:36px;border-radius:50%;background:rgba(201,169,98,0.15);display:flex;align-items:center;justify-content:center;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A962" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        ${makeActivityIcon(a.icon)}
                     </div>
                     <div style="flex:1">
-                        <div style="font-size:14px;font-weight:500;color:#0f1c2e">Completed Follow-Up Assessment</div>
-                        <div style="font-size:12px;color:#888">Score: 78/100 — 3 days ago</div>
+                        <div style="font-size:14px;font-weight:500;color:#0f1c2e">${a.title}</div>
+                        <div style="font-size:12px;color:#888">${a.detail}</div>
                     </div>
                 </div>
-                <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #eee;">
-                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(201,169,98,0.15);display:flex;align-items:center;justify-content:center;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A962" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    </div>
-                    <div style="flex:1">
-                        <div style="font-size:14px;font-weight:500;color:#0f1c2e">Sleep Diary Logged</div>
-                        <div style="font-size:12px;color:#888">Sleep efficiency: 86% — Today</div>
-                    </div>
-                </div>
-                <div style="display:flex;align-items:center;gap:12px;padding:12px 0;">
-                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(201,169,98,0.15);display:flex;align-items:center;justify-content:center;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A962" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    </div>
-                    <div style="flex:1">
-                        <div style="font-size:14px;font-weight:500;color:#0f1c2e">Completed Baseline Assessment</div>
-                        <div style="font-size:12px;color:#888">Score: 62/100 — 4 weeks ago</div>
-                    </div>
-                </div>
-            `;
+            `).join('');
         }
 
         // Tasks banner
         const tasksList = document.getElementById('tasksList');
         const tasksSub = document.getElementById('tasksSubtitle');
-        if (tasksSub) tasksSub.textContent = '2 pending tasks';
+        if (tasksSub) tasksSub.textContent = pd.pendingTasks + ' pending task' + (pd.pendingTasks !== 1 ? 's' : '');
         if (tasksList) {
-            tasksList.innerHTML = `
-                <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f8f7f4;border-radius:8px;margin-bottom:8px;">
+            tasksList.innerHTML = pd.tasks.map((t, idx) => `
+                <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f8f7f4;border-radius:8px;${idx < pd.tasks.length - 1 ? 'margin-bottom:8px;' : ''}">
                     <input type="checkbox" disabled style="width:18px;height:18px;accent-color:#C9A962;">
                     <div style="flex:1">
-                        <div style="font-size:14px;font-weight:500;color:#0f1c2e;">Complete Follow-Up Assessment</div>
-                        <div style="font-size:12px;color:#888;">Due in 2 days</div>
+                        <div style="font-size:14px;font-weight:500;color:#0f1c2e;">${t.title}</div>
+                        <div style="font-size:12px;color:#888;">${t.due}</div>
                     </div>
                 </div>
-                <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f8f7f4;border-radius:8px;">
-                    <input type="checkbox" disabled style="width:18px;height:18px;accent-color:#C9A962;">
-                    <div style="flex:1">
-                        <div style="font-size:14px;font-weight:500;color:#0f1c2e;">Log Sleep Diary Daily</div>
-                        <div style="font-size:12px;color:#888;">Due in 7 days</div>
-                    </div>
-                </div>
-            `;
+            `).join('');
         }
 
         // Show the dashboard section

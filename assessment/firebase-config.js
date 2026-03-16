@@ -29,8 +29,9 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 // Enable offline persistence for Firestore (skip in demo mode to avoid stale cached data)
+const _demoParam = new URLSearchParams(window.location.search).get('demo');
 const isDemoPersistenceSkip =
-    new URLSearchParams(window.location.search).get('demo') === 'true'
+    _demoParam === 'true' || _demoParam === 'hotel' || _demoParam === 'athlete'
     || sessionStorage.getItem('demoMode') === 'true';
 
 if (isDemoPersistenceSkip) {
